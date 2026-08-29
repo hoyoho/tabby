@@ -2,6 +2,10 @@
     background-color: var(--theme-bg-more-2);
     position: relative;
     border-right: 1px solid var(--theme-secondary);
+
+    &:not(.resizing) {
+        transition: width 0.12s ease;
+    }
 }
 
 input {
@@ -99,4 +103,18 @@ input {
     top: 50%;
     right: -4px;
     cursor: col-resize;
+}
+
+:host.collapsed {
+    border-right: none;
+    overflow: visible;
+
+    .p-2 {
+        display: none;
+    }
+
+    .grabber {
+        right: auto;
+        left: 2px;
+    }
 }

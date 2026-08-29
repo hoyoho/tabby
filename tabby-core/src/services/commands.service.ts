@@ -1,6 +1,9 @@
-import { Inject, Injectable, Optional } from '@angular/core'
-import { AppService, Command, CommandContext, CommandProvider, ConfigService, MenuItemOptions, SplitTabComponent, TabContextMenuItemProvider, ToolbarButton, ToolbarButtonProvider, TranslateService } from '../api'
+import { Inject, Injectable, Optional, Injector } from '@angular/core'
+import { AppService, Command, CommandContext, ConfigService, MenuItemOptions, WorkspaceComponent, ToolbarButton, ToolbarButtonProvider, TranslateService, BaseTabComponent } from '../api'
 import { SelectorService } from './selector.service'
+import { Action, ActionContext, ActionSurface } from '../api/action'
+import { actionsToMenuItems } from '../api/adapters'
+import { ActionRegistry } from './action.service'
 
 @Injectable({ providedIn: 'root' })
 export class CommandService {
@@ -11,14 +14,55 @@ export class CommandService {
         private config: ConfigService,
         private app: AppService,
         private translate: TranslateService,
-        @Optional() @Inject(TabContextMenuItemProvider) protected contextMenuProviders: TabContextMenuItemProvider[],
+        private injector: Injector,
         @Optional() @Inject(ToolbarButtonProvider) private toolbarButtonProviders: ToolbarButtonProvider[],
-        @Inject(CommandProvider) private commandProviders: CommandProvider[],
-    ) {
-        this.contextMenuProviders.sort((a, b) => a.weight - b.weight)
+    ) { }
+
+    /**
+     * Resolved lazily: ActionRegistry pulls in every ActionProvider (incl. the
+     * MenuActionAdapter → AppMenuProvider chain, whose constructor requests this
+     * very service for "Commands"). Eventual injection would form a DI cycle
+     * (NG0200); by the time `getCommands` runs this service is already hydrated,
+     * so the provider chain finds the existing instance and the cycle dissolves.
+     */
+    private get actions (): ActionRegistry {
+        return this.injector.get(ActionRegistry)
+    }
+
+    private async contextMenuSections (tab: BaseTabComponent, tabHeader: boolean): Promise<MenuItemOptions[][]> {
+        // The TabContext adapter emits one separator between adjacent provider
+        // sections — split on them to recover the per-provider sections the
+        // palette historically deduplicated against.
+        const actions = await this.actions.getAsync(ActionSurface.TabContext, { tab, tabHeader })
+        const sections: MenuItemOptions[][] = []
+        let current: MenuItemOptions[] = []
+        for (const action of actions) {
+            if (action.type === 'separator') {
+                sections.push(current)
+                current = []
+            } else {
+                current.push(actionsToMenuItems([action], { tab })[0])
+            }
+        }
+        sections.push(current)
+        return sections
+    }
+
+    private commandFromAction (action: Action, ctx: ActionContext): Command {
+        const command = new Command()
+        command.id = action.id
+        command.label = action.label
+        command.sublabel = action.sublabel
+        command.icon = action.icon
+        command.weight = action.weight
+        command.locations = action.locations
+        command.run = async () => { await action.run(ctx) }
+        return command
     }
 
     async getCommands (context: CommandContext): Promise<Command[]> {
+        const ctx: ActionContext = { tab: context.tab ?? null }
+
         let buttons: ToolbarButton[] = []
         this.config.enabledServices(this.toolbarButtonProviders).forEach(provider => {
             buttons = buttons.concat(provider.provide())
@@ -29,19 +73,16 @@ export class CommandService {
         let items: MenuItemOptions[] = []
         if (context.tab) {
             for (const tabHeader of [false, true]) {
-            // Top-level tab menu
-                for (let section of await Promise.all(this.contextMenuProviders.map(x => x.getItems(context.tab!, tabHeader)))) {
+                for (const section of await this.contextMenuSections(context.tab, tabHeader)) {
                     // eslint-disable-next-line @typescript-eslint/no-loop-func
-                    section = section.filter(item => !items.some(ex => ex.label === item.label))
-                    items = items.concat(section)
+                    items = items.concat(section.filter(item => !items.some(ex => ex.label === item.label)))
                 }
-                if (context.tab instanceof SplitTabComponent) {
+                if (context.tab instanceof WorkspaceComponent) {
                     const tab = context.tab.getFocusedTab()
                     if (tab) {
-                        for (let section of await Promise.all(this.contextMenuProviders.map(x => x.getItems(tab, tabHeader)))) {
+                        for (const section of await this.contextMenuSections(tab, tabHeader)) {
                             // eslint-disable-next-line @typescript-eslint/no-loop-func
-                            section = section.filter(item => !items.some(ex => ex.label === item.label))
-                            items = items.concat(section)
+                            items = items.concat(section.filter(item => !items.some(ex => ex.label === item.label)))
                         }
                     }
                 }
@@ -66,8 +107,9 @@ export class CommandService {
         const commands = buttons.map(x => Command.fromToolbarButton(x))
         commands.push(...flatItems.map(x => Command.fromMenuItem(x)))
 
-        for (const provider of this.config.enabledServices(this.commandProviders)) {
-            commands.push(...await provider.provide(context))
+        // Command providers feed the same registry both surfaces see.
+        for (const action of await this.actions.getAsync(ActionSurface.Command, ctx)) {
+            commands.push(this.commandFromAction(action, ctx))
         }
 
         return commands
@@ -97,8 +139,12 @@ export class CommandService {
 
         const context: CommandContext = {}
         const tab = this.app.activeTab
-        if (tab instanceof SplitTabComponent) {
-            context.tab = tab.getFocusedTab() ?? undefined
+        if (tab instanceof WorkspaceComponent) {
+            // Hand the workspace to getCommands: it contributes the
+            // workspace-level items AND (inside getCommands) the focused
+            // session's items, so the palette keeps "Close other workspaces",
+            // "Save layout as profile", Rename/Color etc. reachable.
+            context.tab = tab
         }
         const commands = await this.getCommands(context)
         return this.selector.show(

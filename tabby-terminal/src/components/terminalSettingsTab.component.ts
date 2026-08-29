@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core'
-import { ConfigService, HostAppService, Platform, PlatformService, altKeyName, metaKeyName } from 'tabby-core'
+import { ConfigService, HostAppService, Platform, altKeyName, metaKeyName } from 'tabby-core'
 
 /** @hidden */
 @Component({
@@ -15,11 +15,5 @@ export class TerminalSettingsTabComponent {
     constructor (
         public config: ConfigService,
         public hostApp: HostAppService,
-        private platform: PlatformService,
     ) { }
-
-    openWSLVolumeMixer (): void {
-        this.platform.openPath('sndvol.exe')
-        this.platform.exec('wsl.exe', ['tput', 'bel'])
-    }
 }

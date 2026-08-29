@@ -16,7 +16,7 @@ input.form-control.mt-2(
     #input,
     autofocus,
     [type]='shouldEcho() ? "text" : "password"',
-    placeholder='Response',
+    placeholder="{{ 'Response' | translate }}",
     (keyup.enter)='next()',
     [(ngModel)]='prompt.responses[step]'
 )
@@ -38,5 +38,5 @@ input.form-control.mt-2(
     button.btn.btn-primary(
         (click)='next()'
     )
-        span(*ngIf='step < prompt.prompts.length - 1') Next
-        span(*ngIf='step == prompt.prompts.length - 1') Finish
+        span(*ngIf='step < prompt.prompts.length - 1', translate) Next
+        span(*ngIf='step == prompt.prompts.length - 1', translate) Finish

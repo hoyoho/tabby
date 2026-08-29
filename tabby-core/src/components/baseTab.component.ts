@@ -12,6 +12,19 @@ export interface BaseTabProcess {
     name: string
 }
 
+/**
+ * Weak structural view of the profile that may back a session tab. Concrete
+ * session classes carry richer profile types; core only relies on these two
+ * fields (title fallback + admin-flag detection), so reading them through a
+ * single typed accessor keeps duck-typing contained to one spot.
+ */
+export interface SessionProfileRef {
+    name?: string
+    options?: {
+        runAsAdministrator?: boolean
+    }
+}
+
 export interface GetRecoveryTokenOptions {
     includeState: boolean
 }
@@ -22,7 +35,7 @@ export interface GetRecoveryTokenOptions {
 // @Component({ template: '' })
 export abstract class BaseTabComponent extends BaseComponent {
     /**
-     * Parent tab (usually a SplitTabComponent)
+     * Parent tab (usually a WorkspaceComponent)
      */
     parent: BaseTabComponent|null = null
 
@@ -117,6 +130,15 @@ export abstract class BaseTabComponent extends BaseComponent {
     get destroyed$ (): Observable<void> { return this.destroyed }
     get recoveryStateChangedHint$ (): Observable<void> { return this.recoveryStateChangedHint }
 
+    /**
+     * The profile backing this session tab (if any), exposed in the minimal
+     * shape core needs. Implemented by session tab classes that carry a
+     * `profile`; generic tabs (settings/welcome) return undefined.
+     */
+    getProfile (): SessionProfileRef|undefined {
+        return (this as unknown as { profile?: SessionProfileRef }).profile
+    }
+
     protected config: ConfigService
 
     protected constructor (injector: Injector) {
@@ -179,7 +201,7 @@ export abstract class BaseTabComponent extends BaseComponent {
      * @return JSON serializable tab state representation
      *         for your [[TabRecoveryProvider]] to parse
      */
-    async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken|null> { // eslint-disable-line @typescript-eslint/no-unused-vars
+    async getRecoveryToken (_options?: GetRecoveryTokenOptions): Promise<RecoveryToken|null> {
         return null
     }
 

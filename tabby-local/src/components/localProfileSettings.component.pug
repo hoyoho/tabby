@@ -17,7 +17,7 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                 .input-group
                     input.form-control(
                         type='text',
-                        placeholder='Home directory',
+                        placeholder="{{ 'Home directory' | translate }}",
                         [(ngModel)]='profile.options.cwd'
                     )
                     button.btn.btn-secondary((click)='pickWorkingDirectory()')

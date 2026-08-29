@@ -57,4 +57,25 @@ export class WindowSettingsTabComponent extends BaseComponent {
             this.config.requestRestart()
         }
     }
+
+    get backgroundImageName (): string|null {
+        const path = this.config.store.appearance.backgroundImage
+        if (!path) {
+            return null
+        }
+        return path.split(/[\\/]/).pop()
+    }
+
+    async selectBackgroundImage (): Promise<void> {
+        const path = await this.platform.pickImage()
+        if (path) {
+            this.config.store.appearance.backgroundImage = path
+            this.config.save()
+        }
+    }
+
+    clearBackgroundImage (): void {
+        this.config.store.appearance.backgroundImage = null
+        this.config.save()
+    }
 }

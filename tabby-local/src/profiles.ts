@@ -1,7 +1,7 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import deepClone from 'clone-deep'
 import { Injectable, Inject } from '@angular/core'
-import { ProfileProvider, NewTabParameters, ConfigService, SplitTabComponent, AppService, PartialProfile } from 'tabby-core'
+import { ProfileProvider, NewTabParameters, ConfigService, WorkspaceComponent, AppService, PartialProfile } from 'tabby-core'
 import { TerminalTabComponent } from './components/terminalTab.component'
 import { LocalProfileSettingsComponent } from './components/localProfileSettings.component'
 import { ShellProvider, Shell, SessionOptions, LocalProfile } from './api'
@@ -37,24 +37,35 @@ export class LocalProfilesService extends ProfileProvider<LocalProfile> {
     }
 
     async getBuiltinProfiles (): Promise<PartialProfile<LocalProfile>[]> {
-        return (await this.getShells()).map(shell => ({
+        const shells = await this.getShells()
+
+        // Next a fixed set of terminal templates; the rest (cmder, cygwin,
+        // msys2, …) is not offered — users can adapt a template's args instead.
+        const pick = (match: RegExp): Shell|undefined => shells.find(x => match.test(x.name))
+        const chosen = [
+            pick(/^wsl\b/i) ?? pick(/wsl/i),
+            pick(/^cmd\b/i) ?? pick(/cmd/i),
+            pick(/powershell/i),
+            pick(/git.*bash/i),
+        ].filter(x => !!x) as Shell[]
+
+        const templates = (chosen.length ? chosen : shells).map(shell => ({
             id: `local:${shell.id}`,
             type: 'local',
             name: shell.name,
             icon: shell.icon,
             options: this.optionsFromShell(shell),
             isBuiltin: true,
+            isTemplate: true,
         }))
+        return templates as PartialProfile<LocalProfile>[]
     }
 
     async getNewTabParameters (profile: LocalProfile): Promise<NewTabParameters<TerminalTabComponent>> {
         profile = deepClone(profile)
 
         if (!profile.options.cwd) {
-            if (this.app.activeTab instanceof TerminalTabComponent && this.app.activeTab.session) {
-                profile.options.cwd = await this.app.activeTab.session.getWorkingDirectory() ?? null
-            }
-            if (this.app.activeTab instanceof SplitTabComponent) {
+            if (this.app.activeTab instanceof WorkspaceComponent) {
                 const focusedTab = this.app.activeTab.getFocusedTab()
 
                 if (focusedTab instanceof TerminalTabComponent && focusedTab.session) {

@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
+import { TranslateService } from '@ngx-translate/core'
 import { NotificationsService, VaultFileSecret } from 'tabby-core'
 
 /** @hidden */
@@ -13,6 +14,7 @@ export class ShowSecretModalComponent {
     constructor (
         public modalInstance: NgbActiveModal,
         private notifications: NotificationsService,
+        private translate: TranslateService,
     ) { }
 
     close (): void {
@@ -22,6 +24,6 @@ export class ShowSecretModalComponent {
     copySecret (): void {
         navigator.clipboard.writeText(this.secret.value)
         // Show a notification
-        this.notifications.info('Copied to clipboard')
+        this.notifications.info(this.translate.instant('Copied to clipboard'))
     }
 }

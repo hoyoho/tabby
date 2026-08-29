@@ -3,7 +3,7 @@ import slugify from 'slugify'
 import { v4 as uuidv4 } from 'uuid'
 import { Injectable } from '@angular/core'
 import { ConfigService, NewTabParameters, PartialProfile, Profile, ProfileProvider } from './api'
-import { SplitTabComponent, SplitTabRecoveryProvider } from './components/splitTab.component'
+import { WorkspaceComponent } from './components/workspace.component'
 
 export interface SplitLayoutProfileOptions {
     recoveryToken: any
@@ -24,7 +24,6 @@ export class SplitLayoutProfilesService extends ProfileProvider<SplitLayoutProfi
     }
 
     constructor (
-        private splitTabRecoveryProvider: SplitTabRecoveryProvider,
         private config: ConfigService,
     ) {
         super()
@@ -34,15 +33,21 @@ export class SplitLayoutProfilesService extends ProfileProvider<SplitLayoutProfi
         return []
     }
 
-    async getNewTabParameters (profile: SplitLayoutProfile): Promise<NewTabParameters<SplitTabComponent>> {
-        return this.splitTabRecoveryProvider.recover(profile.options.recoveryToken)
+    async getNewTabParameters (profile: SplitLayoutProfile): Promise<NewTabParameters<WorkspaceComponent>> {
+        return {
+            type: WorkspaceComponent,
+            inputs: {
+                _recoveredState: profile.options.recoveryToken,
+                _profileName: profile.name,
+            },
+        }
     }
 
     getDescription (): string {
         return ''
     }
 
-    async createProfile (tab: SplitTabComponent, name: string): Promise<void> {
+    async createProfile (tab: WorkspaceComponent, name: string): Promise<void> {
         const token = await tab.getRecoveryToken({ includeState: false })
         const profile: PartialProfile<SplitLayoutProfile> = {
             id: `${this.id}:custom:${slugify(name)}:${uuidv4()}`,

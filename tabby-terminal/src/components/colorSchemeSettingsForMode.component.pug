@@ -25,44 +25,44 @@
                 [(model)]='config.store.terminal[this.configKey].foreground',
                 (modelChange)='config.save()',
                 title='FG',
-                hint='Foreground'
+                [hint]="'Foreground' | translate"
             )
             color-picker(
                 [(model)]='config.store.terminal[this.configKey].background',
                 (modelChange)='config.save()',
                 title='BG',
-                hint='Background'
+                [hint]="'Background' | translate"
             )
             color-picker(
                 [(model)]='config.store.terminal[this.configKey].cursor',
                 (modelChange)='config.save()',
                 title='CU',
-                hint='Cursor color'
+                [hint]="'Cursor color' | translate"
             )
             color-picker(
                 [(model)]='config.store.terminal[this.configKey].cursorAccent',
                 (modelChange)='config.save()',
                 title='CA',
-                hint='Block cursor foreground'
+                [hint]="'Block cursor foreground' | translate"
             )
             color-picker(
                 [(model)]='config.store.terminal[this.configKey].selection',
                 (modelChange)='config.save()',
                 title='SB',
-                hint='Selection background'
+                [hint]="'Selection background' | translate"
             )
             color-picker(
                 [(model)]='config.store.terminal[this.configKey].selectionForeground',
                 (modelChange)='config.save()',
                 title='SF',
-                hint='Selection foreground'
+                [hint]="'Selection foreground' | translate"
             )
             color-picker(
                 *ngFor='let _ of config.store.terminal[this.configKey].colors; let idx = index; trackBy: colorsTrackBy',
                 [(model)]='config.store.terminal[this.configKey].colors[idx]',
                 (modelChange)='config.save()',
                 [title]='idx.toString()',
-                hint='ANSI color {{idx}}'
+                [hint]="'ANSI color {idx}' | translate"
             )
 
     color-scheme-preview([scheme]='config.store.terminal[this.configKey]')

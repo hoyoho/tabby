@@ -20,7 +20,7 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                         input.form-control(
                             type='number',
                             alwaysVisibleTypeahead,
-                            placeholder='Ask every time',
+                            placeholder="{{ 'Ask every time' | translate }}",
                             [(ngModel)]='profile.options.baudrate',
                             [ngbTypeahead]='baudratesAutocomplete'
                         )
@@ -56,29 +56,29 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                     [(ngModel)]='profile.options.parity'
                 )
                     option(value='none', translate) None
-                    option(value='even') Even
-                    option(value='odd') Odd
-                    option(value='mark', ng:if='hostApp.platform === Platform.Windows') Mark
-                    option(value='space', ng:if='hostApp.platform === Platform.Windows') Space
+                    option(value='even', translate) Even
+                    option(value='odd', translate) Odd
+                    option(value='mark', ng:if='hostApp.platform === Platform.Windows', translate) Mark
+                    option(value='space', ng:if='hostApp.platform === Platform.Windows', translate) Space
 
             .form-line
                 .header
-                    .title RTS / CTS
+                    .title(translate) RTS / CTS
                 toggle([(ngModel)]='profile.options.rtscts')
 
             .form-line
                 .header
-                    .title XON
+                    .title(translate) XON
                 toggle([(ngModel)]='profile.options.xon')
 
             .form-line
                 .header
-                    .title XOFF
+                    .title(translate) XOFF
                 toggle([(ngModel)]='profile.options.xoff')
 
             .form-line
                 .header
-                    .title Xany
+                    .title(translate) Xany
                 toggle([(ngModel)]='profile.options.xany')
 
             .form-line

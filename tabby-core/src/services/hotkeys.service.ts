@@ -4,7 +4,6 @@ import { HotkeyDescription, HotkeyProvider } from '../api/hotkeyProvider'
 import { KeyEventData, getKeyName, Keystroke, KeyName, getKeystrokeName, metaKeyName, altKeyName } from './hotkeys.util'
 import { ConfigService } from './config.service'
 import { HostAppService, Platform } from '../api/hostApp'
-import { deprecate } from 'util'
 
 export interface PartialHotkeyMatch {
     id: string
@@ -113,11 +112,10 @@ export class HotkeysService {
             registerEvent('auxclick', event => 'button' in event && event.button === 1)
         })
 
-        // deprecated
+        // deprecated legacy EventEmitter channels, bridged onto the Subject
+        // streams for plugin compatibility
         this.hotkey$.subscribe(h => this.matchedHotkey.emit(h))
-        this.matchedHotkey.subscribe = deprecate(s => this.hotkey$.subscribe(s), 'matchedHotkey is deprecated, use hotkey$')
         this.keyEvent$.subscribe(h => this.key.next(h))
-        this.key.subscribe = deprecate(s => this.keyEvent$.subscribe(s), 'key is deprecated, use keyEvent$')
     }
 
     /**

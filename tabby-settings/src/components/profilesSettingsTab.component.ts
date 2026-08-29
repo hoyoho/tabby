@@ -1,6 +1,6 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import deepClone from 'clone-deep'
-import { Component, Inject } from '@angular/core'
+import { Component, Inject, Type } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ConfigService, HostAppService, Profile, SelectorService, ProfilesService, PlatformService, BaseComponent, PartialProfile, ProfileProvider, TranslateService, Platform, ProfileGroup, PartialProfileGroup, QuickConnectProfileProvider } from 'tabby-core'
 import { EditProfileModalComponent } from './editProfileModal.component'
@@ -20,16 +20,16 @@ interface CollapsableProfileGroup extends ProfileGroup {
     styleUrls: ['./profilesSettingsTab.component.scss'],
 })
 export class ProfilesSettingsTabComponent extends BaseComponent {
-    builtinProfiles: PartialProfile<Profile>[] = []
-    profiles: PartialProfile<Profile>[] = []
     templateProfiles: PartialProfile<Profile>[] = []
-    customProfiles: PartialProfile<Profile>[] = []
     profileGroups: PartialProfileGroup<CollapsableProfileGroup>[]
     rootGroups: PartialProfileGroup<CollapsableProfileGroup>[] = []
 
     filter = ''
     Platform = Platform
+    shellSettingsComponent: Type<any>|null = null
+    sshSettingsComponent: Type<any>|null = null
     private descriptionCache = new Map<string, string|null>()
+    private draggedProfile: PartialProfile<Profile>|null = null
 
     constructor (
         public config: ConfigService,
@@ -46,6 +46,15 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
     }
 
     async ngOnInit (): Promise<void> {
+        const nodeRequire = (window as any).nodeRequire
+        try {
+            this.sshSettingsComponent = nodeRequire('tabby-ssh')?.SSHSettingsTabComponent ?? null
+        } catch { /* optional dependency */ }
+        if (this.hostApp.platform === Platform.Windows) {
+            try {
+                this.shellSettingsComponent = nodeRequire('tabby-local')?.ShellSettingsTabComponent ?? null
+            } catch { /* optional dependency */ }
+        }
         await this.refreshProfileGroups()
         await this.refreshProfiles()
         this.subscribeUntilDestroyed(this.config.changed$, () => this.refreshProfileGroups())
@@ -54,9 +63,9 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
 
     async refreshProfiles (): Promise<void> {
         const allProfiles = await this.profilesService.getProfiles()
-        this.builtinProfiles = allProfiles.filter(x => x.isBuiltin && !x.isTemplate)
+        // Built-in presets are never exposed as sessions: only user-defined
+        // profiles (and templates used when creating) remain visible.
         this.templateProfiles = allProfiles.filter(x => x.isBuiltin && x.isTemplate)
-        this.customProfiles = allProfiles.filter(x => !x.isBuiltin)
 
         this.descriptionCache.clear()
         for (const p of allProfiles) {
@@ -73,16 +82,16 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
     async newProfile (base?: PartialProfile<Profile>): Promise<void> {
         if (!base) {
             let profiles = await this.profilesService.getProfiles()
-            profiles = profiles.filter(x => !this.isProfileBlacklisted(x))
+            profiles = profiles.filter(x => !this.isProfileBlacklisted(x) && x.isTemplate)
+            profiles.sort((a, b) => ProfilesService.templatePriority(a) - ProfilesService.templatePriority(b))
             base = await this.selector.show(
-                this.translate.instant('Select a base profile to use as a template'),
+                this.translate.instant('Select a template'),
                 profiles.map(p => ({
                     icon: p.icon ?? undefined,
                     description: this.profilesService.getDescription(p) ?? undefined,
-                    name: p.group ? `${this.profilesService.resolveProfileGroupName(p.group)} / ${p.name}` : p.name,
-                    group: p.isTemplate ? this.translate.instant('Template') : this.translate.instant('Duplicate an existing profile'),
+                    name: p.name,
                     result: p,
-                    weight: p.isTemplate ? 0 : 1,
+                    weight: ProfilesService.templatePriority(p) * 10,
                 })),
             ).catch(() => undefined)
             if (!base) {
@@ -261,9 +270,12 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
     async refreshProfileGroups (): Promise<void> {
         const profileGroupCollapsed = JSON.parse(window.localStorage.profileGroupCollapsed ?? '{}')
         const groups = await this.profilesService.getProfileGroups({ includeNonUserGroup: true, includeProfiles: true })
+        // Drop the synthetic "Built-in" group (and its sub-groups); keep only
+        // user groups and the un-grouped bucket.
+        .then(gs => gs.filter(g => g.id === 'default' || g.editable !== false))
         groups.sort((a, b) => a.name.localeCompare(b.name))
         groups.sort((a, b) => (a.id === 'built-in' || !a.editable ? 1 : 0) - (b.id === 'built-in' || !b.editable ? 1 : 0))
-        groups.sort((a, b) => (a.id === 'ungrouped' ? 0 : 1) - (b.id === 'ungrouped' ? 0 : 1))
+        groups.sort((a, b) => (a.id === 'default' ? 0 : 1) - (b.id === 'default' ? 0 : 1))
         this.profileGroups = groups.map(g => ProfilesSettingsTabComponent.intoPartialCollapsableProfileGroup(g, profileGroupCollapsed[g.id] ?? false))
         this.rootGroups = this.profilesService.buildGroupTree(this.profileGroups)
     }
@@ -272,8 +284,49 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         return !this.filter || (group.profiles ?? []).some(x => this.isProfileVisible(x))
     }
 
+    blankContextMenu (event: MouseEvent): void {
+        event.preventDefault()
+        this.platform.popupContextMenu([
+            {
+                type: 'normal',
+                label: this.translate.instant('New profile'),
+                click: () => this.newProfile(),
+            },
+            {
+                type: 'normal',
+                label: this.translate.instant('New group'),
+                click: () => this.newProfileGroup(),
+            },
+        ])
+    }
+
     isProfileVisible (profile: PartialProfile<Profile>): boolean {
         return !this.filter || (profile.name + '$' + (this.getDescription(profile) ?? '')).toLowerCase().includes(this.filter.toLowerCase())
+    }
+
+    onProfileDragStart (profile: PartialProfile<Profile>, event: DragEvent): void {
+        if (profile.isBuiltin) {
+            return
+        }
+        this.draggedProfile = profile
+        event.dataTransfer?.setData('text/plain', profile.id ?? '')
+        event.dataTransfer!.effectAllowed = 'move'
+    }
+
+    allowDrop (event: DragEvent): void {
+        event.preventDefault()
+    }
+
+    async onProfileDrop (event: DragEvent, group: PartialProfileGroup<ProfileGroup>): Promise<void> {
+        event.preventDefault()
+        this.allowDrop(event)
+        const profile = this.draggedProfile
+        this.draggedProfile = null
+        if (!profile?.id || profile.isBuiltin) {
+            return
+        }
+        await this.profilesService.setGroup(profile.id, group.id === 'default' ? '' : group.id)
+        await this.refreshProfileGroups()
     }
 
     getDescription (profile: PartialProfile<Profile>): string|null {

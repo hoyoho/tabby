@@ -1,8 +1,8 @@
 import { Component } from '@angular/core'
 import { DomSanitizer } from '@angular/platform-browser'
 import { HomeBaseService } from '../services/homeBase.service'
-import { CommandService } from '../services/commands.service'
-import { Command, CommandLocation } from '../api/commands'
+import { Action, ActionSurface } from '../api/action'
+import { ActionRegistry } from '../services/action.service'
 
 /** @hidden */
 @Component({
@@ -11,16 +11,15 @@ import { Command, CommandLocation } from '../api/commands'
     styleUrls: ['./startPage.component.scss'],
 })
 export class StartPageComponent {
-    version: string
-    commands: Command[] = []
+    actions: Action[] = []
 
     constructor (
         private domSanitizer: DomSanitizer,
         public homeBase: HomeBaseService,
-        commands: CommandService,
+        actions: ActionRegistry,
     ) {
-        commands.getCommands({}).then(c => {
-            this.commands = c.filter(x => x.locations?.includes(CommandLocation.StartPage))
+        actions.getAsync(ActionSurface.StartPage).then(a => {
+            this.actions = a
         })
     }
 
@@ -28,8 +27,12 @@ export class StartPageComponent {
         return this.domSanitizer.bypassSecurityTrustHtml(icon ?? '')
     }
 
+    runAction (action: Action): void {
+        action.run({})
+    }
+
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    buttonsTrackBy (_, btn: Command): any {
-        return btn.label + btn.icon
+    buttonsTrackBy (_, action: Action): any {
+        return action.label + (action.icon ?? '')
     }
 }

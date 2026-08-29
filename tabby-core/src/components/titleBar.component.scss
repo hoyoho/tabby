@@ -3,19 +3,33 @@ $titlebar-height: 30px;
 :host {
     flex: 0 0 $titlebar-height;
     display: flex;
+    align-items: center;
     background: var(--theme-bg-more-2);
     color: var(--bs-body-color);
+    -webkit-app-region: drag;
+
+    menu-bar {
+        flex: none;
+        align-items: stretch;
+        -webkit-app-region: no-drag;
+    }
+
+    app-menu {
+        align-self: stretch;
+        -webkit-app-region: no-drag;
+    }
 
     .title {
-        flex: auto;
-        padding-left: 15px;
-        line-height: $titlebar-height;
-        -webkit-app-region: drag;
+        flex: none;
+        font-size: 14px;
+        line-height: 1;
+        padding: 0 14px;
         color: var(--bs-body-color);
     }
 
     window-controls {
         background: transparent;
+        -webkit-app-region: no-drag;
     }
 
     &.inset {
@@ -23,7 +37,6 @@ $titlebar-height: 30px;
 
         .title {
             padding-left: 80px;
-            line-height: 36px;
         }
 
         window-controls {

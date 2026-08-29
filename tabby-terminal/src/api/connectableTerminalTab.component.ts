@@ -88,7 +88,7 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
                 if (!this.session?.open && this.reconnectOffered) {
                     this.reconnect()
                 }
-            })
+            }, () => undefined)
         }
     }
 

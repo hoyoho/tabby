@@ -1,6 +1,7 @@
 pluginBlacklist: ['local']
-terminal:
+workspace:
   recoverTabs: false
-enableAnalytics: false
+  newSessionOpensInNewWorkspace: true
+session:
+  appendToPaneByDefault: false
 enableWelcomeTab: false
-enableAutomaticUpdates: false

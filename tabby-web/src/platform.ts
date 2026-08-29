@@ -150,6 +150,10 @@ export class WebPlatformService extends PlatformService {
     async pickDirectory (): Promise<string> {
         throw new Error('Unsupported')
     }
+
+    async pickImage (): Promise<string | null> {
+        return null
+    }
 }
 
 class HTMLFileDownload extends FileDownload {

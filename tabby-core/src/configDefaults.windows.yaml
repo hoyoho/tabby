@@ -19,8 +19,6 @@ hotkeys:
     - 'Ctrl-Shift-PageUp'
   move-tab-right:
     - 'Ctrl-Shift-PageDown'
-  rearrange-panes:
-    - 'Ctrl-Shift'
   duplicate-tab: []
   pin-tab: []
   restart-tab: []
@@ -74,9 +72,9 @@ hotkeys:
     - 'Ctrl-Alt-Up'
   pane-nav-left:
     - 'Ctrl-Alt-Left'
-  pane-nav-previous:
+  session-nav-previous:
     - 'Ctrl-Alt-['
-  pane-nav-next:
+  session-nav-next:
     - 'Ctrl-Alt-]'
   pane-nav-1: []
   pane-nav-2: []
@@ -87,13 +85,15 @@ hotkeys:
   pane-nav-7: []
   pane-nav-8: []
   pane-nav-9: []
-  pane-maximize:
-    - 'Ctrl-Alt-Enter'
-  close-pane: []
-  pane-increase-vertical: []
-  pane-decrease-vertical: []
-  pane-increase-horizontal: []
-  pane-decrease-horizontal: []
+  close-session: []
+  splitter-top-up: []
+  splitter-top-down: []
+  splitter-bottom-up: []
+  splitter-bottom-down: []
+  splitter-left-left: []
+  splitter-left-right: []
+  splitter-right-left: []
+  splitter-right-right: []
   switch-profile:
     - 'Ctrl-Alt-T'
   profile-selector:

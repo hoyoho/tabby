@@ -13,7 +13,7 @@ import { enableDebugTools } from '@angular/platform-browser'
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 
 import { getRootModule } from '../app/src/app.module'
-import { BootstrapData, BOOTSTRAP_DATA } from '../tabby-core/src/api/mainProcess'
+import { BootstrapData, BOOTSTRAP_DATA, PLUGIN_MODULES } from '../tabby-core/src/api/mainProcess'
 
 interface BootstrapOptions {
     packageModules: any[]
@@ -45,6 +45,7 @@ window['bootstrapTabby'] = async function bootstrap (options: BootstrapOptions):
 
     const moduleRef = await platformBrowserDynamic([
         { provide: BOOTSTRAP_DATA, useValue: options.bootstrapData },
+        { provide: PLUGIN_MODULES, useValue: pluginModules },
         { provide: 'WEB_CONNECTOR', useValue: options.connector },
     ]).bootstrapModule(module)
     if (options.debugMode) {

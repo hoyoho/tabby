@@ -102,25 +102,9 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
     }
 
     async canClose (): Promise<boolean> {
-        const children = await this.session?.getChildProcesses()
-        if (!children?.length) {
-            return true
-        }
-        return (await this.platform.showMessageBox(
-            {
-                type: 'warning',
-                message: this.translate.instant(
-                    _('"{command}" is still running. Close?'),
-                    children[0],
-                ),
-                buttons: [
-                    this.translate.instant(_('Kill')),
-                    this.translate.instant(_('Cancel')),
-                ],
-                defaultId: 0,
-                cancelId: 1,
-            },
-        )).response === 0
+        // Closing means closing — don't nag about still-running child processes
+        // (e.g. wslhost.exe for WSL sessions).
+        return true
     }
 
     ngOnDestroy (): void {

@@ -1,5 +1,12 @@
 export const BOOTSTRAP_DATA = 'BOOTSTRAP_DATA'
 
+/**
+ * Loaded plugin modules (Angular NgModules with a `pluginName` tag).
+ * Provided at bootstrap by the host shell — replaces the old
+ * `window['pluginModules']` global.
+ */
+export const PLUGIN_MODULES = 'PLUGIN_MODULES'
+
 export interface PluginInfo {
     name: string
     description: string

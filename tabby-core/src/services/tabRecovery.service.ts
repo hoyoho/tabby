@@ -20,7 +20,8 @@ export class TabRecoveryService {
     }
 
     async saveTabs (tabs: BaseTabComponent[]): Promise<void> {
-        if (!this.enabled || !this.config.store.recoverTabs) {
+        const recoverWorkspaces = this.config.store.workspace?.recoverTabs
+        if (!this.enabled || !recoverWorkspaces) {
             return
         }
         window.localStorage.tabsRecovery = JSON.stringify(
@@ -39,9 +40,6 @@ export class TabRecoveryService {
             if (tab.icon) {
                 token.tabIcon = tab.icon
             }
-            if (tab.color) {
-                token.tabColor = tab.color
-            }
             token.disableDynamicTitle = tab['disableDynamicTitle']
         }
         return token
@@ -56,7 +54,6 @@ export class TabRecoveryService {
                 const tab = await provider.recover(token)
                 tab.inputs = tab.inputs ?? {}
                 tab.inputs.icon = token.tabIcon ?? null
-                tab.inputs.color = token.tabColor ?? null
                 tab.inputs.title = token.tabTitle || ''
                 tab.inputs.customTitle = token.tabCustomTitle || ''
                 tab.inputs.pinned = token.tabPinned ?? false

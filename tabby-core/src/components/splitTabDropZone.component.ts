@@ -3,7 +3,8 @@ import { Component, Input, HostBinding, ElementRef, Output, EventEmitter } from 
 import { AppService } from '../services/app.service'
 import { BaseTabComponent } from './baseTab.component'
 import { SelfPositioningComponent } from './selfPositioning.component'
-import { SplitDropZoneInfo, SplitTabComponent } from './splitTab.component'
+import { SessionTab } from '../api/session'
+import { SplitDropZoneInfo, WorkspaceComponent } from './workspace.component'
 
 /** @hidden */
 @Component({
@@ -22,7 +23,7 @@ import { SplitDropZoneInfo, SplitTabComponent } from './splitTab.component'
 })
 export class SplitTabDropZoneComponent extends SelfPositioningComponent {
     @Input() dropZone: SplitDropZoneInfo
-    @Input() parent: SplitTabComponent
+    @Input() parent: WorkspaceComponent
     @Output() tabDropped = new EventEmitter<BaseTabComponent>()
     @HostBinding('class.active') isActive = false
     @HostBinding('class.highlighted') isHighlighted = false
@@ -40,12 +41,17 @@ export class SplitTabDropZoneComponent extends SelfPositioningComponent {
     }
 
     canActivateFor (tab: BaseTabComponent): boolean {
+        if (!(tab instanceof SessionTab)) {
+            // Only sessions (running connections) can be dropped into a
+            // workspace's panes; other top-level tabs (workspaces, settings,
+            // welcome) must not light up the drop zones.
+            return false
+        }
         const allTabs = this.parent.getAllTabs()
         return !(
             tab === this.parent ||
             allTabs.length === 1 && allTabs.includes(tab) ||
-            this.dropZone.type === 'relative' && tab === this.dropZone.relativeTo ||
-            this.dropZone.type === 'absolute' && tab === this.dropZone.container.children[this.dropZone.position]
+            this.dropZone.type === 'relative' && tab === (this.dropZone.relativeTo as any)
         )
     }
 
@@ -59,6 +65,7 @@ export class SplitTabDropZoneComponent extends SelfPositioningComponent {
             this.dropZone.y,
             this.dropZone.w,
             this.dropZone.h,
+            'px',
         )
     }
 }

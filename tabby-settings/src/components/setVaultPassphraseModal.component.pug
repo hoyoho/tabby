@@ -7,7 +7,7 @@ h3.modal-header.m-0.pb-0(translate) Set master passphrase
             autofocus,
             [(ngModel)]='passphrase',
             #input,
-            placeholder='Master passphrase',
+            placeholder="{{ 'Master passphrase' | translate }}",
             (keyup.enter)='ok()',
             (keyup.esc)='cancel()',
         )

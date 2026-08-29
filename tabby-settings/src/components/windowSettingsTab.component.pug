@@ -70,7 +70,7 @@ h3.mb-3(translate) Window
         label.btn.btn-secondary(
             for='vibrancyTypeFluent'
         )
-            span Fluent
+            span(translate) Fluent
 
 .form-line(*ngIf='platform.supportsWindowControls')
     .header
@@ -83,43 +83,6 @@ h3.mb-3(translate) Window
         max='1',
         step='0.01'
     )
-
-.form-line(*ngIf='platform.supportsWindowControls')
-    .header
-        .title(translate) Window frame
-        .description(translate) Whether a custom window or an OS native window should be used
-
-    .btn-group
-        input.btn-check(
-            type='radio',
-            name='frame',
-            [(ngModel)]='config.store.appearance.frame',
-            (ngModelChange)='saveConfiguration(true)',
-            id='frameNative',
-            [value]='"native"'
-        )
-        label.btn.btn-secondary(for='frameNative')
-            span(translate) Native
-        input.btn-check(
-            type='radio',
-            name='frame',
-            [(ngModel)]='config.store.appearance.frame',
-            (ngModelChange)='saveConfiguration(true)',
-            id='frameThin',
-            [value]='"thin"'
-        )
-        label.btn.btn-secondary(for='frameThin')
-            span(translate) Thin
-        input.btn-check(
-            type='radio',
-            name='frame',
-            [(ngModel)]='config.store.appearance.frame',
-            (ngModelChange)='saveConfiguration(true)',
-            id='frameFull',
-            [value]='"full"'
-        )
-        label.btn.btn-secondary(for='frameFull')
-            span(translate) Full
 
 .form-line(*ngIf='hostApp.platform !== Platform.Web && hostApp.platform !== Platform.Linux')
     .header
@@ -137,6 +100,29 @@ h3.mb-3(translate) Window
     toggle(
         [(ngModel)]='config.store.showProfileTree',
         (ngModelChange)='saveConfiguration(false)'
+    )
+
+.form-line
+    .header
+        .title(translate) Background image
+        .description(translate) Display an image behind the terminal window
+    .d-flex.align-items-center.min-w-0.flex-shrink-1
+        span.text-truncate.me-2.text-muted(style='max-width: 240px', [title]='backgroundImageName || null') {{ backgroundImageName || ("Not set"|translate) }}
+        .btn-group.flex-shrink-0
+            button.btn.btn-secondary(translate, (click)='selectBackgroundImage()') Browse…
+            button.btn.btn-secondary(translate, (click)='clearBackgroundImage()', [disabled]='!config.store.appearance.backgroundImage') Clear
+
+.form-line(*ngIf='config.store.appearance.backgroundImage')
+    .header
+        .title(translate) Background image brightness
+        .description(translate) Adjust the dark scrim behind the interface
+    input(
+        type='range',
+        [(ngModel)]='config.store.appearance.backgroundImageBrightness',
+        (ngModelChange)='saveConfiguration()',
+        min='0',
+        max='1',
+        step='0.05'
     )
 
 h3.mt-4(translate) Docking
@@ -212,19 +198,19 @@ h3.mt-4(translate) Docking
             id='dockScreenCurrent',
             value='current'
         )
-        label.btn.btn-secondary(id='dockScreenCurrent')
+        label.btn.btn-secondary(for='dockScreenCurrent')
             span(translate) Current
-        input.btn-check(
-            *ngFor='let screen of screens',
-            type='radio',
-            name='dockScreen',
-            [(ngModel)]='config.store.appearance.dockScreen',
-            (ngModelChange)='saveConfiguration(); docking.dock()',
-            id='dockScreen{{screen.id}}',
-            [value]='screen.id'
-        )
-        label.btn.btn-secondary(*ngFor='let screen of screens', for='dockScreen{{screen.id}}')
-            | {{screen.name}}
+        ng-container(*ngFor='let screen of screens')
+            input.btn-check(
+                type='radio',
+                name='dockScreen',
+                [(ngModel)]='config.store.appearance.dockScreen',
+                (ngModelChange)='saveConfiguration(); docking.dock()',
+                id='dockScreen{{screen.id}}',
+                [value]='screen.id'
+            )
+            label.btn.btn-secondary(for='dockScreen{{screen.id}}')
+                | {{screen.name}}
 
 .ms-5.form-line(*ngIf='docking && config.store.appearance.dock != "off"')
     .header
@@ -270,11 +256,11 @@ h3.mt-4(translate) Docking
         (ngModelChange)='saveConfiguration(); ',
     )
 
-h3.mt-4(translate) Tabs
+h3.mt-4(translate) Workspaces
 
 .form-line
     .header
-        .title(translate) Tabs location
+        .title(translate) Workspace bar location
     .btn-group
         input.btn-check(
             type='radio',
@@ -319,7 +305,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Tabs width
+        .title(translate) Workspace bar width
     .btn-group
         input.btn-check(
             type='radio',
@@ -330,7 +316,7 @@ h3.mt-4(translate) Tabs
             [value]='true'
         )
         label.btn.btn-secondary(for='flexTabsTrue')
-            span(translate, translateComment='[Dynamic] tab width') id.tab-width.dynamic
+            span(translate) Dynamic
         input.btn-check(
             type='radio',
             name='flexTabs',
@@ -344,7 +330,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Show tabs in fullscreen mode
+        .title(translate) Show workspace bar in fullscreen mode
 
     toggle(
         [(ngModel)]='config.store.appearance.tabsInFullscreen',
@@ -353,7 +339,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Hide tab index
+        .title(translate) Hide workspace index
 
     toggle(
         [(ngModel)]='config.store.terminal.hideTabIndex',
@@ -362,7 +348,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Show profile icon on tab
+        .title(translate) Show profile icon on the workspace
 
     toggle(
         [(ngModel)]='config.store.terminal.showTabProfileIcon',
@@ -371,7 +357,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Hide tab options button
+        .title(translate) Hide workspace options button
 
     toggle(
         [(ngModel)]='config.store.terminal.hideTabOptionsButton',
@@ -380,7 +366,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Hide tab close button
+        .title(translate) Hide workspace close button
 
     toggle(
         [(ngModel)]='config.store.terminal.hideCloseButton',
@@ -389,7 +375,7 @@ h3.mt-4(translate) Tabs
 
 .form-line
     .header
-        .title(translate) Close the window after closing the last tab
+        .title(translate) Close the window after closing the last workspace
 
     toggle(
         [(ngModel)]='config.store.appearance.lastTabClosesWindow',

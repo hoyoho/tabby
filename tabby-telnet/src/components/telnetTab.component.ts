@@ -22,7 +22,6 @@ export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetPr
         injector: Injector,
     ) {
         super(injector)
-        this.enableToolbar = true
     }
 
     ngOnInit (): void {

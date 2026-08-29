@@ -6,7 +6,6 @@ import { ToastrModule } from 'ngx-toastr'
 
 import TabbyCorePlugin, { HostAppService, ToolbarButtonProvider, TabRecoveryProvider, ConfigProvider, HotkeysService, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, ProfileProvider } from 'tabby-core'
 import TabbyTerminalModule from 'tabby-terminal'
-import { SettingsTabProvider } from 'tabby-settings'
 
 import { TerminalTabComponent } from './components/terminalTab.component'
 import { ShellSettingsTabComponent } from './components/shellSettingsTab.component'
@@ -18,7 +17,6 @@ import { TerminalService } from './services/terminal.service'
 
 import { ButtonProvider } from './buttonProvider'
 import { RecoveryProvider } from './recoveryProvider'
-import { ShellSettingsTabProvider } from './settings'
 import { TerminalConfigProvider } from './config'
 import { LocalTerminalHotkeyProvider } from './hotkeys'
 import { NewTabContextMenu } from './tabContextMenu'
@@ -37,8 +35,6 @@ import { LocalProfilesService } from './profiles'
         TabbyTerminalModule,
     ],
     providers: [
-        { provide: SettingsTabProvider, useClass: ShellSettingsTabProvider, multi: true },
-
         { provide: ToolbarButtonProvider, useClass: ButtonProvider, multi: true },
         { provide: TabRecoveryProvider, useClass: RecoveryProvider, multi: true },
         { provide: ConfigProvider, useClass: TerminalConfigProvider, multi: true },
@@ -83,5 +79,6 @@ export default class LocalTerminalModule { // eslint-disable-line @typescript-es
 }
 
 export { TerminalTabComponent }
+export { ShellSettingsTabComponent }
 export { TerminalService }
 export * from './api'

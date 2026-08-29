@@ -12,8 +12,8 @@
         checkbox(
             *ngIf='showRememberCheckbox',
             [(ngModel)]='remember',
-            text='Remember'
+            [text]='i18nRemember'
         )
         button.btn.btn-primary.ms-auto(
             (click)='ok()',
-        ) OK
+        ) {{ i18nOK }}

@@ -17,7 +17,7 @@
                 input.form-control(
                     type='text',
                     alwaysVisibleTypeahead,
-                    placeholder='Ungrouped',
+                    placeholder="{{ 'Ungrouped' | translate }}",
                     [(ngModel)]='selectedParentGroup',
                     [ngbTypeahead]='groupTypeahead',
                     [inputFormatter]="groupFormatter",

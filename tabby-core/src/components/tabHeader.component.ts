@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Component, Input, Optional, Inject, HostBinding, HostListener, NgZone } from '@angular/core'
+import { Component, Input, HostBinding, HostListener, NgZone } from '@angular/core'
 import { auditTime } from 'rxjs'
-import { TabContextMenuItemProvider } from '../api/tabContextMenuProvider'
 import { BaseTabComponent } from './baseTab.component'
-import { SplitTabComponent } from './splitTab.component'
+import { WorkspaceComponent } from './workspace.component'
 import { HotkeysService } from '../services/hotkeys.service'
 import { AppService } from '../services/app.service'
 import { HostAppService, Platform } from '../api/hostApp'
@@ -11,6 +10,9 @@ import { ConfigService } from '../services/config.service'
 import { BaseComponent } from './base.component'
 import { MenuItemOptions } from '../api/menu'
 import { PlatformService } from '../api/platform'
+import { ActionSurface } from '../api/action'
+import { actionsToMenuItems } from '../api/adapters'
+import { ActionRegistry } from '../services/action.service'
 
 /** @hidden */
 @Component({
@@ -32,7 +34,7 @@ export class TabHeaderComponent extends BaseComponent {
         private hotkeys: HotkeysService,
         private platform: PlatformService,
         private zone: NgZone,
-        @Optional() @Inject(TabContextMenuItemProvider) protected contextMenuProviders: TabContextMenuItemProvider[],
+        private actions: ActionRegistry,
     ) {
         super()
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, (hotkey) => {
@@ -42,7 +44,6 @@ export class TabHeaderComponent extends BaseComponent {
                 }
             }
         })
-        this.contextMenuProviders.sort((a, b) => a.weight - b.weight)
     }
 
     ngOnInit () {
@@ -56,33 +57,83 @@ export class TabHeaderComponent extends BaseComponent {
     }
 
     async buildContextMenu (): Promise<MenuItemOptions[]> {
-        let items: MenuItemOptions[] = []
-        // Top-level tab menu
-        for (const section of await Promise.all(this.contextMenuProviders.map(x => x.getItems(this.tab, true)))) {
-            items.push({ type: 'separator' })
-            items = items.concat(section)
-        }
-        if (this.tab instanceof SplitTabComponent) {
-            const tab = this.tab.getFocusedTab()
-            if (tab) {
-                for (let section of await Promise.all(this.contextMenuProviders.map(x => x.getItems(tab, true)))) {
-                    // eslint-disable-next-line @typescript-eslint/no-loop-func
-                    section = section.filter(item => !items.some(ex => ex.label === item.label))
-                    if (section.length) {
-                        items.push({ type: 'separator' })
-                        items = items.concat(section)
-                    }
-                }
-            }
-        }
-        return items.slice(1)
+        // Provider sections are grouped by the registry (one separator between
+        // adjacent provider sections), mirroring the legacy per-provider loop.
+        const actions = await this.actions.getAsync(ActionSurface.TabContext, { tab: this.tab, tabHeader: true })
+        return actionsToMenuItems(actions, { tab: this.tab })
     }
 
     onTabDragStart (tab: BaseTabComponent) {
         this.app.emitTabDragStarted(tab)
+        if (tab instanceof WorkspaceComponent) {
+            // Cross-window workspace drag: don't activate the cross-window
+            // protocol (and its ghost card) until the pointer actually leaves
+            // this window — a plain in-window reorder must keep the native CDK
+            // drag look with no ghost card popping up.
+            this.crossWindowArmed = false
+            if (this.hostApp.platform !== Platform.Web) {
+                this.crossWindowMoveListener = (e: PointerEvent) => {
+                    const sx = window.screenX + e.clientX
+                    const sy = window.screenY + e.clientY
+                    const inside = (
+                        sx >= window.screenX &&
+                        sx <= window.screenX + window.outerWidth &&
+                        sy >= window.screenY &&
+                        sy <= window.screenY + window.outerHeight
+                    )
+                    if (this.crossWindowArmed && inside) {
+                        // The pointer re-entered the window: abort the
+                        // cross-window protocol and hand control back to the
+                        // native CDK reorder so the user can keep sorting tabs
+                        // in this window (no lingering ghost card).
+                        this.abortCrossWindowWorkspaceDrag(tab)
+                        return
+                    }
+                    if (!this.crossWindowArmed && !inside) {
+                        // Locked into cross-window mode from here on: swap the
+                        // native CDK drag look for the ghost card, without
+                        // flickering back if the pointer briefly re-enters.
+                        this.armCrossWindowWorkspaceDrag(tab)
+                    }
+                }
+                window.addEventListener('pointermove', this.crossWindowMoveListener)
+            }
+        }
     }
 
-    onTabDragEnd () {
+    private crossWindowArmed = false
+    private crossWindowMoveListener: ((e: PointerEvent) => void)|null = null
+
+    private armCrossWindowWorkspaceDrag (tab: WorkspaceComponent): void {
+        if (this.crossWindowArmed) { return }
+        this.crossWindowArmed = true
+        document.body.classList.add('tabby-cross-window-drag')
+        void this.app.startWorkspaceCrossWindowDrag(tab, () => this.crossWindowArmed)
+    }
+
+    private abortCrossWindowWorkspaceDrag (tab: WorkspaceComponent): void {
+        if (!this.crossWindowArmed) { return }
+        this.crossWindowArmed = false
+        document.body.classList.remove('tabby-cross-window-drag')
+        this.app.cancelWorkspaceCrossWindowDrag(tab)
+    }
+
+    onTabDragEnd (event?: any) {
+        const armed = this.crossWindowArmed
+        this.crossWindowArmed = false
+        if (this.crossWindowMoveListener) {
+            window.removeEventListener('pointermove', this.crossWindowMoveListener)
+            this.crossWindowMoveListener = null
+        }
+        document.body.classList.remove('tabby-cross-window-drag')
+        if (armed && this.tab instanceof WorkspaceComponent) {
+            // Released while the cross-window protocol was still engaged.
+            this.app.emitTabDragEnded()
+            this.app.endWorkspaceCrossWindowDrag(this.tab)
+            return
+        }
+        // In-window reorder (never left, or returned and was handed back):
+        // CDK finished normally; there's nothing else to do.
         setTimeout(() => {
             this.app.emitTabDragEnded()
             this.app.emitTabsChanged()
@@ -93,9 +144,12 @@ export class TabHeaderComponent extends BaseComponent {
         return this.config.store.appearance.flexTabs
     }
 
-    @HostListener('dblclick', ['$event']) onDoubleClick ($event: MouseEvent): void {
-        this.app.renameTab(this.tab)
-        $event.stopPropagation()
+    @HostListener('dblclick', ['$event']) onDoubleClick (_$event: MouseEvent): void {
+        // Whole-page hosts (settings / welcome / release notes) are not
+        // renameable — only workspaces are.
+        if (this.tab instanceof WorkspaceComponent) {
+            this.app.renameTab(this.tab)
+        }
     }
 
     @HostListener('mousedown', ['$event']) async onMouseDown ($event: MouseEvent) {

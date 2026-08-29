@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { ProfilesService } from './services/profiles.service'
 import { HotkeyDescription, HotkeyProvider } from './api/hotkeyProvider'
 
 /** @hidden */
@@ -21,139 +20,55 @@ export class AppHotkeyProvider extends HotkeyProvider {
         },
         {
             id: 'rename-tab',
-            name: this.translate.instant('Rename tab'),
+            name: this.translate.instant('Rename workspace'),
         },
         {
             id: 'close-tab',
-            name: this.translate.instant('Close tab'),
+            name: this.translate.instant('Close workspace'),
         },
         {
             id: 'reopen-tab',
-            name: this.translate.instant('Reopen last tab'),
+            name: this.translate.instant('Reopen last workspace'),
         },
         {
             id: 'toggle-last-tab',
-            name: this.translate.instant('Toggle last tab'),
+            name: this.translate.instant('Toggle last workspace'),
         },
         {
             id: 'next-tab',
-            name: this.translate.instant('Next tab'),
+            name: this.translate.instant('Next workspace'),
         },
         {
             id: 'previous-tab',
-            name: this.translate.instant('Previous tab'),
+            name: this.translate.instant('Previous workspace'),
         },
         {
             id: 'move-tab-left',
-            name: this.translate.instant('Move tab to the left'),
+            name: this.translate.instant('Move workspace to the left'),
         },
         {
             id: 'move-tab-right',
-            name: this.translate.instant('Move tab to the right'),
-        },
-        {
-            id: 'rearrange-panes',
-            name: this.translate.instant('Show pane labels (for rearranging)'),
+            name: this.translate.instant('Move workspace to the right'),
         },
         {
             id: 'duplicate-tab',
-            name: this.translate.instant('Duplicate tab'),
+            name: this.translate.instant('Duplicate workspace'),
         },
         {
             id: 'pin-tab',
-            name: this.translate.instant('Pin or unpin tab'),
+            name: this.translate.instant('Pin or unpin workspace'),
         },
         {
             id: 'restart-tab',
-            name: this.translate.instant('Restart tab'),
+            name: this.translate.instant('Restart workspace'),
         },
         {
             id: 'explode-tab',
-            name: this.translate.instant('Turn current tab\'s panes into separate tabs'),
+            name: this.translate.instant('Split current workspace into separate workspaces'),
         },
         {
             id: 'combine-tabs',
-            name: this.translate.instant('Combine all tabs into the current tab'),
-        },
-        {
-            id: 'tab-1',
-            name: this.translate.instant('Tab {number}', { number: 1 }),
-        },
-        {
-            id: 'tab-2',
-            name: this.translate.instant('Tab {number}', { number: 2 }),
-        },
-        {
-            id: 'tab-3',
-            name: this.translate.instant('Tab {number}', { number: 3 }),
-        },
-        {
-            id: 'tab-4',
-            name: this.translate.instant('Tab {number}', { number: 4 }),
-        },
-        {
-            id: 'tab-5',
-            name: this.translate.instant('Tab {number}', { number: 5 }),
-        },
-        {
-            id: 'tab-6',
-            name: this.translate.instant('Tab {number}', { number: 6 }),
-        },
-        {
-            id: 'tab-7',
-            name: this.translate.instant('Tab {number}', { number: 7 }),
-        },
-        {
-            id: 'tab-8',
-            name: this.translate.instant('Tab {number}', { number: 8 }),
-        },
-        {
-            id: 'tab-9',
-            name: this.translate.instant('Tab {number}', { number: 9 }),
-        },
-        {
-            id: 'tab-10',
-            name: this.translate.instant('Tab {number}', { number: 10 }),
-        },
-        {
-            id: 'tab-11',
-            name: this.translate.instant('Tab {number}', { number: 11 }),
-        },
-        {
-            id: 'tab-12',
-            name: this.translate.instant('Tab {number}', { number: 12 }),
-        },
-        {
-            id: 'tab-13',
-            name: this.translate.instant('Tab {number}', { number: 13 }),
-        },
-        {
-            id: 'tab-14',
-            name: this.translate.instant('Tab {number}', { number: 14 }),
-        },
-        {
-            id: 'tab-15',
-            name: this.translate.instant('Tab {number}', { number: 15 }),
-        },
-        {
-            id: 'tab-16',
-            name: this.translate.instant('Tab {number}', { number: 16 }),
-        },
-        {
-            id: 'tab-17',
-            name: this.translate.instant('Tab {number}', { number: 17 }),
-        },
-        {
-            id: 'tab-18',
-            name: this.translate.instant('Tab {number}', { number: 18 }),
-        },
-        {
-            id: 'tab-19',
-            name: this.translate.instant('Tab {number}', { number: 19 }),
-        },
-        {
-            id: 'tab-20',
-            name: this.translate.instant('Tab {number}', { number: 20 }),
+            name: this.translate.instant('Combine all workspaces into one workspace'),
         },
         {
             id: 'split-right',
@@ -172,10 +87,6 @@ export class AppHotkeyProvider extends HotkeyProvider {
             name: this.translate.instant('Split to the top'),
         },
         {
-            id: 'pane-maximize',
-            name: this.translate.instant('Maximize the active pane'),
-        },
-        {
             id: 'pane-nav-up',
             name: this.translate.instant('Focus the pane above'),
         },
@@ -192,98 +103,82 @@ export class AppHotkeyProvider extends HotkeyProvider {
             name: this.translate.instant('Focus the pane on the right'),
         },
         {
-            id: 'pane-nav-previous',
-            name: this.translate.instant('Focus previous pane'),
+            id: 'session-nav-previous',
+            name: this.translate.instant('Focus previous session'),
         },
         {
-            id: 'pane-nav-next',
-            name: this.translate.instant('Focus next pane'),
-        },
-        {
-            id: 'pane-nav-1',
-            name: this.translate.instant('Focus pane {number}', { number: 1 }),
-        },
-        {
-            id: 'pane-nav-2',
-            name: this.translate.instant('Focus pane {number}', { number: 2 }),
-        },
-        {
-            id: 'pane-nav-3',
-            name: this.translate.instant('Focus pane {number}', { number: 3 }),
-        },
-        {
-            id: 'pane-nav-4',
-            name: this.translate.instant('Focus pane {number}', { number: 4 }),
-        },
-        {
-            id: 'pane-nav-5',
-            name: this.translate.instant('Focus pane {number}', { number: 5 }),
-        },
-        {
-            id: 'pane-nav-6',
-            name: this.translate.instant('Focus pane {number}', { number: 6 }),
-        },
-        {
-            id: 'pane-nav-7',
-            name: this.translate.instant('Focus pane {number}', { number: 7 }),
-        },
-        {
-            id: 'pane-nav-8',
-            name: this.translate.instant('Focus pane {number}', { number: 8 }),
-        },
-        {
-            id: 'pane-nav-9',
-            name: this.translate.instant('Focus pane {number}', { number: 9 }),
+            id: 'session-nav-next',
+            name: this.translate.instant('Focus next session'),
         },
         {
             id: 'switch-profile',
             name: this.translate.instant('Switch profile in the active pane'),
         },
         {
-            id: 'close-pane',
-            name: this.translate.instant('Close focused pane'),
+            id: 'close-session',
+            name: this.translate.instant('Close focused session'),
         },
         {
-            id: 'pane-increase-vertical',
-            name: this.translate.instant('Increase vertical split size'),
+            id: 'splitter-top-up',
+            name: this.translate.instant('Move upper splitter up'),
         },
         {
-            id: 'pane-decrease-vertical',
-            name: this.translate.instant('Decrease vertical split size'),
+            id: 'splitter-top-down',
+            name: this.translate.instant('Move upper splitter down'),
         },
         {
-            id: 'pane-increase-horizontal',
-            name: this.translate.instant('Increase horizontal split size'),
+            id: 'splitter-bottom-up',
+            name: this.translate.instant('Move lower splitter up'),
         },
         {
-            id: 'pane-decrease-horizontal',
-            name: this.translate.instant('Decrease horizontal split size'),
+            id: 'splitter-bottom-down',
+            name: this.translate.instant('Move lower splitter down'),
+        },
+        {
+            id: 'splitter-left-left',
+            name: this.translate.instant('Move left splitter left'),
+        },
+        {
+            id: 'splitter-left-right',
+            name: this.translate.instant('Move left splitter right'),
+        },
+        {
+            id: 'splitter-right-left',
+            name: this.translate.instant('Move right splitter left'),
+        },
+        {
+            id: 'splitter-right-right',
+            name: this.translate.instant('Move right splitter right'),
         },
     ]
 
     constructor (
-        private profilesService: ProfilesService,
         private translate: TranslateService,
     ) { super() }
 
     async provide (): Promise<HotkeyDescription[]> {
-        const profiles = await this.profilesService.getProfiles()
-        const groups = await this.profilesService.getProfileGroups()
         return [
-            ...this.hotkeys,
-            ...profiles.map(profile => ({
-                id: `profile.${ProfilesService.getProfileHotkeyName(profile)}`,
-                name: this.translate.instant('New tab: {profile}', { profile: profile.name }),
+            ...this.hotkeys.map(item => ({
+                ...item,
+                name: this.relocalize(item.name),
             })),
-            ...this.profilesService.getProviders().map(provider => ({
-                id: `profile-selectors.${provider.id}`,
-                name: this.translate.instant('Show {type} profile selector', { type: provider.name }),
+            ...Array.from({ length: 20 }, (_, i) => ({
+                id: `tab-${i + 1}`,
+                name: this.translate.instant('Workspace {number}', { number: i + 1 }),
             })),
-            ...groups.map(group => ({
-                id: `group-selectors.${group.id}`,
-                name: this.translate.instant('Show profile selector for group {name}', { name: group.name }),
+            ...Array.from({ length: 9 }, (_, i) => ({
+                id: `pane-nav-${i + 1}`,
+                name: this.translate.instant('Focus pane {number}', { number: i + 1 }),
             })),
         ]
+    }
+
+    private relocalize (name: string): string {
+        if (/^[A-Za-z][^]*$/.test(name)) {
+            const translated = this.translate.instant(name)
+            return translated && translated !== name ? translated : name
+        }
+        return name
     }
 
 }

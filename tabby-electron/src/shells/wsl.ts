@@ -1,16 +1,11 @@
 import * as fs from 'mz/fs'
-import slugify from 'slugify'
 
 import { Injectable } from '@angular/core'
-import { HostAppService, Platform, isWindowsBuild, WIN_BUILD_WSL_EXE_DISTRO_FLAG } from 'tabby-core'
+import { HostAppService, Platform } from 'tabby-core'
 
 import { ShellProvider, Shell } from 'tabby-local'
 
 /* eslint-disable block-scoped-var */
-
-try {
-    var wnr = require('windows-native-registry') // eslint-disable-line @typescript-eslint/no-var-requires, no-var
-} catch { }
 
 // WSL Distribution List
 // https://docs.microsoft.com/en-us/windows/wsl/install-win10#install-your-linux-distribution-of-choice
@@ -49,75 +44,37 @@ export class WSLShellProvider extends ShellProvider {
             return []
         }
 
-        const bashPath = `${process.env.windir}\\system32\\bash.exe`
+        // A single WSL template — distro-specific launches can be configured via
+        // command arguments, so we never enumerate the installed distributions.
         const wslPath = `${process.env.windir}\\system32\\wsl.exe`
+        const bashPath = `${process.env.windir}\\system32\\bash.exe`
 
-        const lxssPath = 'Software\\Microsoft\\Windows\\CurrentVersion\\Lxss'
-        const lxss = wnr.getRegistryKey(wnr.HK.CU, lxssPath)
-        const shells: Shell[] = []
-
-        if (lxss?.DefaultDistribution) {
-            const defaultDistKey = wnr.getRegistryKey(wnr.HK.CU, lxssPath + '\\' + String(lxss.DefaultDistribution.value))
-            if (defaultDistKey?.DistributionName) {
-                const shell: Shell = {
-                    id: 'wsl',
-                    name: 'WSL / Default distro',
-                    command: wslPath,
-                    env: {
-                        TERM: 'xterm-color',
-                        COLORTERM: 'truecolor',
-                    },
-                    shellType: 'unix',
-                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                    icon: wslIconMap[defaultDistKey.DistributionName.value] ?? wslIconMap.Linux,
-                }
-                shells.push(shell)
-            }
-        }
-
-        if (!lxss?.DefaultDistribution || !isWindowsBuild(WIN_BUILD_WSL_EXE_DISTRO_FLAG)) {
-            if (await fs.exists(bashPath)) {
-                return [{
-                    id: 'wsl',
-                    name: 'WSL / Bash on Windows',
-                    icon: wslIconMap.Linux,
-                    command: bashPath,
-                    env: {
-                        TERM: 'xterm-color',
-                        COLORTERM: 'truecolor',
-                    },
-                    shellType: 'unix',
-                }]
-            } else {
-                return []
-            }
-        }
-        for (const child of wnr.listRegistrySubkeys(wnr.HK.CU, lxssPath) as string[]) {
-            const childKey = wnr.getRegistryKey(wnr.HK.CU, lxssPath + '\\' + child)
-            if (!childKey.DistributionName || !childKey.BasePath) {
-                continue
-            }
-            const wslVersion = (childKey.Flags?.value || 0) & 8 ? 2 : 1
-            const name = childKey.DistributionName.value
-            const fsBase = wslVersion === 2 ? `\\\\wsl$\\${name}` : childKey.BasePath.value as string + '\\rootfs'
-            const slug = slugify(name, { remove: /[:.]/g })
-            const shell: Shell = {
-                id: `wsl-${slug}`,
-                name: `WSL / ${name}`,
+        if (await fs.exists(wslPath)) {
+            return [{
+                id: 'wsl',
+                name: 'WSL',
                 command: wslPath,
-                args: ['-d', name],
-                fsBase,
                 env: {
                     TERM: 'xterm-color',
                     COLORTERM: 'truecolor',
                 },
                 shellType: 'unix',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                icon: wslIconMap[name] ?? wslIconMap.Linux,
-            }
-            shells.push(shell)
+                icon: wslIconMap.Linux,
+            }]
         }
-
-        return shells
+        if (await fs.exists(bashPath)) {
+            return [{
+                id: 'wsl',
+                name: 'WSL / Bash',
+                command: bashPath,
+                env: {
+                    TERM: 'xterm-color',
+                    COLORTERM: 'truecolor',
+                },
+                shellType: 'unix',
+                icon: wslIconMap.Linux,
+            }]
+        }
+        return []
     }
 }

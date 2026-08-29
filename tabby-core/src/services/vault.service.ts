@@ -9,6 +9,7 @@ import { NotificationsService } from './notifications.service'
 import { SelectorService } from './selector.service'
 import { FileProvider } from '../api/fileProvider'
 import { PlatformService } from '../api/platform'
+import { TranslateService } from '@ngx-translate/core'
 
 const PBKDF_ITERATIONS = 100000
 const PBKDF_DIGEST = 'sha512'
@@ -110,11 +111,12 @@ export class VaultService {
     private contentChanged = new Subject<void>()
 
     /** @hidden */
-    private constructor (
-        private zone: NgZone,
-        private notifications: NotificationsService,
-        private ngbModal: NgbModal,
-    ) {
+private constructor (
+          private zone: NgZone,
+          private notifications: NotificationsService,
+          private ngbModal: NgbModal,
+          private translate: TranslateService,
+      ) {
         this.getPassphrase = serializeFunction(this.getPassphrase.bind(this))
     }
 
@@ -146,7 +148,7 @@ export class VaultService {
         } catch (e) {
             this.forgetPassphrase()
             if (e.toString().includes('BAD_DECRYPT')) {
-                this.notifications.error('Incorrect passphrase')
+                this.notifications.error(this.translate.instant('Incorrect passphrase'))
             }
             throw e
         }

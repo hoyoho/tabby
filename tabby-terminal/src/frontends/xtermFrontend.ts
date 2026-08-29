@@ -77,6 +77,11 @@ export class XTermFrontend extends Frontend {
     private copyOnSelect = false
     private preventNextOnSelectionChangeEvent = false
     private search = new SearchAddon()
+    /**
+     * Listeners registered on the attach host, remembered so detach() can
+     * remove them (esp. the capture-phase wheel one) — see detach().
+     */
+    private hostListeners: { event: string, handler: (e: any) => void, opts?: AddEventListenerOptions }[] = []
     private searchState: SearchState = { resultCount: 0 }
     private fitAddon = new FitAddon()
     private serializeAddon = new SerializeAddon()
@@ -355,7 +360,7 @@ export class XTermFrontend extends Frontend {
         // unpin (see constructor comment). Use capture phase — xterm.js
         // handles wheel/key events on its internal viewport element and may
         // stop propagation, so bubbling listeners on host would never fire.
-        host.addEventListener('wheel', (event: WheelEvent) => {
+        this.addHostListener('wheel', (event: WheelEvent) => {
             // Immediately unpin on scroll-up so that writes arriving before
             // the next animation frame don't yank the viewport back down.
             if (event.deltaY < 0) {
@@ -363,7 +368,6 @@ export class XTermFrontend extends Frontend {
             }
             requestAnimationFrame(() => this.updatePinnedState())
         }, { capture: true, passive: true })
-
 
         this.hotkeysService.hotkey$
             .pipe(
@@ -387,13 +391,13 @@ export class XTermFrontend extends Frontend {
                 requestAnimationFrame(() => this.updatePinnedState())
             })
 
-        host.addEventListener('dragOver', (event: any) => this.dragOver.next(event))
-        host.addEventListener('drop', event => this.drop.next(event))
+        this.addHostListener('dragOver', (event: any) => this.dragOver.next(event))
+        this.addHostListener('drop', event => this.drop.next(event))
 
-        host.addEventListener('mousedown', event => this.mouseEvent.next(event))
-        host.addEventListener('mouseup', event => this.mouseEvent.next(event))
-        host.addEventListener('mousewheel', event => this.mouseEvent.next(event as MouseEvent))
-        host.addEventListener('contextmenu', event => {
+        this.addHostListener('mousedown', event => this.mouseEvent.next(event))
+        this.addHostListener('mouseup', event => this.mouseEvent.next(event))
+        this.addHostListener('mousewheel', event => this.mouseEvent.next(event as MouseEvent))
+        this.addHostListener('contextmenu', event => {
             event.preventDefault()
             event.stopPropagation()
         })
@@ -402,10 +406,28 @@ export class XTermFrontend extends Frontend {
         this.resizeObserver.observe(host)
     }
 
+    /** Registers a host listener and remembers it for detach() cleanup. */
+    private addHostListener (event: string, handler: (e: any) => void, opts?: AddEventListenerOptions): void {
+        // attach() sets this.element = host before any listener is registered.
+        if (!this.element) {
+            return
+        }
+        this.hostListeners.push({ event, handler, opts })
+        this.element.addEventListener(event, handler as EventListener, opts)
+    }
+
     detach (_host: HTMLElement): void {
         window.removeEventListener('resize', this.resizeHandler)
         this.resizeObserver?.disconnect()
         delete this.resizeObserver
+        // Remove every listener attach() registered on the host. Leaving them
+        // behind lets a stray wheel/mouse event hit the disposed terminal and
+        // crash xterm's viewport sync ("Cannot read properties of undefined
+        // (reading 'dimensions')") after the session is closed.
+        for (const { event, handler, opts } of this.hostListeners) {
+            _host.removeEventListener(event, handler as EventListener, opts)
+        }
+        this.hostListeners = []
     }
 
     destroy (): void {

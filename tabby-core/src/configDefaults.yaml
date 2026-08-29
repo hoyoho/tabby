@@ -7,12 +7,13 @@ appearance:
   dockSpace: 1
   dockHideOnBlur: false
   dockAlwaysOnTop: true
+  backgroundImage: null
+  backgroundImageBrightness: 0.4
   flexTabs: false
   tabsLocation: top
   tabsInFullscreen: false
   cycleTabs: true
   theme: Follow the color scheme
-  frame: thin
   css: '/* * { color: blue !important; } */'
   opacity: 1.0
   vibrancy: false
@@ -21,32 +22,27 @@ appearance:
   spaciness: 1
   colorSchemeMode: 'dark'
 terminal:
-  showBuiltinProfiles: true
   showRecentProfiles: 3
   paneResizeStep: 0.1
   focusFollowsMouse: false
   identification: null
-hotkeys:
-  profile:
-    __nonStructural: true
-  profile-selectors:
-    __nonStructural: true
-  group-selectors:
-    __nonStructural: true
+hotkeys: {}
 profiles: []
 groups: []
 profileDefaults:
   __nonStructural: true
   ssh:
     disableDynamicTitle: true
-recoverTabs: true
-enableAnalytics: true
+workspace:
+  recoverTabs: true
+  newSessionOpensInNewWorkspace: false
+session:
+  appendToPaneByDefault: true
 enableWelcomeTab: true
 electronFlags:
   - ['force_discrete_gpu', '0']
-enableAutomaticUpdates: true
 hideTray: false
-version: 1
+version: 13
 vault: null
 encrypted: false
 enableExperimentalFeatures: false

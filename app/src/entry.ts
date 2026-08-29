@@ -14,7 +14,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
 import { ipcRenderer } from 'electron'
 
 import { getRootModule } from './app.module'
-import { BootstrapData, BOOTSTRAP_DATA, PluginInfo } from '../../tabby-core/src/api/mainProcess'
+import { BootstrapData, BOOTSTRAP_DATA, PluginInfo, PLUGIN_MODULES } from '../../tabby-core/src/api/mainProcess'
 
 // Always land on the start view
 location.hash = ''
@@ -40,11 +40,10 @@ async function bootstrap (bootstrapData: BootstrapData, plugins: PluginInfo[], s
         (document.querySelector('.progress .bar') as HTMLElement).style.width = `${100 * current / total}%` // eslint-disable-line
     })
 
-    window['pluginModules'] = pluginModules
-
     const module = getRootModule(pluginModules)
     const moduleRef = await platformBrowserDynamic([
         { provide: BOOTSTRAP_DATA, useValue: bootstrapData },
+        { provide: PLUGIN_MODULES, useValue: pluginModules },
     ]).bootstrapModule(module)
     if (process.env.TABBY_DEV) {
         const applicationRef = moduleRef.injector.get(ApplicationRef)

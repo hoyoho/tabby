@@ -130,6 +130,10 @@ export default options => {
                     type: 'asset/inline',
                 },
                 {
+                    test: /\.(png|jpe?g|gif|webp)$/,
+                    type: 'asset/inline',
+                },
+                {
                     test: /\.po$/,
                     use: [
                         { loader: 'json-loader' },

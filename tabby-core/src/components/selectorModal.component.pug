@@ -27,8 +27,8 @@
                 ) {{option.description}}
                 .ms-auto
                 .no-wrap.badge.text-bg-secondary.ms-2(*ngIf='selectedIndex == i && canEditSelected()')
-                    span BACKSPACE
+                    span(translate) BACKSPACE
                     i.fas.fa-pencil.ms-1
                 .no-wrap.badge.text-bg-secondary.ms-2(*ngIf='selectedIndex == i')
-                    span ENTER
+                    span(translate) ENTER
                     i.fas.fa-arrow-right.ms-1

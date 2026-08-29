@@ -1,0 +1,21 @@
+ng-container(*ngFor='let menu of menus')
+    .menu-root.d-inline-flex(
+        ngbDropdown,
+        container='body',
+        (openChange)='onMenuOpen(menu, $event)'
+    )
+        button.btn.btn-link.menu-label(
+            ngbDropdownToggle,
+        )
+            | {{ menu.label | translate }}
+        .dropdown-menu(
+            ngbDropdownMenu,
+        )
+            ng-container(*ngFor='let item of menu.children')
+                .dropdown-divider(*ngIf='item.separatorBefore')
+                button.dropdown-item(
+                    [disabled]='!isEnabled(item)',
+                    (click)='run(item)'
+                )
+                    i.fa.fa-check.me-1(*ngIf='isChecked(item)')
+                    | {{ item.label | translate }}

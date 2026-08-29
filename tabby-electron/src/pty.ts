@@ -103,6 +103,9 @@ export class ElectronPTYProxy extends PTYProxy {
     }
 
     async getChildProcessesInternal (truePID: number): Promise<ChildProcess[]> {
+        if (!truePID) {
+            return []
+        }
         if (process.platform === 'darwin') {
             const processes = await macOSNativeProcessList.getProcessList()
             return processes.filter(x => x.ppid === truePID).map(p => ({
@@ -112,6 +115,12 @@ export class ElectronPTYProxy extends PTYProxy {
             }))
         }
         if (process.platform === 'win32') {
+            // windows-process-tree is an optional native dep; when it is not
+            // installed/built (or the pty is already gone) the probe must not
+            // blow up the renderer with an unhandled rejection.
+            if (!windowsProcessTree) {
+                return []
+            }
             return new Promise<ChildProcess[]>(resolve => {
                 windowsProcessTree.getProcessTree(truePID, tree => {
                     resolve(tree ? tree.children.map(child => ({

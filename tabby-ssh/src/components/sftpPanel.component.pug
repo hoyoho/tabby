@@ -43,7 +43,7 @@
     .input-group
         input.form-control(
             type='text',
-            placeholder='Filter...',
+            placeholder="{{ 'Filter...' | translate }}",
             autofocus,
             [(ngModel)]='filterText',
             (input)='onFilterChange()',
@@ -86,4 +86,7 @@
                 .mode {{getModeString(item)}}
         .alert.alert-info.text-center.mt-3(*ngIf='fileList !== null && filteredFileList.length === 0 && showFilter && filterText.trim() !== ""')
             i.fas.fa-search.me-2
-            span(translate) No files match the filter "{{filterText}}"
+            span(
+                translate='No files match the filter "{filterText}"',
+                [translateParams]='{filterText: filterText}'
+            )

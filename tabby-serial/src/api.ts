@@ -1,6 +1,6 @@
 import stripAnsi from 'strip-ansi'
 import { SerialPortStream } from '@serialport/stream'
-import { LogService, NotificationsService } from 'tabby-core'
+import { LogService, NotificationsService, TranslateService } from 'tabby-core'
 import { Subject, Observable } from 'rxjs'
 import { Injector, NgZone } from '@angular/core'
 import { BaseSession, ConnectableTerminalProfile, InputProcessingOptions, InputProcessor, LoginScriptsOptions, SessionMiddleware, StreamProcessingOptions, TerminalStreamProcessor, UTF8SplitterMiddleware } from 'tabby-terminal'
@@ -49,6 +49,7 @@ export class SerialSession extends BaseSession {
     private streamProcessor: TerminalStreamProcessor
     private zone: NgZone
     private notifications: NotificationsService
+    private translate: TranslateService
     private serialService: SerialService
 
     constructor (injector: Injector, public profile: SerialProfile) {
@@ -57,6 +58,7 @@ export class SerialSession extends BaseSession {
 
         this.zone = injector.get(NgZone)
         this.notifications = injector.get(NotificationsService)
+        this.translate = injector.get(TranslateService)
 
         this.streamProcessor = new TerminalStreamProcessor(profile.options)
         this.middleware.push(this.streamProcessor)
@@ -106,7 +108,7 @@ export class SerialSession extends BaseSession {
                 })
             })
             serial.on('close', () => {
-                this.emitServiceMessage('Port closed')
+                this.emitServiceMessage(this.translate.instant('Port closed'))
                 this.destroy()
             })
 

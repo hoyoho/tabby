@@ -21,7 +21,7 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
     @Input() settingsComponent: new () => ProfileSettingsComponent<P, PP>
     @Input() defaultsMode: 'enabled'|'group'|'disabled' = 'disabled'
     @Input() profileGroup: PartialProfileGroup<ProfileGroup> | undefined
-    groups: PartialProfileGroup<ProfileGroup>[]
+    groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
     @ViewChild('placeholder', { read: ViewContainerRef }) placeholder: ViewContainerRef
 
     protected profile: FullyDefined<P> & ConfigProxy<FullyDefined<P>>
@@ -34,7 +34,7 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
         private modalInstance: NgbActiveModal,
     ) {
         if (this.defaultsMode === 'disabled') {
-            this.profilesService.getProfileGroups().then(groups => {
+            this.profilesService.getProfileGroupsFlattened().then(groups => {
                 this.groups = groups
                 this.profileGroup = groups.find(g => g.id === this.partialProfile.group)
             })
@@ -72,14 +72,14 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
         }
     }
 
-    groupTypeahead: OperatorFunction<string, readonly PartialProfileGroup<ProfileGroup>[]> = (text$: Observable<string>) =>
+    groupTypeahead: OperatorFunction<string, readonly (PartialProfileGroup<ProfileGroup> & { displayName: string })[]> = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(q => this.groups.filter(g => !q || g.name.toLowerCase().includes(q.toLowerCase()))),
+            map(q => this.groups.filter(g => !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase()))),
         )
 
-    groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => g.name
+    groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => (g as any).displayName ?? g.name
 
     iconSearch: OperatorFunction<string, string[]> = (text$: Observable<string>) =>
         text$.pipe(

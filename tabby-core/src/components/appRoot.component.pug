@@ -1,7 +1,7 @@
 title-bar(
-  *ngIf='ready && !hostWindow.isFullscreen && config.store.appearance.dock == "off" && isTitleBarNeeded()',
-  (dblclick)='toggleMaximize()',
-  [hideControls]='hostApp.platform !== Platform.Linux && !hostWindow.isFullscreen',
+  *ngIf='ready && !hostWindow.isFullscreen && isTitleBarNeeded()',
+  (dblclick)='config.store.appearance.dock == "off" && toggleMaximize()',
+  [hideControls]='(hostApp.platform !== Platform.Linux || config.store.appearance.dock != "off") && !hostWindow.isFullscreen',
   [class.inset]='hostApp.platform == Platform.macOS && !hostWindow.isFullscreen'
 )
 
@@ -9,8 +9,7 @@ title-bar(
     profile-tree(
         *ngIf='ready && config.store.showProfileTree',
         [class.mac-inset]='hostApp.platform == Platform.macOS \
-        && !hostWindow.isFullscreen \
-        && config.store.appearance.frame == "thin"'
+        && !hostWindow.isFullscreen'
     )
 
     .content.main.h-100(
@@ -23,11 +22,11 @@ title-bar(
         .tab-bar(
             *ngIf='!hostWindow.isFullscreen || config.store.appearance.tabsInFullscreen',
             [class.tab-bar-no-controls-overlay]='hostApp.platform == Platform.macOS',
-            (dblclick)='!isTitleBarNeeded() && toggleMaximize()'
+            (dblclick)='config.store.appearance.dock == "off" && !isTitleBarNeeded() && toggleMaximize()'
         )
+            app-menu(*ngIf='hostApp.platform !== Platform.macOS && !isTitleBarNeeded()')
             .inset.background(*ngIf='hostApp.platform == Platform.macOS \
             && !hostWindow.isFullscreen \
-            && config.store.appearance.frame == "thin" \
             && (config.store.appearance.tabsLocation == "top" || config.store.appearance.tabsLocation == "left") \
             && !config.store.showProfileTree')
             .tabs(
@@ -41,11 +40,11 @@ title-bar(
                     [index]='idx',
                     [tab]='tab',
                     [active]='tab == app.activeTab',
+                    [class.cross-window-drop-target]='app.crossWindowDragTarget === tab',
                     [@animateTab]='{value: "in", params: {size: targetTabSize}}',
                     [@.disabled]='hasVerticalTabs() || !config.store.accessibility.animations',
                     (click)='app.selectTab(tab)',
-                    [class.fully-draggable]='hostApp.platform !== Platform.macOS',
-                    [ngbTooltip]='tab.customTitle || tab.title'
+                    [class.fully-draggable]='hostApp.platform !== Platform.macOS'
                 )
 
             .btn-group.background
@@ -55,6 +54,7 @@ title-bar(
                     button.btn.btn-secondary.btn-tab-bar(
                         [ngbTooltip]='button.label',
                         (click)='button.run && button.run()',
+                        (dblclick)='$event.stopPropagation()',
                         [fastHtmlBind]='button.icon'
                     )
 
@@ -66,6 +66,7 @@ title-bar(
                     button.btn.btn-secondary.btn-tab-bar(
                         [hidden]='activeTransfers.length == 0',
                         [ngbTooltip]='"File transfers"|translate',
+                        (dblclick)='$event.stopPropagation()',
                         ngbDropdownToggle
                     ) !{require('../icons/transfers.svg')}
                     transfers-menu(
@@ -74,10 +75,8 @@ title-bar(
                         (transfersChange)='onTransfersChange()'
                     )
 
-            .btn-space.background(
-                [class.persistent]='config.store.appearance.frame == "thin"',
-                [class.drag]='config.store.appearance.frame == "thin" \
-                && ((config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right") || hostApp.platform !== Platform.macOS)'
+            .btn-space.background.persistent(
+                [class.drag]='(config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right") || hostApp.platform !== Platform.macOS'
             )
 
             .btn-group.background
@@ -87,24 +86,18 @@ title-bar(
                     button.btn.btn-secondary.btn-tab-bar(
                         [ngbTooltip]='button.label',
                         (click)='button.run && button.run()',
+                        (dblclick)='$event.stopPropagation()',
                         [fastHtmlBind]='button.icon'
                     )
 
-                button.btn.btn-secondary.btn-tab-bar.btn-update(
-                    *ngIf='updatesAvailable',
-                    [ngbTooltip]='"Update available - Click to install"|translate',
-                    (click)='updater.update()'
-                ) !{require('../icons/gift.svg')}
-
             window-controls.background(
-                *ngIf='config.store.appearance.frame == "thin" \
-                && config.store.appearance.tabsLocation !== "left" \
+                *ngIf='config.store.appearance.tabsLocation !== "left" \
                 && config.store.appearance.tabsLocation !== "right" \
                 && hostApp.platform == Platform.Linux',
             )
 
             div.window-controls-spacer(
-                *ngIf='config.store.appearance.frame == "thin" && (hostApp.platform == Platform.Windows) && (config.store.appearance.tabsLocation == "top")',
+                *ngIf='(hostApp.platform == Platform.Windows) && (config.store.appearance.tabsLocation == "top")',
             )
         .content
             start-page.content-tab.content-tab-active(*ngIf='ready && app.tabs.length == 0')

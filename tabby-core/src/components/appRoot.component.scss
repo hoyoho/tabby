@@ -171,6 +171,16 @@ $tab-border-radius: 4px;
     }
 }
 
+// While a cross-window drag has taken over (pointer left this window), the
+// native CDK drag visuals (the floating tab clone / placeholder) would look
+// like a second, competing "tab" — hide them so only the ghost card follows.
+body.tabby-cross-window-drag {
+    .cdk-drag-preview,
+    .cdk-drag-placeholder {
+        display: none !important;
+    }
+}
+
 .content {
     flex: 1 1 0;
     position: relative;

@@ -3,12 +3,12 @@ div
     .input-group.flex-grow-1(*ngFor='let script of scripts')
         input.form-control(
             type='text',
-            placeholder='Expect',
+            placeholder="{{ 'Expect' | translate }}",
             [(ngModel)]='script.expect'
         )
         input.form-control(
             type='text',
-            placeholder='Send',
+            placeholder="{{ 'Send' | translate }}",
             [(ngModel)]='script.send'
         )
         .input-group-text.p-0.border-0

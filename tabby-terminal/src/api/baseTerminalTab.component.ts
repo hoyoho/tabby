@@ -3,7 +3,7 @@ import { Spinner } from 'cli-spinner'
 import colors from 'ansi-colors'
 import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
-import { AppService, ConfigService, BaseTabComponent, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, TabContextMenuItemProvider, SplitTabComponent, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, ResettableTimeout, TranslateService, ThemesService, FullyDefined } from 'tabby-core'
+import { AppService, ConfigService, SessionTab, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
 
 import { BaseSession } from '../session'
 
@@ -12,7 +12,6 @@ import { XTermFrontend, XTermWebGLFrontend } from '../frontends/xtermFrontend'
 import { ResizeEvent, BaseTerminalProfile } from './interfaces'
 import { TerminalDecorator } from './decorator'
 import { SearchPanelComponent } from '../components/searchPanel.component'
-import { MultifocusService } from '../services/multifocus.service'
 import { getTerminalBackgroundColor } from '../helpers'
 
 
@@ -24,7 +23,7 @@ const OSC_FOCUS_OUT = Buffer.from('\x1b[O')
  * A class to base your custom terminal tabs on
  */
 @Component({ template: '' })
-export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends BaseTabComponent implements OnInit, OnDestroy {
+export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends SessionTab implements OnInit, OnDestroy {
     static template: string = require('../components/baseTerminalTab.component.pug')
     static styles: string[] = [require('../components/baseTerminalTab.component.scss')]
     static animations: AnimationTriggerMetadata[] = [
@@ -80,15 +79,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
     /** @hidden */
     @HostBinding('style.background-color') backgroundColor: string|null = null
 
-    /** @hidden */
-    @HostBinding('class.toolbar-enabled') enableToolbar = false
-
-    /** @hidden */
-    @HostBinding('class.toolbar-pinned') pinToolbar = false
-
-    /** @hidden */
-    @HostBinding('class.toolbar-revealed') revealToolbar = false
-
     frontend?: Frontend
 
     /** @hidden */
@@ -124,11 +114,10 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
     protected notifications: NotificationsService
     protected log: LogService
     protected decorators: TerminalDecorator[] = []
-    protected contextMenuProviders: TabContextMenuItemProvider[]
     protected hostWindow: HostWindowService
     protected translate: TranslateService
-    protected multifocus: MultifocusService
     protected themes: ThemesService
+    protected actions: ActionRegistry
     // Deps end
 
     protected logger: Logger
@@ -156,9 +145,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
 
     private spinnerActive = false
     private spinnerPaused = false
-    private toolbarRevealTimeout = new ResettableTimeout(() => {
-        this.revealToolbar = false
-    }, 1000)
 
     private frontendWriteLock = Promise.resolve()
 
@@ -203,10 +189,9 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.notifications = injector.get(NotificationsService)
         this.log = injector.get(LogService)
         this.decorators = injector.get<any>(TerminalDecorator, null, InjectFlags.Optional) as TerminalDecorator[]
-        this.contextMenuProviders = injector.get<any>(TabContextMenuItemProvider, null, InjectFlags.Optional) as TabContextMenuItemProvider[]
         this.hostWindow = injector.get(HostWindowService)
+        this.actions = injector.get(ActionRegistry)
         this.translate = injector.get(TranslateService)
-        this.multifocus = injector.get(MultifocusService)
         this.themes = injector.get(ThemesService)
 
         this.logger = this.log.create('baseTerminalTab')
@@ -332,14 +317,10 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.bellPlayer = document.createElement('audio')
         this.bellPlayer.src = require('../bell.ogg')
         this.bellPlayer.load()
-
-        this.contextMenuProviders.sort((a, b) => a.weight - b.weight)
     }
 
     /** @hidden */
     ngOnInit (): void {
-        this.pinToolbar = this.enableToolbar && (window.localStorage.pinTerminalToolbar ?? 'true') === 'true'
-
         this.focused$.subscribe(() => {
             this.configure()
             this.frontend?.focus()
@@ -376,7 +357,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
 
         this.frontendReady$.pipe(first()).subscribe(() => {
             this.onFrontendReady()
-        })
+        }, () => undefined)
 
         this.frontend.resize$.pipe(first()).subscribe(async ({ columns, rows }) => {
             this.size = { columns, rows }
@@ -391,15 +372,18 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
                 }
             })
 
-            setTimeout(() => {
-                this.session?.resize(columns, rows)
+            this.delayedResizeTimer = setTimeout(() => {
+                this.delayedResizeTimer = null
+                if (!this.isTerminating) {
+                    this.session?.resize(columns, rows)
+                }
             }, 1000)
 
             this.session?.releaseInitialDataBuffer()
             this.sessionChanged$.subscribe(() => {
                 this.session?.releaseInitialDataBuffer()
             })
-        })
+        }, () => undefined)
 
         this.alternateScreenActive$.subscribe(x => {
             this.alternateScreenActive = x
@@ -413,7 +397,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
                 this.focused$.pipe(first()).subscribe(async () => {
                     await this.frontend?.attach(this.content.nativeElement, this.profile)
                     this.frontend?.configure(this.profile)
-                })
+                }, () => undefined)
             }
         })
 
@@ -437,10 +421,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         })
 
         this.frontend.focus()
-
-        this.blurred$.subscribe(() => {
-            this.multifocus.cancel()
-        })
 
         this.visibility$
             .pipe(debounce(visibility => interval(visibility ? 0 : INACTIVE_TAB_UNLOAD_DELAY)))
@@ -469,13 +449,12 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
     }
 
     async buildContextMenu (): Promise<MenuItemOptions[]> {
-        let items: MenuItemOptions[] = []
-        for (const section of await Promise.all(this.contextMenuProviders.map(x => x.getItems(this)))) {
-            items = items.concat(section)
-            items.push({ type: 'separator' })
-        }
-        items.splice(items.length - 1, 1)
-        return items
+        // Unified registry path (R3), mirroring the tab-header & pane-tab
+        // menus: one separator between adjacent provider sections. `tabHeader`
+        // stays false — the in-terminal right-click historically rendered the
+        // non-tabHeader provider contributions only.
+        const actions = await this.actions.getAsync(ActionSurface.TabContext, { tab: this, tabHeader: false })
+        return actionsToMenuItems(actions, { tab: this })
     }
 
     /**
@@ -495,9 +474,12 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
      * Feeds input into the terminal frontend
      */
     async write (data: string): Promise<void> {
+        if (!this.frontend) {
+            await this.frontendReady$.toPromise().catch(() => undefined)
+        }
         this.frontendWriteLock = this.frontendWriteLock.then(() =>
             this.withSpinnerPaused(() => this.writeRaw(data)))
-        await this.frontendWriteLock
+        await this.frontendWriteLock.catch(() => undefined)
     }
 
     protected async writeRaw (data: string): Promise<void> {
@@ -615,12 +597,37 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.stopSpinner()
     }
 
+    /**
+     * Set as soon as [[destroy]] begins. Gates every resize/write path that
+     * touches the session so the teardown storm can't race the ConPTY teardown
+     * (which on Windows waits up to ~2s for the shell to exit before killing).
+     */
+    private isTerminating = false
+    private delayedResizeTimer: ReturnType<typeof setTimeout>|null = null
+
     async destroy (): Promise<void> {
-        this.frontend?.detach(this.content.nativeElement)
+        if (this.isTerminating) {
+            return
+        }
+        this.isTerminating = true
+
+        // Cut every resize/write feed reaching the session FIRST, before the
+        // ConPTY graceful-exit window starts: the pane-detach layout storm and
+        // the pending 1s delayed resize would otherwise hit a half-exited pty.
+        if (this.delayedResizeTimer) {
+            clearTimeout(this.delayedResizeTimer)
+            this.delayedResizeTimer = null
+        }
+        const session = this.session
+        this.detachTermContainerHandlers()
+        this.setSession(null)
+
+        if (this.frontend && this.content?.nativeElement) {
+            this.frontend.detach(this.content.nativeElement)
+        }
         this.frontend?.destroy()
         this.frontend = undefined
         this.content.nativeElement.remove()
-        this.detachTermContainerHandlers()
         this.config.enabledServices(this.decorators).forEach(decorator => {
             try {
                 decorator.detach(this)
@@ -633,8 +640,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.frontendReady.complete()
 
         super.destroy()
-        if (this.session?.open) {
-            await this.session.destroy()
+        if (session?.open) {
+            await session.destroy()
         }
     }
 
@@ -700,9 +707,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
 
         this.termContainerSubscriptions.subscribe(this.frontend.mouseEvent$, event => {
             if (event.type === 'mousedown') {
-                if (event.which === 1) {
-                    this.multifocus.cancel()
-                }
                 if (event.which === 2) {
                     if (this.config.store.terminal.pasteOnMiddleClick) {
                         this.paste()
@@ -746,6 +750,9 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.termContainerSubscriptions.subscribe(this.frontend.resize$.pipe(auditTime(100)), ({ columns, rows }) => {
             this.logger.debug(`Resizing to ${columns}x${rows}`)
             this.size = { columns, rows }
+            if (this.isTerminating) {
+                return
+            }
             this.zone.run(() => {
                 if (this.session?.open) {
                     this.session.resize(columns, rows)
@@ -772,22 +779,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
         this.sessionChanged.next(session)
     }
 
-    showToolbar (): void {
-        this.revealToolbar = true
-        this.toolbarRevealTimeout.clear()
-    }
-
-    hideToolbar (): void {
-        this.toolbarRevealTimeout.set()
-    }
-
-    togglePinToolbar (): void {
-        this.pinToolbar = !this.pinToolbar
-        window.localStorage.pinTerminalToolbar = this.pinToolbar
-    }
-
     @HostBinding('class.with-title-inset') get hasTitleInset (): boolean {
-        return this.hostApp.platform === Platform.macOS && this.config.store.appearance.tabsLocation !== 'top' && this.config.store.appearance.frame === 'thin'
+        return this.hostApp.platform === Platform.macOS && this.config.store.appearance.tabsLocation !== 'top'
     }
 
     protected attachSessionHandler <T> (observable: Observable<T>, handler: (v: T) => void): void {
@@ -897,15 +890,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Bas
     }
 
     protected forEachFocusedTerminalPane (cb: (tab: BaseTerminalTabComponent<any>) => void): void {
-        if (this.parent && this.parent instanceof SplitTabComponent && this.parent._allFocusMode) {
-            for (const tab of this.parent.getAllTabs()) {
-                if (tab instanceof BaseTerminalTabComponent) {
-                    cb(tab)
-                }
-            }
-        } else {
-            cb(this)
-        }
+        // Broadcast (Focus all…) was removed — apply to this terminal only.
+        cb(this)
     }
 
     /**

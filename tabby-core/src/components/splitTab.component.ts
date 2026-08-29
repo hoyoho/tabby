@@ -209,9 +209,6 @@ export class SplitTabComponent extends BaseTabComponent implements AfterViewInit
     _dropZones: SplitDropZoneInfo[] = []
 
     /** @hidden */
-    _allFocusMode = false
-
-    /** @hidden */
     _spannerResizing = false
 
     /**
@@ -947,7 +944,7 @@ export class SplitTabComponent extends BaseTabComponent implements AfterViewInit
                     element.classList.toggle('child', true)
                     element.classList.toggle('maximized', child === this.maximizedTab)
                     element.classList.toggle('minimized', this.maximizedTab && child !== this.maximizedTab)
-                    element.classList.toggle('focused', this._allFocusMode || child === this.focusedTab)
+                    element.classList.toggle('focused', child === this.focusedTab)
                     element.style.left = `${childX}%`
                     element.style.top = `${childY}%`
                     element.style.width = `${childW}%`

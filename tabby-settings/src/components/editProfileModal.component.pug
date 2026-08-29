@@ -23,7 +23,7 @@
                 input.form-control(
                     type='text',
                     alwaysVisibleTypeahead,
-                    placeholder='Ungrouped',
+                    placeholder="{{ 'Ungrouped' | translate }}",
                     [(ngModel)]='profileGroup',
                     [ngbTypeahead]='groupTypeahead',
                     [inputFormatter]="groupFormatter",
@@ -64,14 +64,14 @@
 
             .form-line
                 .header
-                    .title(translate) Disable dynamic tab title
+                    .title(translate) Disable dynamic session title
                     .description(translate) Connection name will be used instead
                 toggle([(ngModel)]='profile.disableDynamicTitle')
 
             .form-line
                 .header
                     .title(translate) When a session ends
-                    .description(*ngIf='profile.behaviorOnSessionEnd == "auto"', translate) Only close the tab when session is explicitly terminated
+                    .description(*ngIf='profile.behaviorOnSessionEnd == "auto"', translate) Close the session only when explicitly terminated
                 select.form-control(
                     [(ngModel)]='profile.behaviorOnSessionEnd',
                 )

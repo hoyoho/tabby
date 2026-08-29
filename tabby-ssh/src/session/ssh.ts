@@ -454,7 +454,7 @@ export class SSHSession {
         this.authUsername ??= this.profile.options.user
         if (!this.authUsername) {
             const modal = this.ngbModal.open(PromptModalComponent)
-            modal.componentInstance.prompt = `Username for ${this.profile.options.host}`
+            modal.componentInstance.prompt = this.translate.instant('Username for {host}', { host: this.profile.options.host })
             try {
                 const result = await modal.result.catch(() => null)
                 this.authUsername = result?.value ?? null
@@ -571,7 +571,7 @@ export class SSHSession {
 
             const agent = await russh.SSHAgentStream.connect(spec)
             channel.data$.subscribe(data => agent.write(data))
-            agent.data$.subscribe(data => channel.write(data), undefined, () => channel.close())
+            agent.data$.subscribe(data => channel.write(data).catch(() => undefined), undefined, () => channel.close())
             channel.closed$.subscribe(() => agent.close())
         })
     }
@@ -678,7 +678,10 @@ export class SSHSession {
             }
             if (method.type === 'prompt-password') {
                 const modal = this.ngbModal.open(PromptModalComponent)
-                modal.componentInstance.prompt = `Password for ${this.authUsername}@${this.profile.options.host}`
+                modal.componentInstance.prompt = this.translate.instant('Password for {user}@{host}', {
+                    user: this.authUsername,
+                    host: this.profile.options.host,
+                })
                 modal.componentInstance.password = true
                 modal.componentInstance.showRememberCheckbox = true
                 const prefilledPassword = await this.passwordStorage.loadPassword(this.profile, this.authUsername)
@@ -849,7 +852,11 @@ export class SSHSession {
         this.willDestroy.next()
         this.willDestroy.complete()
         this.serviceMessage.complete()
-        this.ssh.disconnect()
+        try {
+            this.ssh.disconnect()
+        } catch {
+            // russh may throw SendError when closing an already-closed connection
+        }
     }
 
     async openShellChannel (options: { x11: boolean }): Promise<russh.Channel> {
@@ -892,6 +899,7 @@ export class SSHSession {
         socket.on('data', data => {
             try {
                 channel.write(new Uint8Array(data.buffer, data.byteOffset, data.byteLength))
+                    .catch(err => this.logger.debug(`${logPrefix}: channel write rejected: ${err}`))
             } catch (err) {
                 this.logger.error(`${logPrefix}: channel write error: ${err}`)
                 socket.destroy(new Error(`${logPrefix}failed to write to channel: ${err}`))
@@ -959,7 +967,7 @@ export class SSHSession {
                     await this.passwordStorage.deletePrivateKeyPassword(keyHash)
 
                     const modal = this.ngbModal.open(PromptModalComponent)
-                    modal.componentInstance.prompt = 'Private key passphrase'
+                    modal.componentInstance.prompt = this.translate.instant('Private key passphrase')
                     modal.componentInstance.password = true
                     modal.componentInstance.showRememberCheckbox = true
 
@@ -972,7 +980,7 @@ export class SSHSession {
                         this.passwordStorage.savePrivateKeyPassword(keyHash, passphrase)
                     }
                 } else {
-                    this.notifications.error('Could not read the private key', e.toString())
+                    this.notifications.error(this.translate.instant('Could not read the private key'), e.toString())
                     throw e
                 }
             }

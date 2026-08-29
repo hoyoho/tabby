@@ -6,17 +6,17 @@
 
     .list-group.mb-4
         a.list-group-item.list-group-item-action.d-flex.pt-3.pb-3(
-            *ngFor='let command of commands; trackBy: buttonsTrackBy',
-            (click)='command.run()',
+            *ngFor='let action of actions; trackBy: buttonsTrackBy',
+            (click)='runAction(action)',
         )
-            .d-flex.align-self-center([innerHTML]='sanitizeIcon(command.icon)')
-            span {{command.label}}
+            .d-flex.align-self-center([innerHTML]='sanitizeIcon(action.icon)')
+            span {{action.label}}
 
 footer.d-flex.align-items-center
     .btn-group.me-auto
         button.btn.btn-link((click)='homeBase.openGitHub()')
             i.fab.fa-github
-            span GitHub
+            span(translate) GitHub
         button.btn.btn-link((click)='homeBase.reportBug()')
             i.fas.fa-bug
             span(translate) Report a problem

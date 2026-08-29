@@ -3,7 +3,7 @@ import { Socket } from 'net'
 import colors from 'ansi-colors'
 import stripAnsi from 'strip-ansi'
 import { Injector } from '@angular/core'
-import { LogService } from 'tabby-core'
+import { LogService, TranslateService } from 'tabby-core'
 import { BaseSession, ConnectableTerminalProfile, InputProcessingOptions, InputProcessor, LoginScriptsOptions, SessionMiddleware, StreamProcessingOptions, TerminalStreamProcessor } from 'tabby-terminal'
 import { Subject, Observable } from 'rxjs'
 
@@ -61,6 +61,7 @@ class UnescapeFFMiddleware extends SessionMiddleware {
 export class TelnetSession extends BaseSession {
     get serviceMessage$ (): Observable<string> { return this.serviceMessage }
 
+    private translate: TranslateService
     private serviceMessage = new Subject<string>()
     private socket: Socket
     private streamProcessor: TerminalStreamProcessor
@@ -75,6 +76,7 @@ export class TelnetSession extends BaseSession {
         public profile: TelnetProfile,
     ) {
         super(injector.get(LogService).create(`telnet-${profile.options.host}-${profile.options.port}`))
+        this.translate = injector.get(TranslateService)
         this.streamProcessor = new TerminalStreamProcessor(profile.options)
         this.middleware.push(this.streamProcessor)
         this.middleware.push(new InputProcessor(profile.options.input))
@@ -83,7 +85,7 @@ export class TelnetSession extends BaseSession {
 
     async start (): Promise<void> {
         this.socket = new Socket()
-        this.emitServiceMessage(`Connecting to ${this.profile.options.host}`)
+        this.emitServiceMessage(this.translate.instant('Connecting to {host}', { host: this.profile.options.host }))
 
         return new Promise((resolve, reject) => {
             this.socket.on('error', err => {
@@ -92,12 +94,12 @@ export class TelnetSession extends BaseSession {
                 this.destroy()
             })
             this.socket.on('close', () => {
-                this.emitServiceMessage('Connection closed')
+                this.emitServiceMessage(this.translate.instant('Connection closed'))
                 this.destroy()
             })
             this.socket.on('data', data => this.onData(data))
             this.socket.connect(this.profile.options.port ?? 23, this.profile.options.host, () => {
-                this.emitServiceMessage('Connected')
+                this.emitServiceMessage(this.translate.instant('Connected'))
                 this.open = true
                 setTimeout(() => this.streamProcessor.start())
                 this.loginScriptProcessor?.executeUnconditionalScripts()

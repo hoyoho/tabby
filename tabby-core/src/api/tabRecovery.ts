@@ -5,7 +5,6 @@ export interface RecoveryToken {
     [_: string]: any
     type: string
     tabIcon?: string|null
-    tabColor?: string|null
     tabPinned?: boolean
 }
 

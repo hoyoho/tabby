@@ -1,6 +1,5 @@
-import { Component, HostBinding, HostListener, Input } from '@angular/core'
+import { Component, HostBinding, HostListener, Input, ChangeDetectorRef, Inject, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import deepClone from 'clone-deep'
 import FuzzySearch from 'fuzzy-search'
 
@@ -8,7 +7,7 @@ import { ConfigService } from '../services/config.service'
 import { ProfilesService } from '../services/profiles.service'
 import { AppService } from '../services/app.service'
 import { PlatformService } from '../api/platform'
-import { ProfileProvider } from '../api/index'
+import { ProfileProvider, SelectorService, ProfileEditHost } from '../api/index'
 import { PartialProfileGroup, ProfileGroup, PartialProfile, Profile } from '../index'
 import { BaseComponent } from './base.component'
 
@@ -29,14 +28,28 @@ export class ProfileTreeComponent extends BaseComponent {
 
     filteredProfiles: PartialProfile<Profile>[] = []
     @Input() filter = ''
+    private draggedProfile: PartialProfile<Profile>|null = null
+    private draggedGroup: PartialProfileGroup<ProfileGroup>|null = null
 
 
     panelMinWidth = 200
     panelMaxWidth = 600
-    panelInternalWidth: number = parseInt(window.localStorage.profileTreeWidth ?? '300')
+    // Below this released width the panel hides; between here and panelMinWidth
+    // it snaps back to panelMinWidth (avoids accidental collapse).
+    panelCollapseThreshold = 30
+    panelCollapsed: boolean = window.localStorage.profileTreeCollapsed === 'true'
+    panelInternalWidth: number = this.panelCollapsed ? 0 : parseInt(window.localStorage.profileTreeWidth ?? '300')
     panelStartWidth = this.panelInternalWidth
     panelIsResizing = false
     panelStartX = 0
+
+    @HostBinding('class.collapsed') get isCollapsed (): boolean {
+        return this.panelCollapsed
+    }
+
+    @HostBinding('class.resizing') get isResizing (): boolean {
+        return this.panelIsResizing
+    }
 
     constructor (
         private app: AppService,
@@ -44,7 +57,9 @@ export class ProfileTreeComponent extends BaseComponent {
         private config: ConfigService,
         private profilesService: ProfilesService,
         private translate: TranslateService,
-        private ngbModal: NgbModal,
+        private selector: SelectorService,
+        private cdr: ChangeDetectorRef,
+        @Optional() @Inject(ProfileEditHost) private profileEditHost: ProfileEditHost|null,
     ) {
         super()
     }
@@ -71,29 +86,26 @@ export class ProfileTreeComponent extends BaseComponent {
             }
         }
 
-        if (!this.config.store.terminal.showBuiltinProfiles) { groups = groups.filter(g => g.id !== 'built-in') }
+        // Built-in presets are never shown in the side panel: sessions are only
+        // created from user profiles.
+        groups = groups.filter(g => g.id === 'default' || g.editable !== false)
 
         groups.sort((a, b) => a.name.localeCompare(b.name))
         groups.sort((a, b) => (a.id === 'built-in' || !a.editable ? 1 : 0) - (b.id === 'built-in' || !b.editable ? 1 : 0))
-        groups.sort((a, b) => (a.id === 'ungrouped' ? 0 : 1) - (b.id === 'ungrouped' ? 0 : 1))
+        groups.sort((a, b) => (a.id === 'default' ? 0 : 1) - (b.id === 'default' ? 0 : 1))
         this.profileGroups = groups.map(g => ProfileTreeComponent.intoPartialCollapsableProfileGroup(g, profileGroupCollapsed[g.id] ?? false))
         this.rootGroups = this.profilesService.buildGroupTree(this.profileGroups)
+        this.cdr.markForCheck()
     }
 
     private async editProfile (profile: PartialProfile<Profile>): Promise<void> {
-        const { EditProfileModalComponent } = window['nodeRequire']('tabby-settings')
-        const modal = this.ngbModal.open(
-            EditProfileModalComponent,
-            { size: 'lg' },
-        )
-
         const provider = this.profilesService.providerForProfile(profile)
         if (!provider) { throw new Error('Cannot edit a profile without a provider') }
 
-        modal.componentInstance.partialProfile = deepClone(profile)
-        modal.componentInstance.profileProvider = provider
-
-        const result = await modal.result.catch(() => null)
+        const result = await this.profileEditHost?.editProfile({
+            partialProfile: deepClone(profile),
+            provider,
+        }) ?? null
         if (!result) { return }
 
         result.type = provider.id
@@ -103,44 +115,31 @@ export class ProfileTreeComponent extends BaseComponent {
     }
 
     private async editProfileGroup (group: PartialProfileGroup<CollapsableProfileGroup>): Promise<void> {
-        const { EditProfileGroupModalComponent } = window['nodeRequire']('tabby-settings')
-
-        const modal = this.ngbModal.open(
-            EditProfileGroupModalComponent,
-            { size: 'lg' },
-        )
-
-        modal.componentInstance.group = deepClone(group)
-        modal.componentInstance.providers = this.profilesService.getProviders()
-
-        const result: PartialProfileGroup<ProfileGroup & { group: PartialProfileGroup<CollapsableProfileGroup>, provider?: ProfileProvider<Profile> }> | null = await modal.result.catch(() => null)
+        const result = await this.profileEditHost?.editProfileGroup(
+            deepClone(group),
+            this.profilesService.getProviders(),
+        ) ?? null
         if (!result) { return }
-        if (!result.group) { return }
 
         if (result.provider) {
             return this.editProfileGroupDefaults(result.group, result.provider)
         }
 
-        delete result.group.collapsed
-        delete result.group.children
+        delete (result.group as any).collapsed
+        delete (result.group as any).children
         await this.profilesService.writeProfileGroup(result.group)
         await this.config.save()
     }
 
     private async editProfileGroupDefaults (group: PartialProfileGroup<CollapsableProfileGroup>, provider: ProfileProvider<Profile>): Promise<void> {
-        const { EditProfileModalComponent } = window['nodeRequire']('tabby-settings')
-
-        const modal = this.ngbModal.open(
-            EditProfileModalComponent,
-            { size: 'lg' },
-        )
         const model = group.defaults?.[provider.id] ?? {}
         model.type = provider.id
-        modal.componentInstance.profile = Object.assign({}, model)
-        modal.componentInstance.profileProvider = provider
-        modal.componentInstance.defaultsMode = 'group'
 
-        const result = await modal.result.catch(() => null)
+        const result = await this.profileEditHost?.editProfile({
+            partialProfile: Object.assign({}, model),
+            provider,
+            defaultsMode: 'group',
+        }) ?? null
         if (result) {
             // Fully replace the config
             for (const k in model) {
@@ -158,6 +157,7 @@ export class ProfileTreeComponent extends BaseComponent {
 
     async profileContextMenu (profile: PartialProfile<Profile>, event: MouseEvent): Promise<void> {
         event.preventDefault()
+        event.stopPropagation()
 
         this.platform.popupContextMenu([
             {
@@ -167,8 +167,20 @@ export class ProfileTreeComponent extends BaseComponent {
             },
             {
                 type: 'normal',
-                label: this.translate.instant('Edit profile'),
+                label: this.translate.instant('Edit'),
                 click: () => this.editProfile(profile),
+                enabled: !(profile.isBuiltin ?? profile.isTemplate),
+            },
+            {
+                type: 'normal',
+                label: this.translate.instant('Duplicate'),
+                click: () => this.duplicateProfile(profile),
+                enabled: !(profile.isBuiltin ?? profile.isTemplate),
+            },
+            {
+                type: 'normal',
+                label: this.translate.instant('Delete'),
+                click: () => this.deleteProfile(profile),
                 enabled: !(profile.isBuiltin ?? profile.isTemplate),
             },
         ])
@@ -176,6 +188,7 @@ export class ProfileTreeComponent extends BaseComponent {
 
     async groupContextMenu (group: PartialProfileGroup<CollapsableProfileGroup>, event: MouseEvent): Promise<void> {
         event.preventDefault()
+        event.stopPropagation()
         this.platform.popupContextMenu([
             {
                 type: 'normal',
@@ -191,8 +204,167 @@ export class ProfileTreeComponent extends BaseComponent {
         ])
     }
 
+    async blankContextMenu (event: MouseEvent): Promise<void> {
+        event.preventDefault()
+        this.platform.popupContextMenu([
+            {
+                type: 'normal',
+                label: this.translate.instant('New profile'),
+                click: () => this.newProfileFromBlank(),
+            },
+            {
+                type: 'normal',
+                label: this.translate.instant('New group'),
+                click: () => this.editProfileGroup({
+                    id: 'new',
+                    name: '',
+                    icon: 'far fa-folder',
+                }),
+            },
+        ])
+    }
+
+    async newProfileFromBlank (): Promise<void> {
+        const templates = (await this.profilesService.getProfiles()).filter(x => x.isTemplate)
+        templates.sort((a, b) => ProfilesService.templatePriority(a) - ProfilesService.templatePriority(b))
+        const base = await this.selector.show(
+            this.translate.instant('Select a template'),
+            templates.map(p => ({
+                icon: p.icon ?? undefined,
+                description: this.profilesService.getDescription(p) ?? undefined,
+                name: p.name,
+                result: p,
+                weight: ProfilesService.templatePriority(p) * 10,
+            })),
+        ).catch(() => undefined)
+        if (!base) {
+            return
+        }
+        const fresh: PartialProfile<Profile> = deepClone(base)
+        delete (fresh as any).id
+        fresh.name = ''
+        fresh.isBuiltin = false
+        fresh.isTemplate = false
+
+        const provider = this.profilesService.providerForProfile(fresh)
+        if (!provider) {
+            return
+        }
+        const result = await this.profileEditHost?.editProfile({
+            partialProfile: fresh,
+            provider,
+        }) ?? null
+        if (!result) {
+            return
+        }
+        result.type = provider.id
+        await this.profilesService.newProfile(result)
+        await this.config.save()
+    }
+
+    async duplicateProfile (profile: PartialProfile<Profile>): Promise<void> {
+        const dup: PartialProfile<Profile> = deepClone(profile)
+        delete (dup as any).id
+        dup.name = this.translate.instant('{name} copy', { name: profile.name })
+        dup.isBuiltin = false
+        dup.isTemplate = false
+
+        const provider = this.profilesService.providerForProfile(dup) ?? this.profilesService.providerForProfile(profile)
+        if (!provider) {
+            return
+        }
+        const result = await this.profileEditHost?.editProfile({
+            partialProfile: dup,
+            provider,
+        }) ?? null
+        if (!result) {
+            return
+        }
+        result.type = provider.id
+        await this.profilesService.newProfile(result)
+        await this.config.save()
+        await this.loadTreeItems()
+    }
+
+    async deleteProfile (profile: PartialProfile<Profile>): Promise<void> {
+        if (profile.isBuiltin === true || profile.isTemplate === true) {
+            return
+        }
+        if ((await this.platform.showMessageBox({
+            type: 'warning',
+            message: this.translate.instant('Delete "{name}"?', { name: profile.name }),
+            buttons: [
+                this.translate.instant('Delete'),
+                this.translate.instant('Keep'),
+            ],
+            defaultId: 1,
+            cancelId: 1,
+        })).response === 0) {
+            await this.profilesService.deleteProfile(profile)
+            await this.config.save()
+        }
+    }
+
     private async tabStateChanged (): Promise<void> {
         // TODO: show active tab in the side panel with eye icon
+    }
+
+    onProfileDragStart (profile: PartialProfile<Profile>, event: DragEvent): void {
+        if (profile.isBuiltin) {
+            return
+        }
+        this.draggedProfile = profile
+        event.dataTransfer?.setData('text/plain', profile.id ?? '')
+        event.dataTransfer!.effectAllowed = 'move'
+    }
+
+    allowDrop (event: DragEvent): void {
+        event.preventDefault()
+        event.stopPropagation()
+    }
+
+    onGroupDragStart (group: PartialProfileGroup<ProfileGroup>, event: DragEvent): void {
+        this.draggedGroup = group
+        this.draggedProfile = null
+        event.dataTransfer?.setData('text/plain', group.id)
+        event.dataTransfer!.effectAllowed = 'move'
+    }
+
+    async onBlankDrop (event: DragEvent): Promise<void> {
+        event.preventDefault()
+        await this.moveToGroupId(null)
+    }
+
+    async onProfileDrop (event: DragEvent, group: PartialProfileGroup<ProfileGroup>): Promise<void> {
+        event.preventDefault()
+        event.stopPropagation()
+        const targetId = group.id === 'default' ? '' : group.id
+        await this.moveToGroupId(targetId)
+    }
+
+    private async moveToGroupId (groupId: string|null): Promise<void> {
+        const profile = this.draggedProfile
+        const group = this.draggedGroup
+        this.draggedProfile = null
+        this.draggedGroup = null
+        if (profile && !profile.isBuiltin && profile.id) {
+            await this.profilesService.setGroup(profile.id, groupId ?? '')
+        } else if (group) {
+            if (groupId && !this.profilesService.canGroupBeParentOf(groupId, group.id)) {
+                await this.loadTreeItems()
+                return
+            }
+            const cGroup = this.config.store.groups?.find(g => g.id === group.id)
+            if (cGroup) {
+                if (groupId) {
+                    cGroup.parentGroupId = groupId
+                } else {
+                    delete cGroup.parentGroupId
+                }
+            }
+            await this.config.save()
+        }
+        await this.loadTreeItems()
     }
 
     async launchProfile<P extends Profile> (profile: PartialProfile<P>): Promise<any> {
@@ -209,7 +381,7 @@ export class ProfileTreeComponent extends BaseComponent {
             }
 
             const profiles = await this.profilesService.getProfiles({
-                includeBuiltin: this.config.store.terminal.showBuiltinProfiles,
+                includeBuiltin: false,
                 clone: true,
             })
 
@@ -237,7 +409,7 @@ export class ProfileTreeComponent extends BaseComponent {
     startResize (event: MouseEvent): void {
         this.panelIsResizing = true
         this.panelStartX = event.clientX
-        this.panelStartWidth = this.panelWidth
+        this.panelStartWidth = this.panelCollapsed ? 0 : this.panelWidth
         event.preventDefault()
     }
 
@@ -245,14 +417,30 @@ export class ProfileTreeComponent extends BaseComponent {
     onMouseMove (event: MouseEvent): void {
         if (!this.panelIsResizing) { return }
         const delta = event.clientX - this.panelStartX
-        const width = Math.min(Math.max(this.panelMinWidth, this.panelStartWidth + delta), this.panelMaxWidth)
+        // The width tracks the mouse continuously (0..max); the collapse/min
+        // decision is deferred to mouseup so the handle never teleports under
+        // the cursor.
+        const width = Math.max(0, Math.min(this.panelMaxWidth, this.panelStartWidth + delta))
         this.panelWidth = width
-        window.localStorage.profileTreeWidth = width
+        if (width > 0 && this.panelCollapsed) {
+            this.panelCollapsed = false
+        }
+        this.cdr.markForCheck()
     }
 
     @HostListener('document:mouseup')
     stopResize (): boolean {
         this.panelIsResizing = false
+        if (this.panelWidth < this.panelCollapseThreshold) {
+            this.panelCollapsed = true
+            this.panelWidth = 0
+        } else {
+            this.panelCollapsed = false
+            this.panelWidth = Math.min(this.panelMaxWidth, Math.max(this.panelMinWidth, this.panelWidth))
+        }
+        window.localStorage.profileTreeWidth = this.panelWidth
+        window.localStorage.profileTreeCollapsed = JSON.stringify(this.panelCollapsed)
+        this.cdr.markForCheck()
         return true
     }
 

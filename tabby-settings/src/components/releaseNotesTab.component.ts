@@ -2,7 +2,7 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import { marked } from '../../node_modules/marked/lib/marked.esm.js'
 import { Component, Injector } from '@angular/core'
-import { BaseTabComponent, TranslateService } from 'tabby-core'
+import { TopLevelTab, TranslateService } from 'tabby-core'
 
 export interface Release {
     name: string
@@ -17,7 +17,7 @@ export interface Release {
     templateUrl: './releaseNotesTab.component.pug',
     styleUrls: ['./releaseNotesTab.component.scss'],
 })
-export class ReleaseNotesComponent extends BaseTabComponent {
+export class ReleaseNotesComponent extends TopLevelTab {
     releases: Release[] = []
     lastPage = 1
 

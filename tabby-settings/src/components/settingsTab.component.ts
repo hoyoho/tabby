@@ -2,14 +2,14 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import * as yaml from 'js-yaml'
 import { debounce } from 'utils-decorators/dist/esm/debounce/debounce'
-import { Component, Inject, Input, HostBinding, Injector } from '@angular/core'
+import { Component, Inject, Input, HostBinding, Injector, ViewChild } from '@angular/core'
+import { NgbNav } from '@ng-bootstrap/ng-bootstrap'
 import {
     ConfigService,
-    BaseTabComponent,
+    TopLevelTab,
     HostAppService,
     Platform,
     HomeBaseService,
-    UpdaterService,
     PlatformService,
     HostWindowService,
     AppService,
@@ -28,17 +28,16 @@ import { ReleaseNotesComponent } from './releaseNotesTab.component'
         './settingsTab.component.scss',
     ],
 })
-export class SettingsTabComponent extends BaseTabComponent {
+export class SettingsTabComponent extends TopLevelTab {
     @Input() activeTab: string
     Platform = Platform
     configDefaults: any
     configFile: string
     isShellIntegrationInstalled = false
-    checkingForUpdate = false
-    updateAvailable = false
     showConfigDefaults = false
     allLanguages = LocaleService.allLanguages
     @HostBinding('class.pad-window-controls') padWindowControls = false
+    @ViewChild('nav', { static: true }) nav: NgbNav
 
     constructor (
         public config: ConfigService,
@@ -47,7 +46,6 @@ export class SettingsTabComponent extends BaseTabComponent {
         public homeBase: HomeBaseService,
         public platform: PlatformService,
         public locale: LocaleService,
-        public updater: UpdaterService,
         private app: AppService,
         @Inject(SettingsTabProvider) public settingsProviders: SettingsTabProvider[],
         translate: TranslateService,
@@ -73,6 +71,29 @@ export class SettingsTabComponent extends BaseTabComponent {
 
     async ngOnInit () {
         this.isShellIntegrationInstalled = await this.platform.isShellIntegrationInstalled()
+    }
+
+    /** Switch to a settings section on the existing instance. */
+    showSection (id: string): void {
+        this.activeTab = id
+        this.nav.select(id)
+    }
+
+    /**
+     * Opens the settings tab, reusing an existing one and navigating to
+     * `activeTab` when possible.
+     */
+    static openSettingsTab (app: AppService, activeTab?: string): void {
+        const existing = app.tabs.find(tab => tab instanceof SettingsTabComponent) as SettingsTabComponent|undefined
+        if (existing) {
+            existing.showSection(activeTab ?? 'application')
+            app.selectTab(existing)
+        } else {
+            app.openNewTabRaw({
+                type: SettingsTabComponent,
+                inputs: { activeTab: activeTab ?? 'application' },
+            })
+        }
     }
 
     async toggleShellIntegration () {
@@ -117,12 +138,6 @@ export class SettingsTabComponent extends BaseTabComponent {
         } catch {
             return false
         }
-    }
-
-    async checkForUpdates () {
-        this.checkingForUpdate = true
-        this.updateAvailable = await this.updater.check()
-        this.checkingForUpdate = false
     }
 
     showReleaseNotes () {

@@ -81,6 +81,7 @@ export class OpenPathCLIHandler extends CLIHandler {
         private profiles: ProfilesService,
         private hostWindow: HostWindowService,
         private notifications: NotificationsService,
+        private translate: TranslateService,
     ) {
         super()
     }
@@ -91,7 +92,7 @@ export class OpenPathCLIHandler extends CLIHandler {
 
         const profile = await this.terminal.getDefaultProfile()
 
-        if (opAsPath && (await fs.lstat(opAsPath)).isDirectory()) {
+        if (opAsPath && await fs.exists(opAsPath) && (await fs.lstat(opAsPath)).isDirectory()) {
             this.terminal.openTab(profile, opAsPath)
             this.hostWindow.bringToFront()
             return true
@@ -123,7 +124,7 @@ export class OpenPathCLIHandler extends CLIHandler {
                     return true
                 }
             } else {
-                this.notifications.error('Cannot handle scripts of this type')
+                this.notifications.error(this.translate.instant('Cannot handle scripts of this type'))
             }
         }
 
@@ -145,10 +146,19 @@ export class AutoOpenTabCLIHandler extends CLIHandler {
     }
 
     async handle (event: CLIEvent): Promise<boolean> {
-        if (!event.secondInstance && this.config.store.terminal.autoOpen && !this.config.store.enableWelcomeTab) {
+        if (!event.secondInstance && this.config.store.terminal.autoOpen) {
+            // Mark that the UI has booted at least once. This flag is
+            // independent of the "restore tabs" setting, so disabling recovery
+            // (which stops tabsRecovery from being written) can't make the app
+            // look like a first run forever.
+            const firstRun = typeof window.localStorage.tabbyLaunched !== 'string'
+            window.localStorage.tabbyLaunched = 'true'
             this.app.ready$.subscribe(() => {
                 if (this.app.tabs.length === 0) {
-                    this.terminal.openTab()
+                    // Auto-open the default profile only on a genuine first run.
+                    if (firstRun) {
+                        this.terminal.openTab().catch(err => console.error('[auto-open] openTab failed', err))
+                    }
                 }
             })
             return true

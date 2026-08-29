@@ -10,8 +10,8 @@ div
             [(ngModel)]='config.store.terminal.frontend',
             (ngModelChange)='config.save()',
         )
-            option(value='xterm-webgl') xterm (WebGL)
-            option(value='xterm') xterm (canvas)
+            option(value='xterm-webgl', translate) xterm (WebGL)
+            option(value='xterm', translate) xterm (canvas)
 
     .form-line
         .header
@@ -111,9 +111,9 @@ div.mt-4
             (ngModelChange)='config.save()',
         )
             option([ngValue]='null', translate) No modifier
-            option(value='ctrlKey', *ngIf='hostApp.platform !== Platform.macOS') Ctrl
+            option(value='ctrlKey', *ngIf='hostApp.platform !== Platform.macOS', translate) Ctrl
             option(value='altKey') {{altKeyName}}
-            option(value='shiftKey') Shift
+            option(value='shiftKey', translate) Shift
             option(value='metaKey') {{metaKeyName}}
 
 .mt-4
@@ -209,10 +209,6 @@ div.mt-4
             label.btn.btn-secondary(for='bellAudible')
                 span(translate) Audible
 
-    .alert.alert-info.d-flex.align-items-center(*ngIf='config.store.terminal.bell != "audible" && (config.store.terminal.profile || "").startsWith("wsl")')
-        .me-auto(translate) WSL terminal bell can only be muted via Volume Mixer
-        button.btn.btn-secondary((click)='openWSLVolumeMixer()', translate) Show Mixer
-
 .mt-4
     h3(translate) Startup
 
@@ -227,10 +223,20 @@ div.mt-4
 
     .form-line
         .header
-            .title(translate) Restore terminal tabs on app start
+            .title(translate) Restore workspaces on app start
 
         toggle(
-            [(ngModel)]='config.store.recoverTabs',
+            [(ngModel)]='config.store.workspace.recoverTabs',
+            (ngModelChange)='config.save()',
+        )
+
+    .form-line
+        .header
+            .title(translate) Open new sessions in the current workspace
+            .description(translate) New sessions are added to the active workspace pane instead of a separate workspace.
+
+        toggle(
+            [(ngModel)]='config.store.session.appendToPaneByDefault',
             (ngModelChange)='config.save()',
         )
 
@@ -240,7 +246,7 @@ div.mt-4(*ngIf='hostApp.platform === Platform.Windows')
     .form-line
         .header
             .title(translate) Set Tabby as %COMSPEC%
-            .description(translate) Allows opening .bat files in tabs, but breaks some shells
+            .description(translate) Allows opening .bat files as sessions, but breaks some shells
         toggle(
             [(ngModel)]='config.store.terminal.setComSpec',
             (ngModelChange)='config.save()',

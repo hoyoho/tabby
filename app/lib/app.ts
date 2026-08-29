@@ -7,7 +7,7 @@ import * as path from 'path'
 import * as fs from 'fs'
 import { Subject, throttleTime } from 'rxjs'
 
-import { saveConfig } from './config'
+import { saveConfig, loadConfig } from './config'
 import { Window, WindowOptions } from './window'
 import { pluginManager } from './pluginManager'
 import { PTYManager } from './pty'
@@ -27,6 +27,8 @@ export class Application {
     private quitRequested = false
     userPluginsPath: string
 
+    getWindows (): Window[] { return this.windows }
+
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor (private configStore: any) {
         remote.initialize()
@@ -35,7 +37,10 @@ export class Application {
 
         ipcMain.handle('app:save-config', async (event, config) => {
             await saveConfig(config)
-            this.broadcastExcept('host:config-change', event.sender, config)
+            this.configStore = loadConfig()
+            for (const window of this.windows) {
+                window.applyConfigChange(this.configStore, event.sender)
+            }
         })
 
         ipcMain.on('app:register-global-hotkey', (_event, specs) => {
@@ -182,9 +187,11 @@ export class Application {
 
     async send (event: string, ...args: any[]): Promise<void> {
         if (!this.hasWindows()) {
-            await this.newWindow()
+            // Do NOT auto-create a window here: a stray IPC after the last
+            // window closed must not silently spawn a fresh "instance".
+            return
         }
-        this.windows.filter(w => !w.isDestroyed())[0].send(event, ...args)
+        this.windows.find(w => !w.isDestroyed())?.send(event, ...args)
     }
 
     enableTray (): void {

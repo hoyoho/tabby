@@ -268,6 +268,8 @@ export abstract class PlatformService {
     abstract popupContextMenu (menu: MenuItemOptions[], event?: MouseEvent): void
     abstract showMessageBox (options: MessageBoxOptions): Promise<MessageBoxResult>
     abstract pickDirectory (): Promise<string | null>
+    /** Asks the user to select an image to use as the window background. */
+    abstract pickImage (): Promise<string | null>
     abstract quit (): void
 }
 

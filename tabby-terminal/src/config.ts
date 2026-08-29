@@ -105,12 +105,6 @@ export class TerminalConfigProvider extends ConfigProvider {
                 search: [
                     '⌘-F',
                 ],
-                'pane-focus-all': [
-                    '⌘-Shift-I',
-                ],
-                'focus-all-tabs': [
-                    '⌘-⌥-Shift-I',
-                ],
                 'scroll-to-top': ['Shift-PageUp'],
                 'scroll-page-up': ['⌥-PageUp'],
                 'scroll-up': ['Ctrl-Shift-Up'],
@@ -158,12 +152,6 @@ export class TerminalConfigProvider extends ConfigProvider {
                 search: [
                     'Ctrl-Shift-F',
                 ],
-                'pane-focus-all': [
-                    'Ctrl-Shift-I',
-                ],
-                'focus-all-tabs': [
-                    'Ctrl-Alt-Shift-I',
-                ],
                 'scroll-to-top': ['Ctrl-PageUp'],
                 'scroll-page-up': ['Alt-PageUp'],
                 'scroll-up': ['Ctrl-Shift-Up'],
@@ -208,12 +196,6 @@ export class TerminalConfigProvider extends ConfigProvider {
                 'delete-next-word': ['Ctrl-Delete'],
                 search: [
                     'Ctrl-Shift-F',
-                ],
-                'pane-focus-all': [
-                    'Ctrl-Shift-I',
-                ],
-                'focus-all-tabs': [
-                    'Ctrl-Alt-Shift-I',
                 ],
                 'scroll-to-top': ['Ctrl-PageUp'],
                 'scroll-page-up': ['Alt-PageUp'],

@@ -27,12 +27,22 @@ export class Session extends BaseSession {
     private pty: PTYProxy|null = null
     private ptyClosed = false
     private pauseAfterExit = false
+    private destroying = false
     private guessedCWD: string|null = null
     private initialCWD: string|null = null
     private config: ConfigService
     private hostApp: HostAppService
     private bootstrapData: BootstrapData
     private ptyInterface: PTYInterface
+
+    /**
+     * When set, destroy() tears down this session's listeners/state but keeps
+     * the underlying PTY alive in the main process. Used when a workspace is
+     * moved to a new window: the new window re-attaches the same PTY by its id
+     * via `restoreFromPTYID`, so the shell (and any running job) must not be
+     * killed on the way out.
+     */
+    keepPTYAlive = false
 
     constructor (
         injector: Injector,
@@ -168,6 +178,63 @@ export class Session extends BaseSession {
         this.pty?.kill(signal)
     }
 
+    override async destroy (): Promise<void> {
+        if (this.destroying) {
+            return
+        }
+        this.destroying = true
+        if (this.keepPTYAlive) {
+            // Detach without killing the live PTY: drop our listeners/subjects
+            // so the shell keeps running in the main process for the new window.
+            this.pty?.unsubscribeAll()
+            this.open = false
+            this.middleware.close()
+            this.closed.next()
+            this.destroyed.next()
+            this.closed.complete()
+            this.destroyed.complete()
+            this.output.complete()
+            this.binaryOutput.complete()
+            this.pty = null
+            return
+        }
+        // ConPTY hosts are fragile when torn down with an active child. Give the
+        // shell a graceful exit to finish first so outer shells (WSL/Git Bash,
+        // plain cmd with clink, etc.) don't crash the renderer/main on close —
+        // which looked like a second app instance being started.
+        if (this.hostApp.platform === Platform.Windows && this.open && !this.ptyClosed) {
+            const pty = this.pty
+            try {
+                pty?.write(Buffer.from('\r\nexit\r\n'))
+            } catch { /* ignore */ }
+            if (pty) {
+                await new Promise<void>(resolve => {
+                    let settled = false
+                    const timer = setTimeout(() => {
+                        settled = true
+                        resolve()
+                    }, 2000)
+                    const finish = (): void => {
+                        if (!settled) {
+                            settled = true
+                            clearTimeout(timer)
+                            resolve()
+                        }
+                    }
+                    pty.subscribe('exit', finish)
+                    pty.subscribe('close', finish)
+                })
+            }
+        }
+        await super.destroy()
+        try {
+            if (this.pty && !this.ptyClosed) {
+                this.pty.kill()
+            }
+        } catch { /* ignore */ }
+        this.pty = null
+    }
+
     async getChildProcesses (): Promise<ChildProcess[]> {
         return this.pty?.getChildProcesses() ?? []
     }
@@ -204,7 +271,12 @@ export class Session extends BaseSession {
         try {
             cwd = await this.pty?.getWorkingDirectory() ?? null
         } catch (exc) {
-            console.info('Could not read working directory:', exc)
+            // PTY process is already gone (e.g. after a session was killed or
+            // right when it starts) — nothing to report, don't spam the console.
+            if (/NtQueryInformationProcess|invalid process handle|not found|no such process/i.test(exc instanceof Error ? exc.message : String(exc))) {
+                return null
+            }
+            this.logger.debug('Could not read working directory:', exc)
         }
 
         try {
@@ -216,8 +288,7 @@ export class Session extends BaseSession {
             cwd = null
         }
 
-        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-        cwd = cwd || this.guessedCWD
+        cwd = cwd ?? this.guessedCWD
 
         try {
             await fs.access(cwd)

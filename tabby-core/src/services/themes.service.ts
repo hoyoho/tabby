@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@angular/core'
+﻿import { Inject, Injectable } from '@angular/core'
 import { Subject, Observable } from 'rxjs'
 import * as Color from 'color'
+import { pathToFileURL } from 'url'
 import { ConfigService } from '../services/config.service'
 import { TerminalColorScheme, Theme } from '../api/theme'
 import { PlatformService, PlatformTheme } from '../api/platform'
@@ -150,11 +151,49 @@ export class ThemesService {
                 contrastPairs.push([`--theme-${key}-active-bg`, `--theme-${key}-active-fg`])
             }
 
+            // Scheme slots surfaced for UI use (also edited in the scheme
+            // editor's labeled cards): cursor / block-cursor accent / selection.
+            if (theme.cursor) {
+                vars['--theme-cursor'] = theme.cursor
+            }
+            if (theme.cursorAccent) {
+                vars['--theme-cursor-accent'] = theme.cursorAccent
+            }
+            if (theme.selection) {
+                vars['--theme-selection'] = theme.selection
+            }
+            if (theme.selectionForeground) {
+                vars['--theme-selection-fg'] = theme.selectionForeground
+            }
+
             const switchBackground = less(theme.colors[accentIndex], 0.25).string()
             vars['--bs-form-switch-bg'] = `url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27${switchBackground}%27/%3e%3c/svg%3e")`
         }
 
         vars['--spaciness'] = this.getConfigStoreOrDefaults().appearance.spaciness
+        const backgroundImage = this.getConfigStoreOrDefaults().appearance.backgroundImage
+        if (backgroundImage) {
+            // Convert a platform path into a CSS-loadable file URL. Direct
+            // interpolation breaks on Windows (backslashes are escapes inside
+            // url()) and is unportable across platforms, so normalize via
+            // pathToFileURL when available and fall back to fixing separators.
+            let imageUrl: string
+            try {
+                imageUrl = pathToFileURL(backgroundImage).toString()
+            } catch {
+                imageUrl = 'file:///' + backgroundImage.replace(/\\/g, '/').replace(/^\/?(?=[A-Za-z]:)/, '').replace(/'/g, '%27').replace(/"/g, '%22')
+            }
+            // The background image and its dark scrim are scoped to the
+            // workspace/terminal area only. Settings, menus and other chrome
+            // keep their regular opaque surfaces.
+            vars['--app-workspace-image'] = `url("${imageUrl}")`
+            const brightness = this.getConfigStoreOrDefaults().appearance.backgroundImageBrightness
+            const scrimAlpha = Math.max(0, Math.min(1, 1 - brightness))
+            vars['--app-workspace-scrim'] = `rgba(20, 22, 26, ${scrimAlpha})`
+        } else {
+            vars['--app-workspace-image'] = 'none'
+            vars['--app-workspace-scrim'] = 'transparent'
+        }
 
         for (const [bg, fg] of contrastPairs) {
             const colorBg = Color(vars[bg]).hsl()

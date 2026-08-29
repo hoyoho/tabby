@@ -3,8 +3,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Observable, Subject, AsyncSubject, takeUntil, debounceTime } from 'rxjs'
 
 import { BaseTabComponent } from '../components/baseTab.component'
-import { SplitTabComponent } from '../components/splitTab.component'
+import { WorkspaceComponent } from '../components/workspace.component'
 import { RenameTabModalComponent } from '../components/renameTabModal.component'
+import { SessionTab } from '../api/session'
+import { TopLevelTab } from '../api/topLevelTab'
 import { SelectorOption } from '../api/selector'
 import { RecoveryToken } from '../api/tabRecovery'
 import { BootstrapData, BOOTSTRAP_DATA } from '../api/mainProcess'
@@ -45,13 +47,16 @@ class CompletionObserver {
 
 @Injectable({ providedIn: 'root' })
 export class AppService {
-    tabs: BaseTabComponent[] = []
+    tabs: TopLevelTab[] = []
 
-    get activeTab (): BaseTabComponent|null { return this._activeTab ?? null }
+    get activeTab (): TopLevelTab|null { return this._activeTab ?? null }
 
     private lastTabIndex = 0
-    private _activeTab: BaseTabComponent | null = null
+    private _activeTab: TopLevelTab | null = null
     private closedTabsStack: RecoveryToken[] = []
+
+    /** The workspace whose tab header is currently hovered by the drag. */
+    crossWindowDragTarget: WorkspaceComponent|null = null
 
     private activeTabChange = new Subject<BaseTabComponent|null>()
     private tabsChanged = new Subject<void>()
@@ -99,7 +104,8 @@ export class AppService {
 
         config.ready$.toPromise().then(async () => {
             if (this.bootstrapData.isMainWindow) {
-                if (config.store.recoverTabs) {
+                const recoverWorkspaces = config.store.workspace?.recoverTabs
+                if (recoverWorkspaces) {
                     const tabs = await this.tabRecovery.recoverTabs()
                     for (const tab of tabs) {
                         this.openNewTabRaw(tab)
@@ -107,6 +113,59 @@ export class AppService {
                 }
                 /** Continue to store the tabs even if the setting is currently off */
                 this.tabRecovery.enabled = true
+            }
+        })
+
+        // A workspace dragged out of another window arrives as a recovery
+        // token; rebuild it here (any window can receive one).
+        this.hostApp.openRecoveryToken$.subscribe(async token => {
+            const params = await this.tabRecovery.recoverTab(token)
+            if (params) {
+                this.openNewTabRaw(params as any)
+            }
+        })
+
+        // Cross-window drag targeting this window: track a hovered workspace
+        // (its tab header in the tab bar) and, on drop, restore the dragged
+        // session into that workspace.
+        this.hostApp.windowDragMove$.subscribe(({ x, y }) => {
+            this.crossWindowDragTarget = this.findWorkspaceAt(
+                x - window.screenX,
+                y - window.screenY,
+            )
+        })
+
+        this.hostApp.windowDragEnter$.subscribe(() => {
+            this.crossWindowDragTarget = null
+        })
+
+        this.hostApp.windowDragLeave$.subscribe(() => {
+            this.crossWindowDragTarget = null
+        })
+
+        this.hostApp.windowDragCommit$.subscribe(async ({ token }) => {
+            const target = this.crossWindowDragTarget ?? (
+                this._activeTab instanceof WorkspaceComponent ? this._activeTab : null
+            )
+            this.crossWindowDragTarget = null
+            try {
+                const params = await this.tabRecovery.recoverTab(token)
+                if (!params) {
+                    this.hostApp.windowDragAccepted()
+                    return
+                }
+                if (target instanceof WorkspaceComponent && params?.type.prototype instanceof SessionTab) {
+                    // Re-home the restored session into the hovered workspace.
+                    const session = this.tabsService.create(params as NewTabParameters<SessionTab>)
+                    this.selectTab(target)
+                    await target.addTabToPane(session)
+                } else {
+                    this.openNewTabRaw(params as any)
+                }
+                this.hostApp.windowDragAccepted()
+            } catch (err) {
+                console.error('[app] cross-window drop failed:', err)
+                this.hostApp.windowDragAccepted()
             }
         })
 
@@ -120,6 +179,12 @@ export class AppService {
     }
 
     addTabRaw (tab: BaseTabComponent, index: number|null = null): void {
+        // Defensive backstop: a session handed straight to addTabRaw (e.g. via
+        // tab restore) still gets wrapped instead of becoming a top-level tab.
+        if (tab instanceof SessionTab) {
+            this.wrapAndAddTab(tab)
+            return
+        }
         if (index !== null) {
             this.tabs.splice(index, 0, tab)
         } else {
@@ -148,13 +213,9 @@ export class AppService {
             this.tabClosed.next(tab)
         })
 
-        if (tab instanceof SplitTabComponent) {
+        if (tab instanceof WorkspaceComponent) {
             tab.tabAdded$.subscribe(() => this.emitTabsChanged())
             tab.tabRemoved$.subscribe(() => this.emitTabsChanged())
-            tab.tabAdopted$.subscribe(t => {
-                this.removeTab(t)
-                this.tabRemoved.next(t)
-            })
         }
     }
 
@@ -168,33 +229,61 @@ export class AppService {
     }
 
     /**
-     * Adds a new tab **without** wrapping it in a SplitTabComponent
+     * Adds a new tab **without** wrapping it in a WorkspaceComponent
      * @param inputs  Properties to be assigned on the new tab component instance
      */
-    openNewTabRaw <T extends BaseTabComponent> (params: NewTabParameters<T>): T {
+    openNewTabRaw <T extends TopLevelTab> (params: NewTabParameters<T>): T {
+        // Defensive backstop: a session handed to the raw path (which should
+        // not happen at compile level) is still routed through openNewTab.
+        if (params.type.prototype instanceof SessionTab) {
+            return this.openNewTab(params as any)
+        }
         const tab = this.tabsService.create(params)
         this.addTabRaw(tab)
         return tab
     }
 
     /**
-     * Adds a new tab while wrapping it in a SplitTabComponent
+     * Adds a new tab while wrapping it in a WorkspaceComponent
      * @param inputs  Properties to be assigned on the new tab component instance
      */
     openNewTab <T extends BaseTabComponent> (params: NewTabParameters<T>): T {
-        if (params.type as any === SplitTabComponent) {
-            return this.openNewTabRaw(params)
+        if (params.type as any === WorkspaceComponent) {
+            return this.openNewTabRaw(params as any)
         }
         const tab = this.tabsService.create(params)
-        this.wrapAndAddTab(tab)
+        const active = this._activeTab
+        const sessionSettings = this.config.store.session ?? {}
+        const workspaceSettings = this.config.store.workspace ?? {}
+        const openInNewWorkspace = workspaceSettings.newSessionOpensInNewWorkspace ?? false
+        const appendToPaneByDefault = sessionSettings.appendToPaneByDefault ?? true
+        // By this point the workspace type was routed to openNewTabRaw, so the
+        // created tab is a session.
+        const session = tab as SessionTab
+        if (active instanceof WorkspaceComponent && !openInNewWorkspace && appendToPaneByDefault) {
+            // Reuse the focused workspace: add the session to its current pane
+            void active.addTabToPane(session)
+        } else {
+            this.wrapAndAddTab(session)
+        }
         return tab
     }
 
     /**
-     * Adds an existing tab while wrapping it in a SplitTabComponent
+     * Creates a new empty top-level workspace tab (a "window" that can host
+     * panes and sub-tabs), without linking it to any connection
      */
-    wrapAndAddTab (tab: BaseTabComponent): SplitTabComponent {
-        const splitTab = this.tabsService.create({ type: SplitTabComponent })
+    createWorkspaceTab (): WorkspaceComponent {
+        const workspace = this.tabsService.create({ type: WorkspaceComponent })
+        this.addTabRaw(workspace)
+        return workspace
+    }
+
+    /**
+     * Adds an existing tab while wrapping it in a WorkspaceComponent
+     */
+    wrapAndAddTab (tab: SessionTab): WorkspaceComponent {
+        const splitTab = this.tabsService.create({ type: WorkspaceComponent })
         splitTab.addTab(tab, null, 'r')
         this.addTabRaw(splitTab)
         return splitTab
@@ -217,7 +306,7 @@ export class AppService {
         return null
     }
 
-    selectTab (tab: BaseTabComponent|null): void {
+    selectTab (tab: TopLevelTab|null): void {
         if (tab && this._activeTab === tab) {
             this._activeTab.emitFocused()
             return
@@ -241,9 +330,9 @@ export class AppService {
         this.hostWindow.setTitle(this._activeTab?.title)
     }
 
-    getParentTab (tab: BaseTabComponent): SplitTabComponent|null {
+    getParentTab (tab: BaseTabComponent): WorkspaceComponent|null {
         for (const topLevelTab of this.tabs) {
-            if (topLevelTab instanceof SplitTabComponent) {
+            if (topLevelTab instanceof WorkspaceComponent) {
                 if (topLevelTab.getAllTabs().includes(tab)) {
                     return topLevelTab
                 }
@@ -395,7 +484,13 @@ export class AppService {
 
     renameTab (tab: BaseTabComponent): void {
         const modal = this.ngbModal.open(RenameTabModalComponent)
-        modal.componentInstance.value = tab.customTitle || tab.title
+        // Sessions display their profile name by default (not the dynamic
+        // cwd/OSC title) — prefill the same thing the user actually sees.
+        const profileName = tab.getProfile()?.name
+        const defaultName = tab.parent instanceof WorkspaceComponent
+            ? tab.customTitle || profileName || tab.title
+            : tab.customTitle || tab.title
+        modal.componentInstance.value = defaultName
         modal.result.then(result => {
             tab.setTitle(result)
             tab.customTitle = result
@@ -406,6 +501,142 @@ export class AppService {
     /** @hidden */
     emitTabsChanged (): void {
         this.tabsChanged.next()
+    }
+
+    /**
+     * The workspace (of this window) whose top-level tab header covers a local
+     * point — the cross-window drop target.
+     */
+    findWorkspaceAt (x: number, y: number): WorkspaceComponent|null {
+        // Map tab headers to tabs by DOM order: the tab bar renders one
+        // `tab-header` per entry of `AppService.tabs`, in the same order.
+        const headers = document.querySelectorAll('tab-header')
+        if (headers.length !== this.tabs.length) {
+            return null
+        }
+        for (let i = 0; i < this.tabs.length; i++) {
+            const tab = this.tabs[i]
+            if (!(tab instanceof WorkspaceComponent)) {
+                continue
+            }
+            const rect = (headers[i] as HTMLElement).getBoundingClientRect()
+            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
+                return tab
+            }
+        }
+        return null
+    }
+
+    /**
+     * Cross-window workspace drag (source side): capture the token while the
+     * sessions are alive, arm the PTY-keepalive, request a ghost thumbnail and
+     * start the main-process drag protocol. The outcome is handled by
+     * `endWorkspaceCrossWindowDrag`.
+     */
+    async startWorkspaceCrossWindowDrag (tab: WorkspaceComponent, ifActive?: () => boolean): Promise<void> {
+        // Drag card first, synchronously: the main process caches it until the
+        // (slower, async) token serialization finishes and the drag starts.
+        this.hostApp.windowDragCard({ title: tab.customTitle || tab.title, color: null })
+        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        if (!token) {
+            return
+        }
+        // The user may have dragged back into the window while we serialized —
+        // don't start a stale protocol in that case.
+        if (ifActive && !ifActive()) {
+            this.hostApp.windowDragCancel()
+            return
+        }
+        const transferToken = JSON.parse(JSON.stringify(token))
+        for (const s of tab.getAllTabs()) {
+            const session = (s as any).session
+            if (session?.keepPTYAlive !== undefined) {
+                session.keepPTYAlive = true
+            }
+        }
+        this.hostApp.windowDragStart('workspace', transferToken)
+    }
+
+    /**
+     * Close this window when its last tab left (e.g. the last workspace was
+     * moved to another window and `lastTabClosesWindow` is on) — mirrors the
+     * tabClosed$ handler for normal closes.
+     */
+    private maybeCloseWindowWhenEmpty (): void {
+        if (!this.tabs.length && this.config.store.appearance.lastTabClosesWindow) {
+            this.hostWindow.close()
+        }
+    }
+
+    /**
+     * Cross-window workspace drag (source side): pointer released — the main
+     * process commits the drop to the window under the cursor. Once its
+     * renderer rebuilt the workspace it signals `drag-committed`, at which
+     * point we drop our copy. A cancelled drop (landed outside every window)
+     * opens the workspace in a brand-new window — the old drag-out behaviour.
+     */
+    endWorkspaceCrossWindowDrag (tab: WorkspaceComponent): void {
+        let done = false
+        const commitSub = this.hostApp.windowDragCommitted$.subscribe(() => {
+            if (done) { return }
+            done = true
+            commitSub.unsubscribe()
+            cancelSub.unsubscribe()
+            this.removeTab(tab)
+            this.maybeCloseWindowWhenEmpty()
+        })
+        const cancelSub = this.hostApp.windowDragCancelled$.subscribe(() => {
+            if (done) { return }
+            done = true
+            commitSub.unsubscribe()
+            cancelSub.unsubscribe()
+            // Dropped on nothing → open it in a brand-new window (kept alive).
+            this.moveWorkspaceToWindow(tab)
+        })
+        this.hostApp.windowDragEnd()
+    }
+
+    /**
+     * Source side: the drag was aborted because the pointer re-entered this
+     * window — cancel the protocol, restore the PTY keep-alives and let the
+     * native CDK reorder resume.
+     */
+    cancelWorkspaceCrossWindowDrag (tab: WorkspaceComponent): void {
+        for (const s of tab.getAllTabs()) {
+            const session = (s as any).session
+            if (session && typeof session.keepPTYAlive === 'boolean') {
+                session.keepPTYAlive = false
+            }
+        }
+        this.hostApp.windowDragCancel()
+    }
+
+    /**
+     * Moves a workspace out of this window into another (existing or new)
+     * window. Serializes the workspace (PTY ids included), detaches its
+     * sessions without killing the underlying PTYs, then asks the host to open
+     * it in the target window which re-attaches the live pty.
+     */
+    async moveWorkspaceToWindow (tab: WorkspaceComponent, screenPoint?: { x: number, y: number }): Promise<void> {
+        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        if (!token) {
+            return
+        }
+        // IPC cannot clone arbitrary objects — send a plain JSON copy.
+        const transferToken = JSON.parse(JSON.stringify(token))
+        for (const s of tab.getAllTabs()) {
+            const session = (s as any).session
+            if (session?.keepPTYAlive !== undefined) {
+                session.keepPTYAlive = true
+            }
+        }
+        this.removeTab(tab)
+        this.maybeCloseWindowWhenEmpty()
+        this.hostApp.newWindow({
+            recoveryToken: transferToken,
+            x: screenPoint?.x,
+            y: screenPoint?.y,
+        })
     }
 
     async closeTab (tab: BaseTabComponent, checkCanClose?: boolean, ignorePinned = false): Promise<void> {
@@ -522,8 +753,8 @@ export class AppService {
         return this.selector.show(name, options)
     }
 
-    explodeTab (tab: SplitTabComponent): SplitTabComponent[] {
-        const result: SplitTabComponent[] = []
+    explodeTab (tab: WorkspaceComponent): WorkspaceComponent[] {
+        const result: WorkspaceComponent[] = []
         for (const child of tab.getAllTabs().slice(1)) {
             tab.removeTab(child)
             result.push(this.wrapAndAddTab(child))
@@ -531,26 +762,26 @@ export class AppService {
         return result
     }
 
-    combineTabsInto (into: SplitTabComponent): void {
+    combineTabsInto (into: WorkspaceComponent): void {
         this.explodeTab(into)
 
-        let allChildren: BaseTabComponent[] = []
+        // Only sessions can live inside a workspace's panes; whole-page hosts
+        // (settings / welcome / release notes) stay where they are.
+        let allChildren: SessionTab[] = []
         for (const tab of this.tabs) {
             if (into === tab) {
                 continue
             }
-            let children = [tab]
-            if (tab instanceof SplitTabComponent) {
-                children = tab.getAllTabs()
+            if (tab instanceof WorkspaceComponent) {
+                allChildren = allChildren.concat(tab.getAllTabs())
             }
-            allChildren = allChildren.concat(children)
         }
 
         let x = 1
-        let previous: BaseTabComponent|null = null
+        let previous: SessionTab|null = null
         const stride = Math.ceil(Math.sqrt(allChildren.length + 1))
         for (const child of allChildren) {
-            into.add(child, x ? previous : null, x ? 'r' : 'b')
+            void into.addTab(child, x ? previous : null, x ? 'r' : 'b')
             previous = child
             x = (x + 1) % stride
         }

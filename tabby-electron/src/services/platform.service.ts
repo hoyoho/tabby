@@ -105,6 +105,9 @@ export class ElectronPlatformService extends PlatformService {
     }
 
     getWinSCPPath (): string|null {
+        if (typeof wnr === 'undefined' || !wnr?.getRegistryKey) {
+            return null
+        }
         const key = wnr.getRegistryKey(wnr.HK.CR, 'WinSCP.Url\\DefaultIcon')
         if (key?.['']) {
             let detectedPath = key[''].value?.split(',')[0]
@@ -357,6 +360,24 @@ export class ElectronPlatformService extends PlatformService {
                 title,
                 buttonLabel,
                 properties: ['openDirectory', 'showHiddenFiles'],
+            },
+        )
+        if (result.canceled || !result.filePaths.length) {
+            return null
+        }
+        return result.filePaths[0]
+    }
+
+    async pickImage (): Promise<string | null> {
+        const result = await this.electron.dialog.showOpenDialog(
+            this.hostWindow.getWindow(),
+            {
+                title: this.translate.instant('Select background image'),
+                buttonLabel: this.translate.instant('Select'),
+                properties: ['openFile', 'showHiddenFiles'],
+                filters: [
+                    { name: 'Images', extensions: ['png', 'jpg', 'jpeg', 'gif', 'bmp', 'webp', 'svg'] },
+                ],
             },
         )
         if (result.canceled || !result.filePaths.length) {

@@ -9,14 +9,22 @@ import { HotkeysService } from '../services/hotkeys.service'
 import { Logger, LogService } from '../services/log.service'
 import { ConfigService } from '../services/config.service'
 import { ThemesService } from '../services/themes.service'
-import { UpdaterService } from '../services/updater.service'
 import { CommandService } from '../services/commands.service'
 
 import { BaseTabComponent } from './baseTab.component'
 import { SafeModeModalComponent } from './safeModeModal.component'
 import { TabBodyComponent } from './tabBody.component'
-import { SplitTabComponent } from './splitTab.component'
-import { AppService, Command, CommandLocation, FileTransfer, HostWindowService, PlatformService } from '../api'
+import { WorkspaceComponent } from './workspace.component'
+import {
+    AppService,
+    Command,
+    CommandLocation,
+    FileTransfer,
+    HostWindowService,
+    PlatformService,
+    ActionSurface,
+} from '../api'
+import { ActionRegistry } from '../services/action.service'
 
 function makeTabAnimation (dimension: string, size: number) {
     return [
@@ -73,14 +81,13 @@ export class AppRootComponent {
     @ViewChildren(TabBodyComponent) tabBodies: TabBodyComponent[]
     @ViewChild('activeTransfersDropdown') activeTransfersDropdown: NgbDropdown
     unsortedTabs: BaseTabComponent[] = []
-    updatesAvailable = false
     activeTransfers: FileTransfer[] = []
     private logger: Logger
 
     constructor (
         private hotkeys: HotkeysService,
         private commands: CommandService,
-        public updater: UpdaterService,
+        private actions: ActionRegistry,
         public hostWindow: HostWindowService,
         public hostApp: HostAppService,
         public config: ConfigService,
@@ -129,10 +136,10 @@ export class AppRootComponent {
                 if (hotkey === 'restart-tab') {
                     this.app.restartTab(this.app.activeTab)
                 }
-                if (hotkey === 'explode-tab' && this.app.activeTab instanceof SplitTabComponent) {
+                if (hotkey === 'explode-tab' && this.app.activeTab instanceof WorkspaceComponent) {
                     this.app.explodeTab(this.app.activeTab)
                 }
-                if (hotkey === 'combine-tabs' && this.app.activeTab instanceof SplitTabComponent) {
+                if (hotkey === 'combine-tabs' && this.app.activeTab instanceof WorkspaceComponent) {
                     this.app.combineTabsInto(this.app.activeTab)
                 }
             }
@@ -177,14 +184,6 @@ export class AppRootComponent {
         config.ready$.toPromise().then(async () => {
             this.leftToolbarButtons = await this.getToolbarButtons(false)
             this.rightToolbarButtons = await this.getToolbarButtons(true)
-
-            setInterval(() => {
-                if (this.config.store.enableAutomaticUpdates) {
-                    this.updater.check().then(available => {
-                        this.updatesAvailable = available
-                    })
-                }
-            }, 3600 * 12 * 1000)
         })
     }
 
@@ -195,7 +194,7 @@ export class AppRootComponent {
         })
 
         // While the window is being dragged, suppress the split-pane layout
-        // transition (see splitTab.component.scss). Animating pane geometry on
+        // transition (see workspace.component.scss). Animating pane geometry on
         // every resize frame triggers a full-layer repaint that flickers the
         // terminal; the transition is only wanted for split/close/maximize.
         let resizeEndTimeout: any = null
@@ -232,13 +231,10 @@ export class AppRootComponent {
     }
 
     onTabsReordered (event: CdkDragDrop<BaseTabComponent[]>) {
+        // Only workspace/settings/… top-level tab headers are CDK drag sources;
+        // a session dragged between workspaces goes through the pane drag
+        // controller instead, so the reordered item is always in `tabs`.
         const tab: BaseTabComponent = event.item.data
-        if (!this.app.tabs.includes(tab)) {
-            if (tab.parent instanceof SplitTabComponent) {
-                tab.parent.removeTab(tab)
-                this.app.wrapAndAddTab(tab)
-            }
-        }
         this.app.moveTabToIndex(tab, event.currentIndex)
     }
 
@@ -253,8 +249,25 @@ export class AppRootComponent {
     }
 
     private async getToolbarButtons (aboveZero: boolean): Promise<Command[]> {
-        return (await this.commands.getCommands({ tab: this.app.activeTab ?? undefined }))
+        const surface = aboveZero ? ActionSurface.ToolbarRight : ActionSurface.ToolbarLeft
+        const actions = this.actions.get(surface, { tab: this.app.activeTab })
+        const actionCommands = actions.map(action => ({
+            label: action.label,
+            icon: action.icon,
+            weight: action.weight,
+            run: () => this.actions.run(action, { tab: this.app.activeTab }),
+        }) as Command)
+
+        // Keep the legacy command-location entries as well: registry actions and
+        // those commands can both derive from the same ToolbarButtonProvider
+        // set (duplicates are dropped), and future ActionProvider contributions
+        // must not silently hide CommandLocation-based buttons.
+        const legacyCommands = (await this.commands.getCommands({ tab: this.app.activeTab ?? undefined }))
             .filter(x => x.locations?.includes(aboveZero ? CommandLocation.RightToolbar : CommandLocation.LeftToolbar))
+            .filter(x => !actionCommands.some(c => c.label === x.label && c.icon === x.icon && c.weight === x.weight))
+
+        return [...actionCommands, ...legacyCommands]
+            .sort((a, b) => (a.weight ?? 0) - (b.weight ?? 0))
     }
 
     toggleMaximize (): void {
@@ -262,13 +275,8 @@ export class AppRootComponent {
     }
 
     protected isTitleBarNeeded (): boolean {
-        return (
-            this.config.store.appearance.frame === 'full'
-            ||
-                this.hostApp.platform !== Platform.macOS
-                && this.config.store.appearance.frame === 'thin'
-                && this.config.store.appearance.tabsLocation !== 'top'
-                && this.config.store.appearance.tabsLocation !== 'bottom'
-        )
+        return this.hostApp.platform !== Platform.macOS
+            && this.config.store.appearance.tabsLocation !== 'top'
+            && this.config.store.appearance.tabsLocation !== 'bottom'
     }
 }

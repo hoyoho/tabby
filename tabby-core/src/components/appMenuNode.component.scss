@@ -1,0 +1,46 @@
+.app-menu-group {
+    &.indented {
+        padding-left: 16px;
+    }
+}
+
+.app-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 7px 12px;
+    border: none;
+    background: transparent;
+    color: var(--bs-body-color);
+    font-size: 13px;
+    font-weight: bold;
+    text-align: left;
+    -webkit-app-region: no-drag;
+
+    &:hover {
+        background: var(--theme-secondary);
+    }
+
+    &.expanded .app-menu-chevron {
+        transform: rotate(90deg);
+    }
+}
+
+.app-menu-chevron {
+    font-size: 10px;
+    color: #aaa;
+    transition: transform 0.1s ease;
+}
+
+.app-menu-body {
+    margin-bottom: 2px;
+}
+
+button.dropdown-item {
+    font-size: 13px;
+
+    &.checked {
+        color: var(--bs-primary);
+    }
+}

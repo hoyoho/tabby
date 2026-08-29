@@ -21,12 +21,21 @@ export class SFTPContextMenu extends TabContextMenuItemProvider {
         if (!(tab instanceof SSHTabComponent)) {
             return []
         }
-        const items = [{
+        const items: MenuItemOptions[] = []
+        if (this.hostApp.platform !== Platform.Web) {
+            items.push({
+                label: this.translate.instant('Port forwarding'),
+                click: (): void => {
+                    tab.showPortForwarding()
+                },
+            })
+        }
+        items.push({
             label: this.translate.instant('Open SFTP panel'),
             click: () => {
                 tab.openSFTP()
             },
-        }]
+        })
         if (this.hostApp.platform === Platform.Windows && this.ssh.getWinSCPPath()) {
             items.push({
                 label: this.translate.instant('Launch WinSCP'),

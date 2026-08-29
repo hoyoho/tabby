@@ -21,8 +21,28 @@ export class WebHostApp extends HostAppService {
         super(injector)
     }
 
-    newWindow (): void {
+    newWindow (_payload?: any): void {
         throw new Error('Not implemented')
+    }
+
+    windowDragStart (_kind: 'session'|'workspace', _token: any): void {
+        // No cross-window drag in the web build
+    }
+
+    windowDragEnd (): void {
+        // No cross-window drag in the web build
+    }
+
+    windowDragCancel (): void {
+        // No cross-window drag in the web build
+    }
+
+    windowDragAccepted (): void {
+        // No cross-window drag in the web build
+    }
+
+    windowDragCard (_card: { title: string, color?: string|null }): void {
+        // No cross-window drag in the web build
     }
 
     relaunch (): void {

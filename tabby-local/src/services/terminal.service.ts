@@ -1,6 +1,6 @@
 import * as fsSync from 'fs'
 import { Injectable } from '@angular/core'
-import { Logger, LogService, ConfigService, ProfilesService, PartialProfile } from 'tabby-core'
+import { Logger, LogService, ProfilesService, PartialProfile } from 'tabby-core'
 import { TerminalTabComponent } from '../components/terminalTab.component'
 import { LocalProfile } from '../api'
 
@@ -11,19 +11,16 @@ export class TerminalService {
     /** @hidden */
     private constructor (
         private profilesService: ProfilesService,
-        private config: ConfigService,
         log: LogService,
     ) {
         this.logger = log.create('terminal')
     }
 
     async getDefaultProfile (): Promise<PartialProfile<LocalProfile>> {
+        // The "default profile for new tabs" setting was removed: first local
+        // profile is the single remaining fallback.
         const profiles = await this.profilesService.getProfiles()
-        let profile = profiles.find(x => x.id === this.config.store.terminal.profile)
-        if (!profile) {
-            profile = profiles.filter(x => x.type === 'local' && x.isBuiltin)[0]
-        }
-        return profile
+        return profiles.filter(x => x.type === 'local')[0]
     }
 
     /**

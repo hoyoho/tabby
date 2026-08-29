@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr'
 import { NgxColorsModule } from 'ngx-colors'
 
-import TabbyCorePlugin, { ConfigProvider, HotkeyProvider, TabContextMenuItemProvider, CLIHandler } from 'tabby-core'
+import TabbyCorePlugin, { ConfigProvider, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, MenuProvider } from 'tabby-core'
 import { SettingsTabProvider } from 'tabby-settings'
 
 import { AppearanceSettingsTabComponent } from './components/appearanceSettingsTab.component'
@@ -16,7 +16,6 @@ import { ColorSchemePreviewComponent } from './components/colorSchemePreview.com
 import { SearchPanelComponent } from './components/searchPanel.component'
 import { StreamProcessingSettingsComponent } from './components/streamProcessingSettings.component'
 import { LoginScriptsSettingsComponent } from './components/loginScriptsSettings.component'
-import { TerminalToolbarComponent } from './components/terminalToolbar.component'
 import { ColorSchemeSelectorComponent } from './components/colorSchemeSelector.component'
 import { InputProcessingSettingsComponent } from './components/inputProcessingSettings.component'
 import { ColorSchemeSettingsForModeComponent } from './components/colorSchemeSettingsForMode.component'
@@ -29,12 +28,13 @@ import { DebugDecorator } from './features/debug'
 import { ZModemDecorator } from './features/zmodem'
 import { TerminalConfigProvider } from './config'
 import { TerminalHotkeyProvider } from './hotkeys'
-import { CopyPasteContextMenu, MiscContextMenu, LegacyContextMenu, ReconnectContextMenu, SaveAsProfileContextMenu } from './tabContextMenu'
+import { CopyPasteContextMenu, MiscContextMenu, LegacyContextMenu, ReconnectContextMenu } from './tabContextMenu'
 
 import { Frontend } from './frontends/frontend'
 import { XTermFrontend, XTermWebGLFrontend } from './frontends/xtermFrontend'
 import { TerminalCLIHandler } from './cli'
 import { DefaultColorSchemes } from './colorSchemes'
+import { TerminalMenuProvider } from './menu'
 
 /** @hidden */
 @NgModule({
@@ -47,6 +47,7 @@ import { DefaultColorSchemes } from './colorSchemes'
         NgxColorsModule,
     ],
     providers: [
+        { provide: MenuProvider, useClass: TerminalMenuProvider, multi: true },
         { provide: SettingsTabProvider, useClass: AppearanceSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: ColorSchemeSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: TerminalSettingsTabProvider, multi: true },
@@ -60,7 +61,6 @@ import { DefaultColorSchemes } from './colorSchemes'
         { provide: TabContextMenuItemProvider, useClass: MiscContextMenu, multi: true },
         { provide: TabContextMenuItemProvider, useClass: LegacyContextMenu, multi: true },
         { provide: TabContextMenuItemProvider, useClass: ReconnectContextMenu, multi: true },
-        { provide: TabContextMenuItemProvider, useClass: SaveAsProfileContextMenu, multi: true },
 
         { provide: CLIHandler, useClass: TerminalCLIHandler, multi: true },
         { provide: TerminalColorSchemeProvider, useClass: DefaultColorSchemes, multi: true },
@@ -75,7 +75,6 @@ import { DefaultColorSchemes } from './colorSchemes'
         SearchPanelComponent,
         StreamProcessingSettingsComponent,
         LoginScriptsSettingsComponent,
-        TerminalToolbarComponent,
         InputProcessingSettingsComponent,
         ColorSchemeSettingsForModeComponent,
     ],
@@ -85,7 +84,6 @@ import { DefaultColorSchemes } from './colorSchemes'
         SearchPanelComponent,
         StreamProcessingSettingsComponent,
         LoginScriptsSettingsComponent,
-        TerminalToolbarComponent,
         InputProcessingSettingsComponent,
     ],
 })
@@ -104,5 +102,4 @@ export * from './middleware/inputProcessing'
 export * from './api/middleware'
 export * from './session'
 export { LoginScriptsSettingsComponent, StreamProcessingSettingsComponent }
-export { MultifocusService } from './services/multifocus.service'
 export { TerminalColorScheme } from 'tabby-core' // was previously defined in this plugin

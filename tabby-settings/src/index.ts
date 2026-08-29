@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
-import TabbyCorePlugin, { ToolbarButtonProvider, HotkeyProvider, ConfigProvider, HotkeysService, AppService } from 'tabby-core'
+import TabbyCorePlugin, { ToolbarButtonProvider, HotkeyProvider, ConfigProvider, MenuProvider, ProfileEditHost } from 'tabby-core'
 
 import { EditProfileModalComponent } from './components/editProfileModal.component'
 import { EditProfileGroupModalComponent } from './components/editProfileGroupModal.component'
@@ -18,16 +18,16 @@ import { VaultSettingsTabComponent }  from './components/vaultSettingsTab.compon
 import { SetVaultPassphraseModalComponent } from './components/setVaultPassphraseModal.component'
 import { ProfilesSettingsTabComponent } from './components/profilesSettingsTab.component'
 import { ReleaseNotesComponent } from './components/releaseNotesTab.component'
-import { ConfigSyncSettingsTabComponent } from './components/configSyncSettingsTab.component'
 import { ShowSecretModalComponent } from './components/showSecretModal.component'
 
-import { ConfigSyncService } from './services/configSync.service'
 
 import { SettingsTabProvider } from './api'
+import { HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabProvider, ProfilesSettingsTabProvider } from './settings'
 import { ButtonProvider } from './buttonProvider'
 import { SettingsHotkeyProvider } from './hotkeys'
 import { SettingsConfigProvider } from './config'
-import { HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabProvider, ProfilesSettingsTabProvider, ConfigSyncSettingsTabProvider } from './settings'
+import { SettingsMenuProvider } from './menu'
+import { SettingsProfileEditHost } from './profileEditHost'
 
 /** @hidden */
 @NgModule({
@@ -40,13 +40,14 @@ import { HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabP
     ],
     providers: [
         { provide: ToolbarButtonProvider, useClass: ButtonProvider, multi: true },
+        { provide: MenuProvider, useClass: SettingsMenuProvider, multi: true },
+        { provide: ProfileEditHost, useClass: SettingsProfileEditHost },
         { provide: ConfigProvider, useClass: SettingsConfigProvider, multi: true },
         { provide: HotkeyProvider, useClass: SettingsHotkeyProvider, multi: true },
         { provide: SettingsTabProvider, useClass: HotkeySettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: WindowSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: VaultSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: ProfilesSettingsTabProvider, multi: true },
-        { provide: SettingsTabProvider, useClass: ConfigSyncSettingsTabProvider, multi: true },
     ],
     declarations: [
         EditProfileModalComponent,
@@ -60,28 +61,11 @@ import { HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabP
         SetVaultPassphraseModalComponent,
         VaultSettingsTabComponent,
         WindowSettingsTabComponent,
-        ConfigSyncSettingsTabComponent,
         ReleaseNotesComponent,
         ShowSecretModalComponent,
     ],
 })
-export default class SettingsModule {
-    constructor (
-        public configSync: ConfigSyncService,
-        app: AppService,
-        hotkeys: HotkeysService,
-    ) {
-        hotkeys.hotkey$.subscribe(async hotkey => {
-            if (hotkey.startsWith('settings-tab.')) {
-                const id = hotkey.substring(hotkey.indexOf('.') + 1)
-                app.openNewTabRaw({
-                    type: SettingsTabComponent,
-                    inputs: { activeTab: id },
-                })
-            }
-        })
-    }
-}
+export default class SettingsModule {} // eslint-disable-line @typescript-eslint/no-extraneous-class
 
 export * from './api'
 export {

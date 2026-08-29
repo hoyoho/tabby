@@ -63,6 +63,15 @@ export class SSHShellSession extends BaseSession {
                 this.destroy()
             }
         })
+
+        // Some servers shut the connection down without a clean EOF; the tab
+        // must still close instead of staying as a seemingly-live session.
+        this.shell.closed$.subscribe(() => {
+            this.logger.info('Shell channel closed')
+            if (this.open) {
+                this.destroy()
+            }
+        })
     }
 
     emitServiceMessage (msg: string): void {

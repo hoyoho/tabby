@@ -14,9 +14,6 @@ export class TerminalConfigProvider extends ConfigProvider {
 
     platformDefaults = {
         [Platform.macOS]: {
-            terminal: {
-                profile: 'local:default',
-            },
             hotkeys: {
                 'new-tab': [
                     '⌘-T',
@@ -24,9 +21,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             },
         },
         [Platform.Windows]: {
-            terminal: {
-                profile: 'local:cmd-clink',
-            },
             hotkeys: {
                 'new-tab': [
                     'Ctrl-Shift-T',
@@ -34,9 +28,6 @@ export class TerminalConfigProvider extends ConfigProvider {
             },
         },
         [Platform.Linux]: {
-            terminal: {
-                profile: 'local:default',
-            },
             hotkeys: {
                 'new-tab': [
                     'Ctrl-Shift-T',

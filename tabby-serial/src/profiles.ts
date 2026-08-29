@@ -1,11 +1,9 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
-import slugify from 'slugify'
 import deepClone from 'clone-deep'
 import { Injectable } from '@angular/core'
 import { NewTabParameters, SelectorService, HostAppService, Platform, TranslateService, ConnectableProfileProvider } from 'tabby-core'
 import { SerialProfileSettingsComponent } from './components/serialProfileSettings.component'
 import { SerialTabComponent } from './components/serialTab.component'
-import { SerialService } from './services/serial.service'
 import { BAUD_RATES, SerialProfile } from './api'
 
 @Injectable({ providedIn: 'root' })
@@ -37,7 +35,6 @@ export class SerialProfilesService extends ConnectableProfileProvider<SerialProf
 
     constructor (
         private selector: SelectorService,
-        private serial: SerialService,
         private hostApp: HostAppService,
         private translate: TranslateService,
     ) {
@@ -53,10 +50,12 @@ export class SerialProfilesService extends ConnectableProfileProvider<SerialProf
                     name: this.translate.instant('Serial connection'),
                     icon: 'fas fa-microchip',
                     isBuiltin: true,
+                    isTemplate: true,
                 } as SerialProfile,
             ]
         }
 
+        // Only the template — physical ports are configured per-profile.
         return [
             {
                 id: `serial:template`,
@@ -66,18 +65,6 @@ export class SerialProfilesService extends ConnectableProfileProvider<SerialProf
                 isBuiltin: true,
                 isTemplate: true,
             } as SerialProfile,
-            ...(await this.serial.listPorts()).map(p => ({
-                id: `serial:port-${slugify(p.name).replace('.', '-')}`,
-                type: 'serial',
-                name: p.description ?
-                    this.translate.instant('Serial: {description}', p) :
-                    this.translate.instant('Serial'),
-                icon: 'fas fa-microchip',
-                isBuiltin: true,
-                options: {
-                    port: p.name,
-                },
-            } as SerialProfile)),
         ]
     }
 

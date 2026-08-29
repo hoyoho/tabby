@@ -23,7 +23,6 @@ export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialPr
         private selector: SelectorService,
     ) {
         super(injector)
-        this.enableToolbar = true
     }
 
     ngOnInit () {

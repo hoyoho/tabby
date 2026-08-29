@@ -49,13 +49,68 @@ export class ElectronHostAppService extends HostAppService {
             this.configChangeBroadcast.next()
         }))
 
+        electron.ipcRenderer.on('window:open-recovery-token', (_$event, token) => {
+            this.zone.run(() => {
+                this.recoveryTokenOpen.next(token)
+            })
+        })
+
+        electron.ipcRenderer.on('window:drag-enter', (_$event, payload) => this.zone.run(() => {
+            this.windowDragEnter.next({
+                kind: payload?.kind,
+                token: payload?.token,
+                x: payload?.x,
+                y: payload?.y,
+            })
+        }))
+
+        electron.ipcRenderer.on('window:drag-move', (_$event, payload) => this.zone.run(() => {
+            this.windowDragMove.next({ x: payload?.x, y: payload?.y })
+        }))
+
+        electron.ipcRenderer.on('window:drag-leave', () => this.zone.run(() => {
+            this.windowDragLeave.next()
+        }))
+
+        electron.ipcRenderer.on('window:drag-commit', (_$event, payload) => this.zone.run(() => {
+            this.windowDragCommit.next({ kind: payload?.kind, token: payload?.token })
+        }))
+
+        electron.ipcRenderer.on('window:drag-committed', () => this.zone.run(() => {
+            this.windowDragCommitted.next()
+        }))
+
+        electron.ipcRenderer.on('window:drag-cancelled', () => this.zone.run(() => {
+            this.windowDragCancelled.next()
+        }))
+
         if (isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
             electron.ipcRenderer.send('window-set-disable-vibrancy-while-dragging', true)
         }
     }
 
-    newWindow (): void {
-        this.electron.ipcRenderer.send('app:new-window')
+    newWindow (payload?: any): void {
+        this.electron.ipcRenderer.send('app:new-window', payload ?? undefined)
+    }
+
+    windowDragStart (kind: 'session'|'workspace', token: any): void {
+        this.electron.ipcRenderer.send('app:window-drag-start', { kind, token: JSON.parse(JSON.stringify(token)) })
+    }
+
+    windowDragEnd (): void {
+        this.electron.ipcRenderer.send('app:window-drag-end')
+    }
+
+    windowDragCancel (): void {
+        this.electron.ipcRenderer.send('app:window-drag-cancel')
+    }
+
+    windowDragAccepted (): void {
+        this.electron.ipcRenderer.send('app:window-drag-accepted')
+    }
+
+    windowDragCard (card: { title: string, color?: string|null }): void {
+        this.electron.ipcRenderer.send('app:window-drag-card', card)
     }
 
     async saveConfig (data: string): Promise<void> {

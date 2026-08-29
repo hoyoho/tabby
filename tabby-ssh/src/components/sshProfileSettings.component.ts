@@ -3,7 +3,7 @@ import { Component, ViewChild } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { firstBy } from 'thenby'
 
-import { FileProvidersService, Platform, HostAppService, PromptModalComponent, PartialProfile, ProfilesService, ProfileSettingsComponent, FullyDefined, ProxifiedConfig } from 'tabby-core'
+import { FileProvidersService, Platform, HostAppService, PromptModalComponent, PartialProfile, ProfilesService, ProfileSettingsComponent, FullyDefined, ProxifiedConfig, TranslateService } from 'tabby-core'
 import { LoginScriptsSettingsComponent } from 'tabby-terminal'
 import { PasswordStorageService } from '../services/passwordStorage.service'
 import { ForwardedPortConfig, SSHAlgorithmType, SSHProfile } from '../api'
@@ -32,7 +32,9 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
         private passwordStorage: PasswordStorageService,
         private ngbModal: NgbModal,
         private fileProviders: FileProvidersService,
-    ) { }
+        private translate: TranslateService,
+    ) {
+    }
 
     async ngOnInit () {
         this.jumpHosts = (await this.profilesService.getProfiles({ includeBuiltin: false })).filter(x => x.type === 'ssh' && x !== this.profile)
@@ -70,7 +72,10 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
 
     async setPassword () {
         const modal = this.ngbModal.open(PromptModalComponent)
-        modal.componentInstance.prompt = `Password for ${this.profile.options.user}@${this.profile.options.host}`
+        modal.componentInstance.prompt = this.translate.instant('Password for {user}@{host}', {
+            user: this.profile.options.user,
+            host: this.profile.options.host,
+        })
         modal.componentInstance.password = true
         try {
             const result = await modal.result.catch(() => null)
@@ -135,6 +140,8 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
     }
 
     getConnectionDropdownTitle () {
+        // Keys are translated via the template pipe so they stay in sync with the
+        // dropdown menu rendering (same translation source as the menu items).
         return {
             direct: 'Direct',
             proxyCommand: 'Proxy command',

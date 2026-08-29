@@ -1,0 +1,22 @@
+:host {
+    display: flex;
+    flex: none;
+    align-items: center;
+}
+
+.menu-label {
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 2px;
+    font-size: 14px;
+    line-height: 1;
+    padding: 0 10px;
+    margin: 0 1px;
+    color: var(--bs-body-color);
+    -webkit-app-region: no-drag;
+
+    &:hover {
+        background: var(--theme-secondary);
+    }
+}

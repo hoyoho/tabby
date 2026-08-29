@@ -1,0 +1,103 @@
+:host {
+    display: block;
+    position: relative;
+    flex: auto;
+}
+
+::ng-deep split-tab > .child {
+    position: absolute;
+    transition: 0.125s all;
+    opacity: .75;
+
+    &.focused {
+        opacity: 1;
+    }
+}
+
+::ng-deep split-tab > .pane-tab-view {
+    overflow: hidden;
+
+    &.pane-tab-inactive {
+        display: none;
+    }
+}
+
+// 消除 pane 内终端与标题栏之间的顶部间隙（内容器 margin-top）
+::ng-deep split-tab > .child .content,
+::ng-deep split-tab > .pane-tab-view .content {
+    margin-top: 0 !important;
+}
+
+:host > .pane-header {
+    position: absolute;
+    z-index: 7;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 6px;
+    overflow: hidden;
+    background: #f2f3f5;
+    border: 1px solid #000;
+    border-radius: 0;
+
+    .pane-tab {
+        flex: 1 1 0;
+        min-width: 0;
+        padding: 2px 10px;
+        font-size: 12px;
+        line-height: 18px;
+        border-radius: 3px;
+        color: #2b2f36;
+        background: rgba(0, 0, 0, 0.05);
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+
+        .pane-tab-admin {
+            margin-right: 4px;
+            font-size: 11px;
+            color: #b06000;
+        }
+
+        &:hover {
+            background: var(--theme-primary-less-2);
+        }
+
+        &.active {
+            background: var(--theme-primary);
+            color: var(--theme-primary-fg);
+        }
+    }
+}
+
+:host > .pane-drop-hint {
+    position: fixed;
+    z-index: 60;
+    pointer-events: none;
+    border: 2px solid #4a8cff;
+    border-radius: 5px;
+    background: rgba(74, 140, 255, 0.25);
+    opacity: 0;
+    transition: opacity 0.12s;
+
+    &.visible {
+        opacity: 1;
+    }
+}
+
+::ng-deep .no-animations split-tab > .child {
+    transition: none;
+}
+
+::ng-deep .no-animations split-tab > .child {
+    transition: none;
+}
+
+// While a splitter is dragged, don't animate pane geometry — the transition
+// would otherwise ghost the content each frame.
+::ng-deep split-tab.resizing > .child,
+::ng-deep split-tab.resizing > .pane-tab-view {
+    transition: none;
+}

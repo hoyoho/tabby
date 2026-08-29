@@ -1,5 +1,4 @@
 import * as glasstron from 'glasstron'
-import { autoUpdater } from 'electron-updater'
 import { Subject, Observable, debounceTime } from 'rxjs'
 import { BrowserWindow, app, ipcMain, Rectangle, Menu, screen, BrowserWindowConstructorOptions, TouchBar, nativeImage, WebContents, nativeTheme } from 'electron'
 import ElectronConfig = require('electron-config')
@@ -41,6 +40,7 @@ export class Window {
     private windowConfig: ElectronConfig
     private windowBounds?: Rectangle
     private closing = false
+    private forceCloseTimer: ReturnType<typeof setTimeout>|null = null
     private lastVibrancy: { enabled: boolean, type?: string } | null = null
     private disableVibrancyWhileDragging = false
     private touchBarControl: any
@@ -49,6 +49,16 @@ export class Window {
 
     get visible$ (): Observable<boolean> { return this.visible }
     get closed$ (): Observable<void> { return this.closed }
+
+    /**
+     * Last time this window received focus — used as a z-order heuristic when
+     * several windows overlap so a drop can be routed to the one on top.
+     */
+    activatedAt = Date.now()
+
+    get isAlwaysOnTop (): boolean {
+        return !!(this.window && !this.window.isDestroyed() && this.window.isAlwaysOnTop())
+    }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor (private application: Application, private configStore: any, options?: WindowOptions) {
@@ -90,14 +100,10 @@ export class Window {
             }
         }
 
-        if (this.configStore.appearance?.frame === 'native') {
-            bwOptions.frame = true
-        } else {
-            bwOptions.titleBarStyle = 'hidden'
-            if (process.platform === 'win32') {
-                bwOptions.titleBarOverlay = {
-                    color: '#00000000',
-                }
+        bwOptions.titleBarStyle = 'hidden'
+        if (process.platform === 'win32') {
+            bwOptions.titleBarOverlay = {
+                color: '#00000000',
             }
         }
 
@@ -167,7 +173,6 @@ export class Window {
         }
 
         this.setupWindowManagement()
-        this.setupUpdater()
 
         this.ready = new Promise(resolve => {
             const listener = event => {
@@ -236,8 +241,21 @@ export class Window {
         }
     }
 
+    applyConfigChange (config: any, sender: WebContents): void {
+        this.configStore = config
+        this.syncDockingState()
+        this.enableDockedWindowStyles(this.isDockedOnTop())
+        if (this.webContents.id !== sender.id) {
+            this.webContents.send('host:config-change', config)
+        }
+    }
+
     isDestroyed (): boolean {
         return !this.window || this.window.isDestroyed()
+    }
+
+    get bounds (): Rectangle {
+        return this.window?.getBounds() ?? { x: 0, y: 0, width: 0, height: 0 }
     }
 
     isFocused (): boolean {
@@ -250,6 +268,57 @@ export class Window {
 
     isDockedOnTop (): boolean {
         return this.isMainWindow && this.configStore.appearance?.dock && this.configStore.appearance?.dock !== 'off' && (this.configStore.appearance?.dockAlwaysOnTop ?? true)
+    }
+
+    isDocked (): boolean {
+        return this.isMainWindow && this.configStore.appearance?.dock && this.configStore.appearance?.dock !== 'off'
+    }
+
+    private syncDockingState (): void {
+        if (!this.window) {
+            return
+        }
+        const docked = this.isDocked()
+        if (docked) {
+            if (this.window.isMaximized()) {
+                this.window.unmaximize()
+            }
+            if (this.window.isMaximizable()) {
+                this.window.setMaximizable(false)
+            }
+            if (this.window.isMovable()) {
+                this.window.setMovable(false)
+            }
+        } else {
+            if (!this.window.isMaximizable()) {
+                this.window.setMaximizable(true)
+            }
+            if (!this.window.isMovable()) {
+                this.window.setMovable(true)
+            }
+        }
+    }
+
+    private forceDockedState (): void {
+        if (!this.window) {
+            return
+        }
+        // The OS has just finished maximizing; defer the reset so the restore
+        // is not raced by the in-flight maximize.
+        setTimeout(() => {
+            if (!this.window || !this.isDocked()) {
+                return
+            }
+            if (this.window.isMaximized()) {
+                this.window.unmaximize()
+            }
+            if (this.window.isMaximizable()) {
+                this.window.setMaximizable(false)
+            }
+            if (this.window.isMovable()) {
+                this.window.setMovable(false)
+            }
+        }, 1)
     }
 
     async hide (): Promise<void> {
@@ -289,6 +358,7 @@ export class Window {
     }
 
     private async enableDockedWindowStyles (enabled: boolean) {
+        this.syncDockingState()
         if (process.platform === 'darwin') {
             if (enabled) {
                 if (!this.dockHidden) {
@@ -343,21 +413,61 @@ export class Window {
         this.window.on('enter-full-screen', () => this.send('host:window-enter-full-screen'))
         this.window.on('leave-full-screen', () => this.send('host:window-leave-full-screen'))
 
-        this.window.on('maximize', () => this.send('host:window-maximized'))
+        this.window.on('maximize', () => {
+            if (this.isDocked()) {
+                this.forceDockedState()
+            }
+            this.send('host:window-maximized')
+        })
         this.window.on('unmaximize', () => this.send('host:window-unmaximized'))
 
         this.window.on('close', event => {
             if (!this.closing) {
                 event.preventDefault()
                 this.send('host:window-close-request')
+                // If the renderer never confirms the close (e.g. it crashed
+                // while tearing down a WSL/ConPTY session), don't leave a half
+                // dead window holding the single-instance lock. Force the close
+                // so window-all-closed → app.quit() actually runs.
+                if (this.forceCloseTimer) {
+                    clearTimeout(this.forceCloseTimer)
+                }
+                this.forceCloseTimer = setTimeout(() => {
+                    this.forceCloseTimer = null
+                    if (!this.closing) {
+                        this.closing = true
+                        this.window?.close()
+                    }
+                }, 3000)
                 return
+            }
+            if (this.forceCloseTimer) {
+                clearTimeout(this.forceCloseTimer)
+                this.forceCloseTimer = null
             }
             this.windowConfig.set('windowBoundaries', this.windowBounds)
             this.windowConfig.set('maximized', this.window.isMaximized())
         })
 
         this.window.on('closed', () => {
+            if (this.forceCloseTimer) {
+                clearTimeout(this.forceCloseTimer)
+                this.forceCloseTimer = null
+            }
             this.destroy()
+        })
+
+        this.window.webContents.on('render-process-gone', (_event, details) => {
+            // A crashed/errored renderer (e.g. from a ConPTY teardown crash)
+            // must not linger as a blank zombie window that blocks a fresh
+            // launch; close it so the app can shut down cleanly.
+            if (this.closing || this.window?.isDestroyed()) {
+                return
+            }
+            if (details.reason !== 'clean-exit') {
+                this.closing = true
+                this.window.close()
+            }
         })
 
         this.window.on('resize', () => {
@@ -373,6 +483,7 @@ export class Window {
         })
 
         this.window.on('focus', () => {
+            this.activatedAt = Date.now()
             this.send('host:window-focused')
         })
 
@@ -391,7 +502,30 @@ export class Window {
         })
 
         this.on('window-set-bounds', (_, bounds) => {
-            this.window?.setBounds(bounds)
+            if (!this.window) {
+                return
+            }
+            // setBounds is only ever emitted by the docking service, so defer
+            // any in-flight unmaximize that the config change may have started.
+            // unmaximize is asynchronous (the window restores, then
+            // 'unmaximize' fires); applying bounds before that completes lets
+            // the deferred restore smash the docked position back to the old
+            // one, leaving the window floating at center.
+            if (this.window.isMaximized()) {
+                this.window.setMaximizable(false)
+                this.window.setMovable(false)
+                this.window.once('unmaximize', () => {
+                    if (!this.window) {
+                        return
+                    }
+                    this.window.setBounds(bounds)
+                    this.syncDockingState()
+                })
+                this.window.unmaximize()
+            } else {
+                this.window.setBounds(bounds)
+                this.syncDockingState()
+            }
         })
 
         this.on('window-set-always-on-top', (_, flag) => {
@@ -430,6 +564,10 @@ export class Window {
         })
 
         this.on('window-close', () => {
+            if (this.forceCloseTimer) {
+                clearTimeout(this.forceCloseTimer)
+                this.forceCloseTimer = null
+            }
             this.closing = true
             this.window.close()
         })
@@ -467,10 +605,16 @@ export class Window {
         this.window.on('resize', onBoundsChange)
 
         ipcMain.on('window-set-traffic-light-position', (_event, x, y) => {
+            if (!this.window) {
+                return
+            }
             this.window.setWindowButtonPosition({ x, y })
         })
 
         ipcMain.on('window-set-opacity', (_event, opacity) => {
+            if (!this.window) {
+                return
+            }
             this.window.setOpacity(opacity)
         })
 
@@ -485,35 +629,6 @@ export class Window {
                 return
             }
             listener(e, ...args)
-        })
-    }
-
-    private setupUpdater () {
-        autoUpdater.autoDownload = true
-        autoUpdater.autoInstallOnAppQuit = true
-
-        autoUpdater.on('update-available', () => {
-            this.send('updater:update-available')
-        })
-
-        autoUpdater.on('update-not-available', () => {
-            this.send('updater:update-not-available')
-        })
-
-        autoUpdater.on('error', err => {
-            this.send('updater:error', err)
-        })
-
-        autoUpdater.on('update-downloaded', () => {
-            this.send('updater:update-downloaded')
-        })
-
-        this.on('updater:check-for-updates', () => {
-            autoUpdater.checkForUpdates()
-        })
-
-        this.on('updater:quit-and-install', () => {
-            autoUpdater.quitAndInstall()
         })
     }
 

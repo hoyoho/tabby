@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
-import { HostWindowService } from '../api'
+import { HostWindowService, HostAppService, Platform } from '../api'
+import { ConfigService } from '../services/config.service'
 
 /** @hidden */
 @Component({
@@ -8,7 +9,13 @@ import { HostWindowService } from '../api'
     styleUrls: ['./titleBar.component.scss'],
 })
 export class TitleBarComponent {
+    Platform = Platform
+
     @Input() hideControls: boolean
 
-    constructor (public hostWindow: HostWindowService) { }
+    constructor (
+        public hostWindow: HostWindowService,
+        public config: ConfigService,
+        public hostApp: HostAppService,
+    ) { }
 }

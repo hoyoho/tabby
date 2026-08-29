@@ -1,7 +1,7 @@
 import * as C from 'constants'
 import { posix as path } from 'path'
 import { Component, Input, Output, EventEmitter, Inject, Optional } from '@angular/core'
-import { FileUpload, DirectoryUpload, DirectoryDownload, MenuItemOptions, NotificationsService, PlatformService } from 'tabby-core'
+import { FileUpload, DirectoryUpload, DirectoryDownload, MenuItemOptions, NotificationsService, PlatformService, TranslateService } from 'tabby-core'
 import { SFTPSession, SFTPFile } from '../session/sftp'
 import { SSHSession } from '../session/ssh'
 import { SFTPContextMenuItemProvider } from '../api'
@@ -36,6 +36,7 @@ export class SFTPPanelComponent {
         private ngbModal: NgbModal,
         private notifications: NotificationsService,
         public platform: PlatformService,
+        private translate: TranslateService,
         @Optional() @Inject(SFTPContextMenuItemProvider) protected contextMenuProviders: SFTPContextMenuItemProvider[],
     ) {
         this.contextMenuProviders.sort((a, b) => a.weight - b.weight)
@@ -199,10 +200,10 @@ export class SFTPPanelComponent {
         const directoryName = await modal.result.catch(() => null)
         if (directoryName?.trim()) {
             this.sftp.mkdir(path.join(this.path, directoryName)).then(() => {
-                this.notifications.notice('The directory was created successfully')
+                this.notifications.notice(this.translate.instant('The directory was created successfully'))
                 this.navigate(path.join(this.path, directoryName))
             }).catch(() => {
-                this.notifications.error('The directory could not be created')
+                this.notifications.error(this.translate.instant('The directory could not be created'))
             })
         }
     }
@@ -274,7 +275,7 @@ export class SFTPPanelComponent {
                 transfer.close()
             }
         } catch (error) {
-            this.notifications.error(`Failed to download folder: ${error.message}`)
+            this.notifications.error(this.translate.instant('Failed to download folder: {error}', { error: error.message }))
             throw error
         }
     }

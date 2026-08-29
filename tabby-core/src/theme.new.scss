@@ -70,7 +70,15 @@ app-root {
 }
 
 tab-body {
-    background: var(--body-bg);
+    background: var(--app-content-bg, var(--body-bg));
+}
+
+split-tab {
+    background-image: linear-gradient(var(--app-workspace-scrim), var(--app-workspace-scrim)), var(--app-workspace-image);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto, cover;
+    background-color: var(--body-bg);
 }
 
 $tab-border-radius: 5px;
@@ -87,7 +95,7 @@ $input-placeholder-color: var(--theme-fg-more-2);
 @import "./theme.vendor.scss";
 
 body {
-    background: var(--body-bg);
+    background-color: var(--body-bg);
     --bs-border-color: var(--theme-bg-more-2);
     --bs-form-control-bg: var(--theme-bg-more-2);
     --bs-emphasis-color: var(--theme-fg-less-2);
@@ -187,16 +195,6 @@ select.form-control {
 
 .progress {
     --bs-progress-height: 3px;
-}
-
-tab-body {
-    terminal-toolbar {
-        background: transparent;
-
-        .btn, .toolbar-pin-button {
-            font-weight: bold;
-        }
-    }
 }
 
 @each $color, $value in $theme-colors {
@@ -438,10 +436,10 @@ start-page {
 }
 
 split-tab-spanner {
-    background: rgba(var(--bs-dark-rgb), .1);
+    background: var(--theme-fg);
 
     &:hover, &.active {
-        background: rgba(var(--bs-dark-rgb), .2);
+        background: var(--theme-primary);
     }
 }
 

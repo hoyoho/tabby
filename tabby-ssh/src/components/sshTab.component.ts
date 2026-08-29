@@ -28,7 +28,6 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     session: SSHShellSession|null = null
     sftpPanelVisible = false
     sftpPath = '/'
-    enableToolbar = true
     activeKIPrompt: KeyboardInteractivePrompt|null = null
 
     constructor (
@@ -228,8 +227,11 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     }
 
     protected isSessionExplicitlyTerminated (): boolean {
-        return super.isSessionExplicitlyTerminated() ||
-        this.recentInputs.charCodeAt(this.recentInputs.length - 1) === 4 ||
-        this.recentInputs.endsWith('exit\r')
+        // A session end is signalled by a protocol-level EOF/close (shell.eof$),
+        // so a stuck remote process can never reach this point. Once the session
+        // has really ended, treat it as explicitly terminated so the tab closes
+        // by itself — same as WSL. 'keep' / 'reconnect' end-of-session behaviours
+        // are still honoured in ConnectableTerminalTabComponent.
+        return true
     }
 }

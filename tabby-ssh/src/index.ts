@@ -5,7 +5,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr'
 import { NgxFilesizeModule } from 'ngx-filesize'
 import TabbyCoreModule, { ConfigProvider, TabRecoveryProvider, HotkeyProvider, TabContextMenuItemProvider, ProfileProvider } from 'tabby-core'
-import { SettingsTabProvider } from 'tabby-settings'
 import TabbyTerminalModule from 'tabby-terminal'
 
 import { SSHProfileSettingsComponent } from './components/sshProfileSettings.component'
@@ -19,7 +18,6 @@ import { KeyboardInteractiveAuthComponent } from './components/keyboardInteracti
 import { HostKeyPromptModalComponent } from './components/hostKeyPromptModal.component'
 
 import { SSHConfigProvider } from './config'
-import { SSHSettingsTabProvider } from './settings'
 import { RecoveryProvider } from './recoveryProvider'
 import { SSHHotkeyProvider } from './hotkeys'
 import { SFTPContextMenu } from './tabContextMenu'
@@ -41,7 +39,6 @@ import { SFTPCreateDirectoryModalComponent } from './components/sftpCreateDirect
     ],
     providers: [
         { provide: ConfigProvider, useClass: SSHConfigProvider, multi: true },
-        { provide: SettingsTabProvider, useClass: SSHSettingsTabProvider, multi: true },
         { provide: TabRecoveryProvider, useClass: RecoveryProvider, multi: true },
         { provide: HotkeyProvider, useClass: SSHHotkeyProvider, multi: true },
         { provide: TabContextMenuItemProvider, useClass: SFTPContextMenu, multi: true },
@@ -67,4 +64,5 @@ export default class SSHModule { }
 export * from './api'
 export { SFTPFile, SFTPSession } from './session/sftp'
 export { SFTPPanelComponent, SSHTabComponent }
+export { SSHSettingsTabComponent }
 export { PasswordStorageService } from './services/passwordStorage.service'

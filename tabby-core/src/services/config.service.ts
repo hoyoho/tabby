@@ -3,11 +3,12 @@ import deepEqual from 'deep-equal'
 import { v4 as uuidv4 } from 'uuid'
 import * as yaml from 'js-yaml'
 import { Observable, Subject, AsyncSubject, lastValueFrom } from 'rxjs'
-import { Injectable, Inject } from '@angular/core'
+import { Injectable, Inject, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigProvider } from '../api/configProvider'
 import { PlatformService } from '../api/platform'
 import { HostAppService } from '../api/hostApp'
+import { PLUGIN_MODULES } from '../api/mainProcess'
 import { Vault, VaultService } from './vault.service'
 import { serializeFunction } from '../utils'
 import { PartialProfileGroup, ProfileGroup } from '../api/profileProvider'
@@ -19,7 +20,254 @@ export const configMerge = (a, b) => deepmerge(a, b, { arrayMerge: (_d, s) => s 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const configMergeByDefault = (a, b) => deepmerge(a, b) // eslint-disable-line @typescript-eslint/no-var-requires
 
-const LATEST_VERSION = 1
+/**
+ * Ordered config migrations. Each `run` mutates the store; the framework writes
+ * `config.version` after a migration succeeds, so a throwing migration is
+ * re-run on the next boot. The loop re-evaluates `config.version` top-down, so
+ * only the steps above the stored version run, in order.
+ */
+interface AnyConfigMigration { version: number, run: (config: any) => void }
+
+const CONFIG_MIGRATIONS: AnyConfigMigration[] = [
+    {
+        version: 1,
+        run: config => {
+            for (const connection of config.ssh?.connections ?? []) {
+                if (connection.privateKey) {
+                    connection.privateKeys = [connection.privateKey]
+                    delete connection.privateKey
+                }
+            }
+        },
+    },
+    {
+        version: 2,
+        run: config => {
+            config.profiles ??= []
+            if (config.terminal?.recoverTabs !== undefined) {
+                config.recoverTabs = config.terminal.recoverTabs
+                delete config.terminal.recoverTabs
+            }
+            for (const profile of config.terminal?.profiles ?? []) {
+                if (profile.sessionOptions) {
+                    profile.options = profile.sessionOptions
+                    delete profile.sessionOptions
+                }
+                profile.type = 'local'
+                profile.id = `local:custom:${uuidv4()}`
+            }
+            if (config.terminal?.profiles) {
+                config.profiles = config.terminal.profiles
+                delete config.terminal.profiles
+                delete config.terminal.environment
+                delete config.terminal.profile
+            }
+        },
+    },
+    {
+        version: 3,
+        run: config => {
+            delete config.ssh?.recentConnections
+            for (const c of config.ssh?.connections ?? []) {
+                const p = {
+                    id: `ssh:${uuidv4()}`,
+                    type: 'ssh',
+                    icon: 'fas fa-desktop',
+                    name: c.name,
+                    group: c.group ?? undefined,
+                    color: c.color,
+                    disableDynamicTitle: c.disableDynamicTitle,
+                    options: c,
+                }
+                config.profiles.push(p)
+            }
+            for (const p of config.profiles ?? []) {
+                if (p.type === 'ssh') {
+                    if (p.options.jumpHost) {
+                        p.options.jumpHost = config.profiles.find(x => x.name === p.options.jumpHost)?.id
+                    }
+                }
+            }
+            for (const c of config.serial?.connections ?? []) {
+                const p = {
+                    id: `serial:${uuidv4()}`,
+                    type: 'serial',
+                    icon: 'fas fa-microchip',
+                    name: c.name,
+                    group: c.group ?? undefined,
+                    color: c.color,
+                    options: c,
+                }
+                config.profiles.push(p)
+            }
+            delete config.ssh?.connections
+            delete config.serial?.connections
+            delete window.localStorage.lastSerialConnection
+        },
+    },
+    {
+        version: 4,
+        run: config => {
+            for (const p of config.profiles ?? []) {
+                if (!p.id) {
+                    p.id = `${p.type}:custom:${uuidv4()}`
+                }
+            }
+        },
+    },
+    {
+        version: 5,
+        run: config => {
+            const groups: PartialProfileGroup<ProfileGroup>[] = []
+            for (const p of config.profiles ?? []) {
+                if (!(p.group ?? '').trim()) {
+                    continue
+                }
+
+                let group = groups.find(x => x.name === p.group)
+                if (!group) {
+                    group = {
+                        id: `${uuidv4()}`,
+                        name: `${p.group}`,
+                    }
+                    groups.push(group)
+                }
+                p.group = group.id
+            }
+
+            const profileGroupCollapsed = JSON.parse(window.localStorage.profileGroupCollapsed ?? '{}')
+            for (const g of groups) {
+                if (profileGroupCollapsed[g.name]) {
+                    const collapsed = profileGroupCollapsed[g.name]
+                    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                    delete profileGroupCollapsed[g.name]
+                    profileGroupCollapsed[g.id] = collapsed
+                }
+            }
+            window.localStorage.profileGroupCollapsed = JSON.stringify(profileGroupCollapsed)
+
+            config.groups = groups
+        },
+    },
+    {
+        version: 6,
+        run: config => {
+            if (config.ssh?.clearServiceMessagesOnConnect === false) {
+                config.profileDefaults ??= {}
+                config.profileDefaults.ssh ??= {}
+                config.profileDefaults.ssh.clearServiceMessagesOnConnect = false
+                delete config.ssh?.clearServiceMessagesOnConnect
+            }
+        },
+    },
+    {
+        version: 7,
+        run: config => {
+            if (!config.configSync?.host || config.configSync?.host === 'https://api.tabby.sh') {
+                config.configSync ??= {}
+                delete config.configSync.host
+                delete config.configSync.token
+            }
+        },
+    },
+    {
+        version: 8,
+        run: config => {
+            if (config.profileDefaults?.ssh?.options?.algorithms?.compression) {
+                config.profileDefaults.ssh.options.algorithms.compression = ['none']
+            }
+            for (const p of config.profiles ?? []) {
+                if (p.options?.algorithms?.compression) {
+                    p.options.algorithms.compression = ['none']
+                }
+            }
+        },
+    },
+    {
+        version: 9,
+        run: config => {
+            // Workspace/session semantic consolidation
+            if (config.recoverTabs !== undefined) {
+                config.workspace ??= {}
+                config.workspace.recoverTabs = config.recoverTabs
+                delete config.recoverTabs
+            }
+            delete config.enableAutomaticUpdates
+        },
+    },
+    {
+        version: 10,
+        run: config => {
+            // Native window frame option was removed; the frame concept no
+            // longer exists (only the thin custom frame is rendered).
+            delete config.appearance?.frame
+        },
+    },
+    {
+        version: 11,
+        run: config => {
+            // Per-profile / per-provider / per-group hotkey namespaces were
+            // never exposed in the UI and are dead (v3 removed builtin profiles).
+            delete config.hotkeys?.profile
+            delete config.hotkeys?.['profile-selectors']
+            delete config.hotkeys?.['group-selectors']
+        },
+    },
+    {
+        version: 12,
+        run: config => {
+            // Hotkey ids renamed to match session granularity
+            const remap = {
+                'pane-nav-previous': 'session-nav-previous',
+                'pane-nav-next': 'session-nav-next',
+                'close-pane': 'close-session',
+            }
+            if (config.hotkeys) {
+                for (const old of Object.keys(remap)) {
+                    if (config.hotkeys[old] !== undefined) {
+                        config.hotkeys[remap[old]] = config.hotkeys[old]
+                        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                        delete config.hotkeys[old]
+                    }
+                }
+            }
+        },
+    },
+    {
+        version: 13,
+        run: config => {
+            // Pane size +/- hotkeys were replaced by 8 splitter-move hotkeys
+            for (const old of ['pane-increase-vertical', 'pane-decrease-vertical', 'pane-increase-horizontal', 'pane-decrease-horizontal']) {
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete config.hotkeys?.[old]
+            }
+        },
+    },
+    {
+        version: 14,
+        run: config => {
+            // R3 cleanup: dead hotkey ns/keys and removed options that the
+            // workspace & terminal refactor dropped but old saved configs
+            // (and the v11-v13 migrations) still carry.
+            for (const old of ['rearrange-panes', 'pane-maximize', 'pane-focus-all', 'focus-all-tabs', 'settings-tab']) {
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete config.hotkeys?.[old]
+            }
+            delete config.terminal?.showBuiltinProfiles
+            delete config.enableAnalytics
+        },
+    },
+    {
+        version: 15,
+        run: config => {
+            // Frame-mode concept removed entirely: the app only renders the
+            // thin custom frame (menus live in the title-bar hamburger now).
+            delete config.appearance?.frame
+        },
+    },
+]
+
+const LATEST_VERSION = CONFIG_MIGRATIONS.length
 
 function isStructuralMember (v): v is AnyRec {
     return v instanceof Object && !(v instanceof Array) &&
@@ -170,6 +418,7 @@ export class ConfigService {
         private vault: VaultService,
         private translate: TranslateService,
         @Inject(ConfigProvider) private configProviders: ConfigProvider[],
+        @Optional() @Inject(PLUGIN_MODULES) private pluginModules: any[]|null = null,
     ) {
         this.defaults = this.mergeDefaults()
         setTimeout(() => this.init())
@@ -274,7 +523,7 @@ export class ConfigService {
         }
         if (!this.servicesCache) {
             this.servicesCache = {}
-            for (const imp of window['pluginModules']) {
+            for (const imp of this.pluginModules ?? []) {
                 const module = imp.ngModule || imp
                 if (module.ɵinj?.providers) {
                     this.servicesCache[module.pluginName] = module.ɵinj.providers.map(provider => {
@@ -311,146 +560,16 @@ export class ConfigService {
         this.changed.next()
     }
 
-    // eslint-disable-next-line max-statements
     private migrate (config) {
         config.version ??= 0
-        if (config.version < 1) {
-            for (const connection of config.ssh?.connections ?? []) {
-                if (connection.privateKey) {
-                    connection.privateKeys = [connection.privateKey]
-                    delete connection.privateKey
-                }
+        for (const { version, run } of CONFIG_MIGRATIONS) {
+            if (config.version < version) {
+                run(config)
+                // Set the version only after the run succeeded, so a migration
+                // that throws is re-attempted on the next boot instead of being
+                // silently skipped.
+                config.version = version
             }
-            config.version = 1
-        }
-        if (config.version < 2) {
-            config.profiles ??= []
-            if (config.terminal?.recoverTabs !== undefined) {
-                config.recoverTabs = config.terminal.recoverTabs
-                delete config.terminal.recoverTabs
-            }
-            for (const profile of config.terminal?.profiles ?? []) {
-                if (profile.sessionOptions) {
-                    profile.options = profile.sessionOptions
-                    delete profile.sessionOptions
-                }
-                profile.type = 'local'
-                profile.id = `local:custom:${uuidv4()}`
-            }
-            if (config.terminal?.profiles) {
-                config.profiles = config.terminal.profiles
-                delete config.terminal.profiles
-                delete config.terminal.environment
-                config.terminal.profile = `local:${config.terminal.profile}`
-            }
-            config.version = 2
-        }
-        if (config.version < 3) {
-            delete config.ssh?.recentConnections
-            for (const c of config.ssh?.connections ?? []) {
-                const p = {
-                    id: `ssh:${uuidv4()}`,
-                    type: 'ssh',
-                    icon: 'fas fa-desktop',
-                    name: c.name,
-                    group: c.group ?? undefined,
-                    color: c.color,
-                    disableDynamicTitle: c.disableDynamicTitle,
-                    options: c,
-                }
-                config.profiles.push(p)
-            }
-            for (const p of config.profiles ?? []) {
-                if (p.type === 'ssh') {
-                    if (p.options.jumpHost) {
-                        p.options.jumpHost = config.profiles.find(x => x.name === p.options.jumpHost)?.id
-                    }
-                }
-            }
-            for (const c of config.serial?.connections ?? []) {
-                const p = {
-                    id: `serial:${uuidv4()}`,
-                    type: 'serial',
-                    icon: 'fas fa-microchip',
-                    name: c.name,
-                    group: c.group ?? undefined,
-                    color: c.color,
-                    options: c,
-                }
-                config.profiles.push(p)
-            }
-            delete config.ssh?.connections
-            delete config.serial?.connections
-            delete window.localStorage.lastSerialConnection
-            config.version = 3
-        }
-        if (config.version < 4) {
-            for (const p of config.profiles ?? []) {
-                if (!p.id) {
-                    p.id = `${p.type}:custom:${uuidv4()}`
-                }
-            }
-            config.version = 4
-        }
-        if (config.version < 5) {
-            const groups: PartialProfileGroup<ProfileGroup>[] = []
-            for (const p of config.profiles ?? []) {
-                if (!(p.group ?? '').trim()) {
-                    continue
-                }
-
-                let group = groups.find(x => x.name === p.group)
-                if (!group) {
-                    group = {
-                        id: `${uuidv4()}`,
-                        name: `${p.group}`,
-                    }
-                    groups.push(group)
-                }
-                p.group = group.id
-            }
-
-            const profileGroupCollapsed = JSON.parse(window.localStorage.profileGroupCollapsed ?? '{}')
-            for (const g of groups) {
-                if (profileGroupCollapsed[g.name]) {
-                    const collapsed = profileGroupCollapsed[g.name]
-                    // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                    delete profileGroupCollapsed[g.name]
-                    profileGroupCollapsed[g.id] = collapsed
-                }
-            }
-            window.localStorage.profileGroupCollapsed = JSON.stringify(profileGroupCollapsed)
-
-            config.groups = groups
-            config.version = 5
-        }
-        if (config.version < 6) {
-            if (config.ssh?.clearServiceMessagesOnConnect === false) {
-                config.profileDefaults ??= {}
-                config.profileDefaults.ssh ??= {}
-                config.profileDefaults.ssh.clearServiceMessagesOnConnect = false
-                delete config.ssh?.clearServiceMessagesOnConnect
-            }
-            config.version = 6
-        }
-        if (config.version < 7) {
-            if (!config.configSync?.host || config.configSync?.host === 'https://api.tabby.sh') {
-                config.configSync ??= {}
-                delete config.configSync.host
-                delete config.configSync.token
-            }
-            config.version = 7
-        }
-        if (config.version < 8) {
-            if (config.profileDefaults?.ssh?.options?.algorithms?.compression) {
-                config.profileDefaults.ssh.options.algorithms.compression = ['none']
-            }
-            for (const p of config.profiles ?? []) {
-                if (p.options?.algorithms?.compression) {
-                    p.options.algorithms.compression = ['none']
-                }
-            }
-            config.version = 8
         }
     }
 
@@ -519,12 +638,10 @@ export class ConfigService {
         }
         delete decryptedVault.config.vault
         delete decryptedVault.config.encrypted
-        delete decryptedVault.config.configSync
         return {
             ...decryptedVault.config,
             vault: store.vault,
             encrypted: store.encrypted,
-            configSync: store.configSync,
         }
     }
 
@@ -539,11 +656,9 @@ export class ConfigService {
         vault.config = { ...store }
         delete vault.config.vault
         delete vault.config.encrypted
-        delete vault.config.configSync
         return {
             vault: await this.vault.encrypt(vault),
             encrypted: true,
-            configSync: store.configSync,
         }
     }
 }

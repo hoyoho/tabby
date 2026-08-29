@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Component, Injector } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
-import { BaseTabComponent } from './baseTab.component'
+import { TopLevelTab } from '../api/topLevelTab'
 import { ConfigService } from '../services/config.service'
 import { LocaleService } from '../services/locale.service'
 
@@ -11,7 +11,7 @@ import { LocaleService } from '../services/locale.service'
     templateUrl: './welcomeTab.component.pug',
     styleUrls: ['./welcomeTab.component.scss'],
 })
-export class WelcomeTabComponent extends BaseTabComponent {
+export class WelcomeTabComponent extends TopLevelTab {
     enableGlobalHotkey = true
     allLanguages = LocaleService.allLanguages
 

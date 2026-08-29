@@ -15,23 +15,6 @@
                                     sup α
                                 .text-muted {{homeBase.appVersion}}
 
-                                button.btn.btn-secondary.mt-3.mb-2(
-                                    *ngIf='!updateAvailable && hostApp.platform !== Platform.Web',
-                                    (click)='checkForUpdates()',
-                                    [disabled]='checkingForUpdate'
-                                )
-                                    i.fas.fa-sync(
-                                        [class.fa-spin]='checkingForUpdate'
-                                    )
-                                    span(translate) Check for updates
-
-                                button.btn.btn-info.mt-3.mb-2(
-                                    *ngIf='updateAvailable',
-                                    (click)='updater.update()',
-                                )
-                                    i.fas.fa-sync
-                                    span(translate) Update
-
                         .col-12.col-md-6
                             .list-group.list-group-light.mb-5
                                 button.list-group-item.list-group-item-action.link-card((click)='homeBase.reportBug()')
@@ -49,7 +32,7 @@
                                 button.list-group-item.list-group-item-action.link-card((click)='homeBase.openGitHub()')
                                     i.fab.fa-fw.fa-github
                                     div
-                                        div GitHub
+                                        div(translate) GitHub
                                         small.text-muted(translate) Source code
 
                                 button.list-group-item.list-group-item-action.link-card((click)='showReleaseNotes()')
@@ -78,21 +61,6 @@
                             .title(translate) Shell integration
                             .description(translate) Allows quickly opening a terminal in the selected folder
                         toggle([ngModel]='isShellIntegrationInstalled', (ngModelChange)='toggleShellIntegration()')
-
-                    .form-line(*ngIf='hostApp.platform !== Platform.Web')
-                        .header
-                            .title(translate) Enable analytics
-                            .description(translate) We're only tracking your Tabby and OS versions.
-                        toggle(
-                            [(ngModel)]='config.store.enableAnalytics',
-                            (ngModelChange)='saveConfiguration(true)',
-                        )
-
-                    .form-line(*ngIf='hostApp.platform !== Platform.Web')
-                        .header
-                            .title(translate) Automatic Updates
-                            .description(translate) Enable automatic installation of updates when they become available.
-                        toggle([(ngModel)]='config.store.enableAutomaticUpdates', (ngModelChange)='saveConfiguration()')
 
                     .form-line(*ngIf='hostApp.platform !== Platform.Web')
                         .header
@@ -127,8 +95,6 @@
                     span {{provider.title|translate}}
                 ng-template(ngbNavContent)
                     settings-tab-body([provider]='provider')
-
-        .mb-3
 
         ng-container(*ngFor='let provider of settingsProviders')
             li(*ngIf='!provider.prioritized', [ngbNavItem]='provider.id')

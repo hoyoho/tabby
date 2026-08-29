@@ -1,8 +1,9 @@
-import { Injectable, Inject } from '@angular/core'
+import { Injectable, Inject, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { NewTabParameters } from './tabs.service'
 import { BaseTabComponent } from '../components/baseTab.component'
 import { QuickConnectProfileProvider, PartialProfile, PartialProfileGroup, Profile, ProfileGroup, ProfileProvider } from '../api/profileProvider'
+import { ProfileEditHost } from '../api/profileEditHost'
 import { SelectorOption } from '../api/selector'
 import { AppService } from './app.service'
 import { configMerge, ConfigProxy, ConfigService, FullyDefined } from './config.service'
@@ -37,6 +38,7 @@ export class ProfilesService {
         private selector: SelectorService,
         private translate: TranslateService,
         @Inject(ProfileProvider) private profileProviders: ProfileProvider<Profile>[],
+        @Optional() @Inject(ProfileEditHost) public profileEditHost: ProfileEditHost|null = null,
     ) { }
 
     /*
@@ -124,20 +126,64 @@ export class ProfilesService {
         }
     }
 
+    async setGroup (profileId: string, groupId: string): Promise<void> {
+        const profile = this.config.store.profiles.find(p => p.id === profileId)
+        if (profile) {
+            profile.group = groupId
+        }
+        await this.config.save()
+    }
+
+    /**
+     * Returns user groups flattened into a single level, each carrying a
+     * human-readable hierarchical display name ("Parent / Child").
+     */
+    async getProfileGroupsFlattened (): Promise<(PartialProfileGroup<ProfileGroup> & { displayName: string })[]> {
+        const all = await this.getProfileGroups()
+        const roots = this.buildGroupTree(all as any)
+        const result: (PartialProfileGroup<ProfileGroup> & { displayName: string })[] = []
+
+        const walk = (groups: typeof roots, prefix: string, visited: Set<string>): void => {
+            for (const group of groups) {
+                if (group.id === 'default' || visited.has(group.id)) {
+                    continue
+                }
+                visited.add(group.id)
+                const path = prefix ? `${prefix} / ${group.name || '?'}` : group.name || '?'
+                result.push({ ...group, displayName: path })
+                walk(all.filter(x => x.parentGroupId === group.id && x.id !== group.id), path, visited)
+            }
+        }
+        walk(roots, '', new Set())
+        return result
+    }
+
+    /** Builds a "Parent / Child" path for a group based on its id. */
+    getGroupDisplayPath (groupId: string, flattened: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]): string | undefined {
+        return flattened.find(x => x.id === groupId)?.displayName
+    }
+
+    /**
+     * Priority for the "new profile" template picker.
+     * SSH → Serial → Telnet/Raw → everything else (order among the rest is
+     * preserved).
+     */
+    static templatePriority (p: PartialProfile<Profile>): number {
+        const n = p.name.toLowerCase()
+        const t = p.type
+        if (t === 'ssh' || n.includes('ssh')) { return 0 }
+        if (t === 'serial' || n.includes('serial')) { return 1 }
+        if (n.includes('raw')) { return 3 }
+        if (t === 'telnet' || n.includes('telnet')) { return 2 }
+        return 4
+    }
+
     /**
     * Delete a Profile from config
     */
     async deleteProfile (profile: PartialProfile<Profile>): Promise<void> {
         this.providerForProfile(profile)?.deleteProfile(this.getConfigProxyForProfile(profile))
         this.config.store.profiles = this.config.store.profiles.filter(p => p.id !== profile.id)
-
-        const profileHotkeyName = ProfilesService.getProfileHotkeyName(profile)
-        if (this.config.store.hotkeys.profile.hasOwnProperty(profileHotkeyName)) {
-            const profileHotkeys = deepClone(this.config.store.hotkeys.profile)
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-            delete profileHotkeys[profileHotkeyName]
-            this.config.store.hotkeys.profile = profileHotkeys
-        }
     }
 
     /**
@@ -147,14 +193,6 @@ export class ProfilesService {
     async bulkDeleteProfiles (filter: (p: PartialProfile<Profile>) => boolean): Promise<void> {
         for (const profile of this.config.store.profiles.filter(filter)) {
             this.providerForProfile(profile)?.deleteProfile(this.getConfigProxyForProfile(profile))
-
-            const profileHotkeyName = ProfilesService.getProfileHotkeyName(profile)
-            if (this.config.store.hotkeys.profile.hasOwnProperty(profileHotkeyName)) {
-                const profileHotkeys = deepClone(this.config.store.hotkeys.profile)
-                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-                delete profileHotkeys[profileHotkeyName]
-                this.config.store.hotkeys.profile = profileHotkeys
-            }
         }
 
         this.config.store.profiles = this.config.store.profiles.filter(x => !filter(x))
@@ -177,9 +215,6 @@ export class ProfilesService {
             if (fullProfile.disableDynamicTitle) {
                 params.inputs['disableDynamicTitle'] = true
             }
-            if (fullProfile.color) {
-                params.inputs['color'] = fullProfile.color
-            }
             if (fullProfile.icon) {
                 params.inputs['icon'] = fullProfile.icon
             }
@@ -201,10 +236,6 @@ export class ProfilesService {
         window.localStorage['recentProfiles'] = JSON.stringify(recentProfiles)
     }
 
-    static getProfileHotkeyName (profile: PartialProfile<Profile>): string {
-        return (profile.id ?? profile.name).replace(/\./g, '-')
-    }
-
     /*
     * Methods used to interact with Profile Selector
     */
@@ -223,6 +254,29 @@ export class ProfilesService {
         }
     }
 
+    /**
+     * True if `targetParentId` can act as the parent of `childGroupId`:
+     * it must differ from the child and must not be one of its descendants.
+     */
+    canGroupBeParentOf (targetParentId: string, childGroupId: string): boolean {
+        const groups = this.config.store.groups ?? []
+        const seen = new Set<string>([childGroupId])
+        let cur = groups.find(g => g.id === targetParentId)
+        while (cur) {
+            if (cur.id === childGroupId || seen.has(cur.id)) {
+                return false
+            }
+            seen.add(cur.id)
+            const parentId = cur.parentGroupId
+            cur = parentId ? groups.find(g => g.id === parentId) : undefined
+        }
+        return true
+    }
+
+    /**
+     * Groups with an invalid/cyclic parent are promoted to roots instead of
+     * silently disappearing from the UI.
+     */
     buildGroupTree (groups: PartialProfileGroup<ProfileGroup & { children: any }>[]): PartialProfileGroup<ProfileGroup & { children: any }>[] {
         const map = new Map<string, PartialProfileGroup<ProfileGroup & { children: any }>>()
 
@@ -234,11 +288,24 @@ export class ProfilesService {
         const roots: PartialProfileGroup<ProfileGroup & { children: any }>[] = []
 
         for (const group of groups) {
-            if (group.parentGroupId) {
-                const parent = map.get(group.parentGroupId)
-                if (parent) {
+            if (group.parentGroupId && group.parentGroupId !== group.id && map.has(group.parentGroupId)) {
+                const parent = map.get(group.parentGroupId)!
+                const seen = new Set<string>([group.id])
+                let cursor: PartialProfileGroup<ProfileGroup & { children: any }>|undefined = parent
+                let cycles = false
+                while (cursor) {
+                    if (seen.has(cursor.id)) {
+                        cycles = true
+                        break
+                    }
+                    seen.add(cursor.id)
+                    cursor = cursor.parentGroupId ? map.get(cursor.parentGroupId) : undefined
+                }
+                if (cycles) {
+                    roots.push(group) // would create a cycle → treat as root
+                } else {
                     parent.children.push(group)
-                } else { roots.push(group) } // Orphaned group, treat as root
+                }
             } else {
                 roots.push(group)
             }
@@ -247,14 +314,14 @@ export class ProfilesService {
         return roots
     }
 
-    showProfileSelector (): Promise<PartialProfile<Profile> | null> {
+    showProfileSelector (filter?: (p: PartialProfile<Profile>) => boolean): Promise<PartialProfile<Profile> | null> {
         if (this.selector.active) {
             return Promise.resolve(null)
         }
 
         return new Promise<PartialProfile<Profile>|null>(async (resolve, reject) => {
             try {
-                const recentProfiles = this.getRecentProfiles()
+                const recentProfiles = filter ? this.getRecentProfiles().filter(filter) : this.getRecentProfiles()
 
                 let options: SelectorOption<void>[] = recentProfiles.map((p, i) => ({
                     ...this.selectorOptionForProfile(p),
@@ -285,19 +352,15 @@ export class ProfilesService {
 
                 let profiles = await this.getProfiles()
 
-                if (!this.config.store.terminal.showBuiltinProfiles) {
-                    profiles = profiles.filter(x => !x.isBuiltin)
-                } else {
-                    profiles = profiles.map(p => {
-                        if (p.isBuiltin) { p.group = 'Built-in' }
-                        if (!p.icon) { p.icon = 'fas fa-network-wired' }
-                        return p
-                    })
-                }
-
-                profiles = profiles.filter(x => !x.isTemplate)
+                // Sessions are always created from user-provided configs; built-in
+                // presets are never offered in the launcher.
+                profiles = profiles.filter(x => !x.isBuiltin)
 
                 profiles = profiles.filter(x => x.id && !this.config.store.profileBlacklist.includes(x.id))
+
+                if (filter) {
+                    profiles = profiles.filter(filter)
+                }
 
                 options = [...options, ...profiles.map((p): SelectorOption<void> => ({
                     ...this.selectorOptionForProfile(p),
@@ -305,21 +368,17 @@ export class ProfilesService {
                     callback: () => resolve(p),
                 }))]
 
-                try {
-                    const { SettingsTabComponent } = window['nodeRequire']('tabby-settings')
+                if (this.profileEditHost) {
                     options.push({
                         name: this.translate.instant('Manage profiles'),
                         icon: 'fas fa-window-restore',
                         weight: 10,
                         callback: () => {
-                            this.app.openNewTabRaw({
-                                type: SettingsTabComponent,
-                                inputs: { activeTab: 'profiles' },
-                            })
+                            this.profileEditHost?.openSettings('profiles')
                             resolve(null)
                         },
                     })
-                } catch { }
+                }
 
                 this.getProviders().forEach(provider => {
                     if (provider instanceof QuickConnectProfileProvider) {
@@ -359,7 +418,7 @@ export class ProfilesService {
                 }
             }
         }
-        this.notifications.error(`Could not parse "${query}"`)
+        this.notifications.error(this.translate.instant(`Could not parse "${query}"`))
         return null
     }
 
@@ -416,7 +475,7 @@ export class ProfilesService {
     /**
     * Return an Array of the existing ProfileGroups
     * arg: includeProfiles (default: false) -> if false, does not fill up the profiles field of ProfileGroup
-    * arg: includeNonUserGroup (default: false) -> if false, does not add built-in and ungrouped groups
+    * arg: includeNonUserGroup (default: false) -> if false, does not add built-in and default groups
     */
     async getProfileGroups (options?: { includeProfiles?: boolean, includeNonUserGroup?: boolean }): Promise<PartialProfileGroup<ProfileGroup>[]> {
         let profiles: PartialProfile<Profile>[] = []
@@ -446,7 +505,7 @@ export class ProfilesService {
             })
 
             const ungrouped: PartialProfileGroup<ProfileGroup> = {
-                id: 'ungrouped',
+                id: 'default',
                 name: this.translate.instant('Ungrouped'),
                 editable: false,
             }
@@ -511,6 +570,12 @@ export class ProfilesService {
     * Delete a ProfileGroup from config
     */
     async deleteProfileGroup (group: PartialProfileGroup<ProfileGroup>, options?: { deleteProfiles?: boolean }): Promise<void> {
+        // Promote direct children back to the root so nested layouts don't lose
+        // their sub-groups (and their profiles) when an intermediate group dies.
+        for (const child of this.config.store.groups.filter(g => g.parentGroupId === group.id)) {
+            delete child.parentGroupId
+        }
+
         this.config.store.groups = this.config.store.groups.filter(g => g.id !== group.id)
         if (options?.deleteProfiles) {
             await this.bulkDeleteProfiles((p) => p.group === group.id)
@@ -518,12 +583,6 @@ export class ProfilesService {
             for (const profile of this.config.store.profiles.filter(x => x.group === group.id)) {
                 delete profile.group
             }
-        }
-        if (this.config.store.hotkeys['group-selectors'].hasOwnProperty(group.id)) {
-            const groupSelectorsHotkeys = { ...this.config.store.hotkeys['group-selectors'] }
-            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
-            delete groupSelectorsHotkeys[group.id]
-            this.config.store.hotkeys['group-selectors'] = groupSelectorsHotkeys
         }
     }
 

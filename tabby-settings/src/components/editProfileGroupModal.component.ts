@@ -19,9 +19,9 @@ export class EditProfileGroupModalComponent<G extends ProfileGroup> {
     @Input() group: G & ConfigProxy<G>
     @Input() providers: ProfileProvider<Profile>[]
     @Input() selectedParentGroup: PartialProfileGroup<ProfileGroup> | undefined
-    groups: PartialProfileGroup<ProfileGroup>[]
+groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
 
-    getValidParents (groups: PartialProfileGroup<ProfileGroup>[], targetId: string): PartialProfileGroup<ProfileGroup>[] {
+    getValidParents (groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[], targetId: string): (PartialProfileGroup<ProfileGroup> & { displayName: string })[] {
         // Build a quick lookup: parentGroupId -> [child groups]
         const childrenMap = new Map<string | null, string[]>()
         for (const group of groups) {
@@ -66,7 +66,7 @@ export class EditProfileGroupModalComponent<G extends ProfileGroup> {
     ) { }
 
     async ngOnInit () {
-        const groups = await this.profilesService.getProfileGroups()
+        const groups = await this.profilesService.getProfileGroupsFlattened()
         this.groups = this.getValidParents(groups, this.group.id)
         this.selectedParentGroup = groups.find(g => g.id === this.group.parentGroupId) ?? undefined
     }
@@ -85,14 +85,14 @@ export class EditProfileGroupModalComponent<G extends ProfileGroup> {
         return TAB_COLORS.find(x => x.value === value)?.name ?? value
     }
 
-    groupTypeahead: OperatorFunction<string, readonly PartialProfileGroup<ProfileGroup>[]> = (text$: Observable<string>) =>
+    groupTypeahead: OperatorFunction<string, readonly (PartialProfileGroup<ProfileGroup> & { displayName: string })[]> = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(q => this.groups.filter(g => !q || g.name.toLowerCase().includes(q.toLowerCase()))),
+            map(q => this.groups.filter(g => !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase()))),
         )
 
-    groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => g.name
+    groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => (g as any).displayName ?? g.name
 
     iconSearch: OperatorFunction<string, string[]> = (text$: Observable<string>) =>
         text$.pipe(
@@ -101,6 +101,10 @@ export class EditProfileGroupModalComponent<G extends ProfileGroup> {
         )
 
     async save () {
+        if (!this.group.name?.trim()) {
+            this.group.name = this.translate.instant('Untitled group')
+        }
+
         if (!this.selectedParentGroup) {
             this.group.parentGroupId = undefined
         } else {
