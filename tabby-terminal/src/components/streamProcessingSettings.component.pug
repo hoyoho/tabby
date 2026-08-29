@@ -5,7 +5,7 @@
     .d-flex(ngbDropdown)
         button.btn.btn-secondary.btn-tab-bar(
             ngbDropdownToggle,
-        ) {{getInputModeName(options.inputMode)}}
+        ) {{getInputModeName(options.inputMode)|translate}}
 
         div(ngbDropdownMenu)
             a.d-flex.flex-column(
@@ -32,7 +32,7 @@
     .d-flex(ngbDropdown)
         button.btn.btn-secondary.btn-tab-bar(
             ngbDropdownToggle,
-        ) {{getOutputModeName(options.outputMode)}}
+        ) {{getOutputModeName(options.outputMode)|translate}}
 
         div(ngbDropdownMenu)
             a.d-flex.flex-column(

@@ -1,36 +1,51 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Injectable } from '@angular/core'
+import { Injectable, Injector } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { SessionService, MenuProvider, AppMenu } from 'tabby-core'
 import { BaseTerminalTabComponent } from './api/baseTerminalTab.component'
 
 /** @hidden */
 @Injectable()
 export class TerminalMenuProvider extends MenuProvider {
-    constructor (private session: SessionService) {
+    private translate: TranslateService|undefined
+
+    constructor (
+        private injector: Injector,
+        private session: SessionService,
+    ) {
         super()
+    }
+
+    private t (str: string): string {
+        try {
+            this.translate ??= this.injector.get(TranslateService)
+            return this.translate.instant(str)
+        } catch {
+            return str
+        }
     }
 
     getMenus (): AppMenu[] {
         return [
             {
-                label: 'Font size',
+                label: this.t('Font size'),
                 target: 'View',
                 items: [
                     {
-                        label: 'Enlarge font',
+                        label: this.t('Enlarge font'),
                         separatorBefore: true,
                         weight: 20,
                         click: () => this.zoom(tab => tab.zoomIn()),
                         enabled: this.hasActiveTerminal(),
                     },
                     {
-                        label: 'Shrink font',
+                        label: this.t('Shrink font'),
                         weight: 21,
                         click: () => this.zoom(tab => tab.zoomOut()),
                         enabled: this.hasActiveTerminal(),
                     },
                     {
-                        label: 'Reset zoom',
+                        label: this.t('Reset zoom'),
                         weight: 22,
                         click: () => this.zoom(tab => tab.resetZoom()),
                         enabled: this.hasActiveTerminal(),
@@ -41,7 +56,11 @@ export class TerminalMenuProvider extends MenuProvider {
     }
 
     private hasActiveTerminal (): boolean {
-        return this.getActiveTerminal() instanceof BaseTerminalTabComponent
+        try {
+            return this.getActiveTerminal() instanceof BaseTerminalTabComponent
+        } catch {
+            return false
+        }
     }
 
     private getActiveTerminal (): BaseTerminalTabComponent<any>|null {

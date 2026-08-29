@@ -42,7 +42,8 @@ export class MenuActionAdapter extends ActionProvider {
 
         for (const provider of this.menuProviders) {
             for (const menu of provider.getMenus()) {
-                const menuId = `menu:${provider.constructor.name}:${menu.label}`
+                const menuName = menu.name ?? menu.label
+                const menuId = `menu:${provider.constructor.name}:${menuName}`
                 // Positional ids keep every child unique across providers and
                 // menus, so the registry's id merge never collapses two items
                 // that merely share a label.
@@ -54,6 +55,9 @@ export class MenuActionAdapter extends ActionProvider {
                 topLevel.push({
                     id: menuId,
                     label: menu.label,
+                    // Store original English name for target matching
+                    // (separate from display label which may be translated)
+                    ...(menu.name ? { name: menu.name } : {}),
                     weight: (menu.weight ?? 0) + provider.weight,
                     surfaces: [ActionSurface.Menu],
                     run: () => undefined,
@@ -62,9 +66,13 @@ export class MenuActionAdapter extends ActionProvider {
             }
         }
 
-        // Merge contributions (target: '…') into the matching top-level menu
+        // Merge contributions (target: '…') into the matching top-level menu.
+        // Match by `name` first (untranslated slug), fall back to `label`
+        // (backward compatibility for providers that set target to a label).
         for (const contribution of contributions) {
-            const target = topLevel.find(m => m.label === contribution.target)
+            const target = topLevel.find(m =>
+                (m as any).name === contribution.target || m.label === contribution.target,
+            )
             if (target) {
                 target.children = [...target.children ?? [], ...contribution.items]
             }

@@ -1,7 +1,7 @@
 div.app-menu-root(ngbDropdown, #menuDropdown='ngbDropdown', container='body', (openChange)='onOpen($event)')
     button.btn.app-menu-btn(
         ngbDropdownToggle,
-        aria-label='Menu',
+        [attr.aria-label]="'Menu' | translate",
         (dblclick)='$event.stopPropagation()',
     )
         svg(width='14', height='14', viewBox='0 0 14 14')

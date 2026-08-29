@@ -41,7 +41,12 @@ export class WindowSettingsTabProvider extends SettingsTabProvider {
 export class VaultSettingsTabProvider extends SettingsTabProvider {
     id = 'vault'
     icon = 'key'
-    title = 'Vault'
+    title: string
+
+    constructor (translate: TranslateService) {
+        super()
+        this.title = translate.instant('Vault')
+    }
 
     getComponentType (): any {
         return VaultSettingsTabComponent

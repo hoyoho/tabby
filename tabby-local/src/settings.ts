@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HostAppService, Platform } from 'tabby-core'
+import { HostAppService, Platform, TranslateService } from 'tabby-core'
 import { SettingsTabProvider } from 'tabby-settings'
 
 import { ShellSettingsTabComponent } from './components/shellSettingsTab.component'
@@ -9,10 +9,11 @@ import { ShellSettingsTabComponent } from './components/shellSettingsTab.compone
 export class ShellSettingsTabProvider extends SettingsTabProvider {
     id = 'terminal-shell'
     icon = 'list-ul'
-    title = 'Shell'
+    title: string
 
-    constructor (private hostApp: HostAppService) {
+    constructor (private hostApp: HostAppService, translate: TranslateService) {
         super()
+        this.title = translate.instant('Shell')
     }
 
     getComponentType (): any {

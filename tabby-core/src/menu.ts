@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Injectable } from '@angular/core'
+import { Injectable, Injector } from '@angular/core'
+import { TranslateService } from '@ngx-translate/core'
 import { ConfigService } from './services/config.service'
 import { ProfilesService } from './services/profiles.service'
 import { SessionService } from './services/session.service'
@@ -12,7 +13,10 @@ import { MenuProvider, AppMenu, AppMenuItem } from './api/menuProvider'
 /** @hidden */
 @Injectable()
 export class AppMenuProvider extends MenuProvider {
+    private translate: TranslateService|undefined
+
     constructor (
+        private injector: Injector,
         private config: ConfigService,
         private profiles: ProfilesService,
         private session: SessionService,
@@ -24,11 +28,20 @@ export class AppMenuProvider extends MenuProvider {
         super()
     }
 
+    private t (str: string): string {
+        try {
+            this.translate ??= this.injector.get(TranslateService)
+            return this.translate.instant(str)
+        } catch {
+            return str
+        }
+    }
+
     getMenus (): AppMenu[] {
         const recents = this.recentSessions()
         const clearRecents = recents.length
             ? [{
-                label: 'Clear recent sessions',
+                label: this.t('Clear recent sessions'),
                 separatorBefore: true,
                 click: () => {
                     window.localStorage.removeItem('recentProfiles')
@@ -38,10 +51,11 @@ export class AppMenuProvider extends MenuProvider {
             : []
         return [
             {
-                label: 'Session',
+                name: 'Session',
+                label: this.t('Session'),
                 items: [
                     {
-                        label: 'Select profile',
+                        label: this.t('Select profile'),
                         click: async () => {
                             const profile = await this.profiles
                                 .showProfileSelector(p => p.type !== 'split-layout')
@@ -52,7 +66,7 @@ export class AppMenuProvider extends MenuProvider {
                         },
                     },
                     {
-                        label: 'Select layout',
+                        label: this.t('Select layout'),
                         click: async () => {
                             const profile = await this.profiles
                                 .showProfileSelector(p => p.type === 'split-layout')
@@ -70,47 +84,49 @@ export class AppMenuProvider extends MenuProvider {
                 ],
             },
             {
-                label: 'View',
+                name: 'View',
+                label: this.t('View'),
                 weight: 40,
                 items: [
                     {
-                        label: 'Toggle fullscreen',
+                        label: this.t('Toggle fullscreen'),
                         weight: 0,
                         click: () => this.hostWindow.toggleFullscreen(),
                     },
                     {
-                        label: 'Command palette',
+                        label: this.t('Command palette'),
                         weight: 10,
                         click: () => this.commands.showSelector(),
                     },
                     {
                         separatorBefore: true,
                         weight: 30,
-                        label: 'Profile sidebar',
+                        label: this.t('Profile sidebar'),
                         checked: this.config.store.showProfileTree,
                         click: () => this.toggleProfileTree(),
                     },
                 ],
             },
             {
-                label: 'Help',
+                name: 'Help',
+                label: this.t('Help'),
                 weight: 1000,
                 items: [
                     {
-                        label: 'Report a problem',
+                        label: this.t('Report a problem'),
                         click: () => this.homeBase.reportBug(),
                     },
                     {
-                        label: 'Community',
+                        label: this.t('Community'),
                         click: () => this.homeBase.openDiscord(),
                     },
                     {
-                        label: 'GitHub',
+                        label: this.t('GitHub'),
                         click: () => this.homeBase.openGitHub(),
                     },
                     {
                         separatorBefore: true,
-                        label: 'About',
+                        label: this.t('About'),
                         click: () => this.about(),
                     },
                 ],
