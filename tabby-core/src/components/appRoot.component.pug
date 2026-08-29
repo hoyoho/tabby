@@ -75,8 +75,9 @@ title-bar(
                         (transfersChange)='onTransfersChange()'
                     )
 
-            .btn-space.background.persistent(
-                [class.drag]='(config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right") || hostApp.platform !== Platform.macOS'
+            .btn-space.background(
+                [class.drag]='config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right" && hostApp.platform !== Platform.macOS',
+                [class.persistent]='config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right" && hostApp.platform !== Platform.macOS'
             )
 
             .btn-group.background

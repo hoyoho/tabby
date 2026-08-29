@@ -7,6 +7,8 @@ $titlebar-height: 30px;
     background: var(--theme-bg-more-2);
     color: var(--bs-body-color);
     -webkit-app-region: drag;
+    position: relative;
+    z-index: 10;
 
     menu-bar {
         flex: none;

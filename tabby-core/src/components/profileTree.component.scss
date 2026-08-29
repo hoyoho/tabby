@@ -103,6 +103,7 @@ input {
     top: 50%;
     right: -4px;
     cursor: col-resize;
+    -webkit-app-region: no-drag;
 }
 
 :host.collapsed {
