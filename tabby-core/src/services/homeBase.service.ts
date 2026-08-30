@@ -17,7 +17,7 @@ export class HomeBaseService {
     }
 
     openGitHub (): void {
-        this.platform.openExternal('https://github.com/Eugeny/tabby')
+        this.platform.openExternal('https://github.com/hoyoho/tabby')
     }
 
     openDiscord (): void {
@@ -34,6 +34,6 @@ export class HomeBaseService {
         const plugins = this.bootstrapData.installedPlugins.filter(x => !x.isBuiltin).map(x => x.name)
         body += `Plugins: ${plugins.join(', ') || 'none'}\n`
         body += `Frontend: ${this.config.store.terminal?.frontend}\n\n`
-        this.platform.openExternal(`https://github.com/Eugeny/tabby/issues/new?body=${encodeURIComponent(body)}`)
+        this.platform.openExternal(`https://github.com/hoyoho/tabby/issues/new?body=${encodeURIComponent(body)}`)
     }
 }

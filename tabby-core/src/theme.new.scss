@@ -301,8 +301,11 @@ hotkey-input-modal {
 }
 
 .btn {
+    // optical fix: icon/label ink alignment looks best with the label nudged down
     i + * {
         margin-left: 5px;
+        position: relative;
+        top: 1.5px;
     }
 
     &.btn-lg i + * {
