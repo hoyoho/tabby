@@ -24,7 +24,6 @@ export class KeyboardInteractiveAuthComponent implements OnInit {
     @Input() step = 0
     @Output() done = new EventEmitter()
     @ViewChild('input') input: ElementRef
-    remember = false
 
     constructor (
         private passwordStorage: PasswordStorageService,
@@ -106,10 +105,6 @@ export class KeyboardInteractiveAuthComponent implements OnInit {
     }
 
     next (): void {
-        if (this.isPassword() && this.remember) {
-            this.passwordStorage.savePassword(this.profile, this.prompt.responses[this.step])
-        }
-
         if (this.step === this.prompt.prompts.length - 1) {
             this.prompt.respond()
             this.done.emit()

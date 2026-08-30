@@ -58,21 +58,18 @@ const isWindows = platform() === 'win32'
         HtmlExtractors.elementAttribute('[translate*=" "]', 'translate', options),
     ]).parseFilesGlob(`${tempHtml}/**/*.html`)
 
-    // Scan pug source files for translate pipes ({{ 'xxx' | translate }})
-    // which gettext-extractor's HtmlExtractors doesn't handle
+    // Scan pug source files for `... | translate` pipes — both single- and
+    // double-quoted strings, anywhere in the template (not just right after
+    // `{{`), which gettext-extractor's HtmlExtractors doesn't handle.
     log.info('extract-pipes')
-    const pipePattern = /{{\s*'([^']+)'\s*\|\s*translate\s*}}/g
-    const attrPattern = /\[(\w+)\]="'([^']+)'\s*\|\s*translate"/g
+    const pipePattern = /(?:'([^']+)'|"([^"]+)")\s*\|\s*translate/g
     const pugFiles = sh.find('.').filter(f => f.endsWith('.pug') && f.includes('/src/'))
     const pipeMessages = new Set()
     for (const file of pugFiles) {
         const content = await fs.readFile(file, 'utf-8')
         let match
         while ((match = pipePattern.exec(content)) !== null) {
-            pipeMessages.add(match[1])
-        }
-        while ((match = attrPattern.exec(content)) !== null) {
-            pipeMessages.add(match[2])
+            pipeMessages.add(match[1] ?? match[2])
         }
     }
     log.info('extract-pipes', `found ${pipeMessages.size} unique messages from translate pipes`)

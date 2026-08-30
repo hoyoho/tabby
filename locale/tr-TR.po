@@ -2372,16 +2372,57 @@ msgid "Session persistence"
 msgstr "Oturum kalıcılığı"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "Yeniden bağlantılar arasında uzak kabuğu canlı tutar (ör. bir sekmeyi başka bir pencereye taşırken) tmux veya screen kullanarak. Aracın uzak ana bilgisayara kurulu olması gerekir."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "Sekmeyi başka bir pencereye sürüklemek yeniden bağlantıyı tetiklemesin diye kabuğu tmux ile canlı tutar."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "Ayarlanmadı"
+
+
+
+
+
+
+msgid "Description"
+msgstr "Açıklama"
+
+
+msgid "Search up"
+msgstr "Yukarı ara"
+
+
+msgid "Search down"
+msgstr "Aşağı ara"
+
+
+msgid "Case sensitivity"
+msgstr "Büyük/küçük harf duyarlılığı"
+
+
+msgid "Regular expression"
+msgstr "Düzenli ifade"
+
+
+msgid "Whole word"
+msgstr "Tam kelime"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3400,3 +3441,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "工作階段持久化"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "使用 tmux 或 screen 在重新連線時保持遠端 shell 存活（例如將分頁拖到另一個視窗）。需在遠端主機上安裝對應工具。"
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "使用 tmux 保持連線，避免跨執行個體拖曳工作階段時觸發重新連線"
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "未設定"
+
+
+
+
+
+
+msgid "Description"
+msgstr "描述"
+
+
+msgid "Search up"
+msgstr "向上搜尋"
+
+
+msgid "Search down"
+msgstr "向下搜尋"
+
+
+msgid "Case sensitivity"
+msgstr "區分大小寫"
+
+
+msgid "Regular expression"
+msgstr "正規表示式"
+
+
+msgid "Whole word"
+msgstr "整詞比對"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

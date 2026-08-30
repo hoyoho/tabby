@@ -22,12 +22,6 @@ input.form-control.mt-2(
 )
 
 .d-flex.mt-3
-    checkbox(
-        *ngIf='isPassword()',
-        [(ngModel)]='remember',
-        [text]='"Save password"|translate'
-    )
-
     .ms-auto
 
     button.btn.btn-secondary.me-3(

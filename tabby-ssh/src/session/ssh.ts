@@ -254,6 +254,9 @@ export class SSHSession {
                 this.allAuthMethods.push({ type: 'keyboard-interactive', savedPassword: this.profile.options.password })
             }
             this.allAuthMethods.push({ type: 'keyboard-interactive' })
+            // Some servers only advertise plain `password` auth; fall back to a
+            // password prompt instead of failing silently with no dialog.
+            this.allAuthMethods.push({ type: 'prompt-password' })
         }
         if (!this.profile.options.auth || this.profile.options.auth === 'password') {
             this.allAuthMethods.push({ type: 'prompt-password' })
@@ -683,7 +686,10 @@ export class SSHSession {
                     host: this.profile.options.host,
                 })
                 modal.componentInstance.password = true
-                modal.componentInstance.showRememberCheckbox = true
+                // In keyboard-interactive mode this prompt is only a fallback
+                // when the server doesn't offer k-i; don't offer to remember
+                // the password there. Password/auto modes keep the checkbox.
+                modal.componentInstance.showRememberCheckbox = this.profile.options.auth !== 'keyboardInteractive'
                 const prefilledPassword = await this.passwordStorage.loadPassword(this.profile, this.authUsername)
                 if (prefilledPassword) {
                     modal.componentInstance.value = prefilledPassword

@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "Sessie-persistensie"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "Hou die afgeleë dop lewendig tussen herverbindings (bv. wanneer u 'n oortjie na 'n ander venster skuif) deur tmux of screen te gebruik. Die hulpmiddel moet op die afgeleë gasheer geïnstalleer wees."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "Hou die dop aan die lewe met tmux sodat die sleep van 'n oortjie na 'n ander venster nie herkonneksie veroorsaak nie."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "Nie gestel nie"
+
+
+
+
+
+
+msgid "Description"
+msgstr "Beskrywing"
+
+
+msgid "Search up"
+msgstr "Soek op"
+
+
+msgid "Search down"
+msgstr "Soek af"
+
+
+msgid "Case sensitivity"
+msgstr "Kasgevoeligheid"
+
+
+msgid "Regular expression"
+msgstr "Reëlmatige uitdrukking"
+
+
+msgid "Whole word"
+msgstr "Hele woord"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

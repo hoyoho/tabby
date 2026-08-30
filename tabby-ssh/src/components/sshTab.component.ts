@@ -32,8 +32,8 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     activeKIPrompt: KeyboardInteractivePrompt|null = null
 
     /**
-     * Stable per-tab name of the remote tmux/screen session. Set when the tab
-     * is first created (if session persistence is enabled) and carried across
+     * Stable per-tab name of the remote tmux session. Set when the tab is
+     * first created (if session persistence is enabled) and carried across
      * reconnects via the recovery token, so a tab moved to another window
      * re-attaches the same remote session instead of starting a fresh shell.
      */
@@ -204,7 +204,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
         return {
             ...(await super.getRecoveryToken(options)),
-            // Only carry the live tmux/screen session name when the tab is being
+            // Only carry the live tmux session name when the tab is being
             // *moved* (drag to another window, workspace move, app restart).
             // Duplicating / splitting a tab must yield a brand-new session.
             persistSessionName: options?.includeState ? (this.persistSessionName ?? null) : null,

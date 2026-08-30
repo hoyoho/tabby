@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "세션 유지"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "tmux 또는 screen을 사용하여 재연결 시에도 원격 셸을 유지합니다(예: 탭을 다른 창으로 이동). 원격 호스트에 해당 도구가 설치되어 있어야 합니다."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "tmux로 셸을 유지하여 다른 창으로 탭을 끌어도 다시 연결되지 않도록 합니다."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "설정되지 않음"
+
+
+
+
+
+
+msgid "Description"
+msgstr "설명"
+
+
+msgid "Search up"
+msgstr "위로 검색"
+
+
+msgid "Search down"
+msgstr "아래로 검색"
+
+
+msgid "Case sensitivity"
+msgstr "대소문자 구분"
+
+
+msgid "Regular expression"
+msgstr "정규식"
+
+
+msgid "Whole word"
+msgstr "전체 단어"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

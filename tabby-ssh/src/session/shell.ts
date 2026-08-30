@@ -31,22 +31,15 @@ export class SSHShellSession extends BaseSession {
     /**
      * Build a wrapper command that keeps the remote shell alive across
      * reconnects: instead of spawning a plain shell, the login shell is
-     * started inside tmux/screen under a stable per-tab session name. A
-     * reconnect (e.g. dragging the tab to another window) re-runs the same
-     * command and transparently re-attaches to the existing session.
+     * started inside tmux under a stable per-tab session name. A reconnect
+     * (e.g. dragging the tab to another window) re-runs the same command and
+     * transparently re-attaches to the existing session.
      */
     private getWrapperCommand (): string|null {
-        const mode = this.profile.options.persistSession
-        if (!mode || !this.persistSessionName) {
+        if (!this.profile.options.persistSession || !this.persistSessionName) {
             return null
         }
-        if (mode === 'tmux') {
-            return `tmux new -A -s ${this.persistSessionName}`
-        }
-        if (mode === 'screen') {
-            return `screen -xRR -S ${this.persistSessionName}`
-        }
-        return null
+        return `tmux new -A -s ${this.persistSessionName}`
     }
 
     async start (): Promise<void> {

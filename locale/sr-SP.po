@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "Трајност сесије"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "Одржава удаљену љуску живом између поновних повезивања (нпр. приликом премештања картице у други прозор) помоћу tmux или screen. Алат мора бити инсталиран на удаљеном хосту."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "Одржава љуску активном помоћу tmux-а како превлачење картице у други прозор не би изазвало поновно повезивање."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "Није подешено"
+
+
+
+
+
+
+msgid "Description"
+msgstr "Опис"
+
+
+msgid "Search up"
+msgstr "Тражи горе"
+
+
+msgid "Search down"
+msgstr "Тражи доле"
+
+
+msgid "Case sensitivity"
+msgstr "Осетљивост на велика и мала слова"
+
+
+msgid "Regular expression"
+msgstr "Регуларни израз"
+
+
+msgid "Whole word"
+msgstr "Цела реч"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

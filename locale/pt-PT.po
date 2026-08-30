@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "Persistência de sessão"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "Mantém a shell remota ativa entre religações (por exemplo, ao mover um separador para outra janela) usando tmux ou screen. A ferramenta tem de estar instalada no host remoto."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "Mantém o shell ativo com tmux, para que arrastar um separador para outra janela não provoque uma reconexão."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "Não definido"
+
+
+
+
+
+
+msgid "Description"
+msgstr "Descrição"
+
+
+msgid "Search up"
+msgstr "Pesquisar para cima"
+
+
+msgid "Search down"
+msgstr "Pesquisar para baixo"
+
+
+msgid "Case sensitivity"
+msgstr "Sensibilidade a maiúsculas e minúsculas"
+
+
+msgid "Regular expression"
+msgstr "Expressão regular"
+
+
+msgid "Whole word"
+msgstr "Palavra inteira"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+

@@ -2371,16 +2371,57 @@ msgid "Session persistence"
 msgstr "Uchování relace"
 
 
-msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
-msgstr "Udržuje vzdálený shell naživu mezi opětovnými připojeními (např. při přesunu karty do jiného okna) pomocí tmux nebo screen. Nástroj musí být nainstalován na vzdáleném hostiteli."
+msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
+msgstr "Udržuje shell naživu pomocí tmux, aby přetažení karty do jiného okna nezpůsobilo znovupřipojení."
 
 
-msgid "tmux"
-msgstr "tmux"
 
 
-msgid "screen"
-msgstr "screen"
+
+
+
+
+
+
+
+msgid "Not set"
+msgstr "Nenastaveno"
+
+
+
+
+
+
+msgid "Description"
+msgstr "Popis"
+
+
+msgid "Search up"
+msgstr "Hledat nahoru"
+
+
+msgid "Search down"
+msgstr "Hledat dolů"
+
+
+msgid "Case sensitivity"
+msgstr "Rozlišovat velká a malá písmena"
+
+
+msgid "Regular expression"
+msgstr "Regulární výraz"
+
+
+msgid "Whole word"
+msgstr "Celé slovo"
+
+
+
+
+
+
+
+
 
 
 msgid "Reuse session for multiple tabs"
@@ -3399,3 +3440,5 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+
