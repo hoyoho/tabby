@@ -76,7 +76,6 @@ mac:
 linux:
   category: "Utility;TerminalEmulator;System"
   icon: "./build/icons"
-  packageName: tabby-terminal
   artifactName: tabby-${version}-linux-${env.ARCH}.${ext}
   executableArgs:
   - "--no-sandbox"
