@@ -2364,6 +2364,25 @@ msgstr "应用启动时恢复工作区"
 
 
 
+
+
+
+msgid "Session persistence"
+msgstr "会话持久化"
+
+
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr "使用 tmux 或 screen 在重连时保持远程 shell 存活（例如将标签页拖到另一个窗口）。需在远程主机上安装相应的工具。"
+
+
+msgid "tmux"
+msgstr "tmux"
+
+
+msgid "screen"
+msgstr "screen"
+
+
 msgid "Reuse session for multiple tabs"
 msgstr "为多个标签页重用会话"
 

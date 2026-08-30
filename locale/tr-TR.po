@@ -2365,6 +2365,25 @@ msgstr ""
 
 
 
+
+
+
+msgid "Session persistence"
+msgstr "Oturum kalıcılığı"
+
+
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr "Yeniden bağlantılar arasında uzak kabuğu canlı tutar (ör. bir sekmeyi başka bir pencereye taşırken) tmux veya screen kullanarak. Aracın uzak ana bilgisayara kurulu olması gerekir."
+
+
+msgid "tmux"
+msgstr "tmux"
+
+
+msgid "screen"
+msgstr "screen"
+
+
 msgid "Reuse session for multiple tabs"
 msgstr "Oturumu birden fazla sekme için yeniden kullanma"
 

@@ -230,6 +230,15 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
 
             .form-line
                 .header
+                    .title(translate) Session persistence
+                    .description(translate) Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host.
+                select.form-control([(ngModel)]='profile.options.persistSession')
+                    option([ngValue]='null', translate) Off
+                    option([ngValue]='"tmux"', translate) tmux
+                    option([ngValue]='"screen"', translate) screen
+
+            .form-line
+                .header
                     .title(translate) Keep Alive Interval (Milliseconds)
                 input.form-control(
                     type='number',

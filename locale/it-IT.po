@@ -2365,6 +2365,25 @@ msgstr ""
 
 
 
+
+
+
+msgid "Session persistence"
+msgstr "Persistenza della sessione"
+
+
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr "Mantiene attiva la shell remota tra le riconnessioni (ad es. spostando una scheda in un'altra finestra) usando tmux o screen. Lo strumento deve essere installato sull'host remoto."
+
+
+msgid "tmux"
+msgstr "tmux"
+
+
+msgid "screen"
+msgstr "screen"
+
+
 msgid "Reuse session for multiple tabs"
 msgstr "Riusa la sessione per più schede"
 

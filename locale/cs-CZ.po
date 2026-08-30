@@ -2364,6 +2364,25 @@ msgstr ""
 
 
 
+
+
+
+msgid "Session persistence"
+msgstr "Uchování relace"
+
+
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr "Udržuje vzdálený shell naživu mezi opětovnými připojeními (např. při přesunu karty do jiného okna) pomocí tmux nebo screen. Nástroj musí být nainstalován na vzdáleném hostiteli."
+
+
+msgid "tmux"
+msgstr "tmux"
+
+
+msgid "screen"
+msgstr "screen"
+
+
 msgid "Reuse session for multiple tabs"
 msgstr "Znovu použít relaci pro více karet"
 

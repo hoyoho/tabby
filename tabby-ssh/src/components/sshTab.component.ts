@@ -1,9 +1,10 @@
 import * as russh from 'russh'
+import * as crypto from 'crypto'
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector, HostListener } from '@angular/core'
+import { Component, Injector, HostListener, Input } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { Platform, ProfilesService } from 'tabby-core'
+import { Platform, ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
 import { SSHService } from '../services/ssh.service'
 import { KeyboardInteractivePrompt, SSHSession } from '../session/ssh'
@@ -30,6 +31,14 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     sftpPath = '/'
     activeKIPrompt: KeyboardInteractivePrompt|null = null
 
+    /**
+     * Stable per-tab name of the remote tmux/screen session. Set when the tab
+     * is first created (if session persistence is enabled) and carried across
+     * reconnects via the recovery token, so a tab moved to another window
+     * re-attaches the same remote session instead of starting a fresh shell.
+     */
+    @Input() persistSessionName?: string
+
     constructor (
         injector: Injector,
         public ssh: SSHService,
@@ -44,6 +53,10 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     }
 
     ngOnInit (): void {
+        if (!this.persistSessionName && this.profile.options.persistSession) {
+            this.persistSessionName = `tabby-${Date.now().toString(36)}${crypto.randomBytes(4).toString('hex')}`
+        }
+
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, hotkey => {
             if (!this.hasFocus) {
                 return
@@ -159,7 +172,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
 
     private async initializeSessionMaybeMultiplex (multiplex = true): Promise<void> {
         this.sshSession = await this.setupOneSession(this.injector, this.profile, multiplex)
-        const session = new SSHShellSession(this.injector, this.sshSession, this.profile)
+        const session = new SSHShellSession(this.injector, this.sshSession, this.profile, this.persistSessionName ?? null)
 
         this.setSession(session)
         this.attachSessionHandler(session.serviceMessage$, msg => {
@@ -185,6 +198,16 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
                 this.write(colors.black.bgRed(' X ') + ' ' + colors.red(e.message) + '\r\n')
                 return
             }
+        }
+    }
+
+    async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
+        return {
+            ...(await super.getRecoveryToken(options)),
+            // Only carry the live tmux/screen session name when the tab is being
+            // *moved* (drag to another window, workspace move, app restart).
+            // Duplicating / splitting a tab must yield a brand-new session.
+            persistSessionName: options?.includeState ? (this.persistSessionName ?? null) : null,
         }
     }
 

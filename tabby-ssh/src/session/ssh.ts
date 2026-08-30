@@ -859,7 +859,7 @@ export class SSHSession {
         }
     }
 
-    async openShellChannel (options: { x11: boolean }): Promise<russh.Channel> {
+    async openShellChannel (options: { x11: boolean, command?: string|null }): Promise<russh.Channel> {
         if (!(this.ssh instanceof russh.AuthenticatedSSHClient)) {
             throw new Error('Cannot open shell channel before auth')
         }
@@ -881,7 +881,11 @@ export class SSHSession {
         if (this.profile.options.agentForward) {
             await ch.requestAgentForwarding()
         }
-        await ch.requestShell()
+        if (options.command) {
+            await ch.requestExec(options.command)
+        } else {
+            await ch.requestShell()
+        }
         return ch
     }
 

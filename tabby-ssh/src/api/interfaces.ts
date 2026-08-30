@@ -36,6 +36,7 @@ export interface SSHProfileOptions extends LoginScriptsOptions {
     httpProxyHost: string | null
     httpProxyPort: number | null
     reuseSession: boolean
+    persistSession: null|'tmux'|'screen'
     input: InputProcessingOptions,
 }
 

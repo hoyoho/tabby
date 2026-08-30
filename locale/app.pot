@@ -265,8 +265,8 @@ msgstr ""
 msgid "Change workspace color"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:172
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:176
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:183
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:187
 msgid "Ciphers"
 msgstr ""
 
@@ -371,7 +371,7 @@ msgstr ""
 
 #: locale/tmp-html/tabby-local/src/components/localProfileSettings.component.html:25
 #: locale/tmp-html/tabby-serial/src/components/serialProfileSettings.component.html:81
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:226
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:237
 msgid "Colors"
 msgstr ""
 
@@ -395,7 +395,7 @@ msgstr ""
 msgid "Community"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:216
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:227
 msgid "Compression"
 msgstr ""
 
@@ -446,7 +446,7 @@ msgstr ""
 
 #: locale/tmp-html/tabby-ssh/src/components/sftpPanel.component.html:34
 #: tabby-serial/src/components/serialTab.component.ts:59
-#: tabby-ssh/src/components/sshTab.component.ts:137
+#: tabby-ssh/src/components/sshTab.component.ts:150
 #: tabby-telnet/src/components/telnetTab.component.ts:53
 msgid "Connecting"
 msgstr ""
@@ -528,7 +528,7 @@ msgstr ""
 msgid "Could not decrypt config"
 msgstr ""
 
-#: tabby-ssh/src/session/ssh.ts:983
+#: tabby-ssh/src/session/ssh.ts:987
 msgid "Could not read the private key"
 msgstr ""
 
@@ -706,7 +706,7 @@ msgid "Disabled"
 msgstr ""
 
 #: locale/tmp-html/tabby-ssh/src/components/hostKeyPromptModal.component.html:26
-#: tabby-ssh/src/components/sshTab.component.ts:208
+#: tabby-ssh/src/components/sshTab.component.ts:231
 #: tabby-telnet/src/components/telnetTab.component.ts:82
 #: tabby-terminal/src/api/connectableTerminalTab.component.ts:36
 #: tabby-terminal/src/tabContextMenu.ts:87
@@ -718,7 +718,7 @@ msgstr ""
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr ""
 
-#: tabby-ssh/src/components/sshTab.component.ts:206
+#: tabby-ssh/src/components/sshTab.component.ts:229
 #: tabby-telnet/src/components/telnetTab.component.ts:80
 msgid "Disconnect from {host}?"
 msgstr ""
@@ -743,7 +743,7 @@ msgstr ""
 msgid "Do not abort"
 msgstr ""
 
-#: tabby-ssh/src/components/sshTab.component.ts:209
+#: tabby-ssh/src/components/sshTab.component.ts:232
 #: tabby-telnet/src/components/telnetTab.component.ts:83
 msgid "Do not close"
 msgstr ""
@@ -1151,7 +1151,7 @@ msgstr ""
 msgid "Hides the docked terminal when you click away."
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:196
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:207
 msgid "HMAC"
 msgstr ""
 
@@ -1164,7 +1164,7 @@ msgstr ""
 msgid "Host"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:206
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:217
 msgid "Host key"
 msgstr ""
 
@@ -1219,7 +1219,7 @@ msgid "Incorrect passphrase"
 msgstr ""
 
 #: locale/tmp-html/tabby-serial/src/components/serialProfileSettings.component.html:91
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:236
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:247
 #: locale/tmp-html/tabby-telnet/src/components/telnetProfileSettings.component.html:21
 msgid "Input"
 msgstr ""
@@ -1278,7 +1278,7 @@ msgstr ""
 msgid "Keep"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:154
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:165
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr ""
 
@@ -1286,11 +1286,15 @@ msgstr ""
 msgid "Keep docked terminal always on top"
 msgstr ""
 
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:155
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr ""
+
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:86
 msgid "Key"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:186
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:197
 msgid "Key exchange"
 msgstr ""
 
@@ -1383,7 +1387,7 @@ msgid "Local terminal"
 msgstr ""
 
 #: locale/tmp-html/tabby-serial/src/components/serialProfileSettings.component.html:86
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:231
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:242
 #: locale/tmp-html/tabby-telnet/src/components/telnetProfileSettings.component.html:16
 msgid "Login scripts"
 msgstr ""
@@ -1400,7 +1404,7 @@ msgstr ""
 msgid "Mark"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:160
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:171
 msgid "Max Keep Alive Count"
 msgstr ""
 
@@ -1602,6 +1606,7 @@ msgid "Odd"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/windowSettingsTab.component.html:91
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:158
 #: locale/tmp-html/tabby-terminal/src/components/terminalSettingsTab.component.html:144
 #: locale/tmp-html/tabby-terminal/src/components/terminalSettingsTab.component.html:60
 msgid "Off"
@@ -1844,7 +1849,7 @@ msgstr ""
 msgid "Previous workspace"
 msgstr ""
 
-#: tabby-ssh/src/session/ssh.ts:970
+#: tabby-ssh/src/session/ssh.ts:974
 msgid "Private key passphrase"
 msgstr ""
 
@@ -1902,7 +1907,7 @@ msgstr ""
 msgid "Raw socket connection"
 msgstr ""
 
-#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:166
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:177
 msgid "Ready Timeout (Milliseconds)"
 msgstr ""
 
@@ -2115,6 +2120,10 @@ msgstr ""
 msgid "Saved to {path}"
 msgstr ""
 
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:160
+msgid "screen"
+msgstr ""
+
 #: locale/tmp-html/tabby-terminal/src/components/terminalSettingsTab.component.html:46
 msgid "Scroll on input"
 msgstr ""
@@ -2220,6 +2229,10 @@ msgstr ""
 #: tabby-serial/src/profiles.ts:50
 #: tabby-serial/src/profiles.ts:63
 msgid "Serial connection"
+msgstr ""
+
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:154
+msgid "Session persistence"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/setVaultPassphraseModal.component.html:2
@@ -2400,7 +2413,7 @@ msgstr ""
 msgid "SSH"
 msgstr ""
 
-#: tabby-ssh/src/profiles.ts:77
+#: tabby-ssh/src/profiles.ts:78
 msgid "SSH connection"
 msgstr ""
 
@@ -2532,6 +2545,10 @@ msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/windowSettingsTab.component.html:226
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
+msgstr ""
+
+#: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:159
+msgid "tmux"
 msgstr ""
 
 #: tabby-core/src/hotkeys.ts:19
@@ -2829,9 +2846,6 @@ msgstr ""
 
 #: tabby-terminal/src/hotkeys.ts:58
 msgid "Zoom out"
-msgstr ""
-
-msgid "Menu"
 msgstr ""
 
 msgid "Master passphrase"

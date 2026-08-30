@@ -2364,6 +2364,25 @@ msgstr ""
 
 
 
+
+
+
+msgid "Session persistence"
+msgstr "Trajnost sesije"
+
+
+msgid "Keep the remote shell alive across reconnects (e.g. moving a tab to another window) using tmux or screen. The tool must be installed on the remote host."
+msgstr "Održava udaljenu ljusku aktivnom između ponovnih povezivanja (npr. pri premještanju kartice u drugi prozor) koristeći tmux ili screen. Alat mora biti instaliran na udaljenom hostu."
+
+
+msgid "tmux"
+msgstr "tmux"
+
+
+msgid "screen"
+msgstr "screen"
+
+
 msgid "Reuse session for multiple tabs"
 msgstr "Ponovo koristi sesiju za više kartica"
 
