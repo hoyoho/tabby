@@ -144,12 +144,17 @@ export class TabHeaderComponent extends BaseComponent {
         return this.config.store.appearance.flexTabs
     }
 
-    @HostListener('dblclick', ['$event']) onDoubleClick (_$event: MouseEvent): void {
+    @HostListener('dblclick', ['$event']) onDoubleClick (event: MouseEvent): void {
         // Whole-page hosts (settings / welcome / release notes) are not
         // renameable — only workspaces are.
         if (this.tab instanceof WorkspaceComponent) {
             this.app.renameTab(this.tab)
         }
+        // Stop the dblclick from bubbling to the tab-bar's own handler, which
+        // toggles window maximization when the tab bar doubles as the title
+        // bar (frameless layout). The app menu is a sibling of the tab headers
+        // and is unaffected.
+        event.stopPropagation()
     }
 
     @HostListener('mousedown', ['$event']) async onMouseDown ($event: MouseEvent) {
