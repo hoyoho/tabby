@@ -654,6 +654,32 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /**
+     * Places a session at a precise pane drop zone — merged into a pane's
+     * center or split into a new pane at an edge. Attaches the session's view
+     * if it was freshly created (cross-window drops). Used by the cross-window
+     * drop path so a session dragged from another window lands at the exact
+     * cursor position inside a split workspace.
+     * @hidden
+     */
+    async addSessionAt (tab: SessionTab, zone: { pane: Pane, side: SplitDirection|'all' }): Promise<void> {
+        if (zone.side === 'all') {
+            const pane = zone.pane
+            if (!pane || pane.tabs.includes(tab)) {
+                return
+            }
+            this.adoptTab(tab)
+            pane.tabs.push(tab)
+            pane.activeTab = tab
+            await this.attachTabView(tab)
+            this.focus(tab)
+            this.layout()
+            this.updateTitle()
+            return
+        }
+        await this.addTabAt(tab, zone.pane.tabs[0] ?? null, zone.side)
+    }
+
+    /**
      * Duplicates a session (a sub-tab of a pane) as a new session of the SAME
      * pane. Unlike `AppService.duplicateTab` (which is only valid for top-level
      * workspaces), this keeps the copy inside the current workspace.
@@ -932,6 +958,27 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             }
         }
         return null
+    }
+
+    /**
+     * Pane-level drop target under a client point (the exact pane and the
+     * split/merge side), mirroring the in-window drag gesture. Used by the
+     * cross-window drop path so a session dragged from another window can be
+     * inserted at the precise cursor location inside a split workspace.
+     * @hidden
+     */
+    dropZoneAt (x: number, y: number): { pane: Pane, side: SplitDirection|'all' }|null {
+        const hit = this.paneDrag.hitTestPane(x, y)
+        return hit ? { pane: hit.pane, side: hit.side } : null
+    }
+
+    /**
+     * Renders the in-window drop-hint overlay for a client point (pane merge
+     * or split edge), so the cross-window drag previews where the drop lands.
+     * @hidden
+     */
+    showDropHintAt (x: number, y: number): void {
+        this.paneDrag.updateDragHint(x, y)
     }
 
     /** @hidden PaneDragHost */

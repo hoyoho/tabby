@@ -150,7 +150,7 @@ export class PaneDragController {
         }
     }
 
-    private updateDragHint (x: number, y: number): void {
+    updateDragHint (x: number, y: number): void {
         const hit = this.hitTestPane(x, y)
         if (!hit) {
             // Outside this workspace's panes: highlight another workspace's tab
@@ -229,7 +229,7 @@ export class PaneDragController {
         }
     }
 
-    private hitTestPane (x: number, y: number): { pane: Pane, side: SplitDirection|'all', rect: DOMRect }|null {
+    hitTestPane (x: number, y: number): { pane: Pane, side: SplitDirection|'all', rect: DOMRect }|null {
         for (const pane of collectPanes(this.host.root)) {
             const tab = pane.tab
             if (!tab) { continue }

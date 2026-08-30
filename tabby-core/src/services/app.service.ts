@@ -4,6 +4,7 @@ import { Observable, Subject, AsyncSubject, takeUntil, debounceTime } from 'rxjs
 
 import { BaseTabComponent } from '../components/baseTab.component'
 import { WorkspaceComponent } from '../components/workspace.component'
+import { Pane, SplitDirection } from '../components/workspace.layout'
 import { RenameTabModalComponent } from '../components/renameTabModal.component'
 import { SessionTab } from '../api/session'
 import { TopLevelTab } from '../api/topLevelTab'
@@ -56,7 +57,7 @@ export class AppService {
     private closedTabsStack: RecoveryToken[] = []
 
     /** The workspace whose tab header is currently hovered by the drag. */
-    crossWindowDragTarget: WorkspaceComponent|null = null
+    crossWindowDragTarget: { workspace: WorkspaceComponent, zone: { pane: Pane, side: SplitDirection|'all' }|null }|null = null
 
     private activeTabChange = new Subject<BaseTabComponent|null>()
     private tabsChanged = new Subject<void>()
@@ -129,36 +130,42 @@ export class AppService {
         // (its tab header in the tab bar) and, on drop, restore the dragged
         // session into that workspace.
         this.hostApp.windowDragMove$.subscribe(({ x, y }) => {
-            this.crossWindowDragTarget = this.findWorkspaceAt(
+            this.crossWindowDragTarget = this.crossWindowDropTargetAt(
                 x - window.screenX,
                 y - window.screenY,
             )
         })
 
         this.hostApp.windowDragEnter$.subscribe(() => {
-            this.crossWindowDragTarget = null
+            this.clearCrossWindowDragTarget()
         })
 
         this.hostApp.windowDragLeave$.subscribe(() => {
-            this.crossWindowDragTarget = null
+            this.clearCrossWindowDragTarget()
         })
 
         this.hostApp.windowDragCommit$.subscribe(async ({ token }) => {
             const target = this.crossWindowDragTarget ?? (
-                this._activeTab instanceof WorkspaceComponent ? this._activeTab : null
+                this._activeTab instanceof WorkspaceComponent ? { workspace: this._activeTab, zone: null } : null
             )
-            this.crossWindowDragTarget = null
+            this.clearCrossWindowDragTarget()
             try {
                 const params = await this.tabRecovery.recoverTab(token)
                 if (!params) {
                     this.hostApp.windowDragAccepted()
                     return
                 }
-                if (target instanceof WorkspaceComponent && params?.type.prototype instanceof SessionTab) {
+                if (target?.workspace && params?.type.prototype instanceof SessionTab) {
                     // Re-home the restored session into the hovered workspace.
                     const session = this.tabsService.create(params as NewTabParameters<SessionTab>)
-                    this.selectTab(target)
-                    await target.addTabToPane(session)
+                    this.selectTab(target.workspace)
+                    if (target.zone) {
+                        // Drop landed on a precise pane edge/center — insert at
+                        // the exact cursor location (merge or split).
+                        await target.workspace.addSessionAt(session, target.zone)
+                    } else {
+                        await target.workspace.addTabToPane(session)
+                    }
                 } else {
                     this.openNewTabRaw(params as any)
                 }
@@ -501,6 +508,40 @@ export class AppService {
     /** @hidden */
     emitTabsChanged (): void {
         this.tabsChanged.next()
+    }
+
+    /**
+     * Cross-window drop target under a local (client) point. Resolves to the
+     * precise pane/edge of the focused workspace when the cursor is over its
+     * panes (so the dragged session can be merged/split at the exact drop
+     * point), otherwise to the workspace whose tab header is hovered.
+     */
+    crossWindowDropTargetAt (x: number, y: number): { workspace: WorkspaceComponent, zone: { pane: Pane, side: SplitDirection|'all' }|null }|null {
+        const active = this._activeTab
+        if (active instanceof WorkspaceComponent) {
+            // Only the focused workspace's panes are rendered, so precise
+            // pane-level targeting applies to it.
+            const zone = active.dropZoneAt(x, y)
+            if (zone) {
+                active.showDropHintAt(x, y)
+                return { workspace: active, zone }
+            }
+            // Not over a pane — keep the hint in sync (it may still highlight
+            // another workspace's tab header via the workspace-target fallback).
+            active.showDropHintAt(x, y)
+        }
+        const workspace = this.findWorkspaceAt(x, y)
+        if (workspace) {
+            return { workspace, zone: null }
+        }
+        return null
+    }
+
+    clearCrossWindowDragTarget (): void {
+        this.crossWindowDragTarget = null
+        if (this._activeTab instanceof WorkspaceComponent) {
+            this._activeTab.setDragHint(null)
+        }
     }
 
     /**
