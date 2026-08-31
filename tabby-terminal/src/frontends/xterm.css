@@ -5,6 +5,11 @@
     src: url(../fonts/SourceCodePro.ttf) format("truetype");
 }
 
+/* Only reserve scrollbar space when content actually overflows */
+.xterm .xterm-viewport {
+    overflow-y: auto;
+}
+
 .xterm-viewport::-webkit-scrollbar {
     background: rgba(0, 0, 0, .125);
 }
