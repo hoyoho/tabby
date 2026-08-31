@@ -19,6 +19,7 @@ appearance:
   vibrancy: false
   vibrancyType: 'blur'
   lastTabClosesWindow: false
+  crossWindowDrag: false
   spaciness: 1
   colorSchemeMode: 'dark'
 terminal:

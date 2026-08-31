@@ -71,7 +71,7 @@ export class TabHeaderComponent extends BaseComponent {
             // this window — a plain in-window reorder must keep the native CDK
             // drag look with no ghost card popping up.
             this.crossWindowArmed = false
-            if (this.hostApp.platform !== Platform.Web) {
+            if (this.hostApp.platform !== Platform.Web && this.config.store.appearance.crossWindowDrag) {
                 this.crossWindowMoveListener = (e: PointerEvent) => {
                     const sx = window.screenX + e.clientX
                     const sy = window.screenY + e.clientY

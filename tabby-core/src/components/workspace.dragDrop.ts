@@ -22,6 +22,13 @@ export interface PaneDragHost {
     readonly root: SplitContainer
     readonly paneHeaderHeight: number
 
+    /**
+     * Whether dragging a session out of this window onto another Tabby
+     * window is allowed (config switch). When false the pointer leaving the
+     * window bounds is ignored and the gesture stays in-window.
+     */
+    readonly crossWindowDragEnabled: boolean
+
     /** DOM node of a session (its rendered pane cell), or undefined. */
     elementFor: (tab: SessionTab) => HTMLElement|undefined
     getPaneOf: (tab: SessionTab) => Pane|null
@@ -137,8 +144,10 @@ export class PaneDragController {
 
         // Pointer left this window's bounds (DIP screen coords) — switch to the
         // cross-window protocol. The main process tracks the cursor from here.
+        // Gated by the cross-window drag switch: when disabled, a drag that
+        // leaves the window is simply dropped (nothing to transfer to).
         if (this.info.active && !this.info.crossWindow) {
-            if (!inside) {
+            if (!inside && this.host.crossWindowDragEnabled) {
                 this.info.crossWindow = true
                 this.host.setDragHint(null)
                 this.host.beginCrossWindowDrag(this.info.tab)
