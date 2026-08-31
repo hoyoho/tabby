@@ -25,8 +25,15 @@
         ]
     },
     "compileOnSave": false,
+    "files": [
+        "lib/sentry.ts"
+    ],
+    "include": [
+        "src/**/*"
+    ],
     "exclude": [
         "dist",
+        "lib",
         "node_modules",
         "*/node_modules",
         "tabby*",

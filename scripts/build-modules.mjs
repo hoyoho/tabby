@@ -4,10 +4,11 @@ import log from 'npmlog'
 import webpack from 'webpack'
 import { promisify } from 'node:util'
 
+// Build plugins first so that app bundles pick up fresh plugin output
 const configs = [
+    ...vars.allPackages.map(x => `../${x}/webpack.config.mjs`),
     '../app/webpack.config.main.mjs',
     '../app/webpack.config.mjs',
-    ...vars.allPackages.map(x => `../${x}/webpack.config.mjs`),
 ];
 
 (async () => {
