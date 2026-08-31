@@ -36,7 +36,6 @@ export interface SSHProfileOptions extends LoginScriptsOptions {
     httpProxyHost: string | null
     httpProxyPort: number | null
     reuseSession: boolean
-    persistSession: boolean
     input: InputProcessingOptions,
 }
 

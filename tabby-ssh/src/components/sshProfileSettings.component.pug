@@ -230,12 +230,6 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
 
             .form-line
                 .header
-                    .title(translate) Session persistence
-                    .description(translate) Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect.
-                toggle([(ngModel)]='profile.options.persistSession')
-
-            .form-line
-                .header
                     .title(translate) Keep Alive Interval (Milliseconds)
                 input.form-control(
                     type='number',

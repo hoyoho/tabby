@@ -18,7 +18,6 @@ export class SSHShellSession extends BaseSession {
         injector: Injector,
         ssh: SSHSession,
         private profile: SSHProfile,
-        private persistSessionName: string|null = null,
     ) {
         super(injector.get(LogService).create(`ssh-shell-${profile.options.host}-${profile.options.port}`))
         this.ssh = ssh
@@ -26,20 +25,6 @@ export class SSHShellSession extends BaseSession {
         this.ssh.serviceMessage$.subscribe(m => this.serviceMessage.next(m))
         this.middleware.push(new UTF8SplitterMiddleware())
         this.middleware.push(new InputProcessor(profile.options.input))
-    }
-
-    /**
-     * Build a wrapper command that keeps the remote shell alive across
-     * reconnects: instead of spawning a plain shell, the login shell is
-     * started inside tmux under a stable per-tab session name. A reconnect
-     * (e.g. dragging the tab to another window) re-runs the same command and
-     * transparently re-attaches to the existing session.
-     */
-    private getWrapperCommand (): string|null {
-        if (!this.profile.options.persistSession || !this.persistSessionName) {
-            return null
-        }
-        return `tmux new -A -s ${this.persistSessionName}`
     }
 
     async start (): Promise<void> {
@@ -55,7 +40,7 @@ export class SSHShellSession extends BaseSession {
         this.logger.debug('Opening shell')
 
         try {
-            this.shell = await this.ssh.openShellChannel({ x11: this.profile.options.x11, command: this.getWrapperCommand() })
+            this.shell = await this.ssh.openShellChannel({ x11: this.profile.options.x11 })
         } catch (err) {
             if (err.toString().includes('Unable to request X11')) {
                 this.emitServiceMessage('    Make sure `xauth` is installed on the remote side')
