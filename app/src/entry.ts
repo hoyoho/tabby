@@ -31,9 +31,17 @@ if (process.env.TABBY_DEV && !process.env.TABBY_FORCE_ANGULAR_PROD) {
     enableProdMode()
 }
 
-async function bootstrap (bootstrapData: BootstrapData, plugins: PluginInfo[], safeMode = false): Promise<NgModuleRef<any>> {
+async function bootstrap (bootstrapData: BootstrapData, allPlugins: PluginInfo[], safeMode = false): Promise<NgModuleRef<any>> {
+    let plugins = allPlugins
     if (safeMode) {
+        // Safe mode must ignore the blacklist: builtin plugins provide
+        // config defaults required for the app to boot at all
         plugins = plugins.filter(x => x.isBuiltin)
+    } else {
+        if (bootstrapData.config.pluginBlacklist) {
+            plugins = plugins.filter(x => !bootstrapData.config.pluginBlacklist.includes(x.name))
+        }
+        plugins = plugins.filter(x => x.name !== 'web')
     }
 
     const pluginModules = await loadPlugins(plugins, (current, total) => {
@@ -60,10 +68,6 @@ ipcRenderer.once('start', async (_$event, bootstrapData: BootstrapData) => {
 
     let plugins = await findPlugins()
     bootstrapData.installedPlugins = plugins
-    if (bootstrapData.config.pluginBlacklist) {
-        plugins = plugins.filter(x => !bootstrapData.config.pluginBlacklist.includes(x.name))
-    }
-    plugins = plugins.filter(x => x.name !== 'web')
 
     console.log('Starting with plugins:', plugins)
     try {
