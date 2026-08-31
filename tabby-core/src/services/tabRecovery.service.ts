@@ -40,7 +40,7 @@ export class TabRecoveryService {
             if (tab.icon) {
                 token.tabIcon = tab.icon
             }
-            token.disableDynamicTitle = tab['disableDynamicTitle']
+            token.disableDynamicTitle = tab.disableDynamicTitle
         }
         return token
     }

@@ -50,6 +50,12 @@ export abstract class BaseTabComponent extends BaseComponent {
     customTitle: string
 
     /**
+     * Disables display of dynamic window/tab title provided by the shell
+     * (profile-level "Disable dynamic session title" option)
+     */
+    disableDynamicTitle = false
+
+    /**
      * Last tab activity state
      */
     hasActivity = false

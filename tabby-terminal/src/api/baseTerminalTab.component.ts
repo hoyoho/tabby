@@ -94,11 +94,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
      */
     enablePassthrough = true
 
-    /**
-     * Disables display of dynamic window/tab title provided by the shell
-     */
-    disableDynamicTitle = false
-
     alternateScreenActive = false
 
     @ViewChild(SearchPanelComponent, { 'static': false }) searchPanel?: SearchPanelComponent

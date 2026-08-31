@@ -146,11 +146,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      */
     readonly paneHeaderHeight = 28
 
-    /**
-     * Disables display of dynamic window/tab title provided by the shell
-     */
-    disableDynamicTitle = false
-
     /** @hidden */
     focusedTab: SessionTab|null = null
     private viewRefs: Map<SessionTab, EmbeddedViewRef<any>> = new Map()
@@ -511,13 +506,20 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /**
-     * Pane-tab label: a user rename wins, otherwise fall back to the stable
-     * profile name rather than the dynamic (cwd/OSC) title that changes every
-     * time the shell reports a new working directory.
+     * Pane-tab label resolution order:
+     * 1. user rename (customTitle) — pinned, always wins
+     * 2. profile disables dynamic titles — label stays on the stable profile name
+     * 3. otherwise follow the live session title (which starts as the profile
+     *    name at launch and then tracks the shell's OSC title updates)
      */
     sessionDisplayTitle (tab: SessionTab): string {
-        const profileName = tab.getProfile()?.name
-        return profileName ?? tab.title
+        if (tab.customTitle) {
+            return tab.customTitle
+        }
+        if (tab.disableDynamicTitle) {
+            return tab.getProfile()?.name ?? tab.title
+        }
+        return tab.title || tab.getProfile()?.name || ''
     }
 
     isAdminSession (tab: SessionTab): boolean {
@@ -1012,6 +1014,11 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.cleanRoot()
     }
 
+    /** @hidden Config switch for the cross-window drag feature. */
+    get crossWindowDragEnabled (): boolean {
+        return this.config.store.appearance.crossWindowDrag
+    }
+
     /**
      * When a session drag crosses this window's bounds: capture its recovery
      * token (with the live PTY id) while the session is still alive and hand
@@ -1187,7 +1194,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.root.equalize()
     }
 
-    private updateTitle (): void {
+    updateTitle (): void {
         if (this.disableDynamicTitle) { return }
         if (this.customTitle) { return }
         // A workspace created from a saved layout keeps the profile's name.

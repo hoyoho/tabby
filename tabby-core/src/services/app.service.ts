@@ -491,16 +491,33 @@ export class AppService {
 
     renameTab (tab: BaseTabComponent): void {
         const modal = this.ngbModal.open(RenameTabModalComponent)
-        // Sessions display their profile name by default (not the dynamic
-        // cwd/OSC title) — prefill the same thing the user actually sees.
-        const profileName = tab.getProfile()?.name
+        // Prefill with what the user currently sees (same resolution order
+        // as the pane header: rename > profile name / dynamic title).
         const defaultName = tab.parent instanceof WorkspaceComponent
-            ? tab.customTitle || profileName || tab.title
+            ? tab.parent.sessionDisplayTitle(tab)
             : tab.customTitle || tab.title
         modal.componentInstance.value = defaultName
         modal.result.then(result => {
-            tab.setTitle(result)
-            tab.customTitle = result
+            // Custom title is a display-level pin: it never overwrites the
+            // underlying dynamic title slot, so clearing it (empty result)
+            // cleanly reverts the label to whatever the profile's
+            // dynamic-title setting dictates.
+            if (tab.parent instanceof WorkspaceComponent) {
+                // Session inside a workspace: the pane header resolves the
+                // label itself, nothing else to update.
+                tab.customTitle = result
+            } else if (tab instanceof WorkspaceComponent) {
+                if (result) {
+                    // Emit before pinning so the window title picks it up
+                    tab.setTitle(result)
+                } else {
+                    tab.updateTitle()
+                }
+                tab.customTitle = result
+            } else {
+                tab.setTitle(result)
+                tab.customTitle = result
+            }
             this.emitTabsChanged()
         }).catch(() => null)
     }
