@@ -28,7 +28,9 @@ export class SettingsMenuProvider extends MenuProvider {
     }
 
     getMenus (): AppMenu[] {
-        const providers = [...this.settingsProviders].sort((a, b) => a.weight - b.weight)
+        const providers = [...this.settingsProviders]
+            .filter(p => p.section === 'top')
+            .sort((a, b) => a.weight - b.weight)
         return [
             {
                 name: 'Settings',

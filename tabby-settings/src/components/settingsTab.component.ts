@@ -54,7 +54,7 @@ export class SettingsTabComponent extends TopLevelTab {
         super(injector)
         this.setTitle(translate.instant(_('Settings')))
         this.settingsProviders = config.enabledServices(this.settingsProviders)
-        this.settingsProviders = this.settingsProviders.filter(x => !!x.getComponentType())
+        this.settingsProviders = this.settingsProviders.filter(x => x.section === 'top' && !!x.getComponentType())
         this.settingsProviders.sort((a, b) => a.weight - b.weight + a.title.localeCompare(b.title))
 
         this.configDefaults = yaml.dump(config.getDefaults())

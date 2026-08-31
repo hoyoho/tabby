@@ -1,6 +1,7 @@
-import { Component, HostBinding } from '@angular/core'
+import { Component, HostBinding, Injectable } from '@angular/core'
 import { X11Socket } from '../session/x11'
 import { ConfigService, HostAppService, Platform } from 'tabby-core'
+import { SettingsTabProvider } from 'tabby-settings'
 
 /** @hidden */
 @Component({
@@ -22,5 +23,19 @@ export class SSHSettingsTabComponent {
         } else {
             this.defaultX11Display = `${spec.host}:${spec.port}`
         }
+    }
+}
+
+/** @hidden */
+@Injectable()
+export class SSHSettingsTabProvider extends SettingsTabProvider {
+    id = 'ssh'
+    icon = 'globe'
+    title = 'SSH'
+    section = 'profiles-advanced'
+    weight = 10
+
+    getComponentType (): any {
+        return SSHSettingsTabComponent
     }
 }

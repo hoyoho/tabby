@@ -5,10 +5,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr'
 
 import TabbyCorePlugin, { HostAppService, ToolbarButtonProvider, TabRecoveryProvider, ConfigProvider, HotkeysService, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, ProfileProvider } from 'tabby-core'
+import { SettingsTabProvider } from 'tabby-settings'
 import TabbyTerminalModule from 'tabby-terminal'
 
 import { TerminalTabComponent } from './components/terminalTab.component'
-import { ShellSettingsTabComponent } from './components/shellSettingsTab.component'
+import { ShellSettingsTabComponent, ShellSettingsTabProvider } from './components/shellSettingsTab.component'
 import { EnvironmentEditorComponent } from './components/environmentEditor.component'
 import { LocalProfileSettingsComponent } from './components/localProfileSettings.component'
 import { CommandLineEditorComponent } from './components/commandLineEditor.component'
@@ -43,6 +44,7 @@ import { LocalProfilesService } from './profiles'
         { provide: ProfileProvider, useClass: LocalProfilesService, multi: true },
 
         { provide: TabContextMenuItemProvider, useClass: NewTabContextMenu, multi: true },
+        { provide: SettingsTabProvider, useClass: ShellSettingsTabProvider, multi: true },
 
         { provide: CLIHandler, useClass: TerminalCLIHandler, multi: true },
         { provide: CLIHandler, useClass: OpenPathCLIHandler, multi: true },

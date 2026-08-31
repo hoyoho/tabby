@@ -1,10 +1,11 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import deepClone from 'clone-deep'
-import { Component, Inject, Type } from '@angular/core'
+import { Component, Inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ConfigService, HostAppService, Profile, SelectorService, ProfilesService, PlatformService, BaseComponent, PartialProfile, ProfileProvider, TranslateService, Platform, ProfileGroup, PartialProfileGroup, QuickConnectProfileProvider } from 'tabby-core'
 import { EditProfileModalComponent } from './editProfileModal.component'
 import { EditProfileGroupModalComponent, EditProfileGroupModalComponentResult } from './editProfileGroupModal.component'
+import { SettingsTabProvider } from '../api'
 
 _('Filter')
 _('Ungrouped')
@@ -26,8 +27,6 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
 
     filter = ''
     Platform = Platform
-    shellSettingsComponent: Type<any>|null = null
-    sshSettingsComponent: Type<any>|null = null
     private descriptionCache = new Map<string, string|null>()
     private draggedProfile: PartialProfile<Profile>|null = null
 
@@ -35,6 +34,7 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         public config: ConfigService,
         public hostApp: HostAppService,
         @Inject(ProfileProvider) public profileProviders: ProfileProvider<Profile>[],
+        @Inject(SettingsTabProvider) private settingsTabProviders: SettingsTabProvider[],
         private profilesService: ProfilesService,
         private selector: SelectorService,
         private ngbModal: NgbModal,
@@ -45,16 +45,14 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         this.profileProviders.sort((a, b) => a.name.localeCompare(b.name))
     }
 
+    /** Providers that declared themselves part of this tab's advanced section */
+    get sectionProviders (): SettingsTabProvider[] {
+        return this.settingsTabProviders
+            .filter(x => x.section === 'profiles-advanced' && !!x.getComponentType())
+            .sort((a, b) => a.weight - b.weight)
+    }
+
     async ngOnInit (): Promise<void> {
-        const nodeRequire = (window as any).nodeRequire
-        try {
-            this.sshSettingsComponent = nodeRequire('tabby-ssh')?.SSHSettingsTabComponent ?? null
-        } catch { /* optional dependency */ }
-        if (this.hostApp.platform === Platform.Windows) {
-            try {
-                this.shellSettingsComponent = nodeRequire('tabby-local')?.ShellSettingsTabComponent ?? null
-            } catch { /* optional dependency */ }
-        }
         await this.refreshProfileGroups()
         await this.refreshProfiles()
         this.subscribeUntilDestroyed(this.config.changed$, () => this.refreshProfileGroups())

@@ -157,11 +157,10 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                     button.btn.btn-link.hover-reveal.ms-1((click)='$event.stopPropagation(); deleteDefaults(provider)')
                         i.fas.fa-trash-arrow-up
 
-            .content-box.mt-4(*ngIf='shellSettingsComponent')
-                ng-container(*ngComponentOutlet='shellSettingsComponent')
-
-            h3.mt-4.mb-2(translate) SSH
-            .content-box(*ngIf='sshSettingsComponent')
-                ng-container(*ngComponentOutlet='sshSettingsComponent')
+            div.mt-4(*ngFor='let p of sectionProviders')
+                //- No interpolation inside: it would overwrite the translated text every CD cycle
+                h3.mb-2([translate]='p.title')
+                .content-box
+                    ng-container(*ngComponentOutlet='p.getComponentType()')
 
 div([ngbNavOutlet]='nav')
