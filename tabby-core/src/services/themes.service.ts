@@ -239,18 +239,45 @@ export class ThemesService {
 
     /// @hidden
     _getActiveColorScheme (): TerminalColorScheme {
+        // Fallback: config may lack a color scheme when the plugin that
+        // provides it (e.g. tabby-terminal) is disabled; core must still boot
+        const fallbackScheme: TerminalColorScheme = {
+            name: 'Fallback',
+            foreground: '#cacaca',
+            background: '#171717',
+            cursor: '#bbbbbb',
+            colors: [
+                '#000000',
+                '#ff615a',
+                '#b1e969',
+                '#ebd99c',
+                '#5da9f6',
+                '#e86aff',
+                '#82fff7',
+                '#dedacf',
+                '#313131',
+                '#f58c80',
+                '#ddf88f',
+                '#eee5b2',
+                '#a5c7ff',
+                '#ddaaff',
+                '#b7fff9',
+                '#ffffff',
+            ],
+        }
+
+        const configStore = this.getConfigStoreOrDefaults()
         let theme: PlatformTheme = 'dark'
-        if (this.getConfigStoreOrDefaults().appearance.colorSchemeMode === 'light') {
+        if (configStore.appearance?.colorSchemeMode === 'light') {
             theme = 'light'
-        } else if (this.getConfigStoreOrDefaults().appearance.colorSchemeMode === 'auto') {
+        } else if (configStore.appearance?.colorSchemeMode === 'auto') {
             theme = this.platform.getTheme()
         }
 
-        if (theme === 'light') {
-            return this.getConfigStoreOrDefaults().terminal.lightColorScheme as TerminalColorScheme
-        } else {
-            return this.getConfigStoreOrDefaults().terminal.colorScheme as TerminalColorScheme
-        }
+        const scheme = theme === 'light'
+            ? configStore.terminal?.lightColorScheme
+            : configStore.terminal?.colorScheme
+        return scheme ?? fallbackScheme
     }
 
     applyTheme (theme: Theme): void {
