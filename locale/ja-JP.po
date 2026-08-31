@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} コピー"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "メインフォントに不足している文字を表示する際に使用されます"
 
 
-
 msgid "Abort all"
 msgstr "すべて中止"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "受け入れる"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "ZMODEM セッションを受け入れますか？"
 
 
 msgid "Accept and remember key"
 msgstr "承認してキーを記憶"
 
 
-
 msgid "Accept just this once"
 msgstr "一度だけ"
-
 
 
 msgid "Accessibility"
 msgstr "アクセシビリティ"
 
 
-
 msgid "Acrylic background"
 msgstr "アクリル風ウィンドウ"
-
 
 
 msgid "Add"
 msgstr "追加"
 
 
-
 msgid "Add a port forward"
 msgstr "ポート転送を追加"
-
 
 
 msgid "Add a private key"
 msgstr "秘密鍵を追加"
 
 
-
 msgid "Add..."
 msgstr "追加..."
-
 
 
 msgid "Additional space between lines"
 msgstr "行と行の間隔を広げます"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "インターフェース背面の暗い幕の濃さを調整します"
 
 
 msgid "Advanced"
 msgstr "詳細"
 
 
-
 msgid "Agent"
 msgstr "SSHエージェント"
-
 
 
 msgid "Agent forwarding"
 msgstr "SSHエージェント転送"
 
 
-
 msgid "Agent pipe path"
 msgstr "SSHエージェントのパイプ名"
-
 
 
 msgid "Agent type"
 msgstr "SSHエージェントの指定"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr ".bat ファイルをセッションとして開けるようになりますが、一部のシェルでは動作しなくなります"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "フォルダから端末を素早く開けるようになります"
 
 
-
 msgid "Always dark"
 msgstr "常にダーク"
-
 
 
 msgid "Always light"
 msgstr "常にライト"
 
 
-
 msgid "Appearance"
 msgstr "外観"
-
 
 
 msgid "Application"
 msgstr "アプリ"
 
 
-
 msgid "Application settings"
 msgstr "アプリケーションの設定"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Tabbyを閉じてもよろしいですか？この画面は設定 -> ウィンドウから無効にすることができます。"
 
 
-
 msgid "Are you sure?"
 msgstr "本当によろしいですか？"
-
 
 
 msgid "Arguments"
 msgstr "引数"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "ブラウザタブを閉じる前に確認する"
-
 
 
 msgid "Audible"
 msgstr "サウンド再生"
 
 
-
 msgid "Authentication method"
 msgstr "認証方法"
-
 
 
 msgid "Author"
 msgstr "作者"
 
 
-
 msgid "Auto"
 msgstr "自動"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "起動時に新しい端末を自動で開く"
 
 
-
 msgid "Automatic"
 msgstr "自動"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "変更を自動的にアップロードし、一分ごとに更新を確認します。"
 
 
-
 msgid "Available"
 msgstr "利用可能"
-
 
 
 msgid "Background image"
 msgstr "背景画像"
 
 
-
 msgid "Background image brightness"
 msgstr "背景画像の明るさ"
-
 
 
 msgid "Background type"
 msgstr "透過の種類"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Backspaceキー"
 
 
-
 msgid "Baud rate"
 msgstr "伝送速度"
-
 
 
 msgid "Beginning of the line"
 msgstr "行頭に移動"
 
 
-
 msgid "Blink cursor"
 msgstr "カーソルの点滅"
-
 
 
 msgid "Blue"
 msgstr "青色"
 
 
-
 msgid "Blur"
 msgstr "ぼかし"
-
 
 
 msgid "Bold font weight"
 msgstr "太字フォントの太さ"
 
 
-
 msgid "Bottom"
 msgstr "下部"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "ブラケットペースト (シェルが対応している必要があります)"
 
 
-
 msgid "Browse…"
 msgstr "参照…"
-
 
 
 msgid "Built-in"
 msgstr "標準"
 
 
-
 msgid "Cancel"
 msgstr "キャンセル"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "この種類のスクリプトは処理できません"
 
 
 msgid "Change the master passphrase"
 msgstr "マスターパスフレーズを変更"
 
 
-
 msgid "Change workspace color"
 msgstr "ワークスペースの色を変更"
-
 
 
 msgid "Ciphers"
 msgstr "暗号方式"
 
 
-
 msgid "Clear"
 msgstr "クリア"
-
 
 
 msgid "Clear recent profiles"
 msgstr "最近使用したプロファイルをクリア"
 
 
-
 msgid "Clear terminal"
 msgstr "端末をクリア"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "接続後に端末をクリア"
 
 
-
 msgid "Clipboard"
 msgstr "クリップボード"
-
 
 
 msgid "Close"
 msgstr "閉じる"
 
 
-
 msgid "Close and never show again"
 msgstr "閉じて今後表示しない"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "フォーカス中のセッションを閉じる"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "他のワークスペースを閉じる"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "セッションを閉じる"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "明示的に終了した場合にのみセッションを閉じる"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "最後のワークスペースを閉じた後にウィンドウを閉じる"
 
+msgid "Cross-window drag"
+msgstr "ウィンドウ間ドラッグ"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "ワークスペースやセッションをインスタンス間でドラッグできます。転送可能な PTY を持たないセッション（SSH など）は再接続されます。"
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "ワークスペースを閉じる"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "上のワークスペースを閉じる"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "下のワークスペースを閉じる"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "左のワークスペースを閉じる"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "右のワークスペースを閉じる"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "グループを折りたたむ"
 
 
 msgid "Color"
 msgstr "色"
 
 
-
 msgid "Color scheme"
 msgstr "配色"
-
 
 
 msgid "Color schemes"
 msgstr "配色"
 
 
-
 msgid "Colors"
 msgstr "配色"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "すべてのワークスペースを 1 つにまとめる"
 
 
 msgid "Command line"
 msgstr "コマンドライン"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "ネットワーク接続の代わりにコマンドの stdin/stdout を使用します"
-
 
 
 msgid "Commands"
 msgstr "コマンド"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "コミュニティ"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "圧縮"
 
 
 msgid "Config deleted"
 msgstr "設定が消去されました"
 
 
-
 msgid "Config downloaded"
 msgstr "設定をダウンロードしました"
-
 
 
 msgid "Config file"
 msgstr "設定ファイル"
 
 
-
 msgid "Config sync"
 msgstr "設定の同期"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "設定の同期には Tabby Web サービスのインスタンスが必要です。"
 
 
 msgid "Config uploaded"
 msgstr "設定をアップロードしました"
 
 
-
 msgid "Configs"
 msgstr "設定"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "プロキシサーバー経由で接続"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "'%s' に接続中..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "最初に別のホストに接続し、プロキシとして使用します"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "接続済み"
 
 
 msgid "Connecting"
 msgstr "接続中"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "{host} に接続中"
 
 
 msgid "Connection"
 msgstr "接続"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "接続が切断されました"
 
 
 msgid "Connection failed: {error}"
 msgstr "接続に失敗しました: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "代わりに接続名が使用されます"
-
 
 
 msgid "Context menu"
 msgstr "コンテキストメニュー"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "UI要素間の間隔を変更します"
-
 
 
 msgid "Copied"
 msgstr "コピーしました"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "クリップボードにコピーしました"
 
 
 msgid "Copy"
 msgstr "コピー"
 
 
-
 msgid "Copy current path"
 msgstr "カレントパスをコピー"
-
 
 
 msgid "Copy full path"
 msgstr "フルパスをコピー"
 
 
-
 msgid "Copy on select"
 msgstr "選択時にコピー"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "セッション出力をコピー (デバッグ)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "端末の状態をコピー (デバッグ)"
 
 
 msgid "Copy to clipboard"
 msgstr "クリップボードにコピー"
 
 
-
 msgid "Copy with formatting"
 msgstr "書式付きコピー"
-
 
 
 msgid "Could not decrypt config"
 msgstr "設定を復号できませんでした"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "秘密鍵を読み取れませんでした"
 
 
 msgid "Create"
 msgstr "新規作成"
 
 
-
 msgid "Create directory"
 msgstr "新規ディレクトリを作成"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "現在"
 
 
-
 msgid "Current color scheme"
 msgstr "使用中の配色"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "現在のホスト鍵のフィンガープリント"
 
 
-
 msgid "Current process: {name}"
 msgstr "現在のプロセス: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "カーソルの形状"
 
 
-
 msgid "Custom"
 msgstr "カスタム"
-
 
 
 msgid "Custom CSS"
 msgstr "カスタムCSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "ダークモード"
 
 
-
 msgid "Data bits"
 msgstr "データ長"
-
 
 
 msgid "Debugging"
 msgstr "デバッグ"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "既定の接続方式"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "クイック接続時にデフォルトで使用する接続の種類 (SSH、Telnetなど)"
 
 
-
 msgid "Default profile group settings"
 msgstr "既定のグループ設定"
-
 
 
 msgid "Default profile settings"
 msgstr "既定プロファイルの設定"
 
 
-
 msgid "Defaults"
 msgstr "既定"
-
 
 
 msgid "Defaults for {type}"
 msgstr "{type} の既定値"
 
 
-
 msgid "Delete"
 msgstr "削除"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "{name} を削除しますか？"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "{fullPath} を削除しますか？"
-
 
 
 msgid "Delete entire line"
 msgstr "行全体を削除"
 
 
-
 msgid "Delete next word"
 msgstr "次の単語を削除"
-
 
 
 msgid "Delete previous word"
 msgstr "前の単語を削除"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "リモート上の設定を消去しますか？"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "グループのプロファイルを削除しますか？"
 
 
-
 msgid "Delete this script?"
 msgstr "このスクリプトを削除しますか？"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Vaultのデータを削除しますか？"
 
 
-
 msgid "Deleting"
 msgstr "削除中"
-
 
 
 msgid "Device"
 msgstr "デバイス"
 
 
-
 msgid "Direct"
 msgstr "直接接続"
-
 
 
 msgid "Disable"
 msgstr "無効"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "動的セッションタイトルを無効化"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "ドラッグ中はFluent背景を無効化する"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "GPUアクセラレーションを無効にする"
-
 
 
 msgid "Disabled"
 msgstr "無効化"
 
 
-
 msgid "Disconnect"
 msgstr "切断"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "現在のタブを切断する (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "{host} から切断しますか？"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "端末ウィンドウの背面に画像を表示します"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Sixelエスケープシーケンスによって画像を表示します"
 
 
-
 msgid "Display on"
 msgstr "表示"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "サイドバーにプロファイルの完全なツリーを表示します。"
 
 
 msgid "Do not abort"
 msgstr "中止しない"
 
 
-
 msgid "Do not close"
 msgstr "閉じない"
-
 
 
 msgid "Do not remember"
 msgstr "常にパスワードを要求"
 
 
-
 msgid "Dock always on top"
 msgstr "ドックを常に最前面表示"
-
 
 
 msgid "Dock the terminal"
 msgstr "端末をドック表示する"
 
 
-
 msgid "Docked terminal size"
 msgstr "ドック時の端末のサイズ"
-
 
 
 msgid "Docked terminal space"
 msgstr "ドック時の端末のスペース"
 
 
-
 msgid "Docking"
 msgstr "ドック表示"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "ダブルクリックによるテキスト選択時に区切りとなる文字を設定できます"
 
 
-
 msgid "Down"
 msgstr "下へ"
-
 
 
 msgid "Download"
 msgstr "ダウンロード"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "ダウンロードディレクトリ"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "ここにダウンロード"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "太字のテキストを明るい色で表示"
 
 
-
 msgid "Duplicate"
 msgstr "複製"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "セッションを複製"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "ワークスペースを複製"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "ダイナミック"
 
 
 msgid "Edit"
 msgstr "編集"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "グループを編集"
 
 
 msgid "Edit locally"
 msgstr "ローカル上で編集する"
 
 
-
 msgid "Enable"
 msgstr "有効"
-
 
 
 msgid "Enable animations"
 msgstr "アニメーションを有効化"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Fluent背景オプションを有効にする"
-
 
 
 msgid "Enable font ligatures"
 msgstr "合字フォントを有効化"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "グローバルホットキーを有効にする (Ctrl+Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "実験的な Windows ConPTY API を有効にする"
 
 
-
 msgid "Encrypt config file"
 msgstr "設定ファイルを暗号化する"
-
 
 
 msgid "End of the line"
 msgstr "行末に移動"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "環境"
 
 
-
 msgid "Erase config"
 msgstr "設定を消去"
-
 
 
 msgid "Erase the Vault"
 msgstr "Vaultを消去"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "{plugin} のエラー:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "偶数"
 
 
 msgid "Exact match"
 msgstr "完全一致"
 
 
-
 msgid "Example:"
 msgstr "例:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "グループを展開"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "不具合が報告されているWindows10風の実験的な背景"
 
 
-
 msgid "Export"
 msgstr "エクスポート"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "ファイルにエクスポート"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "PATH を拡張"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "フォルダーのダウンロードに失敗しました: {error}"
 
 
 msgid "Fallback font"
 msgstr "フォールバックフォント"
 
 
-
 msgid "File transfers"
 msgstr "ファイル転送"
-
 
 
 msgid "File: {description}"
 msgstr "ファイル: {description}"
 
 
-
 msgid "Filter"
 msgstr "フィルター"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "結果をフィルター"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "完了"
 
 
 msgid "Fixed"
 msgstr "固定"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "複数行の貼り付けに対応していない端末向けに、貼り付けたテキストを 1 行にまとめます"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Fluent背景はドラッグ中にラグを発生させることがあります"
 
 
-
 msgid "Focus follows mouse"
 msgstr "マウスに合わせてフォーカス"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "次のセッションにフォーカス"
 
 
 msgid "Focus pane {number}"
 msgstr "ペイン {number} にフォーカス"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "前のセッションにフォーカス"
 
 
 msgid "Focus the pane above"
 msgstr "上のペインにフォーカス"
 
 
-
 msgid "Focus the pane below"
 msgstr "下のペインにフォーカス"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "左側のペインにフォーカス"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "右側のペインにフォーカス"
-
 
 
 msgid "Follow the color scheme"
 msgstr "配色設定に合わせる"
 
 
-
 msgid "Font"
 msgstr "フォント"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "キーボードショートカット利用時に反映されます"
 
 
-
 msgid "Force CR"
 msgstr "強制 CR"
-
 
 
 msgid "Force CRLF"
 msgstr "強制 CRLF"
 
 
-
 msgid "Force LF"
 msgstr "強制 LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "指定されたSSHエージェントを強制的に使用します。"
 
 
-
 msgid "Forget"
 msgstr "破棄"
-
 
 
 msgid "Forward port"
 msgstr "ポート転送"
 
 
-
 msgid "Forwarded ports"
 msgstr "転送済みポート"
-
 
 
 msgid "From color scheme"
 msgstr "使用中の配色から"
 
 
-
 msgid "From system"
 msgstr "システムに従う"
-
 
 
 msgid "From theme"
 msgstr "使用中のテーマから"
 
 
-
 msgid "Frontend"
 msgstr "フロントエンド"
-
 
 
 msgid "General"
 msgstr "全般"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "256 色パレットを生成"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Githubに新しいissueを投稿"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "基本 16 色から拡張 256 色パレットを生成します"
 
 
 msgid "Get"
 msgstr "インストール"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Tabby Web版の設定画面から確認することができます"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "ぼかしの入った透過ウィンドウに変更します"
 
 
-
 msgid "Go up"
 msgstr "上へ"
-
 
 
 msgid "Green"
 msgstr "緑色"
 
 
-
 msgid "Group"
 msgstr "グループ"
-
 
 
 msgid "Hacks"
 msgstr "詳細"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "調和のとれたパレット"
 
 
 msgid "Help translate Tabby"
 msgstr "Tabbyの翻訳に参加する"
 
 
-
 msgid "Hexadecimal"
 msgstr "16進数"
-
 
 
 msgid "Hide"
 msgstr "非表示"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Tabby をトレイやメニューバーから非表示にします。"
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "トレイアイコンを非表示"
 
 
 msgid "Hide window on focus loss"
 msgstr "フォーカスが外れた時にウィンドウを非表示にする"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "ワークスペースの閉じるボタンを非表示"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "ワークスペース番号を非表示"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "ワークスペースのオプションボタンを非表示"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "画面外をクリックするとドックした端末が非表示になります"
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "ホームページ"
 
 
-
 msgid "Host"
 msgstr "ホスト"
-
 
 
 msgid "Host key"
 msgstr "ホスト鍵"
 
 
-
 msgid "Host key verification"
 msgstr "ホスト鍵の検証"
-
 
 
 msgid "Hotkeys"
 msgstr "ホットキー"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "環境変数を利用して、Tabbyを他の端末として認識させます"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTPプロキシ"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTPプロキシホスト"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTPプロキシポート"
 
 
-
 msgid "Icon"
 msgstr "アイコン"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "要求していない場合は、悪意のあるアクティビティの兆候である可能性があります。"
 
 
 msgid "Immediately echoes your input locally"
 msgstr "送信した入力をローカル上で直ちに表示します"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "すべての LF に CR を暗黙的に追加"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "すべての CR に LF を暗黙的に追加"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "パスフレーズが正しくありません"
 
 
 msgid "Input"
 msgstr "入力"
 
 
-
 msgid "Input is sent as you type"
 msgstr "入力する度に入力が送信されます"
-
 
 
 msgid "Input mode"
 msgstr "入力モード"
 
 
-
 msgid "Input newlines"
 msgstr "入力の改行"
-
 
 
 msgid "Installed"
 msgstr "インストール済み"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "スマートなCtrl+C (コピー/中止)"
-
 
 
 msgid "Interactive"
 msgstr "インタラクティブ"
 
 
-
 msgid "Invalid syntax"
 msgstr "無効な構文"
-
 
 
 msgid "Jump host"
 msgstr "踏み台サーバー"
 
 
-
 msgid "Jump to next word"
 msgstr "次の単語に移動"
-
 
 
 msgid "Jump to previous word"
 msgstr "前の単語に移動"
 
 
-
 msgid "Keep"
 msgstr "維持"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Keep-Alive 間隔 (ミリ秒)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "ドックされた端末を常に最前面に表示"
-
 
 
 msgid "Key"
 msgstr "キー"
 
 
-
 msgid "Key exchange"
 msgstr "鍵交換"
-
 
 
 msgid "Keyboard"
 msgstr "キーボード"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "キーボードインタラクティブ認証"
-
 
 
 msgid "Language"
 msgstr "言語"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "最後に使われたホスト鍵のフィンガープリント"
-
 
 
 msgid "Launch WinSCP"
 msgstr "WinSCPを起動"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "現在のSSHセッションでWinSCPを起動"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "リモート上の作業ディレクトリを自動検出する方法をご紹介します。"
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "詳細情報"
 
 
 msgid "Left"
 msgstr "左側"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "OSの代わりにシェルにメタキーを処理させます"
-
 
 
 msgid "Light mode"
 msgstr "ライトモード"
 
 
-
 msgid "Line by line"
 msgstr "一行ごとに"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Enterキーを押すと入力が送信されます"
 
 
-
 msgid "Line padding"
 msgstr "行間"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "セッション出力を読み込む (デバッグ)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "端末の状態を読み込む (デバッグ)"
 
 
 msgid "Loading"
 msgstr "読み込み中"
 
 
-
 msgid "Loading configs..."
 msgstr "設定を読み込み中..."
-
 
 
 msgid "Local"
 msgstr "ローカル"
 
 
-
 msgid "Local echo"
 msgstr "ローカルエコー"
-
 
 
 msgid "Local terminal"
 msgstr "ローカル端末"
 
 
-
 msgid "Login scripts"
 msgstr "ログインスクリプト"
-
 
 
 msgid "Long-click for context menu"
 msgstr "長押しするとコンテキストメニューが表示されます"
 
 
-
 msgid "Manage profiles"
 msgstr "プロファイルの管理"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "マーク"
 
 
 msgid "Max Keep Alive Count"
 msgstr "最大Keep-Alive"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "最小コントラスト比"
-
 
 
 msgid "Modified on {date}"
 msgstr "更新日 {date}"
 
 
-
 msgid "Mouse"
 msgstr "マウス"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "左側のスプリッターを左へ移動"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "左側のスプリッターを右へ移動"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "下側のスプリッターを下へ移動"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "下側のスプリッターを上へ移動"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "右側のスプリッターを左へ移動"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "右側のスプリッターを右へ移動"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "\"未分類\" に移動"
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "上側のスプリッターを下へ移動"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "上側のスプリッターを上へ移動"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "ワークスペースを左へ移動"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "ワークスペースを右へ移動"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "マウスの移動に合わせてアクティブなペインを切り替えます。"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "同じ接続で複数のシェルを多重化します"
 
 
 msgid "Name"
 msgstr "名前"
 
 
-
 msgid "Name for the new config"
 msgstr "新しい設定の名前"
-
 
 
 msgid "Name for the new directory"
 msgstr "新しいディレクトリの名前"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "名前付きパイプ"
 
 
 msgid "New"
 msgstr "新規"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "新しい管理者セッション"
 
 
 msgid "New config on {platform}"
 msgstr "{platform} の新しい設定"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "新しいグループ"
 
 
 msgid "New item"
 msgstr "新しい項目"
 
 
-
 msgid "New name"
 msgstr "新しい名前"
-
 
 
 msgid "New profile"
 msgstr "新規プロファイル"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "新しいセッション"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "新しいセッションは、別のワークスペースではなくアクティブなワークスペースのペインに追加されます。"
 
 
 msgid "New tab"
 msgstr "新しいタブを開く"
 
 
-
 msgid "New window"
 msgstr "新しいウィンドウを開く"
-
 
 
 msgid "New Window"
 msgstr "新しいウィンドウ"
 
 
-
 msgid "New with profile"
 msgstr "新しいプロファイルを追加"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "新しいワークスペース"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "次へ"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "次のワークスペース"
 
 
 msgid "No color"
 msgstr "色指定なし"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "フィルター \"{filterText}\" に一致するファイルはありません"
 
 
 msgid "No modifier"
 msgstr "変更しない"
 
 
-
 msgid "None"
 msgstr "なし"
-
 
 
 msgid "Normal"
 msgstr "標準"
 
 
-
 msgid "Normal font weight"
 msgstr "標準フォントの太さ"
-
 
 
 msgid "Not found"
 msgstr "見つかりませんでした"
 
 
-
 msgid "Notify on activity"
 msgstr "アクティビティを通知する"
-
 
 
 msgid "Notify when done"
 msgstr "完了時に通知する"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "バッファに保持される行数"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "奇数"
 
 
 msgid "Off"
 msgstr "オフ"
 
 
-
 msgid "Official"
 msgstr "公式"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "Discord で"
 
 
 msgid "Opacity"
 msgstr "不透明度"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "開く"
 
 
 msgid "Open DevTools"
 msgstr "DevToolsを開く"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "新しいセッションを現在のワークスペースで開く"
 
 
 msgid "Open Settings"
 msgstr "設定を開く"
 
 
-
 msgid "Open SFTP panel"
 msgstr "SFTP パネルを開く"
-
 
 
 msgid "Optional"
 msgstr "オプション"
 
 
-
 msgid "Options"
 msgstr "設定"
-
 
 
 msgid "Orange"
 msgstr "橙色"
 
 
-
 msgid "OS default"
 msgstr "OSの既定"
-
 
 
 msgid "OS default ({name})"
 msgstr "OSの既定 ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "16進ダンプとして出力されます"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "受信したデータがそのまま出力されます"
 
 
-
 msgid "Output mode"
 msgstr "出力モード"
-
 
 
 msgid "Output newlines"
 msgstr "出力の改行"
 
 
-
 msgid "Override X11 display"
 msgstr "X11ディスプレイを上書きする"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "ローカルを上書きして同期"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "リモートを上書きして同期"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "リモート上の設定を上書きして、同期を開始しますか？"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "現在のローカル上の設定を上書きして、同期を開始しますか？"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "ペインサイズの変更幅"
 
 
-
 msgid "Panes"
 msgstr "ペイン"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "親グループ"
 
 
 msgid "Parity"
 msgstr "パリティ"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Vaultによって設定ファイルを暗号化した場合、設定の一部だけを同期から外すことはできません。"
-
 
 
 msgid "Pass-through"
 msgstr "パススルー"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "秘密鍵のパスフレーズ ハッシュ値 {hash}..."
-
 
 
 msgid "Password"
 msgstr "パスワード"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "{user}@{host} のパスワード"
 
 
 msgid "Paste"
 msgstr "貼り付け"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "\"{text}\" を貼り付けますか？"
 
 
 msgid "Paste from clipboard"
 msgstr "クリップボードから貼り付け"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "通常は貼り付け、テキスト選択時のみコピー"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "複数行貼り付けを実行してもよろしいですか？"
 
 
-
 msgid "Paste on middle-click"
 msgstr "中クリックで貼り付け"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "セッション出力を貼り付け (デバッグ)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "端末の状態を貼り付け (デバッグ)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "ローカル上のX11ソケットのパスまたはアドレス"
 
 
-
 msgid "Pin"
 msgstr "ピン留めする"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "ワークスペースのピン留めを切り替え"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "ワークスペースをピン留め"
 
 
 msgid "Plugins"
 msgstr "プラグイン"
 
 
-
 msgid "Plugins folder"
 msgstr "プラグインのフォルダー"
-
 
 
 msgid "Port"
 msgstr "ポート"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "ポートが閉じています"
 
 
 msgid "Port forwarding"
 msgstr "ポート転送"
 
 
-
 msgid "Port opened"
 msgstr "ポートが開いています"
-
 
 
 msgid "Ports"
 msgstr "ポート"
 
 
-
 msgid "Press any key to reconnect"
 msgstr "再接続するには何かキーを押してください"
-
 
 
 msgid "Press the key now"
 msgstr "キーを押してください"
 
 
-
 msgid "Prevents accidental closing"
 msgstr "偶発的な終了を防止"
-
 
 
 msgid "Prevents accidental execution of pasted commands"
 msgstr "貼り付けたコマンドの偶発的な実行を防止することができます"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "前のワークスペース"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "秘密鍵のパスフレーズ"
 
 
 msgid "Private keys"
 msgstr "秘密鍵"
 
 
-
 msgid "Process completed"
 msgstr "処理完了"
-
 
 
 msgid "Profile name"
 msgstr "プロファイル名"
 
 
-
 msgid "Profiles"
 msgstr "プロファイル"
-
 
 
 msgid "Profiles & connections"
 msgstr "プロファイルと接続"
 
 
-
 msgid "Program"
 msgstr "プログラム"
-
 
 
 msgid "Proxy command"
 msgstr "プロキシコマンド"
 
 
-
 msgid "Purple"
 msgstr "紫色"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Tabbyの設定をすべてVaultに保存します"
 
 
-
 msgid "Quick connect"
 msgstr "クイック接続"
-
 
 
 msgid "Quit"
 msgstr "終了"
 
 
-
 msgid "Raw socket connection"
 msgstr "Rawソケット接続"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "タイムアウト (ミリ秒)"
 
 
-
 msgid "Recent"
 msgstr "最近"
-
 
 
 msgid "Reconnect"
 msgstr "再接続"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "現在のタブを再接続する (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "赤色"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "更新"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "レジストリから環境変数を再読み込み"
 
 
 msgid "Regex"
 msgstr "正規表現（Regex）"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "拒否"
 
 
 msgid "Release notes"
 msgstr "リリースノート"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "新しいセッションごとに、Windows レジストリから PATH などの変数を再読み込みします"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "記憶する"
 
 
 msgid "Remember for {time}"
 msgstr "{time} 後に再認証"
 
 
-
 msgid "Remote"
 msgstr "リモート"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "コピーしたテキストに含まれる前後の余分なスペースや改行を除去します"
 
 
-
 msgid "Rename"
 msgstr "名前を変更"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "セッション名を変更"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "ワークスペース名を変更"
 
 
 msgid "Rendering"
 msgstr "レンダリング"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "最後のワークスペースをもう一度開く"
 
 
 msgid "Replace"
 msgstr "置換"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "改行をスペースに置き換える"
 
 
 msgid "Report a problem"
 msgstr "問題を報告"
 
 
-
 msgid "Require a key to click links"
 msgstr "特定のキーを使用してリンクを開く"
-
 
 
 msgid "Reset zoom"
 msgstr "拡大/縮小をリセット"
 
 
-
 msgid "Restart current serial session"
 msgstr "現在のシリアルセッションを再起動"
-
 
 
 msgid "Restart current SSH session"
 msgstr "現在のSSHセッションを再起動"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "現在のTelnetセッションを再起動"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "変更を反映するには再起動が必要です"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "ワークスペースを再起動"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "設定を既定に戻してもよろしいですか?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "設定を継承元の既定に戻してもよろしいですか?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "セッションの永続化"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "tmux でシェルを維持し、別ウィンドウへタブをドラッグしても再接続が発生しないようにします。"
-
-
-
-
-
-
-
-
-
+msgstr "アプリ起動時にワークスペースを復元"
 
 
 msgid "Not set"
 msgstr "未設定"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "単語全体"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "複数のタブでセッションを再利用する"
-
 
 
 msgid "Right"
 msgstr "右側"
 
 
-
 msgid "Right click"
 msgstr "右クリック"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "実行"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "\"{command}\" を実行しますか？"
 
 
 msgid "Run as administrator"
 msgstr "管理者として実行"
 
 
-
 msgid "Save"
 msgstr "保存"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "キーチェーンにパスワードを保存する"
 
 
-
 msgid "Save and apply"
 msgstr "保存して反映"
-
 
 
 msgid "Save as profile"
 msgstr "プロファイルとして保存"
 
 
-
 msgid "Save layout as profile"
 msgstr "プロファイルとしてレイアウトを保存"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "セッション出力を保存 (デバッグ)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "端末の状態を保存 (デバッグ)"
 
 
 msgid "Saved layout"
 msgstr "保存されたレイアウト"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "{path} に保存しました"
 
 
 msgid "Scroll on input"
 msgstr "入力時にスクロール"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "端末を 1 行下へスクロール"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "端末を 1 行上へスクロール"
 
 
 msgid "Scroll terminal one page down"
 msgstr "1ページ分下にスクロール"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "1ページ分上にスクロール"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "端末を最下部までスクロール"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "端末を最上部までスクロール"
-
 
 
 msgid "Scrollback"
 msgstr "バックスクロール"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "入力時に端末を最下部にスクロールします"
-
 
 
 msgid "Search"
 msgstr "検索"
 
 
-
 msgid "Search color schemes"
 msgstr "配色を検索"
-
 
 
 msgid "Search hotkeys"
 msgstr "ホットキーを検索"
 
 
-
 msgid "Search plugins"
 msgstr "プラグインを検索"
-
 
 
 msgid "Secret sync token"
 msgstr "シークレット同期トークン"
 
 
-
 msgid "Select"
 msgstr "選択"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "テンプレートを選択"
 
 
 msgid "Select all"
 msgstr "すべて選択"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "背景画像を選択"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "{name} の保存先フォルダーを選択"
 
 
 msgid "Select file storage"
 msgstr "ファイルストレージを選択"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "プロファイルの選択、またはアドレスを入力"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "16進数で入力したバイトを送信"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "1バイトごとにデータを送信します"
-
 
 
 msgid "Serial"
 msgstr "シリアル"
 
 
-
 msgid "Serial connection"
 msgstr "シリアル接続"
-
 
 
 msgid "Set master passphrase"
 msgstr "マスターパスフレーズを設定"
 
 
-
 msgid "Set passphrase"
 msgstr "パスフレーズを設定"
-
 
 
 msgid "Set password"
 msgstr "パスワードを設定"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Tabbyを %COMSPEC% に設定"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "セレクターに最近使用したプロファイルを表示したくない場合は、0に設定してください"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "SSHエージェントの名前付きパイプのパスを指定します。"
-
 
 
 msgid "Settings"
 msgstr "設定"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "シェルがカレントパスの検出に対応していません"
-
 
 
 msgid "Shell integration"
 msgstr "シェル統合"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "表示"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "複数行の貼り付けをする際に確認画面を表示します"
-
 
 
 msgid "Show command selector"
 msgstr "コマンドセレクターを表示"
 
 
-
 msgid "Show config file"
 msgstr "設定ファイルを表示"
-
 
 
 msgid "Show defaults"
 msgstr "既定を表示"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "ワークスペースにプロファイルアイコンを表示"
 
 
 msgid "Show profile selector"
 msgstr "プロファイルセレクターを表示"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "プロファイルのサイドバーを表示"
 
 
 msgid "Show recent profiles in selector"
 msgstr "最近使用したプロファイルの表示数"
 
 
-
 msgid "Show release notes"
 msgstr "リリースノートを表示"
-
 
 
 msgid "Show Serial connections"
 msgstr "シリアル接続を表示"
 
 
-
 msgid "Show vault contents"
 msgstr "Vaultのデータを表示"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "フルスクリーン時にワークスペースバーを表示"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Sixel Graphicsのサポート (実験的)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "MoTD/バナーをスキップ"
-
 
 
 msgid "Slow feed"
 msgstr "低速送信"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "画面の端にウィンドウをスナップします"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKSプロキシ"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKSプロキシホスト"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKSプロキシポート"
 
 
-
 msgid "Sound"
 msgstr "サウンド"
-
 
 
 msgid "Source code"
 msgstr "ソースコード"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Space"
 
 
 msgid "Spaciness"
 msgstr "UI間隔"
 
 
-
 msgid "Split"
 msgstr "分割"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "現在のワークスペースを個別のワークスペースに分割"
 
 
 msgid "Split to the bottom"
 msgstr "下部に分割"
 
 
-
 msgid "Split to the left"
 msgstr "左側に分割"
-
 
 
 msgid "Split to the right"
 msgstr "右側に分割"
 
 
-
 msgid "Split to the top"
 msgstr "上部に分割"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH接続"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "{user}@{host}:{port} のSSHパスワード"
-
 
 
 msgid "Startup"
 msgstr "起動時"
 
 
-
 msgid "Stop bits"
 msgstr "ストップビット"
-
 
 
 msgid "Strip"
 msgstr "ストリップ"
 
 
-
 msgid "Substitutions allowed."
 msgstr "置き換えに対応しています"
-
 
 
 msgid "Switch color scheme"
 msgstr "配色切り替え"
 
 
-
 msgid "Switch profile"
 msgstr "プロファイルを切り替える"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "アクティブなペインのプロファイルを切り替える"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "端末のフロントエンド実装を切り替える (実験的)"
-
 
 
 msgid "Sync"
 msgstr "同期"
 
 
-
 msgid "Sync automatically"
 msgstr "自動同期"
-
 
 
 msgid "Sync host"
 msgstr "同期サーバー"
 
 
-
 msgid "Sync hotkeys"
 msgstr "ホットキーの同期"
-
 
 
 msgid "Sync Vault"
 msgstr "Vaultの同期"
 
 
-
 msgid "Sync window settings"
 msgstr "ウィンドウ設定の同期"
-
 
 
 msgid "Tab activity"
 msgstr "タブのアクティビティ"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "プラグインが原因でTabbyの起動に失敗しました。このセッションではすべてのサードパーティ製のプラグインが無効になっています。エラー:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnetセッション"
 
 
-
 msgid "Terminal"
 msgstr "端末"
-
 
 
 msgid "Terminal background"
 msgstr "端末の背景"
 
 
-
 msgid "Terminal bell"
 msgstr "端末音"
-
 
 
 msgid "Terminal identification"
 msgstr "端末の識別情報"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Tabbyをダウンロードしてくださり、ありがとうございます！"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "ディレクトリを作成できませんでした"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "ディレクトリを作成しました"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "設定を読み込むには Vault のロックを解除する必要があります。"
 
 
 msgid "Theme"
 msgstr "テーマ"
 
 
-
 msgid "There are active file transfers"
 msgstr "ファイル転送を使用中"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "この接続に使用するパスワードを保存しています。"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "すべての同一プロファイルに反映されます"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "グループ内のすべての同一プロファイルに反映されます"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "画像のギザギザやずれて見えるなど表示の乱れが軽減される場合があります"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "全画面表示に切り替え"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "最後のワークスペースに切り替え"
 
 
 msgid "Toggle terminal window"
 msgstr "端末ウィンドウの切り替え"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Tabbyウィンドウの表示を切り替え"
-
 
 
 msgid "Top"
 msgstr "上部"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "スペースや改行を取り除く"
-
 
 
 msgid "Try again"
 msgstr "再試行"
 
 
-
 msgid "Ungrouped"
 msgstr "未分類"
-
 
 
 msgid "Uninstall"
 msgstr "アンインストール"
 
 
-
 msgid "Unknown"
 msgstr "不明"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "タイプ {type} の {key} の不明なシークレット"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "無題のグループ"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "無題のワークスペース"
 
 
 msgid "Up"
 msgstr "上へ"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "{version} にアップグレード"
-
 
 
 msgid "Upload"
 msgstr "アップロード"
 
 
-
 msgid "Upload as a new config"
 msgstr "新しい設定としてアップロード"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "ファイルをアップロード"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "フォルダーをアップロード"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "メタキーとして {altKeyName} を使用する"
 
 
-
 msgid "Use ConPTY"
 msgstr "ConPTYを使用する"
-
 
 
 msgid "User default"
 msgstr "ユーザーの既定"
 
 
-
 msgid "Username"
 msgstr "ユーザー名"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "{host} のユーザー名"
 
 
 msgid "Using CONNECT method"
 msgstr "CONNECTメソッドを使用します"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "保存済みのパスワードを使用します"
 
 
 msgid "Vault"
 msgstr "Vault"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "VaultはSSHパスワードや秘密鍵パスフレーズなどの機密性の高い情報を保存するための常時暗号化されたコンテナです。"
-
 
 
 msgid "Vault is empty"
 msgstr "Vaultにデータは保存されていません"
 
 
-
 msgid "Vault is locked"
 msgstr "Vaultはロックされています"
-
 
 
 msgid "Vault is not configured"
 msgstr "Vaultが設定されていません"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "機密性の高い情報を保存するには、Vaultにマスターパスフレーズを設定する必要があります"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "接続時にホスト鍵を検証"
 
 
-
 msgid "Version"
 msgstr "バージョン"
-
 
 
 msgid "Version: {version}"
 msgstr "バージョン: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "磨りガラス"
-
 
 
 msgid "Visual"
 msgstr "グラフィック表示"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "複数行貼り付け時に警告"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "使用中の接続を閉じる際に警告"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "警告: リモートホストのキーが突然変更されました！"
-
 
 
 msgid "Welcome"
 msgstr "ようこそ"
 
 
-
 msgid "What's new"
 msgstr "最新情報"
-
 
 
 msgid "When a session ends"
 msgstr "セッション終了時"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "有効にすると、特定のキーを押しながらクリックした時のみリンクを開きます"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "WinSCPが検出されると、コンテキストメニューからSCPセッションを起動することができます。"
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "生成したライトテーマの色を反転するかどうか。256 色パレットの各色により意味を持たせやすくなります。"
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "SSH接続時のメッセージが表示されなくなります"
 
 
-
 msgid "Window"
 msgstr "ウィンドウ"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "画面の端から平行方向の幅"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "画面の端から垂直方向の幅"
-
 
 
 msgid "Windows"
 msgstr "ウィンドウ"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "ConPTYにはWindows 10ビルド18309以上を推奨します"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCPのパス"
 
 
-
 msgid "Word separators"
 msgstr "区切り文字"
-
 
 
 msgid "Working directory"
 msgstr "作業ディレクトリ"
 
 
-
 msgid "Working directory detection"
 msgstr "作業ディレクトリの検出"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "ワークスペース {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "ワークスペースバーの位置"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "ワークスペースバーの幅"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "ワークスペース"
 
 
 msgid "X11 forwarding"
 msgstr "X11転送"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "黄色"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "後から変更できますが、忘れた場合復元することはできません。"
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "現在中間者攻撃を受けているか、もしくはホスト鍵が変更された可能性があります。"
 
 
-
 msgid "Zoom in"
 msgstr "拡大"
-
 
 
 msgid "Zoom out"
 msgstr "縮小"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "マスターパスフレーズ"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "エスケープされていない引数に分割"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "1 つのエスケープ済みコマンドに結合"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "変数名"
 
 
 msgid "Value"
-msgstr ""
+msgstr "値"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "ホームディレクトリ"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "毎回確認する"
 
 
 msgid "Response"
-msgstr ""
+msgstr "レスポンス"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "フィルター..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "自動検出"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "前景色"
 
 
 msgid "Background"
-msgstr ""
+msgstr "背景色"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "カーソルの色"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "ブロックカーソルの前景色"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "選択範囲の背景色"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "選択範囲の前景色"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI カラー {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Expect"
 
 
 msgid "Send"
-msgstr ""
+msgstr "送信"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "シェル"
 
 msgid "Menu"
-msgstr ""
+msgstr "メニュー"
 
 

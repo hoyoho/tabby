@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} 複製"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "備用字型用於顯示主字型中缺少的字元"
 
 
-
 msgid "Abort all"
 msgstr "全部中止"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "接受"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "接受 ZMODEM 工作階段?"
 
 
 msgid "Accept and remember key"
 msgstr "接受並記住金鑰"
 
 
-
 msgid "Accept just this once"
 msgstr "只接受一次"
-
 
 
 msgid "Accessibility"
 msgstr "輔助"
 
 
-
 msgid "Acrylic background"
 msgstr "壓克力背景"
-
 
 
 msgid "Add"
 msgstr "新增"
 
 
-
 msgid "Add a port forward"
 msgstr "新增通訊埠轉送"
-
 
 
 msgid "Add a private key"
 msgstr "新增私鑰"
 
 
-
 msgid "Add..."
 msgstr "新增..."
-
 
 
 msgid "Additional space between lines"
 msgstr "行與行之間的額外空間"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "調整介面後方的暗色遮罩"
 
 
 msgid "Advanced"
 msgstr "進階"
 
 
-
 msgid "Agent"
 msgstr "代理"
-
 
 
 msgid "Agent forwarding"
 msgstr "代理轉送"
 
 
-
 msgid "Agent pipe path"
 msgstr "Agent Pipe 路徑"
-
 
 
 msgid "Agent type"
 msgstr "代理類型"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "允許將 .bat 檔案開啟為工作階段，但會破壞某些 shell"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "允許在所選資料夾中快速打開終端"
 
 
-
 msgid "Always dark"
 msgstr "永久深色"
-
 
 
 msgid "Always light"
 msgstr "永久明亮"
 
 
-
 msgid "Appearance"
 msgstr "外觀設定"
-
 
 
 msgid "Application"
 msgstr "應用程式"
 
 
-
 msgid "Application settings"
 msgstr "應用程式設定"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "你確定要關閉 Tabby 嗎？您可以在設定 -> 視窗中停用此提示。"
 
 
-
 msgid "Are you sure?"
 msgstr "您確定嗎？"
-
 
 
 msgid "Arguments"
 msgstr "參數"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "在關閉分頁之前詢問"
-
 
 
 msgid "Audible"
 msgstr "音效"
 
 
-
 msgid "Authentication method"
 msgstr "認證方法"
-
 
 
 msgid "Author"
 msgstr "作者"
 
 
-
 msgid "Auto"
 msgstr "自動"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "在應用程式啟動時自動打開終端"
 
 
-
 msgid "Automatic"
 msgstr "自動"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "每分鐘自動上傳更變並檢查更新"
 
 
-
 msgid "Available"
 msgstr "可用"
-
 
 
 msgid "Background image"
 msgstr "背景圖片"
 
 
-
 msgid "Background image brightness"
 msgstr "背景圖片亮度"
-
 
 
 msgid "Background type"
 msgstr "背景類別"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Backspace鍵模式"
 
 
-
 msgid "Baud rate"
 msgstr "串列傳輸速率"
-
 
 
 msgid "Beginning of the line"
 msgstr "行首"
 
 
-
 msgid "Blink cursor"
 msgstr "閃爍游標"
-
 
 
 msgid "Blue"
 msgstr "藍色"
 
 
-
 msgid "Blur"
 msgstr "模糊"
-
 
 
 msgid "Bold font weight"
 msgstr "粗體文字寬度"
 
 
-
 msgid "Bottom"
 msgstr "底部"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Bracketed 貼上（需要 Shell 支援）"
 
 
-
 msgid "Browse…"
 msgstr "瀏覽…"
-
 
 
 msgid "Built-in"
 msgstr "內建"
 
 
-
 msgid "Cancel"
 msgstr "取消"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "無法處理此類型的指令碼"
 
 
 msgid "Change the master passphrase"
 msgstr "更改主密碼"
 
 
-
 msgid "Change workspace color"
 msgstr "變更工作區顏色"
-
 
 
 msgid "Ciphers"
 msgstr "密碼（Cipher）"
 
 
-
 msgid "Clear"
 msgstr "清除"
-
 
 
 msgid "Clear recent profiles"
 msgstr "清除最近的設定檔"
 
 
-
 msgid "Clear terminal"
 msgstr "清除終端內容"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "連線後清除終端畫面"
 
 
-
 msgid "Clipboard"
 msgstr "剪貼簿"
-
 
 
 msgid "Close"
 msgstr "關閉"
 
 
-
 msgid "Close and never show again"
 msgstr "關閉並不再顯示"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "關閉聚焦的工作階段"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "關閉其他工作區"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "關閉工作階段"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "僅在工作階段明確結束時才關閉"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "關閉最後一個工作區後關閉視窗"
 
+msgid "Cross-window drag"
+msgstr "跨視窗拖曳"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "允許跨實例拖曳工作區或工作階段，無可遷移 PTY 的工作階段（如 SSH）會重新連線"
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "關閉工作區"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "關閉上方的工作區"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "關閉下方的工作區"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "關閉左側的工作區"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "關閉右側的工作區"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "摺疊群組"
 
 
 msgid "Color"
 msgstr "顏色"
 
 
-
 msgid "Color scheme"
 msgstr "顏色機制"
-
 
 
 msgid "Color schemes"
 msgstr "配色方案"
 
 
-
 msgid "Colors"
 msgstr "顏色"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "將所有工作區合併為一個"
 
 
 msgid "Command line"
 msgstr "指令行"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "使用 stdin/stdout 指令代替網絡連線"
-
 
 
 msgid "Commands"
 msgstr "指令"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "社群"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "壓縮"
 
 
 msgid "Config deleted"
 msgstr "設定檔已刪除"
 
 
-
 msgid "Config downloaded"
 msgstr "設定檔已下載"
-
 
 
 msgid "Config file"
 msgstr "設定檔"
 
 
-
 msgid "Config sync"
 msgstr "同步設定檔"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "設定同步需要 Tabby Web 服務的執行個體。"
 
 
 msgid "Config uploaded"
 msgstr "設定檔已上傳"
 
 
-
 msgid "Configs"
 msgstr "設定"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "通過代理伺服器連線"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "正在連線到 \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "先連線到其它主機並將其作為代理伺服器"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "已連線"
 
 
 msgid "Connecting"
 msgstr "正在連線"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "正在連線到 {host}"
 
 
 msgid "Connection"
 msgstr "連線"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "連線已關閉"
 
 
 msgid "Connection failed: {error}"
 msgstr "連線失敗: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "連線名稱將被使用"
-
 
 
 msgid "Context menu"
 msgstr "快顯功能表"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "調整各元件之間的間距"
-
 
 
 msgid "Copied"
 msgstr "已複製"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "已複製到剪貼簿"
 
 
 msgid "Copy"
 msgstr "複製"
 
 
-
 msgid "Copy current path"
 msgstr "複製目前路徑"
-
 
 
 msgid "Copy full path"
 msgstr "複製完整路徑"
 
 
-
 msgid "Copy on select"
 msgstr "選取時即複製"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "複製工作階段輸出 (偵錯)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "複製終端機狀態 (偵錯)"
 
 
 msgid "Copy to clipboard"
 msgstr "複製到剪貼簿"
 
 
-
 msgid "Copy with formatting"
 msgstr "複製文字格式"
-
 
 
 msgid "Could not decrypt config"
 msgstr "無法解密設定檔"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "無法讀取私鑰"
 
 
 msgid "Create"
 msgstr "建立"
 
 
-
 msgid "Create directory"
 msgstr "建立資料夾"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "目前"
 
 
-
 msgid "Current color scheme"
 msgstr "目前配色方案"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "目前主機金輪指紋"
 
 
-
 msgid "Current process: {name}"
 msgstr "目前的處理程序：{name}"
-
 
 
 msgid "Cursor shape"
 msgstr "游標形狀"
 
 
-
 msgid "Custom"
 msgstr "自訂"
-
 
 
 msgid "Custom CSS"
 msgstr "自訂 CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "深色模式"
 
 
-
 msgid "Data bits"
 msgstr "資料位元"
-
 
 
 msgid "Debugging"
 msgstr "除錯"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "預設的 \"連線到\" 類型"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "預設的快速連線功能類型 (ex. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "預設設定檔群組設定"
-
 
 
 msgid "Default profile settings"
 msgstr "預設設定檔設定"
 
 
-
 msgid "Defaults"
 msgstr "預設"
-
 
 
 msgid "Defaults for {type}"
 msgstr "預設為 {type}"
 
 
-
 msgid "Delete"
 msgstr "刪除"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "刪除 “{name}”?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "刪除 {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "刪除整行"
 
 
-
 msgid "Delete next word"
 msgstr "刪除下一個單字"
-
 
 
 msgid "Delete previous word"
 msgstr "刪除上一個單字"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "是否刪除遠端設定檔？"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "是否刪除群組内所有設定檔？"
 
 
-
 msgid "Delete this script?"
 msgstr "刪除此腳本？"
-
 
 
 msgid "Delete vault contents?"
 msgstr "删除金鑰庫中的所有內容？"
 
 
-
 msgid "Deleting"
 msgstr "正在刪除"
-
 
 
 msgid "Device"
 msgstr "裝置"
 
 
-
 msgid "Direct"
 msgstr "直接連線"
-
 
 
 msgid "Disable"
 msgstr "停用"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "停用動態工作階段標題"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "拖曳時停用 fluent 背景"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "停用顯示卡（GPU）加速"
-
 
 
 msgid "Disabled"
 msgstr "已停用"
 
 
-
 msgid "Disconnect"
 msgstr "中斷連線"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "中斷目前分頁的連線 (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "與 {host} 中斷連線嗎?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "在終端機視窗後方顯示圖片"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "透過Sixel跳脫序列顯示圖片"
 
 
-
 msgid "Display on"
 msgstr "顯示在"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "在側邊欄顯示完整的設定檔樹。"
 
 
 msgid "Do not abort"
 msgstr "不要中止"
 
 
-
 msgid "Do not close"
 msgstr "不要關閉"
-
 
 
 msgid "Do not remember"
 msgstr "不要記住"
 
 
-
 msgid "Dock always on top"
 msgstr "永遠貼齊在最上方"
-
 
 
 msgid "Dock the terminal"
 msgstr "貼齊終端機"
 
 
-
 msgid "Docked terminal size"
 msgstr "已貼齊終端機大小"
-
 
 
 msgid "Docked terminal space"
 msgstr "已貼齊終端機空間"
 
 
-
 msgid "Docking"
 msgstr "貼齊"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "點兩下選擇將停在該字元處"
 
 
-
 msgid "Down"
 msgstr "下方"
-
 
 
 msgid "Download"
 msgstr "下載"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "下載目錄"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "下載到這裡"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "用亮色繪製粗體"
 
 
-
 msgid "Duplicate"
 msgstr "複製"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "複製工作階段"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "複製工作區"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "動態"
 
 
 msgid "Edit"
 msgstr "編輯"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "編輯群組"
 
 
 msgid "Edit locally"
 msgstr "在本機編輯"
 
 
-
 msgid "Enable"
 msgstr "啟用"
-
 
 
 msgid "Enable animations"
 msgstr "啟用動畫"
 
 
-
 msgid "Enable fluent background option"
 msgstr "啟用 fluent 背景"
-
 
 
 msgid "Enable font ligatures"
 msgstr "啟用合字"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "啟用全域快速鍵 (Ctrl+Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "啟用實驗性 Windows ConPTY API"
 
 
-
 msgid "Encrypt config file"
 msgstr "加密設定檔"
-
 
 
 msgid "End of the line"
 msgstr "行尾"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "環境"
 
 
-
 msgid "Erase config"
 msgstr "清除設定"
-
 
 
 msgid "Erase the Vault"
 msgstr "清除金鑰庫"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "套件中的錯誤 {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "偶數"
 
 
 msgid "Exact match"
 msgstr "完全符合"
 
 
-
 msgid "Example:"
 msgstr "範例："
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "展開群組"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "已知會導致問題的實驗性Windows 10背景樣式"
 
 
-
 msgid "Export"
 msgstr "匯出"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "匯出至檔案"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "擴充 PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "下載資料夾失敗: {error}"
 
 
 msgid "Fallback font"
 msgstr "備用字型"
 
 
-
 msgid "File transfers"
 msgstr "檔案傳輸"
-
 
 
 msgid "File: {description}"
 msgstr "檔案描述: {description}"
 
 
-
 msgid "Filter"
 msgstr "篩選器"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "篩選結果"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "完成"
 
 
 msgid "Fixed"
 msgstr "固定寬度"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "將貼上的文字壓平成單行，適用於不支援多行貼上的終端機"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Fluent 背景有時會導致拖曳延遲"
 
 
-
 msgid "Focus follows mouse"
 msgstr "焦點隨滑鼠移動"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "聚焦下一個工作階段"
 
 
 msgid "Focus pane {number}"
 msgstr "聚焦{number}號窗格"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "聚焦上一個工作階段"
 
 
 msgid "Focus the pane above"
 msgstr "聚焦上方的窗格"
 
 
-
 msgid "Focus the pane below"
 msgstr "聚焦下方的窗格"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "聚焦左邊的窗格"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "聚焦右邊的窗格"
-
 
 
 msgid "Follow the color scheme"
 msgstr "遵循色彩搭配方案"
 
 
-
 msgid "Font"
 msgstr "字型"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "對於鍵盤快速鍵"
 
 
-
 msgid "Force CR"
 msgstr "強制使用 CR"
-
 
 
 msgid "Force CRLF"
 msgstr "強制使用 CRLF"
 
 
-
 msgid "Force LF"
 msgstr "強制使用 LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "強制 SSH使用特定的連線類型"
 
 
-
 msgid "Forget"
 msgstr "清除"
-
 
 
 msgid "Forward port"
 msgstr "通訊埠轉發"
 
 
-
 msgid "Forwarded ports"
 msgstr "已轉發通訊埠"
-
 
 
 msgid "From color scheme"
 msgstr "從配色方案"
 
 
-
 msgid "From system"
 msgstr "跟隨系統"
-
 
 
 msgid "From theme"
 msgstr "從佈景風格"
 
 
-
 msgid "Frontend"
 msgstr "前端"
-
 
 
 msgid "General"
 msgstr "一般設定"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "產生 256 色調色盤"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "產成一個預填寫的 GitHub 問題"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "從 16 種基本顏色產生擴充的 256 色調色盤"
 
 
 msgid "Get"
 msgstr "取得"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "從 Tabby 網頁設定視窗獲取"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "使視窗具有模糊透明的背景"
 
 
-
 msgid "Go up"
 msgstr "往上"
-
 
 
 msgid "Green"
 msgstr "綠色"
 
 
-
 msgid "Group"
 msgstr "群組"
-
 
 
 msgid "Hacks"
 msgstr "修正"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "和諧調色盤"
 
 
 msgid "Help translate Tabby"
 msgstr "協助我們翻譯 Tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "十六進制"
-
 
 
 msgid "Hide"
 msgstr "隱藏"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "從系統匣或選單列隱藏 Tabby。"
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "隱藏系統匣圖示"
 
 
 msgid "Hide window on focus loss"
 msgstr "非聚焦時隱藏視窗"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "隱藏工作區關閉按鈕"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "隱藏工作區編號"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "隱藏工作區選項按鈕"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "點擊別處時隱藏停靠的終端"
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "首頁"
 
 
-
 msgid "Host"
 msgstr "主機"
-
 
 
 msgid "Host key"
 msgstr "主機金鑰"
 
 
-
 msgid "Host key verification"
 msgstr "主機金鑰驗證"
-
 
 
 msgid "Hotkeys"
 msgstr "快速鍵"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Tabby 如何透過環境變數呈現"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTP 代理伺服器"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTP 代理主機位址"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTP 代理通訊埠"
 
 
-
 msgid "Icon"
 msgstr "圖示"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "如果您沒有要求此操作，這可能是惡意活動的跡象。"
 
 
 msgid "Immediately echoes your input locally"
 msgstr "立刻在本機顯示您的輸入"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "每個 LF 隱含 CR"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "每個 CR 隱含 LF"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "密碼不正確"
 
 
 msgid "Input"
 msgstr "輸入"
 
 
-
 msgid "Input is sent as you type"
 msgstr "輸入在您鍵入時傳送"
-
 
 
 msgid "Input mode"
 msgstr "輸入模式"
 
 
-
 msgid "Input newlines"
 msgstr "換行"
-
 
 
 msgid "Installed"
 msgstr "已安裝"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "智慧 Ctrl-C (複製/中止)"
-
 
 
 msgid "Interactive"
 msgstr "互動式"
 
 
-
 msgid "Invalid syntax"
 msgstr "無效語法"
-
 
 
 msgid "Jump host"
 msgstr "跳轉伺服器"
 
 
-
 msgid "Jump to next word"
 msgstr "跳轉至下個關鍵字"
-
 
 
 msgid "Jump to previous word"
 msgstr "跳轉至上個關鍵字"
 
 
-
 msgid "Keep"
 msgstr "維持現狀"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Keep-Alive 間隔(毫秒)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "保持已貼齊終端機永遠在最上方"
-
 
 
 msgid "Key"
 msgstr "金鑰"
 
 
-
 msgid "Key exchange"
 msgstr "金鑰交換"
-
 
 
 msgid "Keyboard"
 msgstr "鍵盤"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "鍵盤交互認證"
-
 
 
 msgid "Language"
 msgstr "語言"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "最後已知主機金輪指紋"
-
 
 
 msgid "Launch WinSCP"
 msgstr "啟動 WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "為目前 SSH 階段啟動 WinSCP"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "得知如何讓 Tabby 偵測遠端工作目錄"
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "瞭解更多"
 
 
 msgid "Left"
 msgstr "左側"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "使用 Shell 替代作業系統處理 Meta 鍵"
-
 
 
 msgid "Light mode"
 msgstr "淺色模式"
 
 
-
 msgid "Line by line"
 msgstr "逐行"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "行編輯器，按Enter後傳送輸入"
 
 
-
 msgid "Line padding"
 msgstr "行距"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "載入工作階段輸出 (偵錯)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "載入終端機狀態 (偵錯)"
 
 
 msgid "Loading"
 msgstr "載入中"
 
 
-
 msgid "Loading configs..."
 msgstr "載入設定檔中..."
-
 
 
 msgid "Local"
 msgstr "本機"
 
 
-
 msgid "Local echo"
 msgstr "本機回覆"
-
 
 
 msgid "Local terminal"
 msgstr "本機終端機"
 
 
-
 msgid "Login scripts"
 msgstr "登入執行腳本"
-
 
 
 msgid "Long-click for context menu"
 msgstr "長按以叫出選單"
 
 
-
 msgid "Manage profiles"
 msgstr "管理設定檔"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "標記"
 
 
 msgid "Max Keep Alive Count"
 msgstr "最大 Keep-Alive 次數"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "最低對比度"
-
 
 
 msgid "Modified on {date}"
 msgstr "修改於 {date}"
 
 
-
 msgid "Mouse"
 msgstr "滑鼠"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "將左側分隔器左移"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "將左側分隔器右移"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "將下方分隔器下移"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "將下方分隔器上移"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "將右側分隔器左移"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "將右側分隔器右移"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "移至未分類"
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "將上方分隔器下移"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "將上方分隔器上移"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "將工作區左移"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "將工作區右移"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "自動聚焦於滑鼠游標所在的窗格"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "透過同一條連線多工處理多個 shell"
 
 
 msgid "Name"
 msgstr "名稱"
 
 
-
 msgid "Name for the new config"
 msgstr "新設定的名稱"
-
 
 
 msgid "Name for the new directory"
 msgstr "新目錄的名稱"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "具名管道"
 
 
 msgid "New"
 msgstr "新增"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "新增系統管理員工作階段"
 
 
 msgid "New config on {platform}"
 msgstr "{platform} 上的新設定"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "新增群組"
 
 
 msgid "New item"
 msgstr "新增項目"
 
 
-
 msgid "New name"
 msgstr "新增名稱"
-
 
 
 msgid "New profile"
 msgstr "新設定檔"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "新增工作階段"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "新工作階段會加入使用中的工作區窗格，而不是建立獨立的工作區。"
 
 
 msgid "New tab"
 msgstr "新增分頁"
 
 
-
 msgid "New window"
 msgstr "新視窗"
-
 
 
 msgid "New Window"
 msgstr "新視窗"
 
 
-
 msgid "New with profile"
 msgstr "新的設定檔"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "新增工作區"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "下一步"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "下一個工作區"
 
 
 msgid "No color"
 msgstr "無色彩"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "沒有符合篩選條件 \"{filterText}\" 的檔案"
 
 
 msgid "No modifier"
 msgstr "無修飾鍵"
 
 
-
 msgid "None"
 msgstr "無"
-
 
 
 msgid "Normal"
 msgstr "普通"
 
 
-
 msgid "Normal font weight"
 msgstr "普通字型寬度"
-
 
 
 msgid "Not found"
 msgstr "找不到項目"
 
 
-
 msgid "Notify on activity"
 msgstr "有動作時通知"
-
 
 
 msgid "Notify when done"
 msgstr "完成後通知"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "有幾行被存進緩衝區"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "奇數"
 
 
 msgid "Off"
 msgstr "關閉"
 
 
-
 msgid "Official"
 msgstr "官方"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "確定"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "在 Discord 上"
 
 
 msgid "Opacity"
 msgstr "不透明度"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "開啟"
 
 
 msgid "Open DevTools"
 msgstr "開啟開發者工具"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "在目前工作區中開啟新工作階段"
 
 
 msgid "Open Settings"
 msgstr "開啟設定"
 
 
-
 msgid "Open SFTP panel"
 msgstr "開啟 SFTP 面板"
-
 
 
 msgid "Optional"
 msgstr "選用"
 
 
-
 msgid "Options"
 msgstr "選項"
-
 
 
 msgid "Orange"
 msgstr "橘色"
 
 
-
 msgid "OS default"
 msgstr "系統預設"
-
 
 
 msgid "OS default ({name})"
 msgstr "系統預設 ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "以16進位顯示輸出"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "照原樣顯示輸出"
 
 
-
 msgid "Output mode"
 msgstr "輸出模式"
-
 
 
 msgid "Output newlines"
 msgstr "換行輸出"
 
 
-
 msgid "Override X11 display"
 msgstr "覆蓋 X11 顯示"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "覆寫本機並同步"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "覆寫遠端並同步"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "覆寫遠端設定檔並開始同步？"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "覆寫本機設定檔並開始同步？"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "窗格大小調整級距"
 
 
-
 msgid "Panes"
 msgstr "窗格"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "上層群組"
 
 
 msgid "Parity"
 msgstr "同位元"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "部分設定檔無法同步，因為已被金鑰庫加密"
-
 
 
 msgid "Pass-through"
 msgstr "直通"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "一個雜湊私鑰的密碼{hash}"
-
 
 
 msgid "Password"
 msgstr "密碼"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "{user}@{host} 的密碼"
 
 
 msgid "Paste"
 msgstr "貼上"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "貼上 \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "從剪貼簿貼上"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "未選擇內容時貼上，否則複製"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "貼上多行？"
 
 
-
 msgid "Paste on middle-click"
 msgstr "按滑鼠中鍵時貼上"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "貼上工作階段輸出 (偵錯)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "貼上終端機狀態 (偵錯)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "本機 X11 socket 的路徑或位址"
 
 
-
 msgid "Pin"
 msgstr "釘選"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "釘選或取消釘選工作區"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "釘選工作區"
 
 
 msgid "Plugins"
 msgstr "擴充功能"
 
 
-
 msgid "Plugins folder"
 msgstr "擴充功能資料夾"
-
 
 
 msgid "Port"
 msgstr "通訊埠"
 
 
-
 msgid "Port closed"
 msgstr "連接埠已關閉"
-
 
 
 msgid "Port forwarding"
 msgstr "連接埠轉發"
 
 
-
 msgid "Port opened"
 msgstr "通訊埠已打開"
-
 
 
 msgid "Ports"
 msgstr "通訊埠"
 
 
-
 msgid "Press any key to reconnect"
 msgstr "按下任意鍵以重新連線"
-
 
 
 msgid "Press the key now"
 msgstr "現在按下按鍵"
 
 
-
 msgid "Prevents accidental closing"
 msgstr "防止意外關閉"
-
 
 
 msgid "Prevents accidental execution of pasted commands"
 msgstr "防止意外貼上的指令執行"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "上一個工作區"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "私鑰密碼"
 
 
 msgid "Private keys"
 msgstr "私鑰"
 
 
-
 msgid "Process completed"
 msgstr "處理完成"
-
 
 
 msgid "Profile name"
 msgstr "設定檔名稱"
 
 
-
 msgid "Profiles"
 msgstr "設定檔"
-
 
 
 msgid "Profiles & connections"
 msgstr "設定檔與連線"
 
 
-
 msgid "Program"
 msgstr "程式"
-
 
 
 msgid "Proxy command"
 msgstr "代理指令"
 
 
-
 msgid "Purple"
 msgstr "紫色"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "將所有 Tabby 設定檔放入金鑰庫"
 
 
-
 msgid "Quick connect"
 msgstr "快速連線"
-
 
 
 msgid "Quit"
 msgstr "退出"
 
 
-
 msgid "Raw socket connection"
 msgstr "原始 socket 連線"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "就緒超時（毫秒）"
 
 
-
 msgid "Recent"
 msgstr "最近"
-
 
 
 msgid "Reconnect"
 msgstr "重新連線"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "重新連線目前的分頁 (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "紅色"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "重新整理"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "從登錄檔重新整理環境變數"
 
 
 msgid "Regex"
 msgstr "正規表示式"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "拒絕"
 
 
 msgid "Release notes"
 msgstr "發行紀錄"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "為每個新工作階段從 Windows 登錄檔重新載入 PATH 及其他變數"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "記住"
 
 
 msgid "Remember for {time}"
 msgstr "在 {time} 內記住"
 
 
-
 msgid "Remote"
 msgstr "遠端"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "刪除複製文字周圍的空格和換行"
 
 
-
 msgid "Rename"
 msgstr "重新命名"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "重新命名工作階段"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "重新命名工作區"
 
 
 msgid "Rendering"
 msgstr "彩現"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "重新開啟上一個工作區"
 
 
 msgid "Replace"
 msgstr "取代"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "以空格取代換行符"
 
 
 msgid "Report a problem"
 msgstr "回報問題"
 
 
-
 msgid "Require a key to click links"
 msgstr "需要按鍵以打開連結"
-
 
 
 msgid "Reset zoom"
 msgstr "重設縮放比"
 
 
-
 msgid "Restart current serial session"
 msgstr "重啟目前的序列階段"
-
 
 
 msgid "Restart current SSH session"
 msgstr "重啟目前的 SSH 階段"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "重啟目前的 Telnet 階段"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "重新啟動應用程式以套用變更"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "重新啟動工作區"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "將設定還原為預設值?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "將設定還原為繼承的預設值 ?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "工作階段持久化"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "使用 tmux 保持連線，避免跨執行個體拖曳工作階段時觸發重新連線"
-
-
-
-
-
-
-
-
-
+msgstr "應用程式啟動時還原工作區"
 
 
 msgid "Not set"
 msgstr "未設定"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "整詞比對"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "回復多個分頁的狀態"
-
 
 
 msgid "Right"
 msgstr "右側"
 
 
-
 msgid "Right click"
 msgstr "按下滑鼠右鍵"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "執行"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "執行 \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "以系統管理員身分執行"
 
 
-
 msgid "Save"
 msgstr "儲存"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "將密碼儲存至鑰匙圈"
 
 
-
 msgid "Save and apply"
 msgstr "儲存並套用"
-
 
 
 msgid "Save as profile"
 msgstr "另存設定檔"
 
 
-
 msgid "Save layout as profile"
 msgstr "將排版儲存為設定檔"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "儲存工作階段輸出 (偵錯)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "儲存終端機狀態 (偵錯)"
 
 
 msgid "Saved layout"
 msgstr "已儲存排版"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "已儲存至 {path}"
 
 
 msgid "Scroll on input"
 msgstr "輸入時自動捲動至底部"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "終端機向下捲動一行"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "終端機向上捲動一行"
 
 
 msgid "Scroll terminal one page down"
 msgstr "終端機向下捲動一頁"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "終端機向上捲動一頁"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "捲動到終端機底部"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "捲動到終端機頂部"
-
 
 
 msgid "Scrollback"
 msgstr "回捲"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "在用戶輸入時將終端捲動到底部"
-
 
 
 msgid "Search"
 msgstr "搜尋"
 
 
-
 msgid "Search color schemes"
 msgstr "搜尋配色方案"
-
 
 
 msgid "Search hotkeys"
 msgstr "搜尋快速鍵"
 
 
-
 msgid "Search plugins"
 msgstr "搜尋套件"
-
 
 
 msgid "Secret sync token"
 msgstr "同步密鑰"
 
 
-
 msgid "Select"
 msgstr "選擇"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "選擇範本"
 
 
 msgid "Select all"
 msgstr "選取全部"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "選擇背景圖片"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "選擇 {name} 的目標資料夾"
 
 
 msgid "Select file storage"
 msgstr "選取儲存位置"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "選擇設定檔或輸入位址"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "傳輸以十六進位輸入的位元組"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "資料每次只傳送一個位元組"
-
 
 
 msgid "Serial"
 msgstr "序列"
 
 
-
 msgid "Serial connection"
 msgstr "序列埠連線"
-
 
 
 msgid "Set master passphrase"
 msgstr "設定主密碼"
 
 
-
 msgid "Set passphrase"
 msgstr "設定密碼"
-
 
 
 msgid "Set password"
 msgstr "設定密碼"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "設定 Tabby  為 %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "設為 0 時停用顯示最近的設定檔"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "設定 SSH 代理的命名管道路徑"
-
 
 
 msgid "Settings"
 msgstr "設定"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell 不支援目前路徑偵測"
-
 
 
 msgid "Shell integration"
 msgstr "Shell 整合"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "顯示"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "當貼上多行內容時顯示確認視窗"
-
 
 
 msgid "Show command selector"
 msgstr "顯示指令選擇器"
 
 
-
 msgid "Show config file"
 msgstr "顯示設定檔"
-
 
 
 msgid "Show defaults"
 msgstr "顯示預設檔"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "在工作區上顯示設定檔圖示"
 
 
 msgid "Show profile selector"
 msgstr "顯示設定選擇器"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "顯示設定檔側邊欄"
 
 
 msgid "Show recent profiles in selector"
 msgstr "在選擇器中顯示最近使用的設定"
 
 
-
 msgid "Show release notes"
 msgstr "顯示發行紀錄"
-
 
 
 msgid "Show Serial connections"
 msgstr "顯示序列連線"
 
 
-
 msgid "Show vault contents"
 msgstr "顯示金鑰庫的內容"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "在全螢幕模式顯示工作區列"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "(實驗性) Sixel圖形支援"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "跳過MoTD"
-
 
 
 msgid "Slow feed"
 msgstr "逐字節接收"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "將視窗貼齊螢幕的其中一邊"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS 代理"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKS 代理主機"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKS 代理埠"
 
 
-
 msgid "Sound"
 msgstr "音效"
-
 
 
 msgid "Source code"
 msgstr "原始碼"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Space"
 
 
 msgid "Spaciness"
 msgstr "空間感"
 
 
-
 msgid "Split"
 msgstr "新增分割視窗於"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "將目前工作區分割為多個獨立工作區"
 
 
 msgid "Split to the bottom"
 msgstr "分離至底部"
 
 
-
 msgid "Split to the left"
 msgstr "分離至左方"
-
 
 
 msgid "Split to the right"
 msgstr "分離至右方"
 
 
-
 msgid "Split to the top"
 msgstr "分離至上方"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH 連線"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "{user}@{host}:{port} 的 SSH 密碼"
-
 
 
 msgid "Startup"
 msgstr "啟動"
 
 
-
 msgid "Stop bits"
 msgstr "停止位元"
-
 
 
 msgid "Strip"
 msgstr "條"
 
 
-
 msgid "Substitutions allowed."
 msgstr "允許替換"
-
 
 
 msgid "Switch color scheme"
 msgstr "切換配色方案"
 
 
-
 msgid "Switch profile"
 msgstr "切換設定檔"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "切換活動中分頁的設定檔"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "（實驗性）更換終端機前端"
-
 
 
 msgid "Sync"
 msgstr "同步"
 
 
-
 msgid "Sync automatically"
 msgstr "自動同步"
-
 
 
 msgid "Sync host"
 msgstr "同步主機"
 
 
-
 msgid "Sync hotkeys"
 msgstr "同步快速鍵"
-
 
 
 msgid "Sync Vault"
 msgstr "同步金鑰庫"
 
 
-
 msgid "Sync window settings"
 msgstr "同步視窗設定"
-
 
 
 msgid "Tab activity"
 msgstr "分頁活動"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby無法載入您的擴充套件，所以在所有第三方擴充套件已被停用。錯誤是："
-
 
 
 msgid "Telnet session"
 msgstr "Telnet 階段"
 
 
-
 msgid "Terminal"
 msgstr "終端機"
-
 
 
 msgid "Terminal background"
 msgstr "終端機背景"
 
 
-
 msgid "Terminal bell"
 msgstr "終端鈴聲"
-
 
 
 msgid "Terminal identification"
 msgstr "終端標示"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "感謝您下載 Tabby！"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "無法建立目錄"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "目錄建立成功"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "必須解鎖金鑰庫才能載入您的設定。"
 
 
 msgid "Theme"
 msgstr "風格"
 
 
-
 msgid "There are active file transfers"
 msgstr "正在進行檔案傳輸"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "此次連線可使用已儲存密碼"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "這些影響所有給定類型的設定檔"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "這些將套用於此群組中所有具有特定類型的設定檔"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "如果您看到鋸齒或鬼影，請勾選此選項"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "全螢幕模式切換"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "切換最後使用的工作區"
 
 
 msgid "Toggle terminal window"
 msgstr "切換終端機視窗"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "切換Tabby視窗的可見度"
-
 
 
 msgid "Top"
 msgstr "頂部"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "去除空白和空行"
-
 
 
 msgid "Try again"
 msgstr "重試"
 
 
-
 msgid "Ungrouped"
 msgstr "未分類的"
-
 
 
 msgid "Uninstall"
 msgstr "解除安裝"
 
 
-
 msgid "Unknown"
 msgstr "未知的"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "密鑰{key}的密鑰類型{type}未知"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "未命名群組"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "未命名工作區"
 
 
 msgid "Up"
 msgstr "上方"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "升級至版本 {version}"
-
 
 
 msgid "Upload"
 msgstr "上傳"
 
 
-
 msgid "Upload as a new config"
 msgstr "以新的設定檔上傳"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "上傳檔案"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "上傳資料夾"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "使用{altKeyName}為Meta鍵"
 
 
-
 msgid "Use ConPTY"
 msgstr "使用 ConPTY"
-
 
 
 msgid "User default"
 msgstr "使用者預設"
 
 
-
 msgid "Username"
 msgstr "使用者名稱："
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "{host} 的使用者名稱"
 
 
 msgid "Using CONNECT method"
 msgstr "連線方式"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "使用已儲存的密碼"
 
 
 msgid "Vault"
 msgstr "金鑰庫"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Vault是一個永遠加密的存儲空間，用來存放SSH密碼和私鑰的密碼。"
-
 
 
 msgid "Vault is empty"
 msgstr "金鑰庫是空的"
 
 
-
 msgid "Vault is locked"
 msgstr "金鑰庫已被鎖定"
-
 
 
 msgid "Vault is not configured"
 msgstr "金鑰庫未設定"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "須設定Vault的主密碼以存儲密鑰"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "連線時驗證主機金鑰"
 
 
-
 msgid "Version"
 msgstr "版本"
-
 
 
 msgid "Version: {version}"
 msgstr "版本：{version}"
 
 
-
 msgid "Vibrancy"
 msgstr "毛玻璃"
-
 
 
 msgid "Visual"
 msgstr "視覺"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "貼上多行時警告"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "關閉連線中的視窗時警告"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "警告：遠端主機金鑰突然改變！"
-
 
 
 msgid "Welcome"
 msgstr "歡迎使用"
 
 
-
 msgid "What's new"
 msgstr "最新消息"
-
 
 
 msgid "When a session ends"
 msgstr "當連線階段結束"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "啟用後，需按著此鍵才可打開連結"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "當偵測到WinSCP時，您可以通過快顯功能表開啟SCP階段"
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "是否反轉產生的淺色佈景主題顏色。這有助於讓 256 色調色盤更具語意。"
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "將防止顯示 SSH 問候語。"
 
 
-
 msgid "Window"
 msgstr "視窗"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "沿著邊緣的視窗尺寸"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "距離邊緣的視窗尺寸"
-
 
 
 msgid "Windows"
 msgstr "視窗"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "推薦在 Windows 10 版本 18309 或以上使用 ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCP 路徑"
 
 
-
 msgid "Word separators"
 msgstr "分隔字元"
-
 
 
 msgid "Working directory"
 msgstr "工作目錄"
 
 
-
 msgid "Working directory detection"
 msgstr "偵測工作目錄"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "工作區 {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "工作區列位置"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "工作區列寬度"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "工作區"
 
 
 msgid "X11 forwarding"
 msgstr "X11 轉發"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "黃色"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "您可以稍後修改，但如果忘了就沒了"
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "您可能正受到中間人攻擊，或是主機金鑰可能已經改變"
 
 
-
 msgid "Zoom in"
 msgstr "放大"
-
 
 
 msgid "Zoom out"
 msgstr "縮小"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "主密碼"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "分割為未跳脫的引數"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "合併為單一跳脫命令"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "變數名稱"
 
 
 msgid "Value"
-msgstr ""
+msgstr "值"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "主目錄"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "每次都詢問"
 
 
 msgid "Response"
-msgstr ""
+msgstr "回應"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "篩選..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "自動偵測"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "前景"
 
 
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "游標顏色"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "方塊游標前景"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "選取範圍背景"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "選取範圍前景"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI 顏色 {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "期待"
 
 
 msgid "Send"
-msgstr ""
+msgstr "傳送"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 msgid "Menu"
-msgstr ""
+msgstr "選單"
 
 

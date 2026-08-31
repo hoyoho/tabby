@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "Копия {name}"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "Семейство шрифтов, используемое для отображения символов, отсутствующих в основном шрифте"
 
 
-
 msgid "Abort all"
 msgstr "Прервать все"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Принять"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Принять сеанс ZMODEM?"
 
 
 msgid "Accept and remember key"
 msgstr "Принять и запомнить ключ"
 
 
-
 msgid "Accept just this once"
 msgstr "Принять только в этот раз"
-
 
 
 msgid "Accessibility"
 msgstr "Специальные возможности"
 
 
-
 msgid "Acrylic background"
 msgstr "Акриловый фон"
-
 
 
 msgid "Add"
 msgstr "Добавить"
 
 
-
 msgid "Add a port forward"
 msgstr "Добавить перенаправление порта"
-
 
 
 msgid "Add a private key"
 msgstr "Добавить приватный ключ"
 
 
-
 msgid "Add..."
 msgstr "Добавить..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Доп. пространство между строками"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Настройка тёмной подложки за интерфейсом"
 
 
 msgid "Advanced"
 msgstr "Расширенные"
 
 
-
 msgid "Agent"
 msgstr "Агент"
-
 
 
 msgid "Agent forwarding"
 msgstr "Перенаправление агента"
 
 
-
 msgid "Agent pipe path"
 msgstr "Путь к pipe SSH-агента"
-
 
 
 msgid "Agent type"
 msgstr "Тип агента"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Позволяет открывать файлы .bat как сессии, но ломает некоторые оболочки"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Позволяет быстро открыть терминал в выбранной папке"
 
 
-
 msgid "Always dark"
 msgstr "Всегда тёмная"
-
 
 
 msgid "Always light"
 msgstr "Всегда светлая"
 
 
-
 msgid "Appearance"
 msgstr "Внешний вид"
-
 
 
 msgid "Application"
 msgstr "Приложение"
 
 
-
 msgid "Application settings"
 msgstr "Настройки приложения"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Вы уверены, что хотите закрыть Tabby? Это предупреждение можно отключить в Настройках -> Окно."
 
 
-
 msgid "Are you sure?"
 msgstr "Вы уверены?"
-
 
 
 msgid "Arguments"
 msgstr "Аргументы"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Спрашивать перед закрытием вкладки"
-
 
 
 msgid "Audible"
 msgstr "Звук"
 
 
-
 msgid "Authentication method"
 msgstr "Метод аутентификации"
-
 
 
 msgid "Author"
 msgstr "Автор"
 
 
-
 msgid "Auto"
 msgstr "Автоматически"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Автооткрытие терминала при запуске приложения"
 
 
-
 msgid "Automatic"
 msgstr "Автоматически"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Автоматически загружать изменения и проверять наличие обновлений каждую минуту"
 
 
-
 msgid "Available"
 msgstr "Доступно"
-
 
 
 msgid "Background image"
 msgstr "Фоновое изображение"
 
 
-
 msgid "Background image brightness"
 msgstr "Яркость фонового изображения"
-
 
 
 msgid "Background type"
 msgstr "Тип фона"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Режим работы клавиши Backspace"
 
 
-
 msgid "Baud rate"
 msgstr "Скорость передачи"
-
 
 
 msgid "Beginning of the line"
 msgstr "Начало строки"
 
 
-
 msgid "Blink cursor"
 msgstr "Мигающий курсор"
-
 
 
 msgid "Blue"
 msgstr "Синий"
 
 
-
 msgid "Blur"
 msgstr "Размытие"
-
 
 
 msgid "Bold font weight"
 msgstr "Величина жирности шрифта"
 
 
-
 msgid "Bottom"
 msgstr "Снизу"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Bracketed-вставка (требует поддержки оболочки)"
 
 
-
 msgid "Browse…"
 msgstr "Обзор…"
-
 
 
 msgid "Built-in"
 msgstr "Встроенные"
 
 
-
 msgid "Cancel"
 msgstr "Отмена"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Не удалось обработать скрипт этого типа"
 
 
 msgid "Change the master passphrase"
 msgstr "Изменить мастер-пароль"
 
 
-
 msgid "Change workspace color"
 msgstr "Изменить цвет рабочего пространства"
-
 
 
 msgid "Ciphers"
 msgstr "Шифры"
 
 
-
 msgid "Clear"
 msgstr "Очистить"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Очистить недавние профили"
 
 
-
 msgid "Clear terminal"
 msgstr "Очистить терминал"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Очистить терминал после подключения"
 
 
-
 msgid "Clipboard"
 msgstr "Буфер обмена"
-
 
 
 msgid "Close"
 msgstr "Закрыть"
 
 
-
 msgid "Close and never show again"
 msgstr "Закрыть и не показывать снова"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Закрыть активную сессию"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Закрыть другие рабочие области"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Закрыть сессию"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Закрывать сессию только при явном завершении"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Закрывать окно после закрытия последней рабочей области"
 
+msgid "Cross-window drag"
+msgstr "Перетаскивание между окнами"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Позволяет перетаскивать рабочие области и сеансы между экземплярами. Сеансы без переносимого PTY (например, SSH) будут переподключены."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Закрыть рабочую область"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Закрыть рабочие области выше"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Закрыть рабочие области ниже"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Закрыть рабочие области слева"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Закрыть рабочие области справа"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Свернуть группу"
 
 
 msgid "Color"
 msgstr "Цвет"
 
 
-
 msgid "Color scheme"
 msgstr "Цветовая схема"
-
 
 
 msgid "Color schemes"
 msgstr "Цветовая схема"
 
 
-
 msgid "Colors"
 msgstr "Стиль"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Объединить все рабочие области в одну"
 
 
 msgid "Command line"
 msgstr "Командная строка"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Вместо сетевого соединения используется stdin/stdout команды"
-
 
 
 msgid "Commands"
 msgstr "Команды"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Сообщество"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Сжатие"
 
 
 msgid "Config deleted"
 msgstr "Настройка удалена"
 
 
-
 msgid "Config downloaded"
 msgstr "Конфигурация скачана"
-
 
 
 msgid "Config file"
 msgstr "Файл настроек"
 
 
-
 msgid "Config sync"
 msgstr "Синхронизация конфигурации"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Для синхронизации настроек требуется экземпляр сервиса Tabby Web."
 
 
 msgid "Config uploaded"
 msgstr "Конфигурация загружена"
 
 
-
 msgid "Configs"
 msgstr "Конфигурации"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Подключиться через прокси-сервер"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Подключиться к \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Подключиться к другому хосту и использовать его как прокси"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Подключено"
 
 
 msgid "Connecting"
 msgstr "Соединение"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Подключение к {host}"
 
 
 msgid "Connection"
 msgstr "Соединение"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Соединение закрыто"
 
 
 msgid "Connection failed: {error}"
 msgstr "Ошибка соединения: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Вместо этого будет использоваться имя соединения"
-
 
 
 msgid "Context menu"
 msgstr "Контекстное меню"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Управляет расстоянием между элементами"
-
 
 
 msgid "Copied"
 msgstr "Скопировано"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Скопировано в буфер обмена"
 
 
 msgid "Copy"
 msgstr "Копировать"
 
 
-
 msgid "Copy current path"
 msgstr "Копировать текущий путь"
-
 
 
 msgid "Copy full path"
 msgstr "Копировать полный путь"
 
 
-
 msgid "Copy on select"
 msgstr "Копировать при выделении"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Копировать вывод сессии (отладка)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Копировать состояние терминала (отладка)"
 
 
 msgid "Copy to clipboard"
 msgstr "Копировать в буфер обмена"
 
 
-
 msgid "Copy with formatting"
 msgstr "Копировать с форматированием"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Не удалось расшифровать конфигурацию"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Не удалось прочитать закрытый ключ"
 
 
 msgid "Create"
 msgstr "Создать"
 
 
-
 msgid "Create directory"
 msgstr "Создать каталог"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Текущий"
 
 
-
 msgid "Current color scheme"
 msgstr "Текущая цветовая схема"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Отпечаток ключа текущего хоста"
 
 
-
 msgid "Current process: {name}"
 msgstr "Текущий процесс: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Форма курсора"
 
 
-
 msgid "Custom"
 msgstr "Пользовательская"
-
 
 
 msgid "Custom CSS"
 msgstr "Пользовательский CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Тёмная тема"
 
 
-
 msgid "Data bits"
 msgstr "Биты данных"
-
 
 
 msgid "Debugging"
 msgstr "Отладка"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "«Подключиться к» по умолчанию"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Подключение по умолчанию, используемое быстрым подключением (например, SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Настройки группы профилей по умолчанию"
-
 
 
 msgid "Default profile settings"
 msgstr "Настройки профилей по умолчанию"
 
 
-
 msgid "Defaults"
 msgstr "Значения по умолчанию"
-
 
 
 msgid "Defaults for {type}"
 msgstr "По умолчанию для {type}"
 
 
-
 msgid "Delete"
 msgstr "Удалить"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Удалить \"{name}\"?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Удалить {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Удалить всю строку"
 
 
-
 msgid "Delete next word"
 msgstr "Удалить следующее слово"
-
 
 
 msgid "Delete previous word"
 msgstr "Удалить предыдущее слово"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Удалить конфигурацию с удаленной стороны?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Удалить профили этой группы?"
 
 
-
 msgid "Delete this script?"
 msgstr "Удалить этот скрипт?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Удалить содержимое хранилища?"
 
 
-
 msgid "Deleting"
 msgstr "Удаление"
-
 
 
 msgid "Device"
 msgstr "Устройство"
 
 
-
 msgid "Direct"
 msgstr "Напрямую"
-
 
 
 msgid "Disable"
 msgstr "Отключить"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Отключить динамический заголовок сессии"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Отключить прозрачный фон на время перетаскивания окна"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Отключить GPU-ускорение"
-
 
 
 msgid "Disabled"
 msgstr "Отключено"
 
 
-
 msgid "Disconnect"
 msgstr "Отсоединиться"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Отключиться в текущей вкладке (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "Отключиться от {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Показывать изображение за окном терминала"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Отображать изображения при помощи управляющей последовательности Sixel"
 
 
-
 msgid "Display on"
 msgstr "Отобразить на"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Показывает полное дерево профилей в боковой панели."
 
 
 msgid "Do not abort"
 msgstr "Не прерывать"
 
 
-
 msgid "Do not close"
 msgstr "Не закрывать"
-
 
 
 msgid "Do not remember"
 msgstr "Не запоминать"
 
 
-
 msgid "Dock always on top"
 msgstr "Закрепить поверх всех окон"
-
 
 
 msgid "Dock the terminal"
 msgstr "Закрепить терминал"
 
 
-
 msgid "Docked terminal size"
 msgstr "Размер закреплённого терминала"
-
 
 
 msgid "Docked terminal space"
 msgstr "Отступы закреплённого терминала"
 
 
-
 msgid "Docking"
 msgstr "Закрепление"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Выделение по двойному щелчку остановится на этих символах"
 
 
-
 msgid "Down"
 msgstr "Вниз"
-
 
 
 msgid "Download"
 msgstr "Скачать"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Скачать папку"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Скачать сюда"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Выделять полужирный текст ярким цветом"
 
 
-
 msgid "Duplicate"
 msgstr "Дублировать"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Дублировать сессию"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Дублировать рабочую область"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Динамический"
 
 
 msgid "Edit"
 msgstr "Изменить"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Изменить группу"
 
 
 msgid "Edit locally"
 msgstr "Изменить локально"
 
 
-
 msgid "Enable"
 msgstr "Включить"
-
 
 
 msgid "Enable animations"
 msgstr "Включить анимацию"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Включить опцию свободного фона"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Включить лигатуры шрифтов"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Включить глобальную горячую клавишу (Ctrl-Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Включить экспериментальный API Windows ConPTY"
 
 
-
 msgid "Encrypt config file"
 msgstr "Зашифровать файл конфигурации"
-
 
 
 msgid "End of the line"
 msgstr "Конец строки"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Окружение"
 
 
-
 msgid "Erase config"
 msgstr "Очистить конфигурацию"
-
 
 
 msgid "Erase the Vault"
 msgstr "Очистить хранилище"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Ошибка в {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Чётный"
 
 
 msgid "Exact match"
 msgstr "Точное совпадение"
 
 
-
 msgid "Example:"
 msgstr "Например:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Развернуть группу"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Экспериментальный стиль фона Windows 10 вызывает проблемы"
 
 
-
 msgid "Export"
 msgstr "Экспорт"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Экспортировать в файл"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "расширить PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Не удалось скачать папку: {error}"
 
 
 msgid "Fallback font"
 msgstr "Запасной шрифт"
 
 
-
 msgid "File transfers"
 msgstr "Передача файлов"
-
 
 
 msgid "File: {description}"
 msgstr "Файл: {description}"
 
 
-
 msgid "Filter"
 msgstr "Фильтр"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Фильтровать результаты"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Готово"
 
 
 msgid "Fixed"
 msgstr "Фиксированная"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Преобразовывать вставленный текст в одну строку для терминалов, не поддерживающих многострочную вставку"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Иногда прозрачный фон вызывает лаги при перетаскивании"
 
 
-
 msgid "Focus follows mouse"
 msgstr "Фокус следует за курсором"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Перейти к следующей сессии"
 
 
 msgid "Focus pane {number}"
 msgstr "Фокус на панели {number}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Перейти к предыдущей сессии"
 
 
 msgid "Focus the pane above"
 msgstr "Фокус на панели сверху"
 
 
-
 msgid "Focus the pane below"
 msgstr "Фокус на панели снизу"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Фокус на панели слева"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Фокус на панели справа"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Следовать цветовой схеме"
 
 
-
 msgid "Font"
 msgstr "Шрифт"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Для сочетаний клавиш"
 
 
-
 msgid "Force CR"
 msgstr "Изменить на CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Изменить на CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Изменить на LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Принудительно устанавливает определенный тип подключения к SSH-агенту."
 
 
-
 msgid "Forget"
 msgstr "Забыть"
-
 
 
 msgid "Forward port"
 msgstr "Перенаправить порт"
 
 
-
 msgid "Forwarded ports"
 msgstr "Перенаправленные порты"
-
 
 
 msgid "From color scheme"
 msgstr "Из цветовой схемы"
 
 
-
 msgid "From system"
 msgstr "Системная"
-
 
 
 msgid "From theme"
 msgstr "Из темы"
 
 
-
 msgid "Frontend"
 msgstr "Фронтенд"
-
 
 
 msgid "General"
 msgstr "Общие"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Генерировать 256-цветную палитру"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Открыть пред-заполненный отчет на GitHub"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Генерировать расширенную 256-цветную палитру из 16 базовых цветов"
 
 
 msgid "Get"
 msgstr "Получить"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Скопируйте его из окна настроек web-версии Tabby"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Придает окну размытый прозрачный фон"
 
 
-
 msgid "Go up"
 msgstr "Вверх"
-
 
 
 msgid "Green"
 msgstr "Зелёный"
 
 
-
 msgid "Group"
 msgstr "Группа"
-
 
 
 msgid "Hacks"
 msgstr "Проблемы"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Гармоничная палитра"
 
 
 msgid "Help translate Tabby"
 msgstr "Помогите с переводом Tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "Шестнадцатеричный"
-
 
 
 msgid "Hide"
 msgstr "Скрыть"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Скрывать Tabby из области уведомлений или строки меню."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Скрыть значок в области уведомлений"
 
 
 msgid "Hide window on focus loss"
 msgstr "Скрыть окно при потере фокуса"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Скрыть кнопку закрытия рабочей области"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Скрыть номер рабочей области"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Скрыть кнопку параметров рабочей области"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Скрывает закреплённый терминал при нажатии вне его."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Главная страница"
 
 
-
 msgid "Host"
 msgstr "Хост"
-
 
 
 msgid "Host key"
 msgstr "Ключ хоста"
 
 
-
 msgid "Host key verification"
 msgstr "Проверка ключа хоста"
-
 
 
 msgid "Hotkeys"
 msgstr "Горячие клавиши"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Как Tabby обозначает себя в глобальных переменных"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTP-прокси"
 
 
-
 msgid "HTTP proxy host"
 msgstr "Хост HTTP-прокси"
-
 
 
 msgid "HTTP proxy port"
 msgstr "Порт HTTP-прокси"
 
 
-
 msgid "Icon"
 msgstr "Иконка"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Если вы этого не запрашивали, это может быть признаком вредоносной активности."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Мгновенно локально отображает ваш ввод"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Неявный CR после каждого LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Неявный LF после каждого CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Неверная парольная фраза"
 
 
 msgid "Input"
 msgstr "Ввод"
 
 
-
 msgid "Input is sent as you type"
 msgstr "Введённые данные передаются во время ввода"
-
 
 
 msgid "Input mode"
 msgstr "Режим ввода"
 
 
-
 msgid "Input newlines"
 msgstr "Переносы строк во вводе"
-
 
 
 msgid "Installed"
 msgstr "Установлено"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Умный Ctrl-C (копировать/отменить)"
-
 
 
 msgid "Interactive"
 msgstr "Интерактивная"
 
 
-
 msgid "Invalid syntax"
 msgstr "Неверный синтаксис"
-
 
 
 msgid "Jump host"
 msgstr "Промежуточный хост"
 
 
-
 msgid "Jump to next word"
 msgstr "Перейти к следующему слову"
-
 
 
 msgid "Jump to previous word"
 msgstr "Перейти к предыдущему слову"
 
 
-
 msgid "Keep"
 msgstr "Оставить"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Интервал проверки соединения (мс)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Отображать закреплённый терминал всегда поверх всех окон"
-
 
 
 msgid "Key"
 msgstr "Ключ"
 
 
-
 msgid "Key exchange"
 msgstr "Обмен ключами"
-
 
 
 msgid "Keyboard"
 msgstr "Клавиатура"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Интерактивная аутентификация"
-
 
 
 msgid "Language"
 msgstr "Язык"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Последний известный отпечаток ключа хоста"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Запустить WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Запустить WinSCP для текущей SSH сессии"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Узнайте, как разрешить Tabby определять рабочий каталог удалённой оболочки."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Подробнее"
 
 
 msgid "Left"
 msgstr "Слева"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Позволяет оболочке обрабатывать клавишу Meta вместо ОС"
-
 
 
 msgid "Light mode"
 msgstr "Светлая тема"
 
 
-
 msgid "Line by line"
 msgstr "Построчно"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Редактор строк, ввод отправляется после нажатия Enter"
 
 
-
 msgid "Line padding"
 msgstr "Междустрочный интервал"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Загрузить вывод сессии (отладка)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Загрузить состояние терминала (отладка)"
 
 
 msgid "Loading"
 msgstr "Загрузка"
 
 
-
 msgid "Loading configs..."
 msgstr "Загрузка конфигураций..."
-
 
 
 msgid "Local"
 msgstr "Локальное"
 
 
-
 msgid "Local echo"
 msgstr "Локальное эхо"
-
 
 
 msgid "Local terminal"
 msgstr "Локальный терминал"
 
 
-
 msgid "Login scripts"
 msgstr "Скрипты входа"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Долгое нажатие для контекстного меню"
 
 
-
 msgid "Manage profiles"
 msgstr "Управление профилями"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Метка"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Максимальное количество проверок соединения"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Минимальное контрастное соотношение"
-
 
 
 msgid "Modified on {date}"
 msgstr "Изменено {date}"
 
 
-
 msgid "Mouse"
 msgstr "Мышь"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Сдвинуть левый разделитель влево"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Сдвинуть левый разделитель вправо"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Сдвинуть нижний разделитель вниз"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Сдвинуть нижний разделитель вверх"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Сдвинуть правый разделитель влево"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Сдвинуть правый разделитель вправо"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Переместить в «Без группы»"
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Сдвинуть верхний разделитель вниз"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Сдвинуть верхний разделитель вверх"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Переместить рабочую область влево"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Переместить рабочую область вправо"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Наведение мыши на неактивную панель приведёт к её активации"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Мультиплексировать несколько оболочек через одно соединение"
 
 
 msgid "Name"
 msgstr "Имя"
 
 
-
 msgid "Name for the new config"
 msgstr "Имя для новой конфигурации"
-
 
 
 msgid "Name for the new directory"
 msgstr "Имя для новой папки"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Именованный канал"
 
 
 msgid "New"
 msgstr "Новый"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Новый сеанс администратора"
 
 
 msgid "New config on {platform}"
 msgstr "Новая конфигурация на {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Новая группа"
 
 
 msgid "New item"
 msgstr "Новый элемент"
 
 
-
 msgid "New name"
 msgstr "Новое имя"
-
 
 
 msgid "New profile"
 msgstr "Новый профиль"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Новая сессия"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Новые сессии добавляются в панель активной рабочей области, а не в отдельную рабочую область."
 
 
 msgid "New tab"
 msgstr "Новая вкладка"
 
 
-
 msgid "New window"
 msgstr "Новое окно"
-
 
 
 msgid "New Window"
 msgstr "Новое окно"
 
 
-
 msgid "New with profile"
 msgstr "Новый с профилем"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Новая рабочая область"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Далее"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Следующая рабочая область"
 
 
 msgid "No color"
 msgstr "Без цвета"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Нет файлов, соответствующих фильтру \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Без модификатора"
 
 
-
 msgid "None"
 msgstr "Нет"
-
 
 
 msgid "Normal"
 msgstr "Нормальный"
 
 
-
 msgid "Normal font weight"
 msgstr "Нормальный размер шрифта"
-
 
 
 msgid "Not found"
 msgstr "Не найдено"
 
 
-
 msgid "Notify on activity"
 msgstr "Уведомить об активности"
-
 
 
 msgid "Notify when done"
 msgstr "Уведомить о завершении"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Количество строк, сохраняемых в буфере"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Нечётный"
 
 
 msgid "Off"
 msgstr "Выкл."
 
 
-
 msgid "Official"
 msgstr "Официальный"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "В Discord"
 
 
 msgid "Opacity"
 msgstr "Прозрачность"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Открыть"
 
 
 msgid "Open DevTools"
 msgstr "Открыть DevTools"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Открывать новые сессии в текущей рабочей области"
 
 
 msgid "Open Settings"
 msgstr "Открыть настройки"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Открыть панель SFTP"
-
 
 
 msgid "Optional"
 msgstr "Опциональный"
 
 
-
 msgid "Options"
 msgstr "Параметры"
-
 
 
 msgid "Orange"
 msgstr "Оранжевый"
 
 
-
 msgid "OS default"
 msgstr "По умолчанию для ОС"
-
 
 
 msgid "OS default ({name})"
 msgstr "По умолчанию для ОС ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Вывод показан в шестнадцатеричном виде"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Вывод показан в изначальном виде"
 
 
-
 msgid "Output mode"
 msgstr "Режим вывода"
-
 
 
 msgid "Output newlines"
 msgstr "Переносы строк в выводе"
 
 
-
 msgid "Override X11 display"
 msgstr "Переопределить дисплей X11"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Перезаписать локальную конфигурацию и синхронизировать"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Перезаписать удаленную конфигурацию и синхронизировать"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Перезаписать удаленную конфигурацию и начать синхронизацию?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Перезаписать локальную конфигурацию и начать синхронизацию?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Шаг изменения размера панели"
 
 
-
 msgid "Panes"
 msgstr "Панели"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Родительская группа"
 
 
 msgid "Parity"
 msgstr "Контроль чётности"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Частичная синхронизация конфигурации невозможна, если конфигурация зашифрована с помощью хранилища."
-
 
 
 msgid "Pass-through"
 msgstr "Пропускать насквозь"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Парольная фраза для приватного ключа с хэшем {hash}..."
-
 
 
 msgid "Password"
 msgstr "Пароль"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Пароль для {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Вставить"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Вставить \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Вставить из буфера обмена"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Вставить, если нет выделения, иначе скопировать"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Вставить несколько строк?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Вставить средней кнопкой мыши"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Вставить вывод сессии (отладка)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Вставить состояние терминала (отладка)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Путь или адрес локального сокета X11"
 
 
-
 msgid "Pin"
 msgstr "Закрепить"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Закрепить или открепить рабочую область"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Закрепить рабочую область"
 
 
 msgid "Plugins"
 msgstr "Плагины"
 
 
-
 msgid "Plugins folder"
 msgstr "Папка с плагинами"
-
 
 
 msgid "Port"
 msgstr "Порт"
 
 
-
 msgid "Port closed"
 msgstr "Порт закрыт"
-
 
 
 msgid "Port forwarding"
 msgstr "Перенаправление порта"
 
 
-
 msgid "Port opened"
 msgstr "Порт открыт"
-
 
 
 msgid "Ports"
 msgstr "Порты"
 
 
-
 msgid "Press any key to reconnect"
 msgstr "Нажмите любую клавишу для переподключения"
-
 
 
 msgid "Press the key now"
 msgstr "Нажмите клавишу"
 
 
-
 msgid "Prevents accidental closing"
 msgstr "Предотвращает случайное закрытие"
-
 
 
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Предотвращает случайное выполнение вставленных команд"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Предыдущая рабочая область"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Парольная фраза закрытого ключа"
 
 
 msgid "Private keys"
 msgstr "Приватные ключи"
 
 
-
 msgid "Process completed"
 msgstr "Процесс завершён"
-
 
 
 msgid "Profile name"
 msgstr "Название профиля"
 
 
-
 msgid "Profiles"
 msgstr "Профили"
-
 
 
 msgid "Profiles & connections"
 msgstr "Профили и соединения"
 
 
-
 msgid "Program"
 msgstr "Программа"
-
 
 
 msgid "Proxy command"
 msgstr "Прокси-команда"
 
 
-
 msgid "Purple"
 msgstr "Фиолетовый"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Помещает всю конфигурацию Tabby в зашифрованное хранилище"
 
 
-
 msgid "Quick connect"
 msgstr "Быстрое подключение"
-
 
 
 msgid "Quit"
 msgstr "Выйти"
 
 
-
 msgid "Raw socket connection"
 msgstr "Подключение через сокет"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Таймаут подключения (мс)"
 
 
-
 msgid "Recent"
 msgstr "Недавние"
-
 
 
 msgid "Reconnect"
 msgstr "Переподключение"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Переподключиться в текущей вкладке (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Красный"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Обновить"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Обновить переменные среды из реестра"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Отклонить"
 
 
 msgid "Release notes"
 msgstr "Список изменений"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Заново загружать PATH и другие переменные из реестра Windows для каждого нового сеанса"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Запомнить"
 
 
 msgid "Remember for {time}"
 msgstr "Запомнить на {time}"
 
 
-
 msgid "Remote"
 msgstr "Удаленное"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Удалить пробелы и новые строки вокруг скопированного текста"
 
 
-
 msgid "Rename"
 msgstr "Переименовать"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Переименовать сессию"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Переименовать рабочую область"
 
 
 msgid "Rendering"
 msgstr "Отображение"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Открыть последнюю рабочую область заново"
 
 
 msgid "Replace"
 msgstr "Заменить"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Заменять переносы строк пробелами"
 
 
 msgid "Report a problem"
 msgstr "Сообщить о проблеме"
 
 
-
 msgid "Require a key to click links"
 msgstr "Требовать зажатие клавишы для перехода по ссылкам"
-
 
 
 msgid "Reset zoom"
 msgstr "Сбросить масштабирование"
 
 
-
 msgid "Restart current serial session"
 msgstr "Перезапустить текущую последовательную сессию"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Перезапустить текущую SSH сессию"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Перезапустить текущую сессию Telnet"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Перезапустите приложение, чтобы применить изменения"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Перезапустить рабочую область"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Восстановить настройки по умолчанию?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Восстановить унаследованные настройки по умолчанию?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Сохранение сеанса"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Поддерживает оболочку активной с помощью tmux, чтобы перетаскивание вкладки в другое окно не вызывало переподключение."
-
-
-
-
-
-
-
-
-
+msgstr "Восстанавливать рабочие области при запуске приложения"
 
 
 msgid "Not set"
 msgstr "Не задано"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Целое слово"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Повторное использование сессии для нескольких вкладок"
-
 
 
 msgid "Right"
 msgstr "Справа"
 
 
-
 msgid "Right click"
 msgstr "Правый клик"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Запустить"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Запустить \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Запустить от имени администратора"
 
 
-
 msgid "Save"
 msgstr "Сохранить"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Сохранение пароля в связке ключей"
 
 
-
 msgid "Save and apply"
 msgstr "Сохранить и применить"
-
 
 
 msgid "Save as profile"
 msgstr "Сохранить как профиль"
 
 
-
 msgid "Save layout as profile"
 msgstr "Сохранить как профиль"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Сохранить вывод сессии (отладка)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Сохранить состояние терминала (отладка)"
 
 
 msgid "Saved layout"
 msgstr "Сохранённое расположение"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Сохранено в {path}"
 
 
 msgid "Scroll on input"
 msgstr "Прокручивать при вводе"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Прокрутить терминал на одну строку вниз"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Прокрутить терминал на одну строку вверх"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Прокрутить терминал на одну страницу вниз"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Прокрутить терминал на одну страницу вверх"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Прокрутить терминал вниз"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Прокрутить терминал до верха"
-
 
 
 msgid "Scrollback"
 msgstr "Буфер обратной прокрутки"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Прокручивает терминал вниз при вводе"
-
 
 
 msgid "Search"
 msgstr "Поиск"
 
 
-
 msgid "Search color schemes"
 msgstr "Поиск цветовых схем"
-
 
 
 msgid "Search hotkeys"
 msgstr "Поиск горячих клавиш"
 
 
-
 msgid "Search plugins"
 msgstr "Поиск плагинов"
-
 
 
 msgid "Secret sync token"
 msgstr "Секретный токен синхронизации"
 
 
-
 msgid "Select"
 msgstr "Выбрать"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Выберите шаблон"
 
 
 msgid "Select all"
 msgstr "Выбрать всё"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Выбрать фоновое изображение"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Выберите папку назначения для {name}"
 
 
 msgid "Select file storage"
 msgstr "Выберите хранилище файлов"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Выберите профиль или введите адрес"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Отправлять байты, вводя шестнадцатеричные значения"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Отправляет данные по одному байту за раз"
-
 
 
 msgid "Serial"
 msgstr "Последовательный порт"
 
 
-
 msgid "Serial connection"
 msgstr "Соединение по последовательному порту"
-
 
 
 msgid "Set master passphrase"
 msgstr "Установить мастер-пароль"
 
 
-
 msgid "Set passphrase"
 msgstr "Установить мастер-пароль"
-
 
 
 msgid "Set password"
 msgstr "Установить пароль"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Установить Tabby как %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "0 отключает последние профили"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "Установка пути для named pipe SSH-агента."
-
 
 
 msgid "Settings"
 msgstr "Настройки"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell не поддерживает обнаружение текущего пути"
-
 
 
 msgid "Shell integration"
 msgstr "Интеграция в систему"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Показать"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Показывать окно подтверждения при вставке нескольких строк"
-
 
 
 msgid "Show command selector"
 msgstr "Показать справку команды"
 
 
-
 msgid "Show config file"
 msgstr "Показать файл настроек"
-
 
 
 msgid "Show defaults"
 msgstr "Показать значения по умолчанию"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Показывать значок профиля на рабочей области"
 
 
 msgid "Show profile selector"
 msgstr "Показать выбор профиля"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Показывать боковую панель профилей"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Показать последние профили при выборе"
 
 
-
 msgid "Show release notes"
 msgstr "Посмотреть изменения в релизе"
-
 
 
 msgid "Show Serial connections"
 msgstr "Показать соединения по последовательному порту"
 
 
-
 msgid "Show vault contents"
 msgstr "Показать содержимое хранилища"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Показывать панель рабочих областей в полноэкранном режиме"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Поддержка Sixel графики (экспериментальная)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "Пропустить MoTD/баннер"
-
 
 
 msgid "Slow feed"
 msgstr "Медленная отсылка"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Закрепляет окно к выбранному краю экрана"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS прокси"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "Хост SOCKS прокси"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "Порт SOCKS прокси"
 
 
-
 msgid "Sound"
 msgstr "Звук"
-
 
 
 msgid "Source code"
 msgstr "Исходный код"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Space"
 
 
 msgid "Spaciness"
 msgstr "Расстояние между элементами"
 
 
-
 msgid "Split"
 msgstr "Разделить"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Разделить текущую рабочую область на отдельные рабочие области"
 
 
 msgid "Split to the bottom"
 msgstr "Разделить снизу"
 
 
-
 msgid "Split to the left"
 msgstr "Разделить слева"
-
 
 
 msgid "Split to the right"
 msgstr "Разделить справа"
 
 
-
 msgid "Split to the top"
 msgstr "Разделить сверху"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH-соединение"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "Пароль SSH для {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "При запуске"
 
 
-
 msgid "Stop bits"
 msgstr "Стоп-биты"
-
 
 
 msgid "Strip"
 msgstr "Удалить"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Допускаются подстановки."
-
 
 
 msgid "Switch color scheme"
 msgstr "Переключить цветовую схему"
 
 
-
 msgid "Switch profile"
 msgstr "Сменить профиль"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Сменить профиль в активной панели"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Переключение реализации frontend для терминала (экспериментально)"
-
 
 
 msgid "Sync"
 msgstr "Синхронизация"
 
 
-
 msgid "Sync automatically"
 msgstr "Автоматическая синхронизация"
-
 
 
 msgid "Sync host"
 msgstr "Хост синхронизации"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Синхронизация горячих клавиш"
-
 
 
 msgid "Sync Vault"
 msgstr "Синхронизация хранилища"
 
 
-
 msgid "Sync window settings"
 msgstr "Синхронизация настроек окна"
-
 
 
 msgid "Tab activity"
 msgstr "Активность во вкладке"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby не смог запуститься с вашими плагинами, поэтому все сторонние плагины были отключены в этой сессии. Ошибка в следующем:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnet сессия"
 
 
-
 msgid "Terminal"
 msgstr "Терминал"
-
 
 
 msgid "Terminal background"
 msgstr "Фон терминала"
 
 
-
 msgid "Terminal bell"
 msgstr "Звуковой сигнал терминала"
-
 
 
 msgid "Terminal identification"
 msgstr "Идентификация терминала"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Благодарим за загрузку Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Не удалось создать каталог"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Каталог успешно создан"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Для загрузки конфигурации необходимо разблокировать хранилище."
 
 
 msgid "Theme"
 msgstr "Тема"
 
 
-
 msgid "There are active file transfers"
 msgstr "Есть активные передачи файлов"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Для этого соединения сохранён пароль"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Применяются для всех профилей данного типа"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Они применяются ко всем профилям данного типа в группе"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Включите, если испытываете алиасинг, гостинг или иные проблемы с отображением"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Переход в полноэкранный режим и обратно"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Переключиться на последнюю рабочую область"
 
 
 msgid "Toggle terminal window"
 msgstr "Скрыть/показать окно терминала"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Переключает видимость окна Tabby"
-
 
 
 msgid "Top"
 msgstr "Сверху"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Обрезать пробелы и новые строки"
-
 
 
 msgid "Try again"
 msgstr "Повторить"
 
 
-
 msgid "Ungrouped"
 msgstr "Без группы"
-
 
 
 msgid "Uninstall"
 msgstr "Удалить"
 
 
-
 msgid "Unknown"
 msgstr "Неизвестно"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Неизвестный тип секретных данных {type} для {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Группа без названия"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Рабочая область без названия"
 
 
 msgid "Up"
 msgstr "Вверх"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Обновить до {version}"
-
 
 
 msgid "Upload"
 msgstr "Загрузить"
 
 
-
 msgid "Upload as a new config"
 msgstr "Загрузить как новую конфигурацию"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Загрузить файлы"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Загрузить папку"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Использовать {altKeyName} в качестве клавиши Meta"
 
 
-
 msgid "Use ConPTY"
 msgstr "Использовать ConPTY"
-
 
 
 msgid "User default"
 msgstr "По умолчанию для пользователя"
 
 
-
 msgid "Username"
 msgstr "Имя пользователя"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Имя пользователя для {host}"
 
 
 msgid "Using CONNECT method"
 msgstr "Использовать метод CONNECT"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Используется сохранённый пароль"
 
 
 msgid "Vault"
 msgstr "Хранилище"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Хранилище представляет собой постоянно зашифрованный контейнер, содержащий такие секретные данные, как SSH-пароли и парольные фразы приватных ключей."
-
 
 
 msgid "Vault is empty"
 msgstr "Хранилище пусто"
 
 
-
 msgid "Vault is locked"
 msgstr "Хранилище закрыто"
-
 
 
 msgid "Vault is not configured"
 msgstr "Хранилище не настроено"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Для сохранения секретных данных должен быть задан мастер-пароль хранилища"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Проверять ключ хоста при подключении"
 
 
-
 msgid "Version"
 msgstr "Версия"
-
 
 
 msgid "Version: {version}"
 msgstr "Версия: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Размытый фон"
-
 
 
 msgid "Visual"
 msgstr "Визуально"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Предупреждать при многострочной вставке"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Предупреждать при закрытии активных соединений"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Предупреждение: ключ удалённого хоста неожиданно изменился!"
-
 
 
 msgid "Welcome"
 msgstr "Добро пожаловать"
 
 
-
 msgid "What's new"
 msgstr "Что нового"
-
 
 
 msgid "When a session ends"
 msgstr "При завершении сеанса"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Когда включено, ссылки можно нажимать, только удерживая эту клавишу"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "Если WinSCP обнаружен, можно запускать SCP-сессии из контекстного меню."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Инвертировать ли цвета сгенерированной светлой темы. Это помогает придать 256-цветной палитре больше смысла."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "Запретит отправку SSH-приветствия"
 
 
-
 msgid "Window"
 msgstr "Окно"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Размеры окна вдоль края"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Размеры окна от края"
-
 
 
 msgid "Windows"
 msgstr "Windows"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Для ConPTY рекомендуется Windows 10 build 18309 или выше"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "Путь к WinSCP"
 
 
-
 msgid "Word separators"
 msgstr "Разделители слов"
-
 
 
 msgid "Working directory"
 msgstr "Рабочий каталог"
 
 
-
 msgid "Working directory detection"
 msgstr "Определение рабочего каталога"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Рабочая область {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Расположение панели рабочих областей"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Ширина панели рабочих областей"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Рабочие области"
 
 
 msgid "X11 forwarding"
 msgstr "Перенаправление X11"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Жёлтый"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Вы можете изменить его позже, но, если забудете, восстановить будет невозможно."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Возможно, прямо сейчас вы подвергаетесь атаке посредника (man-in-the-middle), или ключ хоста мог быть просто изменён."
 
 
-
 msgid "Zoom in"
 msgstr "Приблизить"
-
 
 
 msgid "Zoom out"
 msgstr "Отдалить"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Мастер-парольная фраза"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Разделить на неэкранированные аргументы"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Объединить в одну экранированную команду"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Имя переменной"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Значение"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Домашний каталог"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Спрашивать каждый раз"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Ответ"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Фильтр..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Определять автоматически"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Передний план"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Фон"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Цвет курсора"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Передний план блочного курсора"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Фон выделения"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Передний план выделения"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI-цвет {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Expect"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Отправить"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Оболочка"
 
 msgid "Menu"
-msgstr ""
+msgstr "Меню"
 
 

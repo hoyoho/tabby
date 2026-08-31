@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} kopia"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "En andra typsnittsfamilj som används för att visa tecken som saknas i huvudtypsnittet"
 
 
-
 msgid "Abort all"
 msgstr "Avbryt alla"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Acceptera"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Acceptera en ZMODEM-session?"
 
 
 msgid "Accept and remember key"
 msgstr "Acceptera och kom ihåg nyckel"
 
 
-
 msgid "Accept just this once"
 msgstr "Acceptera bara den här gången"
-
 
 
 msgid "Accessibility"
 msgstr "Tillgänglighet"
 
 
-
 msgid "Acrylic background"
 msgstr "Akryl bakgrund"
-
 
 
 msgid "Add"
 msgstr "Lägg till"
 
 
-
 msgid "Add a port forward"
 msgstr "Lägg till en vidarebefordrad port"
-
 
 
 msgid "Add a private key"
 msgstr "Lägg till en privat nyckel"
 
 
-
 msgid "Add..."
 msgstr "Lägg till..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Ytterligare utrymme mellan raderna"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Justera det mörka täckskiktet bakom gränssnittet"
 
 
 msgid "Advanced"
 msgstr "Avancerat"
 
 
-
 msgid "Agent"
 msgstr "Agent"
-
 
 
 msgid "Agent forwarding"
 msgstr "Agent vidarebefordran"
 
 
-
 msgid "Agent pipe path"
 msgstr "Agent processökväg"
-
 
 
 msgid "Agent type"
 msgstr "Agent typ"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Tillåter att .bat-filer öppnas som sessioner, men förstör vissa skal"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Tillåter att snabbt öppna en terminal i den valda mappen"
 
 
-
 msgid "Always dark"
 msgstr "Alltid mörk"
-
 
 
 msgid "Always light"
 msgstr "Alltid ljus"
 
 
-
 msgid "Appearance"
 msgstr "Utseende"
-
 
 
 msgid "Application"
 msgstr "Applikation"
 
 
-
 msgid "Application settings"
 msgstr "Applikationsinställningar"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Är du säker på att du vill stänga Tabby? Du kan inaktivera denna prompt i Inställningar -> Fönster."
 
 
-
 msgid "Are you sure?"
 msgstr "Är du säker?"
-
 
 
 msgid "Arguments"
 msgstr "Argument"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Fråga innan webbläsarfliken stängs"
-
 
 
 msgid "Audible"
 msgstr "Hörbar"
 
 
-
 msgid "Authentication method"
 msgstr "Autentiseringsmetod"
-
 
 
 msgid "Author"
 msgstr "Författare"
 
 
-
 msgid "Auto"
 msgstr "Auto"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Öppna en terminal automatiskt vid appstart"
 
 
-
 msgid "Automatic"
 msgstr "Automatisk"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Ladda automatiskt upp ändringar och sök efter uppdateringar varje minut"
 
 
-
 msgid "Available"
 msgstr "Tillgänglig"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Bakgrundsbild"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Ljusstyrka för bakgrundsbilden"
 
 
 msgid "Background type"
 msgstr "Bakgrundstyp"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Tangentläge för backsteg"
 
 
-
 msgid "Baud rate"
 msgstr "Baudhastighet"
-
 
 
 msgid "Beginning of the line"
 msgstr "Början av raden"
 
 
-
 msgid "Blink cursor"
 msgstr "Blinkande markör"
-
 
 
 msgid "Blue"
 msgstr "Blå"
 
 
-
 msgid "Blur"
 msgstr "Oskärpa"
-
 
 
 msgid "Bold font weight"
 msgstr "Fet teckensnittsvikt"
 
 
-
 msgid "Bottom"
 msgstr "Botten"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Inklistring inom parentes (kräver stöd för skal)"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Bläddra…"
 
 
 msgid "Built-in"
 msgstr "Inbyggt"
 
 
-
 msgid "Cancel"
 msgstr "Avbryt"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Kan inte hantera skript av den här typen"
 
 
 msgid "Change the master passphrase"
 msgstr "Ändra huvudlösenordsfrasen"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Ändra arbetsytans färg"
 
 
 msgid "Ciphers"
 msgstr "Chiffer"
 
 
-
 msgid "Clear"
 msgstr "Rensa"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Rensa senaste profilerna"
 
 
-
 msgid "Clear terminal"
 msgstr "Rensa terminal"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Rensa terminal efter anslutning"
 
 
-
 msgid "Clipboard"
 msgstr "Urklipp"
-
 
 
 msgid "Close"
 msgstr "Stäng"
 
 
-
 msgid "Close and never show again"
 msgstr "Stäng och visa aldrig igen"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Stäng sessionen i fokus"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Stäng andra arbetsytor"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Stäng session"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Stäng sessionen endast när den uttryckligen avslutats"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Stäng fönstret när den sista arbetsytan stängts"
 
+msgid "Cross-window drag"
+msgstr "Dra mellan fönster"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Tillåter att arbetsytor eller sessioner dras mellan instanser. Sessioner utan en överförbar PTY (t.ex. SSH) återansluter."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Stäng arbetsyta"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Stäng arbetsytor ovanför"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Stäng arbetsytor nedanför"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Stäng arbetsytor till vänster"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Stäng arbetsytor till höger"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Fäll ihop grupp"
 
 
 msgid "Color"
 msgstr "Färg"
 
 
-
 msgid "Color scheme"
 msgstr "Färgschema"
-
 
 
 msgid "Color schemes"
 msgstr "Färgschema"
 
 
-
 msgid "Colors"
 msgstr "Färger"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Slå ihop alla arbetsytor till en arbetsyta"
 
 
 msgid "Command line"
 msgstr "Kommandorad"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Kommandot stdin/stdout används istället för en nätverksanslutning"
-
 
 
 msgid "Commands"
 msgstr "Kommandon"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Gemenskap"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Komprimering"
 
 
 msgid "Config deleted"
 msgstr "Konfiguration borttagen"
 
 
-
 msgid "Config downloaded"
 msgstr "Konfiguration nerladdad"
-
 
 
 msgid "Config file"
 msgstr "Konfigurationsfil"
 
 
-
 msgid "Config sync"
 msgstr "Konfigurationssynkronisering"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Konfigurationssynkronisering kräver en instans av Tabby Web-tjänsten."
 
 
 msgid "Config uploaded"
 msgstr "Konfiguration uppladdad"
 
 
-
 msgid "Configs"
 msgstr "Konfigurationer"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Anslut via en proxyserver"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Anslut till \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Anslut först till en annan värd och använd den som proxy"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Ansluten"
 
 
 msgid "Connecting"
 msgstr "Ansluter"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Ansluter till {host}"
 
 
 msgid "Connection"
 msgstr "Anslutning"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Anslutningen stängd"
 
 
 msgid "Connection failed: {error}"
 msgstr "Anslutning misslyckades: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Anslutningsnamn kommer att användas istället"
-
 
 
 msgid "Context menu"
 msgstr "Snabbmeny"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Styr mängden utrymme mellan element"
-
 
 
 msgid "Copied"
 msgstr "Kopierad"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Kopierades till urklipp"
 
 
 msgid "Copy"
 msgstr "Kopiera"
 
 
-
 msgid "Copy current path"
 msgstr "Kopiera aktuell sökväg"
-
 
 
 msgid "Copy full path"
 msgstr "Kopiera fullständig sökväg"
 
 
-
 msgid "Copy on select"
 msgstr "Kopiera vid val"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Kopiera sessionsutdata (felsökning)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Kopiera terminaltillstånd (felsökning)"
 
 
 msgid "Copy to clipboard"
 msgstr "Kopiera till urklipp"
 
 
-
 msgid "Copy with formatting"
 msgstr "Kopiera med formatering"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Kunde inte dekryptera konfigurationen"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Kunde inte läsa den privata nyckeln"
 
 
 msgid "Create"
 msgstr "Skapa"
 
 
-
 msgid "Create directory"
 msgstr "Skapa mapp"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Nuvarande"
 
 
-
 msgid "Current color scheme"
 msgstr "Nuvarande färgschema"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Aktuell värdnyckels fingeravtryck"
 
 
-
 msgid "Current process: {name}"
 msgstr "Aktuell process: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Markörens form"
 
 
-
 msgid "Custom"
 msgstr "Anpassad"
-
 
 
 msgid "Custom CSS"
 msgstr "Anpassad CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Mörkt läge"
 
 
-
 msgid "Data bits"
 msgstr "Databitar"
-
 
 
 msgid "Debugging"
 msgstr "Felsökning"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Standardtyp \"Anslut till\""
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Standard anslutningstyp som används av snabbanslutningsfunktionen (ex. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Inställningar för standardprofil"
-
 
 
 msgid "Default profile settings"
 msgstr "Inställningar för standardprofil"
 
 
-
 msgid "Defaults"
 msgstr "Standardvärden"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Standardvärden för {type}"
 
 
-
 msgid "Delete"
 msgstr "Radera"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Radera \"{name}\"?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Radera {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Radera hela raden"
 
 
-
 msgid "Delete next word"
 msgstr "Radera nästa ord"
-
 
 
 msgid "Delete previous word"
 msgstr "Radera föregående ord"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Ta bort konfigurationen på fjärrsidan?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Radera gruppens profiler?"
 
 
-
 msgid "Delete this script?"
 msgstr "Radera det här skriptet?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Radera innehållet i valvet?"
 
 
-
 msgid "Deleting"
 msgstr "Raderar"
-
 
 
 msgid "Device"
 msgstr "Enhet"
 
 
-
 msgid "Direct"
 msgstr "Direkt"
-
 
 
 msgid "Disable"
 msgstr "Inaktivera"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Inaktivera dynamisk sessionstitel"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Inaktivera flytande bakgrund medan du drar"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Inaktivera GPU-acceleration"
-
 
 
 msgid "Disabled"
 msgstr "Inaktiverad"
 
 
-
 msgid "Disconnect"
 msgstr "Koppla ifrån"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Koppla från aktuell flik (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "Koppla bort från {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Visa en bild bakom terminalfönstret"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Visa bilder via Sixel escape-sekvenser"
 
 
-
 msgid "Display on"
 msgstr "Display på"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Visar ett fullständigt träd med profiler i sidofältet."
 
 
 msgid "Do not abort"
 msgstr "Avbryt inte"
 
 
-
 msgid "Do not close"
 msgstr "Stäng inte"
-
 
 
 msgid "Do not remember"
 msgstr "Kom inte ihåg"
 
 
-
 msgid "Dock always on top"
 msgstr "Dock alltid på toppen"
-
 
 
 msgid "Dock the terminal"
 msgstr "Docka terminalen"
 
 
-
 msgid "Docked terminal size"
 msgstr "Dockad terminalstorlek"
-
 
 
 msgid "Docked terminal space"
 msgstr "Dockat terminalutrymme"
 
 
-
 msgid "Docking"
 msgstr "Dockning"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Dubbelklicka val kommer att stanna vid dessa tecken"
 
 
-
 msgid "Down"
 msgstr "Ner"
-
 
 
 msgid "Download"
 msgstr "Ladda ner"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Nedladdningskatalog"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Ladda ner här"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Rita fet text i ljusa färger"
 
 
-
 msgid "Duplicate"
 msgstr "Duplicera"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Duplicera session"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Duplicera arbetsyta"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dynamisk"
 
 
 msgid "Edit"
 msgstr "Redigera"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Redigera grupp"
 
 
 msgid "Edit locally"
 msgstr "Redigera lokalt"
 
 
-
 msgid "Enable"
 msgstr "Aktivera"
-
 
 
 msgid "Enable animations"
 msgstr "Aktivera animationer"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Aktivera flytande bakgrundsalternativ"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Aktivera teckensnittsligaturer"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktivera global snabbtangent (Ctrl-Mellanslag)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Aktiverar det experimentella Windows ConPTY API"
 
 
-
 msgid "Encrypt config file"
 msgstr "Kryptera konfigurationsfil"
-
 
 
 msgid "End of the line"
 msgstr "Slutet av raden"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Miljö"
 
 
-
 msgid "Erase config"
 msgstr "Radera konfiguration"
-
 
 
 msgid "Erase the Vault"
 msgstr "Radera valvet"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Fel i {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Jämn"
 
 
 msgid "Exact match"
 msgstr "Exakt matchning"
 
 
-
 msgid "Example:"
 msgstr "Exempel:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Fäll ut grupp"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Experimentella Windows 10 bakgrundsstilar som är kända för att orsaka problem"
 
 
-
 msgid "Export"
 msgstr "Exportera"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Exportera till fil"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "utöka PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Det gick inte att ladda ner mappen: {error}"
 
 
 msgid "Fallback font"
 msgstr "Reservtypsnitt"
 
 
-
 msgid "File transfers"
 msgstr "Filöverföringar"
-
 
 
 msgid "File: {description}"
 msgstr "Fil: {description}"
 
 
-
 msgid "Filter"
 msgstr "Filtrera"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Filtrera resultat"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Slutför"
 
 
 msgid "Fixed"
 msgstr "Fast"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Konvertera inklistrad text till en enda rad för terminaler som inte stöder inklistring av flera rader"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Flytande bakgrund orsakar ibland draglag"
 
 
-
 msgid "Focus follows mouse"
 msgstr "Fokus följer mus"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Fokusera nästa session"
 
 
 msgid "Focus pane {number}"
 msgstr "Fokusera panel {nummer}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Fokusera föregående session"
 
 
 msgid "Focus the pane above"
 msgstr "Fokusera panelen ovan"
 
 
-
 msgid "Focus the pane below"
 msgstr "Fokusera panelen under"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Fokusera panelen till vänster"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Fokusera panelen till höger"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Följ färgschemat"
 
 
-
 msgid "Font"
 msgstr "Typsnitt"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "För kortkommandon"
 
 
-
 msgid "Force CR"
 msgstr "Tvinga CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Tvinga CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Tvinga LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Framtvingar en specifik SSH-agentanslutningstyp."
 
 
-
 msgid "Forget"
 msgstr "Glöm bort"
-
 
 
 msgid "Forward port"
 msgstr "Vidarebefordra port"
 
 
-
 msgid "Forwarded ports"
 msgstr "Vidarebefordrade portar"
-
 
 
 msgid "From color scheme"
 msgstr "Från färgschema"
 
 
-
 msgid "From system"
 msgstr "Från systemet"
-
 
 
 msgid "From theme"
 msgstr "Från tema"
 
 
-
 msgid "Frontend"
 msgstr "Frontend"
-
 
 
 msgid "General"
 msgstr "Allmän"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Generera 256-färgspalett"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Generera ett förifyllt GitHub-problem"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Generera utökad 256-färgspalett utifrån dina 16 basfärger"
 
 
 msgid "Get"
 msgstr "Hämta"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Hämta det från fönstret Tabby Web-inställningar"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Ger fönstret en suddig transparent bakgrund"
 
 
-
 msgid "Go up"
 msgstr "Gå upp"
-
 
 
 msgid "Green"
 msgstr "Grön"
 
 
-
 msgid "Group"
 msgstr "Grupp"
-
 
 
 msgid "Hacks"
 msgstr "Hacks"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Harmonisk palett"
 
 
 msgid "Help translate Tabby"
 msgstr "Hjälp till att översätta Tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "Hexadecimal"
-
 
 
 msgid "Hide"
 msgstr "Dölj"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Dölj Tabby från systemfältet eller menyraden."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Dölj systemfältsikonen"
 
 
 msgid "Hide window on focus loss"
 msgstr "Dölj fönstret vid fokusförlust"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Dölj arbetsytans stängningsknapp"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Dölj arbetsyteindex"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Dölj arbetsytans alternativknapp"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Döljer den dockade terminalen när du klickar bort."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Hemsida"
 
 
-
 msgid "Host"
 msgstr "Värd"
-
 
 
 msgid "Host key"
 msgstr "Värdnyckel"
 
 
-
 msgid "Host key verification"
 msgstr "Värdnyckelverifiering"
-
 
 
 msgid "Hotkeys"
 msgstr "Snabbtangenter"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Hur Tabby presenterar sig genom miljövariabler"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTP-proxy"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTP-proxy-värd"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTP-proxyport"
 
 
-
 msgid "Icon"
 msgstr "Ikon"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Om du inte har begärt det kan det vara ett tecken på skadlig aktivitet."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Ekar omedelbart din inmatning lokalt"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Implicit CR i varje LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Implicit LF i varje CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Felaktig lösenfras"
 
 
 msgid "Input"
 msgstr "Inmatning"
 
 
-
 msgid "Input is sent as you type"
 msgstr "Inmatning skickas när du skriver"
-
 
 
 msgid "Input mode"
 msgstr "Inmatningsläge"
 
 
-
 msgid "Input newlines"
 msgstr "Inmatningsradbrytning"
-
 
 
 msgid "Installed"
 msgstr "Installerad"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Intelligent Ctrl-C (kopiera/avbryt)"
-
 
 
 msgid "Interactive"
 msgstr "Interaktiv"
 
 
-
 msgid "Invalid syntax"
 msgstr "Felaktig syntax"
-
 
 
 msgid "Jump host"
 msgstr "Mellanvärd"
 
 
-
 msgid "Jump to next word"
 msgstr "Hoppa till nästa ord"
-
 
 
 msgid "Jump to previous word"
 msgstr "Hoppa till föregående ord"
 
 
-
 msgid "Keep"
 msgstr "Behåll"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Håll-vid-liv-intervall (millisekunder)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Håll dockad terminal alltid överst"
-
 
 
 msgid "Key"
 msgstr "Nyckel"
 
 
-
 msgid "Key exchange"
 msgstr "Nyckelbyte"
-
 
 
 msgid "Keyboard"
 msgstr "Tangentbord"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Tangentbordsinteraktiv autentisering"
-
 
 
 msgid "Language"
 msgstr "Språk"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Senast kända värdnyckelfingeravtryck"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Starta WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Starta WinSCP för aktuell SSH-session"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Lär dig hur du tillåter Tabby att upptäcka fjärrskalets arbetskatalog."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Läs mer"
 
 
 msgid "Left"
 msgstr "Vänster"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Låter skalet hantera Meta-nyckeln istället för OS"
-
 
 
 msgid "Light mode"
 msgstr "Ljust läge"
 
 
-
 msgid "Line by line"
 msgstr "Rad för rad"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Radredigerare, inmatning skickas efter att du tryckt på Enter"
 
 
-
 msgid "Line padding"
 msgstr "Linjestoppning"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Läs in sessionsutdata (felsökning)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Läs in terminaltillstånd (felsökning)"
 
 
 msgid "Loading"
 msgstr "Laddar"
 
 
-
 msgid "Loading configs..."
 msgstr "Läser in konfigurationer..."
-
 
 
 msgid "Local"
 msgstr "Lokal"
 
 
-
 msgid "Local echo"
 msgstr "Lokalt eko"
-
 
 
 msgid "Local terminal"
 msgstr "Lokal terminal"
 
 
-
 msgid "Login scripts"
 msgstr "Inloggningsskript"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Långklicka för snabbmeny"
 
 
-
 msgid "Manage profiles"
 msgstr "Hantera profiler"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Markera"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Max Håll-vid-liv-antal"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Minsta kontrastförhållande"
-
 
 
 msgid "Modified on {date}"
 msgstr "Ändrad den {date}"
 
 
-
 msgid "Mouse"
 msgstr "Mus"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Flytta vänster avdelare åt vänster"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Flytta vänster avdelare åt höger"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Flytta nedre avdelare nedåt"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Flytta nedre avdelare uppåt"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Flytta höger avdelare åt vänster"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Flytta höger avdelare åt höger"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Flytta till \"Ogrupperad\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Flytta övre avdelare nedåt"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Flytta övre avdelare uppåt"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Flytta arbetsyta åt vänster"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Flytta arbetsyta åt höger"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Om du flyttar musen över en inaktiv panel kommer den att aktiveras"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multiplexera flera skal via samma anslutning"
 
 
 msgid "Name"
 msgstr "Namn"
 
 
-
 msgid "Name for the new config"
 msgstr "Namn på den nya konfigurationen"
-
 
 
 msgid "Name for the new directory"
 msgstr "Namn på den nya mappen"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Namngivet rör"
 
 
 msgid "New"
 msgstr "Ny"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Ny adminsession"
 
 
 msgid "New config on {platform}"
 msgstr "Ny konfiguration på {plattform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Ny grupp"
 
 
 msgid "New item"
 msgstr "Nytt objekt"
 
 
-
 msgid "New name"
 msgstr "Nytt namn"
-
 
 
 msgid "New profile"
 msgstr "Ny profil"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Ny session"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Nya sessioner läggs till i den aktiva arbetsytans panel istället för en separat arbetsyta."
 
 
 msgid "New tab"
 msgstr "Ny flik"
 
 
-
 msgid "New window"
 msgstr "Nytt fönster"
-
 
 
 msgid "New Window"
 msgstr "Nytt fönster"
 
 
-
 msgid "New with profile"
 msgstr "Nytt med profil"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Ny arbetsyta"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Nästa"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Nästa arbetsyta"
 
 
 msgid "No color"
 msgstr "Ingen färg"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Inga filer matchar filtret \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Ingen modifierare"
 
 
-
 msgid "None"
 msgstr "Ingen"
-
 
 
 msgid "Normal"
 msgstr "Normal"
 
 
-
 msgid "Normal font weight"
 msgstr "Normal teckensnittsvikt"
-
 
 
 msgid "Not found"
 msgstr "Hittades inte"
 
 
-
 msgid "Notify on activity"
 msgstr "Meddela om aktivitet"
-
 
 
 msgid "Notify when done"
 msgstr "Meddela när du är klar"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Antal rader i bufferten"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Udda"
 
 
 msgid "Off"
 msgstr "Av"
 
 
-
 msgid "Official"
 msgstr "Officiell"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "På Discord"
 
 
 msgid "Opacity"
 msgstr "Opacitet"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Öppna"
 
 
 msgid "Open DevTools"
 msgstr "Öppna DevTools"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Öppna nya sessioner på den aktuella arbetsytan"
 
 
 msgid "Open Settings"
 msgstr "Öppna Inställningar"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Öppna SFTP-panelen"
-
 
 
 msgid "Optional"
 msgstr "Frivillig"
 
 
-
 msgid "Options"
 msgstr "Alternativ"
-
 
 
 msgid "Orange"
 msgstr "Orange"
 
 
-
 msgid "OS default"
 msgstr "OS standard"
-
 
 
 msgid "OS default ({name})"
 msgstr "OS standard ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Utdata visas som en hexdump"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Utdata visas när den tas emot"
 
 
-
 msgid "Output mode"
 msgstr "Utgångsläge"
-
 
 
 msgid "Output newlines"
 msgstr "Utgångsradbrytningar"
 
 
-
 msgid "Override X11 display"
 msgstr "Åsidosätt X11-skärm"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Skriv över lokal och synkronisera"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Skriv över fjärr och synkronisera"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Skriv över konfigurationen på fjärrsidan och börja synkronisera?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Vill du skriva över den lokala konfigurationen och börja synkronisera?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Panelomskalningssteg"
 
 
-
 msgid "Panes"
 msgstr "Paneler"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Överordnad grupp"
 
 
 msgid "Parity"
 msgstr "Paritet"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Delvis konfigurationssynkronisering är inte möjlig när konfigurationen är krypterad via Valvet."
-
 
 
 msgid "Pass-through"
 msgstr "Genomgång"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Lösenfras för en privat nyckel med hash {hash}..."
-
 
 
 msgid "Password"
 msgstr "Lösenord"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Lösenord för {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Klistra in"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Klistra in \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Klistra in från urklipp"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Klistra in om inget val, annars kopiera"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Klistra in flera rader?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Klistra in vid mittenklick"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Klistra in sessionsutdata (felsökning)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Klistra in terminaltillstånd (felsökning)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Sökväg eller adress till det lokala X11-uttaget"
 
 
-
 msgid "Pin"
 msgstr "Fäst"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Fäst eller lossa arbetsyta"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Fäst arbetsyta"
 
 
 msgid "Plugins"
 msgstr "Plugins"
 
 
-
 msgid "Plugins folder"
 msgstr "Plugins-mappen"
-
 
 
 msgid "Port"
 msgstr "Port"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Port stängd"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Vidarebefordring av portar"
 
 
 msgid "Port opened"
 msgstr "Port öppnad"
 
 
-
 msgid "Ports"
 msgstr "Portar"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Tryck på valfri tangent för att återansluta"
 
 
-
 msgid "Press the key now"
 msgstr "Tryck på knappen nu"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Förhindrar oavsiktlig stängning"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Förhindrar oavsiktlig exekvering av inklistrade kommandon"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Föregående arbetsyta"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Lösenfras för privat nyckel"
 
 
 msgid "Private keys"
 msgstr "Privata nycklar"
 
 
-
 msgid "Process completed"
 msgstr "Processen avslutad"
-
 
 
 msgid "Profile name"
 msgstr "Profilnamn"
 
 
-
 msgid "Profiles"
 msgstr "Profiler"
-
 
 
 msgid "Profiles & connections"
 msgstr "Profiler & anslutningar"
 
 
-
 msgid "Program"
 msgstr "Program"
-
 
 
 msgid "Proxy command"
 msgstr "Proxy kommando"
 
 
-
 msgid "Purple"
 msgstr "Lila"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Lägger in hela Tabbys konfiguration i valvet"
 
 
-
 msgid "Quick connect"
 msgstr "Snabbanslutning"
-
 
 
 msgid "Quit"
 msgstr "Avsluta"
 
 
-
 msgid "Raw socket connection"
 msgstr "Raw socket anslutning"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Klar timeout (millisekunder)"
 
 
-
 msgid "Recent"
 msgstr "Nyligen"
-
 
 
 msgid "Reconnect"
 msgstr "Återanslut"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Återanslut aktuell flik (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Röd"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Uppdatera"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Uppdatera miljövariabler från registret"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Avvisa"
 
 
 msgid "Release notes"
 msgstr "Versionsinformation"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Läs om PATH och andra variabler från Windows-registret för varje ny session"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Kom ihåg"
 
 
 msgid "Remember for {time}"
 msgstr "Kom ihåg för {time}"
 
 
-
 msgid "Remote"
 msgstr "Fjärr"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Ta bort blanksteg och radbrytningar runt den kopierade texten"
 
 
-
 msgid "Rename"
 msgstr "Döp om"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Byt namn på session"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Byt namn på arbetsyta"
 
 
 msgid "Rendering"
 msgstr "Rendering"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Öppna senaste arbetsytan igen"
 
 
 msgid "Replace"
 msgstr "Byta ut"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Ersätt radbrytningar med mellanslag"
 
 
 msgid "Report a problem"
 msgstr "Rapportera ett problem"
 
 
-
 msgid "Require a key to click links"
 msgstr "Kräv en nyckel för att klicka på länkar"
-
 
 
 msgid "Reset zoom"
 msgstr "Återställ zoom"
 
 
-
 msgid "Restart current serial session"
 msgstr "Starta om aktuell seriell session"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Starta om aktuell SSH-session"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Starta om aktuell Telnet-session"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Starta om appen för att tillämpa ändringar"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Starta om arbetsyta"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Återställ inställningar till standard?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Återställ inställningar till ärvda standardinställningar?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Sessionsbeständighet"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Håller skalet vid liv med tmux så att du inte utlöser en återanslutning när du drar en flik till ett annat fönster."
-
-
-
-
-
-
-
-
-
+msgstr "Återställ arbetsytor vid appstart"
 
 
 msgid "Not set"
 msgstr "Inte inställt"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Helt ord"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Återanvänd session för flera flikar"
-
 
 
 msgid "Right"
 msgstr "Höger"
 
 
-
 msgid "Right click"
 msgstr "Högerklicka"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Kör"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Kör \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Kör som administratör"
 
 
-
 msgid "Save"
 msgstr "Spara"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Spara ett lösenord i nyckelringen"
 
 
-
 msgid "Save and apply"
 msgstr "Spara och tillämpa"
-
 
 
 msgid "Save as profile"
 msgstr "Spara som profil"
 
 
-
 msgid "Save layout as profile"
 msgstr "Spara layout som profil"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Spara sessionsutdata (felsökning)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Spara terminaltillstånd (felsökning)"
 
 
 msgid "Saved layout"
 msgstr "Sparad layout"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Sparades till {path}"
 
 
 msgid "Scroll on input"
 msgstr "Bläddra vid inmatning"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Rulla terminalen en rad nedåt"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Rulla terminalen en rad uppåt"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Skrolla terminalen en sida ner"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Skrolla terminalen en sida upp"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Skrolla terminalen till botten"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Skrolla terminalen till toppen"
-
 
 
 msgid "Scrollback"
 msgstr "Historik"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Skrollar terminalen till botten vid användarinmatning"
-
 
 
 msgid "Search"
 msgstr "Sök"
 
 
-
 msgid "Search color schemes"
 msgstr "Sök efter färgscheman"
-
 
 
 msgid "Search hotkeys"
 msgstr "Sök snabbtangenter"
 
 
-
 msgid "Search plugins"
 msgstr "Sök plugins"
-
 
 
 msgid "Secret sync token"
 msgstr "Hemligt synkroniseringstoken"
 
 
-
 msgid "Select"
 msgstr "Välj"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Välj en mall"
 
 
 msgid "Select all"
 msgstr "Välj alla"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Välj bakgrundsbild"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Välj målmapp för {name}"
 
 
 msgid "Select file storage"
 msgstr "Välj fillagring"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Välj profil eller ange en adress"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Skicka byte genom att skriva in hexadecimala värden"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Skickar data en byte i taget"
-
 
 
 msgid "Serial"
 msgstr "Serie"
 
 
-
 msgid "Serial connection"
 msgstr "Seriell anslutning"
-
 
 
 msgid "Set master passphrase"
 msgstr "Ställ in huvudlösenfras"
 
 
-
 msgid "Set passphrase"
 msgstr "Ställ in lösenordsfras"
-
 
 
 msgid "Set password"
 msgstr "Välj lösenord"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Ställ in Tabby som %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Ställ in 0 för att inaktivera senaste profiler"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "Ställer in SSH-agentens namngivna processökväg."
-
 
 
 msgid "Settings"
 msgstr "Inställningar"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Skalet stöder inte detektering av strömväg"
-
 
 
 msgid "Shell integration"
 msgstr "Skalintegration"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Visa"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Visa en bekräftelseruta när du klistrar in flera rader"
-
 
 
 msgid "Show command selector"
 msgstr "Visa kommandoväljare"
 
 
-
 msgid "Show config file"
 msgstr "Visa konfigurationsfil"
-
 
 
 msgid "Show defaults"
 msgstr "Visa standardinställningar"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Visa profilikon på arbetsytan"
 
 
 msgid "Show profile selector"
 msgstr "Visa profilväljare"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Visa profilsidefält"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Visa senaste profiler i väljaren"
 
 
-
 msgid "Show release notes"
 msgstr "Visa release notes"
-
 
 
 msgid "Show Serial connections"
 msgstr "Visa seriella anslutningar"
 
 
-
 msgid "Show vault contents"
 msgstr "Visa valvets innehåll"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Visa arbetsyteraden i helskärmsläge"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Stöd för Sixel-grafik (experimentellt)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "Hoppa över MoTD/banner"
-
 
 
 msgid "Slow feed"
 msgstr "Långsam matning"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Fäster fönstret mot en sida av skärmen"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS proxy"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKS proxy värd"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKS proxyport"
 
 
-
 msgid "Sound"
 msgstr "Ljud"
-
 
 
 msgid "Source code"
 msgstr "Källkod"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Mellanslag"
 
 
 msgid "Spaciness"
 msgstr "Rymlighet"
 
 
-
 msgid "Split"
 msgstr "Dela"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Dela upp aktuell arbetsyta i separata arbetsytor"
 
 
 msgid "Split to the bottom"
 msgstr "Dela till botten"
 
 
-
 msgid "Split to the left"
 msgstr "Dela åt vänster"
-
 
 
 msgid "Split to the right"
 msgstr "Dela till höger"
 
 
-
 msgid "Split to the top"
 msgstr "Dela till toppen"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH-anslutning"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "SSH-lösenord för {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Börja"
 
 
-
 msgid "Stop bits"
 msgstr "Stoppa bitar"
-
 
 
 msgid "Strip"
 msgstr "Remsa"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Byten tillåtna."
-
 
 
 msgid "Switch color scheme"
 msgstr "Byt färgschema"
 
 
-
 msgid "Switch profile"
 msgstr "Byt profil"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Byt profil i den aktiva panelen"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Switchar terminal frontend implementering (experimentell)"
-
 
 
 msgid "Sync"
 msgstr "Synkronisera"
 
 
-
 msgid "Sync automatically"
 msgstr "Synkronisera automatiskt"
-
 
 
 msgid "Sync host"
 msgstr "Synkronisera värd"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Synkronisera snabbtangenter"
-
 
 
 msgid "Sync Vault"
 msgstr "Synkronisera valv"
 
 
-
 msgid "Sync window settings"
 msgstr "Synkronisera fönsterinställningar"
-
 
 
 msgid "Tab activity"
 msgstr "Flikaktivitet"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby kunde inte starta med dina plugins, så alla tredjeparts plugins har inaktiverats i den här sessionen. Felet var:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnet-session"
 
 
-
 msgid "Terminal"
 msgstr "Terminal"
-
 
 
 msgid "Terminal background"
 msgstr "Terminal bakgrund"
 
 
-
 msgid "Terminal bell"
 msgstr "Terminalklocka"
-
 
 
 msgid "Terminal identification"
 msgstr "Terminal identifiering"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Tack för att du laddade ner Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Katalogen kunde inte skapas"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Katalogen skapades"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Valvet måste låsas upp för att läsa in din konfiguration."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Det finns aktiva filöverföringar"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Det finns ett sparat lösenord för denna anslutning"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Dessa gäller alla profiler av en angiven typ"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Dessa gäller alla profiler av en angiven typ"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Kryssa för detta om du upplever aliaseffekt, spökbilder eller andra visuella problem"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Växla helskärmsläge"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Växla till senaste arbetsytan"
 
 
 msgid "Toggle terminal window"
 msgstr "Växla terminalfönster"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Växlar synlighet för Tabby-fönstret"
-
 
 
 msgid "Top"
 msgstr "Toppen"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Trimma blanksteg och radbrytningar"
-
 
 
 msgid "Try again"
 msgstr "Försök igen"
 
 
-
 msgid "Ungrouped"
 msgstr "Ogrupperad"
-
 
 
 msgid "Uninstall"
 msgstr "Avinstallera"
 
 
-
 msgid "Unknown"
 msgstr "Okänd"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Okänd hemlighet av typen {type} för {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Namnlös grupp"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Namnlös arbetsyta"
 
 
 msgid "Up"
 msgstr "Upp"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Uppgradera till {version}"
-
 
 
 msgid "Upload"
 msgstr "Ladda upp"
 
 
-
 msgid "Upload as a new config"
 msgstr "Ladda upp som en ny konfiguration"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Ladda upp filer"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Ladda upp mapp"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Använd {altKeyName} som Meta-nyckel"
 
 
-
 msgid "Use ConPTY"
 msgstr "Använd ConPTY"
-
 
 
 msgid "User default"
 msgstr "Användarstandard"
 
 
-
 msgid "Username"
 msgstr "Användarnamn"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Användarnamn för {host}"
 
 
 msgid "Using CONNECT method"
 msgstr "Använder CONNECT-metoden"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Använder sparat lösenord"
 
 
 msgid "Vault"
 msgstr "Valv"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Valvet är en alltid-krypterad behållare för hemligheter så som SSH-lösenord och privata nyckellösenfraser."
-
 
 
 msgid "Vault is empty"
 msgstr "Valvet är tomt"
 
 
-
 msgid "Vault is locked"
 msgstr "Valvet är låst"
-
 
 
 msgid "Vault is not configured"
 msgstr "Valvet är inte konfigurerat"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Valv-huvudlösenord måste ställas in för att tillåta lagring av hemligheter"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Verifiera värdnycklar när du ansluter"
 
 
-
 msgid "Version"
 msgstr "Version"
-
 
 
 msgid "Version: {version}"
 msgstr "Version: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Vibrans"
-
 
 
 msgid "Visual"
 msgstr "Visuell"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Varna för flerraders inklistring"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Varna när aktiva anslutningar stängs"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Varning: fjärrvärdens nyckel har plötsligt ändrats!"
-
 
 
 msgid "Welcome"
 msgstr "Välkommen"
 
 
-
 msgid "What's new"
 msgstr "Vad är nytt"
-
 
 
 msgid "When a session ends"
 msgstr "När en session slutar"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "När aktiverad, är länkar endast klickbara medans du håller ned denna tangent"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "När WinSCP upptäcks kan du starta en SCP-session från snabbmenyn."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Huruvida genererade ljusa temafärger ska inverteras. Detta ger 256-färgspaletten mer semantisk betydelse."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "Kommer att förhindra att SSH-hälsning visas"
 
 
-
 msgid "Window"
 msgstr "Fönster"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Fönstermått längs kanten"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Fönstermått bort från kanten"
-
 
 
 msgid "Windows"
 msgstr "Fönster"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Windows 10 build 18309 eller högre rekommenderas för ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCP sökväg"
 
 
-
 msgid "Word separators"
 msgstr "Ordavgränsare"
-
 
 
 msgid "Working directory"
 msgstr "Arbetskatalog"
 
 
-
 msgid "Working directory detection"
 msgstr "Detektering av arbetskatalog"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Arbetsyta {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Plats för arbetsyteraden"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Bredd på arbetsyteraden"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Arbetsytor"
 
 
 msgid "X11 forwarding"
 msgstr "X11 vidarebefordran"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Gul"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Du kan ändra det senare, men det går inte att återställa om det glöms bort."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Du kan vara under en man-in-the-middle-attack just nu, eller så kan värdnyckeln bara ha ändrats."
 
 
-
 msgid "Zoom in"
 msgstr "Zooma in"
-
 
 
 msgid "Zoom out"
 msgstr "Zooma ut"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Huvudlösenfras"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Dela upp i oescapade argument"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Kombinera till ett enda escapat kommando"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Variabelnamn"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Värde"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Hemkatalog"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Fråga varje gång"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Svar"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filtrera..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Automatisk identifiering"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Förgrund"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Bakgrund"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Markörfärg"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Förgrund för blockmarkör"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Bakgrund för markering"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Förgrund för markering"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI-färg {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Expect"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Skicka"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Skal"
 
 msgid "Menu"
-msgstr ""
+msgstr "Meny"
 
 

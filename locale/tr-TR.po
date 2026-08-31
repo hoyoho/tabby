@@ -13,140 +13,112 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} kopyalandı"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "Varsayılan yazı tipinde eksik karakterleri görüntülemek için kullanılan ikinci yazı tipi"
 
 
-
 msgid "Abort all"
 msgstr "Tümünü iptal et"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Kabul et"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "ZMODEM oturumu kabul edilsin mi?"
 
 
 msgid "Accept and remember key"
 msgstr "Kabul et ve hatırla"
 
 
-
 msgid "Accept just this once"
 msgstr "Yalnızca bu seferlik"
-
 
 
 msgid "Accessibility"
 msgstr "Erişilebilirlik"
 
 
-
 msgid "Acrylic background"
 msgstr "Saydam arkaplan"
-
 
 
 msgid "Add"
 msgstr "Ekle"
 
 
-
 msgid "Add a port forward"
 msgstr "Yeni port yönlendirmesi ekle"
-
 
 
 msgid "Add a private key"
 msgstr "Özel anahtar ekle"
 
 
-
 msgid "Add..."
 msgstr "Ekle..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Satırlar arasındaki ek boşluk"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Arayüzün arkasındaki koyu perdeyi ayarla"
 
 
 msgid "Advanced"
 msgstr "Gelişmiş"
 
 
-
 msgid "Agent"
 msgstr "Anonim"
-
 
 
 msgid "Agent forwarding"
 msgstr "Anonim yönlendirme"
 
 
-
 msgid "Agent pipe path"
 msgstr "Anonim ayar dosyası"
-
 
 
 msgid "Agent type"
 msgstr "Gizlilik Türü"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr ".bat dosyalarının oturum olarak açılmasına izin verir, ancak bazı kabukları bozar"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Seçilen klasörde hızlı bir şekilde bir terminal açılmasına izin verir"
 
 
-
 msgid "Always dark"
-msgstr ""
-
+msgstr "Her zaman koyu"
 
 
 msgid "Always light"
 msgstr "Daima Aydınlık"
 
 
-
 msgid "Appearance"
 msgstr "Görünüm / Kişileştirme"
-
 
 
 msgid "Application"
 msgstr "Uygulama"
 
 
-
 msgid "Application settings"
 msgstr "Uygulama ayarları"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
@@ -154,2243 +126,1783 @@ msgstr "Tabby'i kapatmak istediğinizden emin misiniz? \n"
 "Bu işlemi Ayarlar -> Pencere'den devre dışı bırakabilirsiniz."
 
 
-
 msgid "Are you sure?"
 msgstr "Emin misiniz?"
-
 
 
 msgid "Arguments"
 msgstr "Değişkenler"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Tarayıcı sekmesini kapatmadan önce sor"
-
 
 
 msgid "Audible"
 msgstr "Sesli"
 
 
-
 msgid "Authentication method"
 msgstr "Kimlik doğrulama yöntemi"
-
 
 
 msgid "Author"
 msgstr "Sahibi"
 
 
-
 msgid "Auto"
 msgstr "Otomatik"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Uygulama başlangıcında bir terminali otomatik aç"
 
 
-
 msgid "Automatic"
 msgstr "Otomatik"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Değişiklikleri otomatik olarak yükleyin ve güncellemeleri her dakika kontrol edin"
 
 
-
 msgid "Available"
 msgstr "Mevcut"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Arka plan resmi"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Arka plan resmi parlaklığı"
 
 
 msgid "Background type"
 msgstr "Arkaplan Türü"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Backspace tuşu modu"
 
 
-
 msgid "Baud rate"
 msgstr "Bit hızı"
-
 
 
 msgid "Beginning of the line"
 msgstr "Satır başlangıcı"
 
 
-
 msgid "Blink cursor"
 msgstr "Yanıp sönen imleç"
-
 
 
 msgid "Blue"
 msgstr "Mavi"
 
 
-
 msgid "Blur"
 msgstr "Bulanık"
-
 
 
 msgid "Bold font weight"
 msgstr "Kalın harf genişliği"
 
 
-
 msgid "Bottom"
 msgstr "Alt"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Köşe Parantezli yapıştırma(kabuk desteği gerektirir)"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Gözat…"
 
 
 msgid "Built-in"
 msgstr "Dahili"
 
 
-
 msgid "Cancel"
 msgstr "İptal"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Bu türdeki betikler işlenemiyor"
 
 
 msgid "Change the master passphrase"
 msgstr "Ana parolayı değiştirin"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Çalışma alanı rengini değiştir"
 
 
 msgid "Ciphers"
 msgstr "şifreler"
 
 
-
 msgid "Clear"
 msgstr "Temizle"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Son profilleri temizle"
 
 
-
 msgid "Clear terminal"
 msgstr "Terminali Temizle"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Bağlantıdan sonra terminali temizle"
 
 
-
 msgid "Clipboard"
 msgstr "Pano"
-
 
 
 msgid "Close"
 msgstr "Kapat"
 
 
-
 msgid "Close and never show again"
 msgstr "Kapat ve tekrar gösterme"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Odaktaki oturumu kapat"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Diğer çalışma alanlarını kapat"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Oturumu kapat"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Oturumu yalnızca açıkça sonlandırıldığında kapat"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Son çalışma alanı kapatıldıktan sonra pencereyi kapat"
 
+msgid "Cross-window drag"
+msgstr "Pencereler arası sürükleme"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Çalışma alanlarının veya oturumların örnekler arasında sürüklenmesine izin verir. Aktarılabilir PTY olmayan oturumlar (örn. SSH) yeniden bağlanır."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Çalışma alanını kapat"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Yukarıdaki çalışma alanlarını kapat"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Aşağıdaki çalışma alanlarını kapat"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Soldaki çalışma alanlarını kapat"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Sağdaki çalışma alanlarını kapat"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Grubu daralt"
 
 
 msgid "Color"
 msgstr "Renk"
 
 
-
 msgid "Color scheme"
 msgstr "Renk düzeni"
-
 
 
 msgid "Color schemes"
 msgstr "Renk şemaları"
 
 
-
 msgid "Colors"
 msgstr "Renkler"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Tüm çalışma alanlarını tek bir çalışma alanında birleştir"
 
 
 msgid "Command line"
 msgstr "Komut satırı"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Ağ bağlantısı yerine komutun standart giriş/çıkışı kullanılıyor"
-
 
 
 msgid "Commands"
 msgstr "Komutlar"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Topluluk"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Sıkıştırma"
 
 
 msgid "Config deleted"
 msgstr "Yapılandırma silindi"
 
 
-
 msgid "Config downloaded"
 msgstr "Yapılandırma indirildi"
-
 
 
 msgid "Config file"
 msgstr "Yapılandırma dosyası"
 
 
-
 msgid "Config sync"
 msgstr "Yapılandırma senkronize"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Yapılandırma eşitleme için bir Tabby Web servisi örneği gerekir."
 
 
 msgid "Config uploaded"
 msgstr "Yapılandırma yüklendi"
 
 
-
 msgid "Configs"
 msgstr "Yapılandırmalar"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Bağlanırken vekil sunucu kullan"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "\"%s\" bağlan..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Önce farklı bir ana bilgisayara bağlanın ve onu vekil olarak kullanın"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Bağlandı"
 
 
 msgid "Connecting"
 msgstr "Bağlanıyor"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "{host} adresine bağlanılıyor"
 
 
 msgid "Connection"
 msgstr "Bağlantı"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Bağlantı kapatıldı"
 
 
 msgid "Connection failed: {error}"
 msgstr "Bağlantı başarısız: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Bunun yerine bağlantı adı kullanılacak"
-
 
 
 msgid "Context menu"
 msgstr "İçerik Menüsü"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Elementler arasındaki mesafeyi kontrol eder"
-
 
 
 msgid "Copied"
 msgstr "Kopyalandı"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Panoya kopyalandı"
 
 
 msgid "Copy"
 msgstr "Kopyala"
 
 
-
 msgid "Copy current path"
 msgstr "Şu anki yolu kopyala"
-
 
 
 msgid "Copy full path"
 msgstr "Dosya yolunu kopyala"
 
 
-
 msgid "Copy on select"
 msgstr "Seçileni kopyala"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Oturum çıktısını kopyala (hata ayıklama)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Terminal durumunu kopyala (hata ayıklama)"
 
 
 msgid "Copy to clipboard"
 msgstr "Panoya Kopyala"
 
 
-
 msgid "Copy with formatting"
 msgstr "Biçimlendirme ile kopyalayın"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Yapılandırma dosyasının şifresi çözülemedi"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Özel anahtar okunamadı"
 
 
 msgid "Create"
 msgstr "Oluştur"
 
 
-
 msgid "Create directory"
 msgstr "Dizin oluştur"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Geçerli"
 
 
-
 msgid "Current color scheme"
 msgstr "Mevcut renk şeması"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Geçerli ana bilgisayar anahtarı parmak izi"
 
 
-
 msgid "Current process: {name}"
 msgstr "Mevcut işlem :{name}"
-
 
 
 msgid "Cursor shape"
 msgstr "İmleç şekli"
 
 
-
 msgid "Custom"
 msgstr "Özel"
-
 
 
 msgid "Custom CSS"
 msgstr "Özel CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Koyu mod"
 
 
-
 msgid "Data bits"
 msgstr "Veri Biti"
-
 
 
 msgid "Debugging"
 msgstr "Hata ayıklama"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Varsayılan \"Bağlan\" tipi"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Hızlı bağlanma özelliği için varsayılan bağlantı türü (örn. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Varsayılan profil grup ayarları"
-
 
 
 msgid "Default profile settings"
 msgstr "Varsayılan Profil Ayarları"
 
 
-
 msgid "Defaults"
 msgstr "Varsayılanlar"
-
 
 
 msgid "Defaults for {type}"
 msgstr "{type} için varsayılanlar"
 
 
-
 msgid "Delete"
 msgstr "Sil"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Sil {name}?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "{fullPath} sil?"
-
 
 
 msgid "Delete entire line"
 msgstr "Bütün satırı sil"
 
 
-
 msgid "Delete next word"
 msgstr "Sonraki sözcüğü sil"
-
 
 
 msgid "Delete previous word"
 msgstr "Önceki sözlüğü sil"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Sunucudaki yapılandırma silinsin mi?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Grubun profillerini sil?"
 
 
-
 msgid "Delete this script?"
 msgstr "Bu komut dosyası silinsin mi?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "İçeriği sil?"
 
 
-
 msgid "Deleting"
 msgstr "Siliniyor"
-
 
 
 msgid "Device"
 msgstr "Aygıt"
 
 
-
 msgid "Direct"
 msgstr "Direk"
-
 
 
 msgid "Disable"
 msgstr "Devre Dışı Bırak"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Dinamik oturum başlığını devre dışı bırak"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Sürüklerken akıcı arka planı devre dışı bırak"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "GPU hızlandırmasını devre dışı bırak"
-
 
 
 msgid "Disabled"
 msgstr "Devre dışı"
 
 
-
 msgid "Disconnect"
 msgstr "Bağlantıyı Kes"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Geçerli sekmenin bağlantısını kes (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "{host} bağlantısı kesilsin mi?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Terminal penceresinin arkasında bir resim görüntüle"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Fotoğrafları Sixel yoluyla görüntüleyin"
 
 
-
 msgid "Display on"
 msgstr "Ekran açık"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Kenar çubuğunda profil ağacının tamamını görüntüler."
 
 
 msgid "Do not abort"
 msgstr "İptal etme"
 
 
-
 msgid "Do not close"
 msgstr "Kapatma"
-
 
 
 msgid "Do not remember"
 msgstr "Beni hatırlama"
 
 
-
 msgid "Dock always on top"
 msgstr "Dock her zaman üstte"
-
 
 
 msgid "Dock the terminal"
 msgstr "Terminali kenetle"
 
 
-
 msgid "Docked terminal size"
 msgstr "Kenetlenmiş terminal yüksekliği"
-
 
 
 msgid "Docked terminal space"
 msgstr "Kenetlenmiş terminal genişliği"
 
 
-
 msgid "Docking"
 msgstr "Kenetlenme"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Çift tıklama seçimi bu karakterlerde duracak"
 
 
-
 msgid "Down"
 msgstr "Aşağı"
-
 
 
 msgid "Download"
 msgstr "İndir"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "İndirme dizini"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Buraya indir"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Kalın metinleri parlak renkler ile göster"
 
 
-
 msgid "Duplicate"
 msgstr "Kopyasını oluştur"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Oturumu çoğalt"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Çalışma alanını çoğalt"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dinamik"
 
 
 msgid "Edit"
 msgstr "Düzenle"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Grubu düzenle"
 
 
 msgid "Edit locally"
 msgstr "Yerel olarak düzenle"
 
 
-
 msgid "Enable"
 msgstr "Etkinleştir"
-
 
 
 msgid "Enable animations"
 msgstr "Animasyonları etkinleştir"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Akıcı arka plan seçeneğini etkinleştir"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Yazı tipi bağlamayı etkinleştir"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Evrensel kısayol tuşunu etkinleştir (Ctrl-Boşluk)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Deneysel Windows ConPTY API'ı etkinleştir"
 
 
-
 msgid "Encrypt config file"
 msgstr "Konfigürasyon dosyasını şifrele"
-
 
 
 msgid "End of the line"
 msgstr "Satır sonu"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Ortam"
 
 
-
 msgid "Erase config"
 msgstr "Konfigürasyonu sil"
-
 
 
 msgid "Erase the Vault"
 msgstr "Şifreleri Sil"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Eklenti hatası \" {plugin} \":"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Çift"
 
 
 msgid "Exact match"
 msgstr "Tam eşleşme"
 
 
-
 msgid "Example:"
 msgstr "Örnek:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Grubu genişlet"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Sorunlara neden olduğu bilinen deneysel Windows 10 arka plan stili"
 
 
-
 msgid "Export"
 msgstr "Dışa Aktar"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Dosyaya aktar"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "PATH'i genişlet"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Klasör indirilemedi: {error}"
 
 
 msgid "Fallback font"
 msgstr "Yedek yazı tipi"
 
 
-
 msgid "File transfers"
 msgstr "Dosya aktarımları"
-
 
 
 msgid "File: {description}"
 msgstr "{description}: Dosyası"
 
 
-
 msgid "Filter"
 msgstr "Filtre"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Sonuçları filtrele"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Bitir"
 
 
 msgid "Fixed"
 msgstr "Sabit"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Çok satırlı yapıştırmayı desteklemeyen terminaller için yapıştırılan metni tek satıra düzleştir"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Akışkan arkaplan bazen kasmalara sebep olabilir"
 
 
-
 msgid "Focus follows mouse"
 msgstr "Odak imleci takip eder"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Sonraki oturuma odaklan"
 
 
 msgid "Focus pane {number}"
 msgstr "Odak bölmesi {number}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Önceki oturuma odaklan"
 
 
 msgid "Focus the pane above"
 msgstr "Yukarıdaki bölmeye odaklanın"
 
 
-
 msgid "Focus the pane below"
 msgstr "Aşağıdaki bölmeye odaklan"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Soldaki bölmeye odaklan"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Sağdaki bölmeye odaklan"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Renk düzenini takip et"
 
 
-
 msgid "Font"
 msgstr "Yazı tipi"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Klavye kısayolları için"
 
 
-
 msgid "Force CR"
 msgstr "CR'yi zorla"
-
 
 
 msgid "Force CRLF"
 msgstr "CRLF'i zorla"
 
 
-
 msgid "Force LF"
 msgstr "LF'yi zorla"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Belirli bir SSH Doğrulama türünü zorlar."
 
 
-
 msgid "Forget"
 msgstr "Unut"
-
 
 
 msgid "Forward port"
 msgstr "bağlantı noktası Yönlendirme"
 
 
-
 msgid "Forwarded ports"
 msgstr "Yönlendirilen bağlantı noktaları"
-
 
 
 msgid "From color scheme"
 msgstr "Renk şemasından"
 
 
-
 msgid "From system"
 msgstr "Sistemden"
-
 
 
 msgid "From theme"
 msgstr "Temadan"
 
 
-
 msgid "Frontend"
 msgstr "Ön yüz"
-
 
 
 msgid "General"
 msgstr "Genel"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "256 renkli palet oluştur"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Hazır bir GitHub sorunu oluşturun"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Temel 16 renginizden genişletilmiş 256 renkli palet oluştur"
 
 
 msgid "Get"
 msgstr "Yükle"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Tabby Web ayarları penceresinden alın"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Pencereye bulanık şeffaf bir arka plan verir"
 
 
-
 msgid "Go up"
 msgstr "Yukarı çık"
-
 
 
 msgid "Green"
 msgstr "Yeşil"
 
 
-
 msgid "Group"
 msgstr "Grup"
-
 
 
 msgid "Hacks"
 msgstr "Özel bilgiler"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Uyumlu palet"
 
 
 msgid "Help translate Tabby"
 msgstr "Çeviriye yardım et"
 
 
-
 msgid "Hexadecimal"
 msgstr "onaltılık"
-
 
 
 msgid "Hide"
 msgstr "Gizle"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Tabby'yi sistem tepsisinden veya menü çubuğundan gizle."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Tepsi simgesini gizle"
 
 
 msgid "Hide window on focus loss"
 msgstr "Odaklanma kaybolduğunda pencereyi gizle"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Çalışma alanı kapat düğmesini gizle"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Çalışma alanı dizinini gizle"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Çalışma alanı seçenekler düğmesini gizle"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Uzakta tıkladığınızda yerleşik terminali gizler."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Anasayfa"
 
 
-
 msgid "Host"
 msgstr "Sunucu"
-
 
 
 msgid "Host key"
 msgstr "sunucu anahtarı"
 
 
-
 msgid "Host key verification"
 msgstr "Sunucu anahtarı doğrulaması"
-
 
 
 msgid "Hotkeys"
 msgstr "Kısayol tuşları"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Tabby kendisini ortam değişkenleri aracılığıyla nasıl sunar"
-
 
 
 msgid "HTTP proxy"
 msgstr "Vekil Sunucu"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTP proxy sunucu"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTP proxy portu"
 
 
-
 msgid "Icon"
 msgstr "Simge"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Bunu siz istemediyseniz, bu kötü amaçlı bir etkinliğin işareti olabilir."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Girişinizi hemen yerel olarak yankılar"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Her LF'de örtük CR"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Her CR'de örtük LF"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Parola ifadesi yanlış"
 
 
 msgid "Input"
 msgstr "Girdi"
 
 
-
 msgid "Input is sent as you type"
 msgstr "Siz yazarken girdi gönder"
-
 
 
 msgid "Input mode"
 msgstr "Giriş modu"
 
 
-
 msgid "Input newlines"
 msgstr "Yeni satırları girin"
-
 
 
 msgid "Installed"
 msgstr "Yüklendi"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Akıllı Ctrl-C (kopyala/iptal)"
-
 
 
 msgid "Interactive"
 msgstr "Etkişimli"
 
 
-
 msgid "Invalid syntax"
 msgstr "Geçersiz komut"
-
 
 
 msgid "Jump host"
 msgstr "Ev sahibine atla"
 
 
-
 msgid "Jump to next word"
 msgstr "Sonraki kelimeye atla"
-
 
 
 msgid "Jump to previous word"
 msgstr "Önceki kelimeye atla"
 
 
-
 msgid "Keep"
 msgstr "Tut"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Canlı Tutma Aralığı (Milisaniye)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Yerleşik terminali her zaman üstte tutun"
-
 
 
 msgid "Key"
 msgstr "Anahtar"
 
 
-
 msgid "Key exchange"
 msgstr "Anahtar değişimi"
-
 
 
 msgid "Keyboard"
 msgstr "Klavye"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Klavye etkileşimli kimlik doğrulama"
-
 
 
 msgid "Language"
 msgstr "Dil"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Son bilinen ana bilgisayar anahtarı parmak izi"
-
 
 
 msgid "Launch WinSCP"
 msgstr "WinSCP'yi Başlat"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Şu andaki SSH oturumu için WinSCP'yi Başlatın"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Tabby'nin uzak kabuğun çalışma dizinini algılamasına nasıl izin verileceğini öğrenin."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Daha fazla bilgi edinin"
 
 
 msgid "Left"
 msgstr "Sol"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Shell Kabuğa Meta anahtarını işlemesine izin verir"
-
 
 
 msgid "Light mode"
 msgstr "Aydınlık mod"
 
 
-
 msgid "Line by line"
 msgstr "Satır satır"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Satır düzenleyicisi, Enter tuşuna bastıktan sonra gönderilir"
 
 
-
 msgid "Line padding"
 msgstr "Sıra Öteleme"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Oturum çıktısını yükle (hata ayıklama)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Terminal durumunu yükle (hata ayıklama)"
 
 
 msgid "Loading"
 msgstr "Yükleniyor"
 
 
-
 msgid "Loading configs..."
 msgstr "Ayarlar Yükleniyor..."
-
 
 
 msgid "Local"
 msgstr "Yerel"
 
 
-
 msgid "Local echo"
 msgstr "Yerel yankı"
-
 
 
 msgid "Local terminal"
 msgstr "Yerel terminal"
 
 
-
 msgid "Login scripts"
 msgstr "Oturum açma betikleri"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Bağlam menüsü için uzun tıklama"
 
 
-
 msgid "Manage profiles"
 msgstr "Profilleri yönet"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "İşaretle"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Maksimum Canlı Tutma Sayısı"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Minimum kontrast oranı"
-
 
 
 msgid "Modified on {date}"
 msgstr "Değiştirme tarihi {date}"
 
 
-
 msgid "Mouse"
 msgstr "Fare"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Sol ayırıcıyı sola taşı"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Sol ayırıcıyı sağa taşı"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Alt ayırıcıyı aşağı taşı"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Alt ayırıcıyı yukarı taşı"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Sağ ayırıcıyı sola taşı"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Sağ ayırıcıyı sağa taşı"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "\"Ungrouped\"a taşı"
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Üst ayırıcıyı aşağı taşı"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Üst ayırıcıyı yukarı taşı"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Çalışma alanını sola taşı"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Çalışma alanını sağa taşı"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Fareyi etkin olmayan bir bölmenin üzerine getirmek bölmenin etkinleşmesine neden olur"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Birden fazla kabuğu aynı bağlantı üzerinden çoğullar"
 
 
 msgid "Name"
 msgstr "İsim"
 
 
-
 msgid "Name for the new config"
 msgstr "Yeni yapılandırmanızın adı"
-
 
 
 msgid "Name for the new directory"
 msgstr "Yeni klasörün adı"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Adlandırılmış kanal"
 
 
 msgid "New"
 msgstr "Yeni"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Yeni yönetici oturumu"
 
 
 msgid "New config on {platform}"
 msgstr "{platform} üzerinde yeni konfigürasyon"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Yeni grup"
 
 
 msgid "New item"
 msgstr "Yeni öge"
 
 
-
 msgid "New name"
 msgstr "Yeni isim"
-
 
 
 msgid "New profile"
 msgstr "Yeni profil"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Yeni oturum"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Yeni oturumlar ayrı bir çalışma alanı yerine etkin çalışma alanı bölmesine eklenir."
 
 
 msgid "New tab"
 msgstr "Yeni sekme"
 
 
-
 msgid "New window"
 msgstr "Yeni pencere"
-
 
 
 msgid "New Window"
 msgstr "Yeni Pencere"
 
 
-
 msgid "New with profile"
 msgstr "Profil ile yeni"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Yeni çalışma alanı"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "İleri"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Sonraki çalışma alanı"
 
 
 msgid "No color"
 msgstr "Renk yok"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "\"{filterText}\" filtresiyle eşleşen dosya yok"
 
 
 msgid "No modifier"
 msgstr "Değiştirici yok"
 
 
-
 msgid "None"
 msgstr "Hiçbiri"
-
 
 
 msgid "Normal"
 msgstr "Normal"
 
 
-
 msgid "Normal font weight"
 msgstr "Normal yazı tipi kalınlığı"
-
 
 
 msgid "Not found"
 msgstr "Bulunamadı"
 
 
-
 msgid "Notify on activity"
 msgstr "Etkinlik anında bilgilendir"
-
 
 
 msgid "Notify when done"
 msgstr "Tamamlandığında bildir"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Tamponda tutulan satır sayısı"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Tek"
 
 
 msgid "Off"
 msgstr "Kapalı"
 
 
-
 msgid "Official"
 msgstr "Resmi"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "Tamam"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "Discord'da"
 
 
 msgid "Opacity"
 msgstr "Saydamlık"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Aç"
 
 
 msgid "Open DevTools"
 msgstr "Geliştirici araçlarını aç"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Yeni oturumları geçerli çalışma alanında aç"
 
 
 msgid "Open Settings"
 msgstr "Ayarları Aç"
 
 
-
 msgid "Open SFTP panel"
 msgstr "SFTP panelini aç"
-
 
 
 msgid "Optional"
 msgstr "İsteğe bağlı"
 
 
-
 msgid "Options"
 msgstr "Seçenekler"
-
 
 
 msgid "Orange"
 msgstr "Turuncu"
 
 
-
 msgid "OS default"
 msgstr "İşletim sistemi varsayılanı"
-
 
 
 msgid "OS default ({name})"
 msgstr "İşletim sistemi varsayılanı ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Çıktı hexdump olarak gösterilir"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Çıktı alındığı gibi gösterilir"
 
 
-
 msgid "Output mode"
 msgstr "Çıkış modu"
-
 
 
 msgid "Output newlines"
 msgstr "Çıktı yeni satırları"
 
 
-
 msgid "Override X11 display"
 msgstr "X11 görüntüsünü bastır"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Yerelin üzerine yaz ve senkronize et"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Uzak dosyanın üzerine yaz ve senkronize et"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Uzak taraftaki yapılandırmanın üzerine yazılsın ve senkronizasyon başlatılsın mı?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Yerel yapılandırmanın üzerine yazılsın ve senkronizasyon başlatılsın mı?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Bölmeyi yeniden boyutlandırma adımı"
 
 
-
 msgid "Panes"
 msgstr "Bölmeler"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Üst Grup"
 
 
 msgid "Parity"
 msgstr "Parite"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Yapılandırma Vault aracılığıyla şifrelendiğinde kısmi yapılandırma senkronizasyonu mümkün değildir."
-
 
 
 msgid "Pass-through"
 msgstr "Doğrudan geçiş(Pass-through)"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "{hash} hash'li özel anahtar için parola ifadesi..."
-
 
 
 msgid "Password"
 msgstr "Şifre"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "{user}@{host} için parola"
 
 
 msgid "Paste"
 msgstr "Yapıştır"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "\"{text}\" yapıştırılsın mı?"
 
 
 msgid "Paste from clipboard"
 msgstr "Panodan yapıştır"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Seçim yoksa yapıştır, aksi durumda kopyala"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Birden çok satır yapıştırılsın mı?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Orta tıklamayla yapıştır"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Oturum çıktısını yapıştır (hata ayıklama)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Terminal durumunu yapıştır (hata ayıklama)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Yerel X11 soketinin yolu veya adresi"
 
 
-
 msgid "Pin"
 msgstr "Sabitle"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Çalışma alanını sabitle veya ayır"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Çalışma alanını sabitle"
 
 
 msgid "Plugins"
 msgstr "Eklentiler"
 
 
-
 msgid "Plugins folder"
 msgstr "Eklenti Klasörü"
-
 
 
 msgid "Port"
 msgstr "Port"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Port kapandı"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Port yönlendirme"
 
 
 msgid "Port opened"
 msgstr "Port açıldı"
 
 
-
 msgid "Ports"
 msgstr "Bağlantı noktaları"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Tekrar bağlanmak için bir tuşa basın"
 
 
-
 msgid "Press the key now"
 msgstr "Şimdi tuşa basın"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Yanlışlıkla kapanmayı önle"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Yapıştırılan komutların yanlışlıkla çalıştırılmasını önler"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Önceki çalışma alanı"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Özel anahtar parola ifadesi"
 
 
 msgid "Private keys"
 msgstr "Özel anahtarlar"
 
 
-
 msgid "Process completed"
 msgstr "İşlem tamamlandı"
-
 
 
 msgid "Profile name"
 msgstr "Profil adı"
 
 
-
 msgid "Profiles"
 msgstr "Profiller"
-
 
 
 msgid "Profiles & connections"
 msgstr "Profiller ve bağlantılar"
 
 
-
 msgid "Program"
 msgstr "Program"
-
 
 
 msgid "Proxy command"
 msgstr "Proxy komutu"
 
 
-
 msgid "Purple"
 msgstr "Mor"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Tabby'nin tüm konfigürasyonunu kasaya koy"
 
 
-
 msgid "Quick connect"
 msgstr "Hızlı bağlan"
-
 
 
 msgid "Quit"
 msgstr "Çık"
 
 
-
 msgid "Raw socket connection"
 msgstr "Yerel soket bağlantısını kullan"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Hazır Zaman Aşımı (Milisaniye)"
 
 
-
 msgid "Recent"
 msgstr "En Son"
-
 
 
 msgid "Reconnect"
 msgstr "Tekrar bağlan"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Geçerli sekmeye yeniden bağlan (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Kırmızı"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Yenile"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Ortam değişkenlerini kayıt defterinden yenile"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Reddet"
 
 
 msgid "Release notes"
 msgstr "Sürüm notları"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Her yeni oturum için PATH'i ve diğer değişkenleri Windows kayıt defterinden yeniden yükle"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Hatırla"
 
 
 msgid "Remember for {time}"
 msgstr "{time} için hatırla"
 
 
-
 msgid "Remote"
 msgstr "Uzak Bağlantı"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Kopyalanan metnin etrafındaki boşlukları ve yeni satırları kaldırın"
 
 
-
 msgid "Rename"
 msgstr "Yeniden adlandır"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Oturumu yeniden adlandır"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Çalışma alanını yeniden adlandır"
 
 
 msgid "Rendering"
 msgstr "İşleniyor"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Son çalışma alanını yeniden aç"
 
 
 msgid "Replace"
 msgstr "Değiştir"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Satır sonlarını boşluklarla değiştir"
 
 
 msgid "Report a problem"
 msgstr "Sorun Bildir"
 
 
-
 msgid "Require a key to click links"
 msgstr "Bağlantıları tıklamak için bir anahtar gerekir"
-
 
 
 msgid "Reset zoom"
 msgstr "Yakınlaştırmayı sıfırla"
 
 
-
 msgid "Restart current serial session"
 msgstr "Mevcut seri bağlantısını yeniden başlat"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Mevcut SSH oturumunu yeniden başlat"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Mevcut Telnet oturumunu yeniden başlat"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Değişiklikleri uygulamak için uygulamayı yeniden başlatın"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Çalışma alanını yeniden başlat"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Ayarları varsayılanlara geri yükle?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Ayarları önceki varsayılan değerlere geri yükle?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Oturum kalıcılığı"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Sekmeyi başka bir pencereye sürüklemek yeniden bağlantıyı tetiklemesin diye kabuğu tmux ile canlı tutar."
-
-
-
-
-
-
-
-
-
+msgstr "Çalışma alanlarını uygulama başlangıcında geri yükle"
 
 
 msgid "Not set"
 msgstr "Ayarlanmadı"
-
-
-
-
 
 
 msgid "Description"
@@ -2417,1029 +1929,834 @@ msgid "Whole word"
 msgstr "Tam kelime"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Oturumu birden fazla sekme için yeniden kullanma"
-
 
 
 msgid "Right"
 msgstr "Sağ"
 
 
-
 msgid "Right click"
 msgstr "Sağ tık"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Çalıştır"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "\"{command}\" çalıştırılsın mı?"
 
 
 msgid "Run as administrator"
 msgstr "Yönetici olarak çalıştır"
 
 
-
 msgid "Save"
 msgstr "Kaydet"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Anahtar zincirine bir parola kaydedin"
 
 
-
 msgid "Save and apply"
 msgstr "Kaydet ve uygula"
-
 
 
 msgid "Save as profile"
 msgstr "Profil olarak kaydet"
 
 
-
 msgid "Save layout as profile"
 msgstr "Düzeni profil olarak kaydet"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Oturum çıktısını kaydet (hata ayıklama)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Terminal durumunu kaydet (hata ayıklama)"
 
 
 msgid "Saved layout"
 msgstr "Düzeni kaydet"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "{path} yoluna kaydedildi"
 
 
 msgid "Scroll on input"
 msgstr "Girdide kaydır"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Terminali bir satır aşağı kaydır"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Terminali bir satır yukarı kaydır"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Terminali bir sayfa aşağı kaydır"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Terminali bir sayfa yukarı kaydır"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Terminali en alta kaydır"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Terminali en üste kaydır"
-
 
 
 msgid "Scrollback"
 msgstr "Geriye kaydır"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Kullanıcı girdisinde terminali en alta kaydır"
-
 
 
 msgid "Search"
 msgstr "Ara"
 
 
-
 msgid "Search color schemes"
 msgstr "Renk şemalarını ara"
-
 
 
 msgid "Search hotkeys"
 msgstr "Kısayolları ara"
 
 
-
 msgid "Search plugins"
 msgstr "Eklenti ara"
-
 
 
 msgid "Secret sync token"
 msgstr "Gizli senkronizasyon anahtarı"
 
 
-
 msgid "Select"
 msgstr "Seç"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Bir şablon seçin"
 
 
 msgid "Select all"
 msgstr "Tümünü Seç"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Arka plan resmi seçin"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "{name} için hedef klasörü seçin"
 
 
 msgid "Select file storage"
 msgstr "Depolama seç"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Profil seçin ya da bir adres girin"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Hex değerleri yazarak bayt gönderme"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Her seferinde bir bayt veri gönderir"
-
 
 
 msgid "Serial"
 msgstr "Seri"
 
 
-
 msgid "Serial connection"
 msgstr "Seri bağlantı"
-
 
 
 msgid "Set master passphrase"
 msgstr "Ana parolayı ayarla"
 
 
-
 msgid "Set passphrase"
 msgstr "Parolayı ayarla"
-
 
 
 msgid "Set password"
 msgstr "Şifreyi ayarla"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Tabby'yi %COMSPEC% olarak ayarla"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Son profilleri devre dışı bırakmak için 0'a ayarlayın"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "SSH aracısının adlandırılmış yöneltme yolunu ayarlar."
-
 
 
 msgid "Settings"
 msgstr "Ayarlar"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell geçerli yol algılamayı desteklemiyor"
-
 
 
 msgid "Shell integration"
 msgstr "Kabuk bütünleşmesi"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Göster"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Birden fazla satır yapıştırırken onay kutusu göster"
-
 
 
 msgid "Show command selector"
 msgstr "Komut seçiciyi göster"
 
 
-
 msgid "Show config file"
 msgstr "Yapılandırma dosyasını aç"
-
 
 
 msgid "Show defaults"
 msgstr "Varsayılanları göster"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Çalışma alanında profil simgesini göster"
 
 
 msgid "Show profile selector"
 msgstr "Profil seçiciyi göster"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Profil kenar çubuğunu göster"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Son profilleri seçicide göster"
 
 
-
 msgid "Show release notes"
 msgstr "Sürüm notlarını göster"
-
 
 
 msgid "Show Serial connections"
 msgstr "Seri bağlantıları göster"
 
 
-
 msgid "Show vault contents"
 msgstr "Kasa içeriğini göster"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Tam ekran modunda çalışma alanı çubuğunu göster"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Sixel grafik desteği (deneysel)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "MoTD/banner'ı atla"
-
 
 
 msgid "Slow feed"
 msgstr "Yavaş besleme"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Pencereyi ekranın bir tarafına yaslar"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS Proxy"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKS proxy host"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKS proxy port"
 
 
-
 msgid "Sound"
 msgstr "Ses"
-
 
 
 msgid "Source code"
 msgstr "Kaynak kodu"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Boşluk"
 
 
 msgid "Spaciness"
 msgstr "Uzaklık"
 
 
-
 msgid "Split"
 msgstr "Ayır"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Geçerli çalışma alanını ayrı çalışma alanlarına böl"
 
 
 msgid "Split to the bottom"
 msgstr "Ekranı alta ayır"
 
 
-
 msgid "Split to the left"
 msgstr "Ekranı sola ayır"
-
 
 
 msgid "Split to the right"
 msgstr "Ekranı sağa ayır"
 
 
-
 msgid "Split to the top"
 msgstr "Ekranı üste ayır"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH bağlantısı"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "SSH şifresi için {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Başlangıç"
 
 
-
 msgid "Stop bits"
 msgstr "Durdurma Biti"
-
 
 
 msgid "Strip"
 msgstr "Şerit"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Değiştirmeye izin verildi."
-
 
 
 msgid "Switch color scheme"
 msgstr "Renk şemasını değiştir"
 
 
-
 msgid "Switch profile"
 msgstr "Profili değiştirin"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Etkin bölmede profil değiştirme"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Switchler Terminal Frontend implementasyonu (deneysel)"
-
 
 
 msgid "Sync"
 msgstr "Eşitle"
 
 
-
 msgid "Sync automatically"
 msgstr "Otomatik eşitle"
-
 
 
 msgid "Sync host"
 msgstr "Ana bilgisayarı senkronize et"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Kısayolları Eşitle"
-
 
 
 msgid "Sync Vault"
 msgstr "Kasayı eşitle"
 
 
-
 msgid "Sync window settings"
 msgstr "Pencere ayarlarını eşitle"
-
 
 
 msgid "Tab activity"
 msgstr "Sekme aktivitesi"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby, eklentilerinizle başlatılamadı, bu nedenle bu oturumda tüm üçüncü taraf eklentileri devre dışı bırakıldı. Hata:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnet oturumu"
 
 
-
 msgid "Terminal"
 msgstr "Terminal"
-
 
 
 msgid "Terminal background"
 msgstr "Terminal arka planı"
 
 
-
 msgid "Terminal bell"
 msgstr "Terminal zili"
-
 
 
 msgid "Terminal identification"
 msgstr "Terminal tanımlama"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Tabby'i indirdiğiniz için teşekkür ederiz!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Dizin oluşturulamadı"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Dizin başarıyla oluşturuldu"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Yapılandırmanızın yüklenmesi için kasanın kilidi açılmalıdır."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Aktif dosya transferleri var"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Bu bağlantı için kaydedilmiş parola mevcut"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Bunlar, seçilen türdeki tüm profiller için geçerlidir"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Bunlar, bu gruptaki verilen türdeki tüm profiller için geçerlidir"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Örtüşme, gölgelenme veya diğer görsel sorunlar yaşıyorsanız bunu işaretleyin"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Tam Ekran Kipini Aç/Kapat"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Son çalışma alanına geç"
 
 
 msgid "Toggle terminal window"
 msgstr "Terminal penceresini aç/kapat"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Sekmeli pencere görünürlüğünü değiştirir"
-
 
 
 msgid "Top"
 msgstr "Üst"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Boşlukları ve yeni satırları kaldırın"
-
 
 
 msgid "Try again"
 msgstr "Tekrar deneyin"
 
 
-
 msgid "Ungrouped"
 msgstr "Gruplandırılmamış"
-
 
 
 msgid "Uninstall"
 msgstr "Yüklemeyi Kaldır"
 
 
-
 msgid "Unknown"
 msgstr "Bilinmeyen"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "{key} için {type} türünde bilinmeyen mutabakat"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Adsız grup"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Adsız çalışma alanı"
 
 
 msgid "Up"
 msgstr "Yukarı"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "{version} sürümüne yükselt"
-
 
 
 msgid "Upload"
 msgstr "Yükle"
 
 
-
 msgid "Upload as a new config"
 msgstr "Yeni bir konfigürasyon olarak yükle"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Dosyaları yükle"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Klasörü yükle"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Meta anahtarı olarak {altKeyName} kullanın"
 
 
-
 msgid "Use ConPTY"
 msgstr "ConPTY kullan"
-
 
 
 msgid "User default"
 msgstr "Kullanıcı Varsayılanları"
 
 
-
 msgid "Username"
 msgstr "Kullanıcı Adı"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "{host} için kullanıcı adı"
 
 
 msgid "Using CONNECT method"
 msgstr "CONNECT yöntemini kullanma"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Kayıtlı parola kullanılıyor"
 
 
 msgid "Vault"
 msgstr "Kasa"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Vault, SSH şifreleri ve özel anahtar parolaları gibi gizli içerikler için her zaman şifrelenmiş bir alandır."
-
 
 
 msgid "Vault is empty"
 msgstr "Kasa boş"
 
 
-
 msgid "Vault is locked"
 msgstr "Kasa kilitli"
-
 
 
 msgid "Vault is not configured"
 msgstr "Kasa yapılandırılmamış"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Gizli dizilerin saklanmasına izin vermek için kasa ana parolasının ayarlanması gerekir"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Bağlanırken ana bilgisayar anahtarlarını doğrulayın"
 
 
-
 msgid "Version"
 msgstr "Sürüm"
-
 
 
 msgid "Version: {version}"
 msgstr "Sürüm: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Titreşim"
-
 
 
 msgid "Visual"
 msgstr "Görsel"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Çok satırlı yapıştırmada uyar"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Aktif bağlantıları kapatırken uyar"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Uyarı: Uzak ana bilgisayarın anahtarı aniden değişti!"
-
 
 
 msgid "Welcome"
 msgstr "Hoşgeldiniz"
 
 
-
 msgid "What's new"
 msgstr "Yenilikler"
-
 
 
 msgid "When a session ends"
 msgstr "Oturum sona erdiğinde"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Etkinleştirildiğinde, bağlantılar yalnızca bu tuş basılıyken tıklanabilir"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "WinSCP algılandığında, içerik menüsünden bir SCP oturumu başlatabilirsiniz."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Oluşturulan açık tema renklerinin tersine çevrilip çevrilmeyeceği. Bu, 256 renkli palete daha fazla anlam kazandırır."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "SSH selamlamasının görünmesini engelleyecek"
 
 
-
 msgid "Window"
 msgstr "Pencere"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Kenar boyunca pencere boyutu"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Pencere boyutu kenardan uzakta"
-
 
 
 msgid "Windows"
 msgstr "Pencere"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "ConPTY için Windows 10 build 18309 veya üstü önerilir"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCP yolu"
 
 
-
 msgid "Word separators"
 msgstr "Kelime ayracı"
-
 
 
 msgid "Working directory"
 msgstr "Çalışma dizini"
 
 
-
 msgid "Working directory detection"
 msgstr "Çalışma dizini tespiti"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Çalışma alanı {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Çalışma alanı çubuğunun konumu"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Çalışma alanı çubuğunun genişliği"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Çalışma alanları"
 
 
 msgid "X11 forwarding"
 msgstr "X11 yönlendirme"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Sarı"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Daha sonra değiştirebilirsiniz, ancak unutulursa kurtarılamaz."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Şu anda bir man-in-the-middle saldırısı altında olabilirsiniz veya ana bilgisayar anahtarı yeni değiştirilmiş olabilir."
 
 
-
 msgid "Zoom in"
 msgstr "Yakınlaştır"
-
 
 
 msgid "Zoom out"
 msgstr "Uzaklaştır"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Ana parola"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Kaçış karakteri kaldırılmış bağımsız değişkenlere böl"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Kaçış karakterli tek bir komutta birleştir"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Değişken adı"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Giriş dizini"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Her seferinde sor"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Yanıt"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filtrele..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Otomatik algıla"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Ön plan"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Arka plan"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "İmleç rengi"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Blok imleç ön planı"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Seçim arka planı"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Seçim ön planı"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI rengi {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Expect"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Gönder"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Kabuk"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menü"
 
 

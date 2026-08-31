@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} kopie"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "Druhá rodina písma používaná k zobrazení chybějících znaků v hlavním písmu"
 
 
-
 msgid "Abort all"
 msgstr "Zrušit vše"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Přijmout"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Přijmout relaci ZMODEM?"
 
 
 msgid "Accept and remember key"
 msgstr "Přijmout a zapamatovat klíč"
 
 
-
 msgid "Accept just this once"
 msgstr "Přijmout pouze tentokrát"
-
 
 
 msgid "Accessibility"
 msgstr "Přístupnost"
 
 
-
 msgid "Acrylic background"
 msgstr "Akrylové pozadí"
-
 
 
 msgid "Add"
 msgstr "Přidat"
 
 
-
 msgid "Add a port forward"
 msgstr "Přidat nové přesměrování portů"
-
 
 
 msgid "Add a private key"
 msgstr "Přidat soukromý klíč"
 
 
-
 msgid "Add..."
 msgstr "Přidat..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Dodatečný prostor mezi řádky"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Upravit tmavou vrstvu za rozhraním"
 
 
 msgid "Advanced"
 msgstr "Rozšířené"
 
 
-
 msgid "Agent"
 msgstr "Agent"
-
 
 
 msgid "Agent forwarding"
 msgstr "Přeposílání agenta"
 
 
-
 msgid "Agent pipe path"
 msgstr "Cesta kanálu agenta SSH"
-
 
 
 msgid "Agent type"
 msgstr "Typ agenta"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Umožňuje otevírat soubory .bat jako relace, ale rozbíjí některé shelly"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Umožňuje rychlé otevření terminálu ve vybrané složce"
 
 
-
 msgid "Always dark"
 msgstr "Vždy tmavý"
-
 
 
 msgid "Always light"
 msgstr "Vždy světlý"
 
 
-
 msgid "Appearance"
 msgstr "Vzhled"
-
 
 
 msgid "Application"
 msgstr "Aplikace"
 
 
-
 msgid "Application settings"
 msgstr "Nastavení aplikace"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Opravdu chcete zavřít Tabby? Tuto výzvu můžete vypnout v Nastavení -> Okno."
 
 
-
 msgid "Are you sure?"
 msgstr "Jste si jisti?"
-
 
 
 msgid "Arguments"
 msgstr "Parametry"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Zeptat se před zavřením karty prohlížeče"
-
 
 
 msgid "Audible"
 msgstr "Slyšitelný"
 
 
-
 msgid "Authentication method"
 msgstr "Metoda ověřování"
-
 
 
 msgid "Author"
 msgstr "Autor"
 
 
-
 msgid "Auto"
 msgstr "Automaticky"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Automatické otevření terminálu při spuštění aplikace"
 
 
-
 msgid "Automatic"
 msgstr "Automatický"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Automaticky nahrávat změny a kontrolovat aktualizace každou minutu"
 
 
-
 msgid "Available"
 msgstr "K dispozici"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Obrázek na pozadí"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Jas obrázku na pozadí"
 
 
 msgid "Background type"
 msgstr "Typ pozadí"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Režim klávesy Backspace"
 
 
-
 msgid "Baud rate"
 msgstr "Modulační rychlost"
-
 
 
 msgid "Beginning of the line"
 msgstr "Začátek čáry"
 
 
-
 msgid "Blink cursor"
 msgstr "Blikající kurzor"
-
 
 
 msgid "Blue"
 msgstr "Modrá"
 
 
-
 msgid "Blur"
 msgstr "Rozostření"
-
 
 
 msgid "Bold font weight"
 msgstr "Síla tučného písma"
 
 
-
 msgid "Bottom"
 msgstr "Dolní"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Vložení bez odřádkování (vyžaduje podporu shellu)"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Procházet…"
 
 
 msgid "Built-in"
 msgstr "Vestavěný"
 
 
-
 msgid "Cancel"
 msgstr "Zrušit"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Nelze zpracovat skripty tohoto typu"
 
 
 msgid "Change the master passphrase"
 msgstr "Změnit hlavní heslo"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Změnit barvu pracovního prostoru"
 
 
 msgid "Ciphers"
 msgstr "Šifry"
 
 
-
 msgid "Clear"
 msgstr "Vyčistit"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Vymazat nedávné profily"
 
 
-
 msgid "Clear terminal"
 msgstr "Vyčistit terminál"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Vymazat terminál po připojení"
 
 
-
 msgid "Clipboard"
 msgstr "Schránka"
-
 
 
 msgid "Close"
 msgstr "Zavřít"
 
 
-
 msgid "Close and never show again"
 msgstr "Zavřít a už nikdy nezobrazovat"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Zavřít aktivní relaci"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Zavřít ostatní pracovní prostory"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Zavřít relaci"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Zavřít relaci pouze při výslovném ukončení"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Zavřít okno po zavření posledního pracovního prostoru"
 
+msgid "Cross-window drag"
+msgstr "Přetahování mezi okny"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Umožňuje přetahovat pracovní prostory nebo relace mezi instancemi. Relace bez přenositelného PTY (např. SSH) se znovu připojí."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Zavřít pracovní prostor"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Zavřít pracovní prostory nad"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Zavřít pracovní prostory pod"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Zavřít pracovní prostory vlevo"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Zavřít pracovní prostory vpravo"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Sbalit skupinu"
 
 
 msgid "Color"
 msgstr "Barva"
 
 
-
 msgid "Color scheme"
 msgstr "Barevné schéma"
-
 
 
 msgid "Color schemes"
 msgstr "Barevná schémata"
 
 
-
 msgid "Colors"
 msgstr "Barvy"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Sloučit všechny pracovní prostory do jednoho"
 
 
 msgid "Command line"
 msgstr "Příkazový řádek"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Stdin/stdout příkazu se používá namísto síťového připojení"
-
 
 
 msgid "Commands"
 msgstr "Příkazy"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Komunita"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Komprese"
 
 
 msgid "Config deleted"
 msgstr "Konfigurace odstraněna"
 
 
-
 msgid "Config downloaded"
 msgstr "Konfigurace stažena"
-
 
 
 msgid "Config file"
 msgstr "Konfigurační soubor"
 
 
-
 msgid "Config sync"
 msgstr "Synchronizace konfigurace"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Synchronizace konfigurace vyžaduje instanci služby Tabby Web."
 
 
 msgid "Config uploaded"
 msgstr "Konfigurace nahrána"
 
 
-
 msgid "Configs"
 msgstr "Konfigurace"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Připojit přes proxy server"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Připojit k \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Nejdříve se připojte k jinému hostiteli a použijte jej jako proxy"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Připojeno"
 
 
 msgid "Connecting"
 msgstr "Připojuji"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Připojování k {host}"
 
 
 msgid "Connection"
 msgstr "Připojení"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Spojení ukončeno"
 
 
 msgid "Connection failed: {error}"
 msgstr "Připojení selhalo: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Místo toho bude použit název připojení"
-
 
 
 msgid "Context menu"
 msgstr "Kontextové menu"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Určuje množství prostoru mezi prvky"
-
 
 
 msgid "Copied"
 msgstr "Zkopírováno"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Zkopírováno do schránky"
 
 
 msgid "Copy"
 msgstr "Kopírovat"
 
 
-
 msgid "Copy current path"
 msgstr "Kopírovat aktuální cestu"
-
 
 
 msgid "Copy full path"
 msgstr "Kopírovat celou cestu"
 
 
-
 msgid "Copy on select"
 msgstr "Kopírovat při výběru"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Kopírovat výstup relace (ladění)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Kopírovat stav terminálu (ladění)"
 
 
 msgid "Copy to clipboard"
 msgstr "Kopírovat do schránky"
 
 
-
 msgid "Copy with formatting"
 msgstr "Kopírovat s formátováním"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Zprávu se nepodařilo dešifrovat"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Nelze přečíst soukromý klíč"
 
 
 msgid "Create"
 msgstr "Vytvořit"
 
 
-
 msgid "Create directory"
 msgstr "Vytvořit adresář"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Aktuální"
 
 
-
 msgid "Current color scheme"
 msgstr "Aktuální barevné schéma"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Aktuální otisk klíče hostitele"
 
 
-
 msgid "Current process: {name}"
 msgstr "Aktuální proces: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Tvar kurzoru"
 
 
-
 msgid "Custom"
 msgstr "Vlastní"
-
 
 
 msgid "Custom CSS"
 msgstr "Vlastní CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Tmavý režim"
 
 
-
 msgid "Data bits"
 msgstr "Datové bity"
-
 
 
 msgid "Debugging"
 msgstr "Ladění"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Výchozí typ připojení"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Výchozí typ připojení používaný funkcí rychlého připojení (např. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Výchozí nastavení profilu"
-
 
 
 msgid "Default profile settings"
 msgstr "Výchozí nastavení profilu"
 
 
-
 msgid "Defaults"
 msgstr "Výchozí"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Výchozí hodnoty pro {type}"
 
 
-
 msgid "Delete"
 msgstr "Smazat"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Smazat {name}?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Smazat {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Smazat celý řádek"
 
 
-
 msgid "Delete next word"
 msgstr "Smazat následující"
-
 
 
 msgid "Delete previous word"
 msgstr "Smazat předchozí"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Odstranění konfigurace na dálku?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Smazat profily ve skupině?"
 
 
-
 msgid "Delete this script?"
 msgstr "Smazat tento skript?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Smazat obsah trezoru?"
 
 
-
 msgid "Deleting"
 msgstr "Mazání"
-
 
 
 msgid "Device"
 msgstr "Zařízení"
 
 
-
 msgid "Direct"
 msgstr "Přímé"
-
 
 
 msgid "Disable"
 msgstr "Vypnout"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Zakázat dynamický název relace"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Zakázat plynulé pozadí při přetažení"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Zakázat hardwarovou akceleraci"
-
 
 
 msgid "Disabled"
 msgstr "Vypnuto"
 
 
-
 msgid "Disconnect"
 msgstr "Odpojit"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Odpojit aktuální kartu (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "Odpojit od {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Zobrazit obrázek za oknem terminálu"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Zobrazit obrázky přes únikové sekvence Sixel"
 
 
-
 msgid "Display on"
 msgstr "Zobrazit na"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Zobrazuje celý strom profilů v postranním panelu."
 
 
 msgid "Do not abort"
 msgstr "Nepřerušovat"
 
 
-
 msgid "Do not close"
 msgstr "Nezavírat"
-
 
 
 msgid "Do not remember"
 msgstr "Nepamatovat si"
 
 
-
 msgid "Dock always on top"
 msgstr "Vždy nahoře"
-
 
 
 msgid "Dock the terminal"
 msgstr "Připevnit terminál"
 
 
-
 msgid "Docked terminal size"
 msgstr "Velikost připevněného terminálu"
-
 
 
 msgid "Docked terminal space"
 msgstr "Místo připevněného terminálu"
 
 
-
 msgid "Docking"
 msgstr "Připevnění"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Výběr dvojitým kliknutím se zastaví na tyto znaky"
 
 
-
 msgid "Down"
 msgstr "Dolů"
-
 
 
 msgid "Download"
 msgstr "Stáhnout"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Stáhnout adresář"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Stáhnout sem"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Vykreslit tučný text jasnými barvami"
 
 
-
 msgid "Duplicate"
 msgstr "Duplikovat"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Duplikovat relaci"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Duplikovat pracovní prostor"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dynamický"
 
 
 msgid "Edit"
 msgstr "Upravit"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Upravit skupinu"
 
 
 msgid "Edit locally"
 msgstr "Upravit lokálně"
 
 
-
 msgid "Enable"
 msgstr "Povolit"
-
 
 
 msgid "Enable animations"
 msgstr "Povolit animace"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Povolit fluent pozadí"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Povolit svázání znaků"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Povolit globální zkratku (Ctrl-Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Povolit experimentální Windows ConPTY API"
 
 
-
 msgid "Encrypt config file"
 msgstr "Šifrovat konfigurační soubor"
-
 
 
 msgid "End of the line"
 msgstr "Konec řádku"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Environment"
 
 
-
 msgid "Erase config"
 msgstr "Smazat konfiguraci"
-
 
 
 msgid "Erase the Vault"
 msgstr "Vymazat trezor"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Chyba v {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Sudá"
 
 
 msgid "Exact match"
 msgstr "Přesná shoda"
 
 
-
 msgid "Example:"
 msgstr "Příklad:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Rozbalit skupinu"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Experimentální styl pozadí Windowsu 10, je známo že způsobuje problémy"
 
 
-
 msgid "Export"
 msgstr "Export"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Exportovat do souboru"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "rozšířit PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Stažení složky selhalo: {error}"
 
 
 msgid "Fallback font"
 msgstr "Náhradní písmo"
 
 
-
 msgid "File transfers"
 msgstr "Přenos souborů"
-
 
 
 msgid "File: {description}"
 msgstr "Soubor: {description}"
 
 
-
 msgid "Filter"
 msgstr "Filtr"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Filtrovat výsledky"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Dokončit"
 
 
 msgid "Fixed"
 msgstr "Opraveno"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Srovnat vložený text do jednoho řádku pro terminály, které nepodporují vkládání více řádků"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Plynulé pozadí někdy způsobuje lagy při přetažení"
 
 
-
 msgid "Focus follows mouse"
 msgstr "Zaměřit se na myš"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Zaměřit další relaci"
 
 
 msgid "Focus pane {number}"
 msgstr "Soustředit na okno {number}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Zaměřit předchozí relaci"
 
 
 msgid "Focus the pane above"
 msgstr "Soustředit na okno nahoře"
 
 
-
 msgid "Focus the pane below"
 msgstr "Soustředit na okno dole"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Soustředit na okno vlevo"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Soustředit na okno vpravo"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Duplikovat barevné schéma"
 
 
-
 msgid "Font"
 msgstr "Písmo"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
 
-
 msgid "Force CR"
 msgstr "Vynutit CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Vynutit CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Vynutit LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Vynucuje konkrétní typ připojení SSH agenta."
 
 
-
 msgid "Forget"
 msgstr "Zapomenout"
-
 
 
 msgid "Forward port"
 msgstr "Přesměrovat port"
 
 
-
 msgid "Forwarded ports"
 msgstr "Přesměrované porty"
-
 
 
 msgid "From color scheme"
 msgstr "Z barevného schématu"
 
 
-
 msgid "From system"
 msgstr "Ze systému"
-
 
 
 msgid "From theme"
 msgstr "Z motivu"
 
 
-
 msgid "Frontend"
 msgstr "Frontend"
-
 
 
 msgid "General"
 msgstr "Obecné"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Vygenerovat paletu 256 barev"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Generovat předvyplněný GitHub issue"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Vygenerovat rozšířenou paletu 256 barev z vašich 16 základních barev"
 
 
 msgid "Get"
 msgstr "Získat"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Dostupný v nastavení webové aplikace Tabby"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Dá oknu rozostřené průhledné pozadí"
 
 
-
 msgid "Go up"
 msgstr "Přejít nahoru"
-
 
 
 msgid "Green"
 msgstr "Zelená"
 
 
-
 msgid "Group"
 msgstr "Skupina"
-
 
 
 msgid "Hacks"
 msgstr "Hacky"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Harmonická paleta"
 
 
 msgid "Help translate Tabby"
 msgstr "Pomozte s překladem Tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "Hexadecimální"
-
 
 
 msgid "Hide"
 msgstr "Skrýt"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Skrýt Tabby ze systémové oblasti nebo lišty nabídek."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Skrýt ikonu v systémové oblasti"
 
 
 msgid "Hide window on focus loss"
 msgstr "Skrýt neaktivní okno"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Skrýt tlačítko zavření pracovního prostoru"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Skrýt číslo pracovního prostoru"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Skrýt tlačítko možností pracovního prostoru"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Při kliknutí pryč skryje připnutý terminál."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Domovská stránka"
 
 
-
 msgid "Host"
 msgstr "Host"
-
 
 
 msgid "Host key"
 msgstr "Klíč hostitele"
 
 
-
 msgid "Host key verification"
 msgstr "Ověření hostitelského klíče"
-
 
 
 msgid "Hotkeys"
 msgstr "Klávesové zkratky"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Jak se Tabby prezentuje prostřednictvím indikátorů prostředí"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTP proxy"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTP proxy server"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTP proxy port"
 
 
-
 msgid "Icon"
 msgstr "Ikona"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Pokud jste o to nepožádali, může jít o známku škodlivé aktivity."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Okamžitě lokálně vypíše data na vstupu"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Implicitní CR v každém LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Implicitní LF v každém CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Nesprávné heslo"
 
 
 msgid "Input"
 msgstr "Příkaz"
 
 
-
 msgid "Input is sent as you type"
 msgstr "Vstup je odeslán při psaní"
-
 
 
 msgid "Input mode"
 msgstr "Režim vstupu"
 
 
-
 msgid "Input newlines"
 msgstr "Vložit nové řádky"
-
 
 
 msgid "Installed"
 msgstr "Nainstalované"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Inteligentní Ctrl-C (kopírování/přerušení)"
-
 
 
 msgid "Interactive"
 msgstr "Interaktivní"
 
 
-
 msgid "Invalid syntax"
 msgstr "Neplatná syntaxe"
-
 
 
 msgid "Jump host"
 msgstr "Jump host"
 
 
-
 msgid "Jump to next word"
 msgstr "Přeskočit na následující"
-
 
 
 msgid "Jump to previous word"
 msgstr "Skoč na předchozí slovo"
 
 
-
 msgid "Keep"
 msgstr "Ponechat"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Keep Alive Interval (Milisekundy)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Ponechat připevněný terminál vždy nahoře"
-
 
 
 msgid "Key"
 msgstr "Klíč"
 
 
-
 msgid "Key exchange"
 msgstr "Výměna klíčů"
-
 
 
 msgid "Keyboard"
 msgstr "Klávesnice"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Interaktivní ověření klávesnice"
-
 
 
 msgid "Language"
 msgstr "Jazyk"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Poslední známý klíč hostitele"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Spustit WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Spustit WinSCP pro aktuální SSH relaci"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Zjistěte, jak povolit Tabby detekovat pracovní adresář vzdáleného shellu."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Zjistit více"
 
 
 msgid "Left"
 msgstr "Vlevo"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Nechat shell zpracovat Meta klávesu namísto OS"
-
 
 
 msgid "Light mode"
 msgstr "Světlý režim"
 
 
-
 msgid "Line by line"
 msgstr "Řádek po řádku"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Řádkový editor, vstup je odeslán po stisknutí Enter"
 
 
-
 msgid "Line padding"
 msgstr "Odsazení řádek"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Načíst výstup relace (ladění)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Načíst stav terminálu (ladění)"
 
 
 msgid "Loading"
 msgstr "Načítání"
 
 
-
 msgid "Loading configs..."
 msgstr "Načítání konfigurací..."
-
 
 
 msgid "Local"
 msgstr "Místní"
 
 
-
 msgid "Local echo"
 msgstr "Lokální echo"
-
 
 
 msgid "Local terminal"
 msgstr "Místní terminál"
 
 
-
 msgid "Login scripts"
 msgstr "Přihlašovací skripty"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Podržte pro zobrazení kontextové nabídky"
 
 
-
 msgid "Manage profiles"
 msgstr "Správa profilů"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Označit"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Maximální počet zachycení"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Minimální poměr kontrastu"
-
 
 
 msgid "Modified on {date}"
 msgstr "Upraveno dne {date}"
 
 
-
 msgid "Mouse"
 msgstr "Myš"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Posunout levý oddělovač doleva"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Posunout levý oddělovač doprava"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Posunout dolní oddělovač dolů"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Posunout dolní oddělovač nahoru"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Posunout pravý oddělovač doleva"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Posunout pravý oddělovač doprava"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Přesunout do \"Neseskupené\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Posunout horní oddělovač dolů"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Posunout horní oddělovač nahoru"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Přesunout pracovní prostor doleva"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Přesunout pracovní prostor doprava"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Přesun myši nad neaktivní okno ho soustředí"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multiplexovat více shellů přes stejné připojení"
 
 
 msgid "Name"
 msgstr "Jméno"
 
 
-
 msgid "Name for the new config"
 msgstr "Název nové konfigurace"
-
 
 
 msgid "Name for the new directory"
 msgstr "Název nového adresáře"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Pojmenovaná roura"
 
 
 msgid "New"
 msgstr "Nový"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Nová relace správce"
 
 
 msgid "New config on {platform}"
 msgstr "Nové nastavení na {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Nová skupina"
 
 
 msgid "New item"
 msgstr "Nová položka"
 
 
-
 msgid "New name"
 msgstr "Nový název"
-
 
 
 msgid "New profile"
 msgstr "Nový profil"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Nová relace"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Nové relace se přidávají do panelu aktivního pracovního prostoru místo do samostatného pracovního prostoru."
 
 
 msgid "New tab"
 msgstr "Nová karta"
 
 
-
 msgid "New window"
 msgstr "Nové okno"
-
 
 
 msgid "New Window"
 msgstr "Nové okno"
 
 
-
 msgid "New with profile"
 msgstr "Nový s profilem"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Nový pracovní prostor"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Další"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Další pracovní prostor"
 
 
 msgid "No color"
 msgstr "Bez barvy"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Žádné soubory neodpovídají filtru \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Bez modifikátoru"
 
 
-
 msgid "None"
 msgstr "Žádný"
-
 
 
 msgid "Normal"
 msgstr "Normální"
 
 
-
 msgid "Normal font weight"
 msgstr "Síla normálního písma"
-
 
 
 msgid "Not found"
 msgstr "Nenalezeno"
 
 
-
 msgid "Notify on activity"
 msgstr "Upozornit na aktivitu"
-
 
 
 msgid "Notify when done"
 msgstr "Upozornit po dokončení"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Počet řádků uložených ve vyrovnávací paměti"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Lichá"
 
 
 msgid "Off"
 msgstr "Vypnuto"
 
 
-
 msgid "Official"
 msgstr "Oficiální"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "Na Discordu"
 
 
 msgid "Opacity"
 msgstr "Průhlednost"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Otevřít"
 
 
 msgid "Open DevTools"
 msgstr "Otevřít vývojářské nástroje"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Otevírat nové relace v aktuálním pracovním prostoru"
 
 
 msgid "Open Settings"
 msgstr "Otevřít nastavení"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Otevřít panel SFTP"
-
 
 
 msgid "Optional"
 msgstr "Volitelný"
 
 
-
 msgid "Options"
 msgstr "Možnosti"
-
 
 
 msgid "Orange"
 msgstr "Oranžový"
 
 
-
 msgid "OS default"
 msgstr "Výchozí nastavení OS"
-
 
 
 msgid "OS default ({name})"
 msgstr "Výchozí nastavení OS ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Výstup je zobrazen jako hexadecimální výpis"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Výstup je zobrazen v přijaté podobě"
 
 
-
 msgid "Output mode"
 msgstr "Režim výstupu"
-
 
 
 msgid "Output newlines"
 msgstr "Výstupní nové řádky"
 
 
-
 msgid "Override X11 display"
 msgstr "Přepsat zobrazení X11"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Přepsat místní konfiguraci a synchronizovat"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Přepsat vzdálenou konfiguraci a synchronizovat"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Přepsat konfiguraci na vzdálené straně a začít synchronizovat?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Přepsat místní konfiguraci a začít synchronizovat?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "krok změny velikosti"
 
 
-
 msgid "Panes"
 msgstr "Panely"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Nadřazená skupina"
 
 
 msgid "Parity"
 msgstr "Parita"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Částečná konfigurace není možná, pokud je konfigurace šifrována přes trezor."
-
 
 
 msgid "Pass-through"
 msgstr "Kapacita"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Heslo pro privátní klíč s hashem {hash}..."
-
 
 
 msgid "Password"
 msgstr "Heslo"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Heslo pro {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Vložit"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Vložit \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Vložit ze schránky"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Vložit, pokud není nic vybráno, jinak zkopírovat"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Vložit více řádků?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Vložit při kliknutí prostředním tlačítkem"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Vložit výstup relace (ladění)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Vložit stav terminálu (ladění)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Cesta nebo adresa lokálního X11 soketu"
 
 
-
 msgid "Pin"
 msgstr "Připnout"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Připnout nebo odepnout pracovní prostor"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Připnout pracovní prostor"
 
 
 msgid "Plugins"
 msgstr "Pluginy"
 
 
-
 msgid "Plugins folder"
 msgstr "Složka pluginů"
-
 
 
 msgid "Port"
 msgstr "Port"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Port uzavřen"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Přesměrování portů"
 
 
 msgid "Port opened"
 msgstr "Port otevřen"
 
 
-
 msgid "Ports"
 msgstr "Porty"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Stiskněte libovolnou klávesu pro opětovné připojení"
 
 
-
 msgid "Press the key now"
 msgstr "Stiskněte libovolnou klávesu"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Brání nechtěnému zavření"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Brání nechtěnému spuštění vložených příkazů"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Předchozí pracovní prostor"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Heslo soukromého klíče"
 
 
 msgid "Private keys"
 msgstr "Soukromé klíče"
 
 
-
 msgid "Process completed"
 msgstr "Proces dokončen"
-
 
 
 msgid "Profile name"
 msgstr "Název profilu"
 
 
-
 msgid "Profiles"
 msgstr "Profily"
-
 
 
 msgid "Profiles & connections"
 msgstr "Profily a připojení"
 
 
-
 msgid "Program"
 msgstr "Program"
-
 
 
 msgid "Proxy command"
 msgstr "Příkaz proxy"
 
 
-
 msgid "Purple"
 msgstr "Fialová"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Vloží všechny konfigurace Tabby do trezoru"
 
 
-
 msgid "Quick connect"
 msgstr "Rychlé připojení"
-
 
 
 msgid "Quit"
 msgstr "Odejít"
 
 
-
 msgid "Raw socket connection"
 msgstr "Připojení přes socket"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Časový limit pohotovostního režimu (milisekundy)"
 
 
-
 msgid "Recent"
 msgstr "Poslední"
-
 
 
 msgid "Reconnect"
 msgstr "Obnovit připojení"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Obnovení připojení aktivní karty (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Červená"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Obnovit"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Obnovit proměnné prostředí z registru"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Odmítnout"
 
 
 msgid "Release notes"
 msgstr "Poznámky k verzi"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Znovu načíst PATH a další proměnné z registru Windows pro každou novou relaci"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Zapamatovat"
 
 
 msgid "Remember for {time}"
 msgstr "Pamatovat po {time}"
 
 
-
 msgid "Remote"
 msgstr "Vzdálený"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Odstranit mezery a nové řádky kolem zkopírovaného textu"
 
 
-
 msgid "Rename"
 msgstr "Přejmenovat"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Přejmenovat relaci"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Přejmenovat pracovní prostor"
 
 
 msgid "Rendering"
 msgstr "Vykreslování"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Znovu otevřít poslední pracovní prostor"
 
 
 msgid "Replace"
 msgstr "Nahradit"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Nahradit konce řádků mezerami"
 
 
 msgid "Report a problem"
 msgstr "Nahlásit problém"
 
 
-
 msgid "Require a key to click links"
 msgstr "Vyžadovat stisk klávesy pro kliknutí na odkaz"
-
 
 
 msgid "Reset zoom"
 msgstr "Resetovat přiblížení"
 
 
-
 msgid "Restart current serial session"
 msgstr "Restartovat aktuální sériovou relaci"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Restartovat aktuální SSH relaci"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Restartovat aktuální relaci Telnet"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Restartujte aplikaci pro zavedení změn"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Restartovat pracovní prostor"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Obnovit nastavení na výchozí hodnoty?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Obnovit nastavení na výchozí hodnoty?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Uchování relace"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Udržuje shell naživu pomocí tmux, aby přetažení karty do jiného okna nezpůsobilo znovupřipojení."
-
-
-
-
-
-
-
-
-
+msgstr "Obnovit pracovní prostory při spuštění aplikace"
 
 
 msgid "Not set"
 msgstr "Nenastaveno"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Celé slovo"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Znovu použít relaci pro více karet"
-
 
 
 msgid "Right"
 msgstr "Vpravo"
 
 
-
 msgid "Right click"
 msgstr "Pravé tlačítko myši"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Spustit"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Spustit \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Spustit jako správce"
 
 
-
 msgid "Save"
 msgstr "Uložit"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Uložit heslo"
 
 
-
 msgid "Save and apply"
 msgstr "Uložit a použít"
-
 
 
 msgid "Save as profile"
 msgstr "Uložit jako profil"
 
 
-
 msgid "Save layout as profile"
 msgstr "Uložit rozložení jako profil"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Uložit výstup relace (ladění)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Uložit stav terminálu (ladění)"
 
 
 msgid "Saved layout"
 msgstr "Rozložení uloženo"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Uloženo do {path}"
 
 
 msgid "Scroll on input"
 msgstr "Posunout na vstup"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Posunout terminál o řádek dolů"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Posunout terminál o řádek nahoru"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Posunout terminál o jednu stránku dolů"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Posunout terminál o jednu stránku nahoru"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Posunout dolů"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Posunout nahoru"
-
 
 
 msgid "Scrollback"
 msgstr "Posunout zpět"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Posune při vstupu uživatele terminál dolů"
-
 
 
 msgid "Search"
 msgstr "Hledat"
 
 
-
 msgid "Search color schemes"
 msgstr "Hledat barevná témata"
-
 
 
 msgid "Search hotkeys"
 msgstr "Hledat klávesové zkratky"
 
 
-
 msgid "Search plugins"
 msgstr "Hledat pluginy"
-
 
 
 msgid "Secret sync token"
 msgstr "Synchronizační token"
 
 
-
 msgid "Select"
 msgstr "Vybrat"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Vyberte šablonu"
 
 
 msgid "Select all"
 msgstr "Vybrat vše"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Vybrat obrázek na pozadí"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Vyberte cílovou složku pro {name}"
 
 
 msgid "Select file storage"
 msgstr "Vyberte úložiště"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Zvolte profil nebo vložte adresu"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Poslat bajty zadáním hexadecimálních hodnot"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Odesílá data po 1 bitu"
-
 
 
 msgid "Serial"
 msgstr "Sériové číslo"
 
 
-
 msgid "Serial connection"
 msgstr "Sériové připojení"
-
 
 
 msgid "Set master passphrase"
 msgstr "Nastavit hlavní heslo"
 
 
-
 msgid "Set passphrase"
 msgstr "Nastavit přístupovou frázi"
-
 
 
 msgid "Set password"
 msgstr "Nastavit heslo"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "nastavit Tabby jako %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Nastavte na 0 pro vypnutí nedávných profilů"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "Nastaví agenta SSH na pojmenovanou cestu potrubí."
-
 
 
 msgid "Settings"
 msgstr "Nastavení"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell nepodporuje aktuální cestu"
-
 
 
 msgid "Shell integration"
 msgstr "Integrace shellu"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Ukázat"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Zobrazit potvrzovací pole při vkládání více řádků"
-
 
 
 msgid "Show command selector"
 msgstr "Zobrazit výběr příkazu"
 
 
-
 msgid "Show config file"
 msgstr "Zobrazit konfigurační soubor"
-
 
 
 msgid "Show defaults"
 msgstr "Zobrazit výchozí hodnoty"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Zobrazit ikonu profilu v pracovním prostoru"
 
 
 msgid "Show profile selector"
 msgstr "Zobrazit výběr profilu"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Zobrazit postranní panel profilů"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Zobrazit nedávné profily ve výběru"
 
 
-
 msgid "Show release notes"
 msgstr "Zobrazit poznámky k verzi"
-
 
 
 msgid "Show Serial connections"
 msgstr "Zobrazit sériová připojení"
 
 
-
 msgid "Show vault contents"
 msgstr "Zobrazit obsah trezoru"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Zobrazit lištu pracovních prostorů v režimu celé obrazovky"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Podpora šestielové grafiky (experimentální)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "Přeskočit MoTD/banner"
-
 
 
 msgid "Slow feed"
 msgstr "Pomalé odesílání"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Přichytí okno na stranu obrazovky"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS proxy"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKS proxy host"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKS proxy port"
 
 
-
 msgid "Sound"
 msgstr "Zvuk"
-
 
 
 msgid "Source code"
 msgstr "Zdrojový kód"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Mezerník"
 
 
 msgid "Spaciness"
 msgstr "Prostor"
 
 
-
 msgid "Split"
 msgstr "Rozdělit"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Rozdělit aktuální pracovní prostor na samostatné pracovní prostory"
 
 
 msgid "Split to the bottom"
 msgstr "Rozdělit do spodu"
 
 
-
 msgid "Split to the left"
 msgstr "Rozdělit vlevo"
-
 
 
 msgid "Split to the right"
 msgstr "Rozdělit vpravo"
 
 
-
 msgid "Split to the top"
 msgstr "Rozdělení nahoře"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "Připojení SSH"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "SSH heslo pro {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Spuštění"
 
 
-
 msgid "Stop bits"
 msgstr "Stop bity"
-
 
 
 msgid "Strip"
 msgstr "Proužek"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Povolené náhrady."
-
 
 
 msgid "Switch color scheme"
 msgstr "Přepnout barevné schéma"
 
 
-
 msgid "Switch profile"
 msgstr "Přepnout profil"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Přepnout profil v aktivním panelu"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Přepíná implementaci terminálu (experimentální)"
-
 
 
 msgid "Sync"
 msgstr "Synchronizace"
 
 
-
 msgid "Sync automatically"
 msgstr "Synchronizovat automaticky"
-
 
 
 msgid "Sync host"
 msgstr "Hostitel synchronizace"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Synchronizovat klávesové zkratky"
-
 
 
 msgid "Sync Vault"
 msgstr "Synchronizovat trezor"
 
 
-
 msgid "Sync window settings"
 msgstr "Synchronizovat nastavení okna"
-
 
 
 msgid "Tab activity"
 msgstr "Aktivita záložek"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby nemohl začít s vašimi pluginy, takže všechny pluginy třetích stran byly v této relaci zakázány. Došlo k chybě:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnet relace"
 
 
-
 msgid "Terminal"
 msgstr "Terminál"
-
 
 
 msgid "Terminal background"
 msgstr "Pozadí terminálu"
 
 
-
 msgid "Terminal bell"
 msgstr "Terminální zvonek"
-
 
 
 msgid "Terminal identification"
 msgstr "Identifikace terminálu"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Děkujeme vám za stažení Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Adresář se nepodařilo vytvořit"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Adresář byl úspěšně vytvořen"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Pro načtení vaší konfigurace je třeba odemknout trezor."
 
 
 msgid "Theme"
 msgstr "Téma"
 
 
-
 msgid "There are active file transfers"
 msgstr "Existují aktivní přenosy souborů"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Pro toto připojení existuje uložené heslo"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Ty se vztahují na všechny profily daného typu"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Ty se vztahují na všechny profily daného typu v této skupině"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Zaškrtněte, pokud máte aliasing, ghosting nebo jiné vizuální problémy"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Přepnout režim celé obrazovky"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Přepnout poslední pracovní prostor"
 
 
 msgid "Toggle terminal window"
 msgstr "Přepnout okno terminálu"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Přepíná viditelnost okna Tabby"
-
 
 
 msgid "Top"
 msgstr "Vrchní"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Oříznout mezery a nové linie"
-
 
 
 msgid "Try again"
 msgstr "Zkuste to znovu"
 
 
-
 msgid "Ungrouped"
 msgstr "Bez zařazení"
-
 
 
 msgid "Uninstall"
 msgstr "Odinstalovat"
 
 
-
 msgid "Unknown"
 msgstr "Neznámý"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Neznámý typ tejemství typu {type} pro {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Nepojmenovaná skupina"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Nepojmenovaný pracovní prostor"
 
 
 msgid "Up"
 msgstr "Nahoru"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Aktualizace na {verzi}"
-
 
 
 msgid "Upload"
 msgstr "Nahrát"
 
 
-
 msgid "Upload as a new config"
 msgstr "Nahrát jako novou konfiguraci"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Nahrát soubory"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Nahrát složku"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Použít {altKeyName} jako Meta klíč"
 
 
-
 msgid "Use ConPTY"
 msgstr "Použít ConPTY"
-
 
 
 msgid "User default"
 msgstr "Výchozí nastavení uživatele"
 
 
-
 msgid "Username"
 msgstr "Uživatelské jméno"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Uživatelské jméno pro {host}"
 
 
 msgid "Using CONNECT method"
 msgstr "Použití metody CONNECT"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Používá se uložené heslo"
 
 
 msgid "Vault"
 msgstr "Trezor"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Trezor je vždy šifrovaný kontejner pro tajné objekty jako jsou SSH klíče nebo hesla privátních klíčů."
-
 
 
 msgid "Vault is empty"
 msgstr "Trezor je prázdný"
 
 
-
 msgid "Vault is locked"
 msgstr "Trezor je uzamčený"
-
 
 
 msgid "Vault is not configured"
 msgstr "Trezor není nakonfigurován"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Hlavní heslo pro trezor musí být nastaveno pro ukládání tajných objektů"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Ověřit klíče hostitele při připojení"
 
 
-
 msgid "Version"
 msgstr "Verze"
-
 
 
 msgid "Version: {version}"
 msgstr "Verze: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Vibrace"
-
 
 
 msgid "Visual"
 msgstr "Vizuální"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Upozornit na vícevrstvé vložení"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Upozornit při zavírání aktivních připojení"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Varování: klíč vzdáleného hostitele se náhle změnil!"
-
 
 
 msgid "Welcome"
 msgstr "Vítejte"
 
 
-
 msgid "What's new"
 msgstr "Co je nového"
-
 
 
 msgid "When a session ends"
 msgstr "Když skončí relace"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Na odkazy lze kliknout pouze při stisku této klávesy"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "Když je WinSCP detekován, můžete spustit relaci SCP z kontextového menu."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Zda invertovat generované barvy světlého motivu. To pomůže dát paletě 256 barev větší sémantický význam."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "Zabránit zobrazování SSH"
 
 
-
 msgid "Window"
 msgstr "Okno"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Rozměr okna podél okraje"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Rozměry okna od okraje"
-
 
 
 msgid "Windows"
 msgstr "Windows"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Pro ConPTY je doporučeno sestavení Windows 10 18309 nebo vyšší"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "Cesta k WinSCP"
 
 
-
 msgid "Word separators"
 msgstr "Oddělovače slov"
-
 
 
 msgid "Working directory"
 msgstr "Pracovní adresář"
 
 
-
 msgid "Working directory detection"
 msgstr "Detekce pracovního adresáře"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Pracovní prostor {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Umístění lišty pracovních prostorů"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Šířka lišty pracovních prostorů"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Pracovní prostory"
 
 
 msgid "X11 forwarding"
 msgstr "X11 Přesměrování"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Žlutá"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Můžeš to změnit později, ale je to nevratné, pokud je zapomenuto."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Může se jednat o útok typu \"man-in-the-middle\" nebo byl právě změněn klíč hostitele."
 
 
-
 msgid "Zoom in"
 msgstr "Přiblížit"
-
 
 
 msgid "Zoom out"
 msgstr "Oddálit"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Hlavní heslo"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Rozdělit na neescapované parametry"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Sloučit do jediného escapovaného příkazu"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Název proměnné"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Domovský adresář"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Ptát se pokaždé"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Odpověď"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filtrovat..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Automaticky rozpoznat"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Barva popředí"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Pozadí"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Barva kurzoru"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Barva textu blokového kurzoru"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Pozadí výběru"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Barva textu výběru"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "Barva ANSI {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Očekávání"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Odeslat"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 

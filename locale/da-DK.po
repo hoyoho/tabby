@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} kopi"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "En anden skrifttypefamilie, der bruges til at vise tegn, der mangler i hovedskrifttypen"
 
 
-
 msgid "Abort all"
 msgstr "Afbryd alle"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Acceptér"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Acceptér en ZMODEM-session?"
 
 
 msgid "Accept and remember key"
 msgstr "Accepter og husk nøgle"
 
 
-
 msgid "Accept just this once"
 msgstr "Accepter kun dette én gang"
 
 
-
 msgid "Accessibility"
-msgstr ""
-
+msgstr "Tilgængelighed"
 
 
 msgid "Acrylic background"
 msgstr "Akryl baggrund"
 
 
-
 msgid "Add"
 msgstr "Tilføj"
-
 
 
 msgid "Add a port forward"
 msgstr "Tilføj en port-videresendelse"
 
 
-
 msgid "Add a private key"
 msgstr "Tilføj en privat nøgle"
-
 
 
 msgid "Add..."
 msgstr "Tilføj..."
 
 
-
 msgid "Additional space between lines"
 msgstr "Yderligere mellemrum mellem linjer"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Justér det mørke lag bag grænsefladen"
 
 
 msgid "Advanced"
 msgstr "Avanceret"
 
 
-
 msgid "Agent"
 msgstr "Agent"
-
 
 
 msgid "Agent forwarding"
 msgstr "Agent-videresendelse"
 
 
-
 msgid "Agent pipe path"
 msgstr "Agent pipe-sti"
-
 
 
 msgid "Agent type"
 msgstr "Agent type"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Tillader at åbne .bat-filer som sessioner, men ødelægger nogle shells"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Tillader hurtigt at åbne en terminal i den valgte mappe"
 
 
-
 msgid "Always dark"
 msgstr "Altid mørk"
-
 
 
 msgid "Always light"
 msgstr "Altid lys"
 
 
-
 msgid "Appearance"
 msgstr "Udseende"
-
 
 
 msgid "Application"
 msgstr "Applikation"
 
 
-
 msgid "Application settings"
 msgstr "Applikationsindstillinger"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Er du sikker på, at du vil lukke Tabby? Du kan deaktivere denne prompt i Indstillinger -> Vindue."
 
 
-
 msgid "Are you sure?"
 msgstr "Er du sikker?"
-
 
 
 msgid "Arguments"
 msgstr "Argumenter"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Spørg før du lukker browserfanen"
-
 
 
 msgid "Audible"
 msgstr "Hørbar"
 
 
-
 msgid "Authentication method"
 msgstr "Godkendelsesmetode"
-
 
 
 msgid "Author"
 msgstr "Forfatter"
 
 
-
 msgid "Auto"
 msgstr "Auto"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Åbn automatisk en terminal ved appstart"
 
 
-
 msgid "Automatic"
 msgstr "Automatisk"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Upload automatisk ændringer og tjek for opdateringer hvert minut"
 
 
-
 msgid "Available"
 msgstr "Tilgængelig"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Baggrundsbillede"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Lysstyrke for baggrundsbillede"
 
 
 msgid "Background type"
 msgstr "Baggrundstype"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
-msgstr ""
-
+msgstr "Backspace-tastetilstand"
 
 
 msgid "Baud rate"
 msgstr "Baud-rate (hastighed)"
 
 
-
 msgid "Beginning of the line"
 msgstr "Begyndelse af linjen"
-
 
 
 msgid "Blink cursor"
 msgstr "Blinkende markør"
 
 
-
 msgid "Blue"
 msgstr "Blå"
-
 
 
 msgid "Blur"
 msgstr "Sløring"
 
 
-
 msgid "Bold font weight"
 msgstr "Fed skriftvægt"
-
 
 
 msgid "Bottom"
 msgstr "Bunden"
 
 
-
 msgid "Bracketed paste (requires shell support)"
-msgstr ""
-
+msgstr "Bracketed paste (kræver shell-understøttelse)"
 
 
 msgid "Browse…"
-msgstr ""
-
+msgstr "Gennemse…"
 
 
 msgid "Built-in"
 msgstr "Indbygget"
 
 
-
 msgid "Cancel"
 msgstr "Annullér"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Kan ikke håndtere scripts af denne type"
 
 
 msgid "Change the master passphrase"
 msgstr "Ændr hovedadgangskoden"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Ændr arbejdsområdets farve"
 
 
 msgid "Ciphers"
 msgstr "Ciphers"
 
 
-
 msgid "Clear"
 msgstr "Ryd"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Ryd seneste profiler"
 
 
-
 msgid "Clear terminal"
 msgstr "Ryd terminal"
 
 
-
 msgid "Clear terminal after connection"
-msgstr ""
-
+msgstr "Ryd terminal efter forbindelse"
 
 
 msgid "Clipboard"
 msgstr "Udklipsholder"
 
 
-
 msgid "Close"
 msgstr "Luk"
-
 
 
 msgid "Close and never show again"
 msgstr "Luk og vis aldrig igen"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Luk den fokuserede session"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Luk andre arbejdsområder"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Luk session"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Luk kun sessionen, når den udtrykkeligt afsluttes"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Luk vinduet efter lukning af det sidste arbejdsområde"
 
+msgid "Cross-window drag"
+msgstr "Træk på tværs af vinduer"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Tillader at arbejdsområder eller sessioner trækkes på tværs af instanser. Sessioner uden en overførselbar PTY (f.eks. SSH) får igen forbindelse."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Luk arbejdsområde"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Luk arbejdsområder ovenover"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Luk arbejdsområder nedenfor"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Luk arbejdsområder til venstre"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Luk arbejdsområder til højre"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Sammenfold gruppe"
 
 
 msgid "Color"
 msgstr "Farve"
 
 
-
 msgid "Color scheme"
 msgstr "Farvetema"
-
 
 
 msgid "Color schemes"
 msgstr "Farveskemaer"
 
 
-
 msgid "Colors"
 msgstr "Farver"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Kombinér alle arbejdsområder til ét arbejdsområde"
 
 
 msgid "Command line"
 msgstr "Kommandolinje"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Kommandoens stdin/stdout bruges i stedet for en netværksforbindelse"
-
 
 
 msgid "Commands"
 msgstr "Kommandoer"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Fællesskab"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Komprimering"
 
 
 msgid "Config deleted"
 msgstr "Konfig slettet"
 
 
-
 msgid "Config downloaded"
 msgstr "Konfiguration downloadet"
-
 
 
 msgid "Config file"
 msgstr "Konfigurationsfil"
 
 
-
 msgid "Config sync"
 msgstr "Konfigurationssynkronisering"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Konfigurationssynkronisering kræver en instans af Tabby Web-tjenesten."
 
 
 msgid "Config uploaded"
 msgstr "Konfiguration uploadet"
 
 
-
 msgid "Configs"
 msgstr "Konfigurationer"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Forbind via en proxyserver"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Forbind til \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Opret forbindelse til en anden vært først og brug den som en proxy"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Forbundet"
 
 
 msgid "Connecting"
 msgstr "Tilslutter"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Tilslutter til {host}"
 
 
 msgid "Connection"
 msgstr "Forbindelse"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Forbindelsen er lukket"
 
 
 msgid "Connection failed: {error}"
 msgstr "Forbindelse fejlede: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Forbindelsens navn vil blive brugt i stedet"
-
 
 
 msgid "Context menu"
 msgstr "Kontekstmenu"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Styrer mængden af mellemrum mellem elementer"
-
 
 
 msgid "Copied"
 msgstr "Kopieret"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Kopieret til udklipsholder"
 
 
 msgid "Copy"
 msgstr "Kopiér"
 
 
-
 msgid "Copy current path"
 msgstr "Kopiér nuværende sti"
-
 
 
 msgid "Copy full path"
 msgstr "Kopiér hele stien"
 
 
-
 msgid "Copy on select"
 msgstr "Kopiér ved markering"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Kopiér sessionsoutput (fejlfinding)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Kopiér terminaltilstand (fejlfinding)"
 
 
 msgid "Copy to clipboard"
 msgstr "Kopiér til udklipsholder"
 
 
-
 msgid "Copy with formatting"
 msgstr "Kopiér med formatering"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Kunne ikke dekryptere konfiguration"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Kunne ikke læse den private nøgle"
 
 
 msgid "Create"
 msgstr "Opret"
 
 
-
 msgid "Create directory"
 msgstr "Opret mappe"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Nuværende"
 
 
-
 msgid "Current color scheme"
 msgstr "Nuværende farvetema"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Nuværende værtsnøgle fingeraftryk"
 
 
-
 msgid "Current process: {name}"
 msgstr "Nuværende proces: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Markørens form"
 
 
-
 msgid "Custom"
 msgstr "Tilpasset"
-
 
 
 msgid "Custom CSS"
 msgstr "Brugerdefineret CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Mørk tilstand"
 
 
-
 msgid "Data bits"
 msgstr "Databits"
-
 
 
 msgid "Debugging"
 msgstr "Fejlfinding"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Standard \"Forbind til\"-type"
 
 
-
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
-msgstr ""
-
+msgstr "Standardforbindelsestype, der bruges af hurtig forbindelse (f.eks. SSH, Telnet)"
 
 
 msgid "Default profile group settings"
-msgstr ""
-
+msgstr "Standardindstillinger for profilgruppe"
 
 
 msgid "Default profile settings"
 msgstr "Standard profilindstillinger"
 
 
-
 msgid "Defaults"
 msgstr "Standardindstillinger"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Standard for {type}"
 
 
-
 msgid "Delete"
 msgstr "Slet"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Slet \"{name}\"?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Slet {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Slet hele linjen"
 
 
-
 msgid "Delete next word"
 msgstr "Slet næste ord"
-
 
 
 msgid "Delete previous word"
 msgstr "Slet forrige ord"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Slet konfigurationen på fjernsiden?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Slet gruppens profiler?"
 
 
-
 msgid "Delete this script?"
 msgstr "Slet dette script?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Slet indholdet i boksen?"
 
 
-
 msgid "Deleting"
 msgstr "Sletter"
-
 
 
 msgid "Device"
 msgstr "Enhed"
 
 
-
 msgid "Direct"
 msgstr "Direkte"
-
 
 
 msgid "Disable"
 msgstr "Deaktivér"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Deaktivér dynamisk sessionstitel"
 
 
 msgid "Disable fluent background while dragging"
-msgstr ""
-
+msgstr "Deaktivér flydende baggrund under træk"
 
 
 msgid "Disable GPU acceleration"
 msgstr "Deaktivér GPU acceleration"
 
 
-
 msgid "Disabled"
 msgstr "Deaktiveret"
-
 
 
 msgid "Disconnect"
 msgstr "Afbryd"
 
 
-
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
-msgstr ""
-
+msgstr "Afbryd den aktuelle fane (Seriel/Telnet/SSH)"
 
 
 msgid "Disconnect from {host}?"
 msgstr "Afbryd forbindelsen til {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Vis et billede bag terminalvinduet"
 
 
 msgid "Display images via Sixel escape sequences"
-msgstr ""
-
+msgstr "Vis billeder via Sixel-escape-sekvenser"
 
 
 msgid "Display on"
 msgstr "Vis på"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Viser et fuldt træ af profiler i sidebjælken."
 
 
 msgid "Do not abort"
 msgstr "Afbryd ikke"
 
 
-
 msgid "Do not close"
 msgstr "Luk ikke"
-
 
 
 msgid "Do not remember"
 msgstr "Husk ikke"
 
 
-
 msgid "Dock always on top"
-msgstr ""
-
+msgstr "Dock altid øverst"
 
 
 msgid "Dock the terminal"
-msgstr ""
-
+msgstr "Dock terminalen"
 
 
 msgid "Docked terminal size"
-msgstr ""
-
+msgstr "Størrelse på docket terminal"
 
 
 msgid "Docked terminal space"
-msgstr ""
-
+msgstr "Plads til docket terminal"
 
 
 msgid "Docking"
-msgstr ""
-
+msgstr "Dockning"
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Markering med dobbeltklik vil stoppe ved disse tegn"
 
 
-
 msgid "Down"
 msgstr "Ned"
-
 
 
 msgid "Download"
 msgstr "Download"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Downloadmappe"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Download her"
 
 
 msgid "Draw bold text in bright colors"
-msgstr ""
-
+msgstr "Tegn fed tekst i klare farver"
 
 
 msgid "Duplicate"
 msgstr "Duplikér"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Duplikér session"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Duplikér arbejdsområde"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dynamisk"
 
 
 msgid "Edit"
 msgstr "Redigér"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Redigér gruppe"
 
 
 msgid "Edit locally"
-msgstr ""
-
+msgstr "Redigér lokalt"
 
 
 msgid "Enable"
 msgstr "Aktivér"
 
 
-
 msgid "Enable animations"
-msgstr ""
-
+msgstr "Aktivér animationer"
 
 
 msgid "Enable fluent background option"
-msgstr ""
-
+msgstr "Aktivér indstillingen Flydende baggrund"
 
 
 msgid "Enable font ligatures"
 msgstr "Aktivér skrifttype ligaturer"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktivér global genvejstast (Ctrl-Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Aktiverer den eksperimentelle Windows ConPTY API"
 
 
-
 msgid "Encrypt config file"
 msgstr "Kryptér konfigurationsfil"
-
 
 
 msgid "End of the line"
 msgstr "Slut på linjen"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Miljø"
 
 
-
 msgid "Erase config"
 msgstr "Slet konfiguration"
-
 
 
 msgid "Erase the Vault"
 msgstr "Slet Boksen"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Fejl i {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Lige"
 
 
 msgid "Exact match"
 msgstr "Præcis match"
 
 
-
 msgid "Example:"
 msgstr "Eksempel:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Udvid gruppe"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
-msgstr ""
-
+msgstr "Eksperimentel Windows 10-baggrundsstil, som er kendt for at give problemer"
 
 
 msgid "Export"
 msgstr "Eksportér"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Eksportér til fil"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "udvid PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Kunne ikke downloade mappe: {error}"
 
 
 msgid "Fallback font"
 msgstr "Skrifttype at falde tilbage på"
 
 
-
 msgid "File transfers"
 msgstr "Filoverførsler"
-
 
 
 msgid "File: {description}"
 msgstr "Fil: {description}"
 
 
-
 msgid "Filter"
-msgstr ""
-
+msgstr "Filter"
 
 
 msgid "Filter results"
-msgstr ""
-
+msgstr "Filtrér resultater"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Færdig"
 
 
 msgid "Fixed"
 msgstr "Fast"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Fladgør indsat tekst til én linje til terminaler, der ikke understøtter indsættelse af flere linjer"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Flydende"
 
 
 msgid "Fluent background sometimes causes drag lag"
-msgstr ""
-
+msgstr "Flydende baggrund giver nogle gange forsinkelse ved træk"
 
 
 msgid "Focus follows mouse"
-msgstr ""
-
+msgstr "Fokus følger musen"
 
 
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Fokusér næste session"
 
 
 msgid "Focus pane {number}"
-msgstr ""
-
+msgstr "Fokusér rude {number}"
 
 
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Fokusér forrige session"
 
 
 msgid "Focus the pane above"
 msgstr "Fokusér ruden ovenover"
 
 
-
 msgid "Focus the pane below"
 msgstr "Fokusér ruden nedenfor"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Fokusér ruden til venstre"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Fokusér ruden til højre"
 
 
-
 msgid "Follow the color scheme"
-msgstr ""
-
+msgstr "Følg farvetemaet"
 
 
 msgid "Font"
 msgstr "Skrifttype"
 
 
-
 msgid "For keyboard shortcuts"
-msgstr ""
-
+msgstr "Til tastaturgenveje"
 
 
 msgid "Force CR"
 msgstr "Gennemtving CR"
 
 
-
 msgid "Force CRLF"
 msgstr "Gennemtving CRLF"
-
 
 
 msgid "Force LF"
 msgstr "Gennemtving LF"
 
 
-
 msgid "Forces a specific SSH agent connection type."
 msgstr "Tvinger en specifik SSH agent forbindelsestype."
-
 
 
 msgid "Forget"
 msgstr "Glem"
 
 
-
 msgid "Forward port"
 msgstr "Videresend port"
-
 
 
 msgid "Forwarded ports"
 msgstr "Videresendte porte"
 
 
-
 msgid "From color scheme"
 msgstr "Fra farvetema"
 
 
-
 msgid "From system"
-msgstr ""
-
+msgstr "Fra systemet"
 
 
 msgid "From theme"
 msgstr "Fra tema"
 
 
-
 msgid "Frontend"
 msgstr "Frontend"
-
 
 
 msgid "General"
 msgstr "Generel"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Generér 256-farvepalet"
 
 
 msgid "Generate a pre-filled GitHub issue"
-msgstr ""
-
+msgstr "Generér en forudfyldt GitHub-issue"
 
 
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Generér udvidet 256-farvepalet ud fra dine 16 basisfarver"
 
 
 msgid "Get"
 msgstr "Hent"
 
 
-
 msgid "Get it from the Tabby Web settings window"
-msgstr ""
-
+msgstr "Hent den i Tabby Web-indstillingsvinduet"
 
 
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
-msgstr ""
-
+msgstr "Giver vinduet en sløret, gennemsigtig baggrund"
 
 
 msgid "Go up"
 msgstr "Gå op"
 
 
-
 msgid "Green"
 msgstr "Grøn"
-
 
 
 msgid "Group"
 msgstr "Gruppe"
 
 
-
 msgid "Hacks"
-msgstr ""
-
+msgstr "Hacks"
 
 
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Harmonisk palet"
 
 
 msgid "Help translate Tabby"
-msgstr ""
-
+msgstr "Hjælp med at oversætte Tabby"
 
 
 msgid "Hexadecimal"
 msgstr "Hexadecimal"
 
 
-
 msgid "Hide"
-msgstr ""
-
+msgstr "Skjul"
 
 
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Skjul Tabby fra systembakken eller menulinjen."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Skjul bakkeikon"
 
 
 msgid "Hide window on focus loss"
 msgstr "Skjul vindue ved fokustab"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Skjul luk-knappen på arbejdsområdet"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Skjul arbejdsområdeindeks"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Skjul indstillingsknappen på arbejdsområdet"
 
 
 msgid "Hides the docked terminal when you click away."
-msgstr ""
-
+msgstr "Skjuler den dockede terminal, når du klikker uden for den."
 
 
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Hjemmeside"
 
 
-
 msgid "Host"
 msgstr "Vært"
-
 
 
 msgid "Host key"
 msgstr "Værtsnøgle"
 
 
-
 msgid "Host key verification"
 msgstr "Verifikation af værtsnøgle"
-
 
 
 msgid "Hotkeys"
 msgstr "Genvejstaster"
 
 
-
 msgid "How Tabby presents itself through environment vars"
-msgstr ""
-
+msgstr "Hvordan Tabby præsenterer sig selv via miljøvariabler"
 
 
 msgid "HTTP proxy"
-msgstr ""
-
+msgstr "HTTP-proxy"
 
 
 msgid "HTTP proxy host"
-msgstr ""
-
+msgstr "HTTP-proxyvært"
 
 
 msgid "HTTP proxy port"
-msgstr ""
-
+msgstr "HTTP-proxyport"
 
 
 msgid "Icon"
 msgstr "Ikon"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Hvis du ikke har anmodet om det, kan det være et tegn på ondsindet aktivitet."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Ekkoer straks dit input lokalt"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Implicit CR ved hver LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Implicit LF ved hver CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Forkert adgangskode"
 
 
 msgid "Input"
-msgstr ""
-
+msgstr "Input"
 
 
 msgid "Input is sent as you type"
 msgstr "Input sendes mens du skriver"
 
 
-
 msgid "Input mode"
 msgstr "Inputtilstand"
 
 
-
 msgid "Input newlines"
-msgstr ""
-
+msgstr "Input-linjeskift"
 
 
 msgid "Installed"
 msgstr "Installeret"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
-msgstr ""
-
+msgstr "Intelligent Ctrl-C (kopier/afbryd)"
 
 
 msgid "Interactive"
 msgstr "Interaktiv"
 
 
-
 msgid "Invalid syntax"
 msgstr "Ugyldig syntaks"
-
 
 
 msgid "Jump host"
 msgstr "Jump host"
 
 
-
 msgid "Jump to next word"
 msgstr "Hop til næste ord"
-
 
 
 msgid "Jump to previous word"
 msgstr "Hop til forrige ord"
 
 
-
 msgid "Keep"
 msgstr "Behold"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Keep Alive interval (Millisekunder)"
 
 
-
 msgid "Keep docked terminal always on top"
-msgstr ""
-
+msgstr "Hold den dockede terminal altid øverst"
 
 
 msgid "Key"
 msgstr "Nøgle"
 
 
-
 msgid "Key exchange"
-msgstr ""
-
+msgstr "Nøgleudveksling"
 
 
 msgid "Keyboard"
-msgstr ""
-
+msgstr "Tastatur"
 
 
 msgid "Keyboard-interactive auth"
-msgstr ""
-
+msgstr "Tastaturinteraktiv godkendelse"
 
 
 msgid "Language"
 msgstr "Sprog"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Sidste kendte fingeraftryk for værtsnøgle"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Start WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Start WinSCP for den aktuelle SSH-session"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Lær, hvordan du tillader Tabby at registrere ekstern shell's arbejdsmappe."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Få mere at vide"
 
 
 msgid "Left"
 msgstr "Venstre"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Lader shell'et håndtere Meta taster i stedet for operativsystemet"
 
 
-
 msgid "Light mode"
-msgstr ""
-
+msgstr "Lys tilstand"
 
 
 msgid "Line by line"
 msgstr "Linje for linje"
 
 
-
 msgid "Line editor, input is sent after you press Enter"
-msgstr ""
-
+msgstr "Linjeeditor: input sendes, når du trykker på Enter"
 
 
 msgid "Line padding"
-msgstr ""
-
+msgstr "Linjeudfyldning"
 
 
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Indlæs sessionsoutput (fejlfinding)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Indlæs terminaltilstand (fejlfinding)"
 
 
 msgid "Loading"
 msgstr "Indlæser"
 
 
-
 msgid "Loading configs..."
 msgstr "Indlæser konfigurationer..."
-
 
 
 msgid "Local"
 msgstr "Lokal"
 
 
-
 msgid "Local echo"
 msgstr "Lokalt ekko"
-
 
 
 msgid "Local terminal"
 msgstr "Lokal terminal"
 
 
-
 msgid "Login scripts"
 msgstr "Login scripts"
 
 
-
 msgid "Long-click for context menu"
-msgstr ""
-
+msgstr "Langt klik viser kontekstmenuen"
 
 
 msgid "Manage profiles"
 msgstr "Administrér profiler"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Markér"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Maks Keep Alive antal"
 
 
-
 msgid "Minimum contrast ratio"
-msgstr ""
-
+msgstr "Mindste kontrastforhold"
 
 
 msgid "Modified on {date}"
 msgstr "Ændret den {date}"
 
 
-
 msgid "Mouse"
-msgstr ""
-
+msgstr "Mus"
 
 
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Flyt venstre splitter til venstre"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Flyt venstre splitter til højre"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Flyt nedre splitter ned"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Flyt nedre splitter op"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Flyt højre splitter til venstre"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Flyt højre splitter til højre"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Flyt til \"Ugrupperet\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Flyt øvre splitter ned"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Flyt øvre splitter op"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Flyt arbejdsområde til venstre"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Flyt arbejdsområde til højre"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
-msgstr ""
-
+msgstr "Bevæges musen over en inaktiv rude, aktiveres den"
 
 
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multiplexér flere shells gennem den samme forbindelse"
 
 
 msgid "Name"
 msgstr "Navn"
 
 
-
 msgid "Name for the new config"
 msgstr "Navn på den nye konfiguration"
 
 
-
 msgid "Name for the new directory"
-msgstr ""
-
+msgstr "Navn på den nye mappe"
 
 
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Named pipe"
 
 
 msgid "New"
-msgstr ""
-
+msgstr "Ny"
 
 
 msgid "New admin session"
-msgstr ""
-
+msgstr "Ny administratorsession"
 
 
 msgid "New config on {platform}"
 msgstr "Ny konfiguration på {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Ny gruppe"
 
 
 msgid "New item"
 msgstr "Nyt element"
 
 
-
 msgid "New name"
 msgstr "Nyt navn"
-
 
 
 msgid "New profile"
 msgstr "Ny profil"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Ny session"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Nye sessioner føjes til den aktive arbejdsområderude i stedet for et separat arbejdsområde."
 
 
 msgid "New tab"
 msgstr "Ny fane"
 
 
-
 msgid "New window"
 msgstr "Nyt vindue"
 
 
-
 msgid "New Window"
-msgstr ""
-
+msgstr "Nyt vindue"
 
 
 msgid "New with profile"
 msgstr "Ny med profil"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Nyt arbejdsområde"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Næste"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Næste arbejdsområde"
 
 
 msgid "No color"
 msgstr "Ingen farve"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Ingen filer matcher filteret \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Ingen modifikator"
 
 
-
 msgid "None"
 msgstr "Ingen"
-
 
 
 msgid "Normal"
 msgstr "Normal"
 
 
-
 msgid "Normal font weight"
-msgstr ""
-
+msgstr "Normal skriftvægt"
 
 
 msgid "Not found"
 msgstr "Ikke fundet"
 
 
-
 msgid "Notify on activity"
 msgstr "Underret ved aktivitet"
-
 
 
 msgid "Notify when done"
 msgstr "Underret ved afslutning"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Antal linjer i bufferen"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Ulige"
 
 
 msgid "Off"
 msgstr "Slået fra"
 
 
-
 msgid "Official"
 msgstr "Officiel"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "På Discord"
 
 
 msgid "Opacity"
 msgstr "Gennemsigtighed"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Åbn"
 
 
 msgid "Open DevTools"
 msgstr "Åbn udviklingsværktøjer"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Åbn nye sessioner i det aktuelle arbejdsområde"
 
 
 msgid "Open Settings"
 msgstr "Åbn indstillinger"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Åbn SFTP-panel"
-
 
 
 msgid "Optional"
 msgstr "Valgfri"
 
 
-
 msgid "Options"
 msgstr "Indstillinger"
-
 
 
 msgid "Orange"
 msgstr "Orange"
 
 
-
 msgid "OS default"
 msgstr "OS standard"
-
 
 
 msgid "OS default ({name})"
 msgstr "OS standard ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Output vises som hexdump"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Output er vist som det er modtaget"
 
 
-
 msgid "Output mode"
 msgstr "Outputtilstand"
-
 
 
 msgid "Output newlines"
 msgstr "Output nye linjer"
 
 
-
 msgid "Override X11 display"
 msgstr "Tilsidesæt X11-visning"
 
 
-
 msgid "Overwrite local and sync"
-msgstr ""
-
+msgstr "Overskriv lokalt og synkronisér"
 
 
 msgid "Overwrite remote and sync"
 msgstr "Overskriv ekstern og synkroniser"
 
 
-
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Overskriv konfigurationen på den eksterne side og start synkronisering?"
-
 
 
 msgid "Overwrite the local config and start syncing?"
 msgstr "Overskriv den lokale konfiguration og start synkronisering?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
-msgstr ""
-
+msgstr "Trin til ændring af rudestørrelse"
 
 
 msgid "Panes"
-msgstr ""
-
+msgstr "Ruder"
 
 
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Overordnet gruppe"
 
 
 msgid "Parity"
 msgstr "Paritet"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Delvis konfigurationssynkronisering er ikke muligt, når konfigurationen krypteres via Boksen."
 
 
-
 msgid "Pass-through"
-msgstr ""
-
+msgstr "Pass-through"
 
 
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Adgangskode for en privat nøgle med hash {hash}..."
 
 
-
 msgid "Password"
 msgstr "Adgangskode"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Adgangskode til {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Indsæt"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Indsæt \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Indsæt fra udklipsholder"
 
 
-
 msgid "Paste if no selection, else copy"
-msgstr ""
-
+msgstr "Indsæt, hvis intet er markeret, ellers kopiér"
 
 
 msgid "Paste multiple lines?"
 msgstr "Indsæt flere linjer?"
 
 
-
 msgid "Paste on middle-click"
-msgstr ""
-
+msgstr "Indsæt ved midterklik"
 
 
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Indsæt sessionsoutput (fejlfinding)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Indsæt terminaltilstand (fejlfinding)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Sti eller adresse på den lokale X11-socket"
 
 
-
 msgid "Pin"
 msgstr "Fastgør"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Fastgør eller frigør arbejdsområde"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Fastgør arbejdsområde"
 
 
 msgid "Plugins"
 msgstr "Plugins"
 
 
-
 msgid "Plugins folder"
 msgstr "Pluginmappe"
-
 
 
 msgid "Port"
 msgstr "Port"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Port lukket"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Portvideresendelse"
 
 
 msgid "Port opened"
 msgstr "Port åbnet"
 
 
-
 msgid "Ports"
 msgstr "Porte"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Tryk på en vilkårlig tast for at forbinde igen"
 
 
-
 msgid "Press the key now"
 msgstr "Tryk på tasten nu"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Forhindrer utilsigtet lukning"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Forhindrer utilsigtet udførelse af indsatte kommandoer"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Forrige arbejdsområde"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Adgangskode til privat nøgle"
 
 
 msgid "Private keys"
 msgstr "Private nøgler"
 
 
-
 msgid "Process completed"
 msgstr "Proces fuldført"
-
 
 
 msgid "Profile name"
 msgstr "Profilnavn"
 
 
-
 msgid "Profiles"
 msgstr "Profiler"
-
 
 
 msgid "Profiles & connections"
 msgstr "Profiler og forbindelser"
 
 
-
 msgid "Program"
 msgstr "Program"
-
 
 
 msgid "Proxy command"
 msgstr "Proxy kommando"
 
 
-
 msgid "Purple"
 msgstr "Lilla"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Placerer alle Tabby's konfiguration i boksen"
 
 
-
 msgid "Quick connect"
 msgstr "Hurtig tilslutning"
-
 
 
 msgid "Quit"
 msgstr "Afslut"
 
 
-
 msgid "Raw socket connection"
 msgstr "Rå socket forbindelse"
 
 
-
 msgid "Ready Timeout (Milliseconds)"
-msgstr ""
-
+msgstr "Klar-timeout (Millisekunder)"
 
 
 msgid "Recent"
 msgstr "Seneste"
 
 
-
 msgid "Reconnect"
 msgstr "Genopret forbindelse"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
-msgstr ""
-
+msgstr "Genopret forbindelse for den aktuelle fane (Seriel/Telnet/SSH)"
 
 
 msgid "Red"
 msgstr "Rød"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Opdatér"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Opdatér miljøvariabler fra registringsdatabasen"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Afvis"
 
 
 msgid "Release notes"
 msgstr "Udgivelsesnoter"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Genindlæs PATH og andre variabler fra Windows-registringsdatabasen ved hver ny session"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Husk"
 
 
 msgid "Remember for {time}"
 msgstr "Husk i {time}"
 
 
-
 msgid "Remote"
 msgstr "Ekstern"
 
 
-
 msgid "Remove whitespace and newlines around the copied text"
-msgstr ""
-
+msgstr "Fjern mellemrum og linjeskift omkring den kopierede tekst"
 
 
 msgid "Rename"
 msgstr "Omdøb"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Omdøb session"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Omdøb arbejdsområde"
 
 
 msgid "Rendering"
-msgstr ""
-
+msgstr "Rendering"
 
 
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Genåbn sidste arbejdsområde"
 
 
 msgid "Replace"
 msgstr "Erstat"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Erstat linjeskift med mellemrum"
 
 
 msgid "Report a problem"
 msgstr "Rapportér et problem"
 
 
-
 msgid "Require a key to click links"
-msgstr ""
-
+msgstr "Kræv en tast for at klikke på links"
 
 
 msgid "Reset zoom"
 msgstr "Nulstil zoom"
 
 
-
 msgid "Restart current serial session"
 msgstr "Genstart nuværende seriel session"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Genstart nuværende SSH-session"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Genstart nuværende Telnet session"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Genstart app'en for at anvende ændringer"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Genstart arbejdsområde"
 
 
 msgid "Restore settings to defaults ?"
-msgstr ""
-
+msgstr "Gendan indstillingerne til standardværdier ?"
 
 
 msgid "Restore settings to inherited defaults ?"
-msgstr ""
-
+msgstr "Gendan indstillingerne til nedarvede standardværdier ?"
 
 
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Sessionspersistens"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Holder shell'et i live med tmux, så det at trække en fane til et andet vindue ikke udløser en genforbindelse."
-
-
-
-
-
-
-
-
-
+msgstr "Gendan arbejdsområder ved appstart"
 
 
 msgid "Not set"
 msgstr "Ikke angivet"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Hele ordet"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
-msgstr ""
-
+msgstr "Genbrug sessionen til flere faner"
 
 
 msgid "Right"
 msgstr "Højre"
 
 
-
 msgid "Right click"
 msgstr "Højreklik"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Kør"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Kør \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Kør som administrator"
 
 
-
 msgid "Save"
 msgstr "Gem"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Gem en adgangskode i nøgleringen"
 
 
-
 msgid "Save and apply"
 msgstr "Gem og anvend"
-
 
 
 msgid "Save as profile"
 msgstr "Gem som profil"
 
 
-
 msgid "Save layout as profile"
 msgstr "Gem layout som profil"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Gem sessionsoutput (fejlfinding)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Gem terminaltilstand (fejlfinding)"
 
 
 msgid "Saved layout"
 msgstr "Gemt layout"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Gemt på {path}"
 
 
 msgid "Scroll on input"
-msgstr ""
-
+msgstr "Rul ved input"
 
 
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Rul terminalen én linje ned"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Rul terminalen én linje op"
 
 
 msgid "Scroll terminal one page down"
-msgstr ""
-
+msgstr "Rul terminalen én side ned"
 
 
 msgid "Scroll terminal one page up"
-msgstr ""
-
+msgstr "Rul terminalen én side op"
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Rul terminal til bunden"
 
 
-
 msgid "Scroll terminal to top"
-msgstr ""
-
+msgstr "Rul terminalen til toppen"
 
 
 msgid "Scrollback"
-msgstr ""
-
+msgstr "Scrollback"
 
 
 msgid "Scrolls the terminal to the bottom on user input"
-msgstr ""
-
+msgstr "Ruller terminalen til bunden ved brugerinput"
 
 
 msgid "Search"
 msgstr "Søg"
 
 
-
 msgid "Search color schemes"
-msgstr ""
-
+msgstr "Søg i farvetemaer"
 
 
 msgid "Search hotkeys"
-msgstr ""
-
+msgstr "Søg i genvejstaster"
 
 
 msgid "Search plugins"
-msgstr ""
-
+msgstr "Søg i plugins"
 
 
 msgid "Secret sync token"
 msgstr "Hemmelig synkroniseringstoken"
 
 
-
 msgid "Select"
 msgstr "Vælg"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Vælg en skabelon"
 
 
 msgid "Select all"
-msgstr ""
-
+msgstr "Vælg alt"
 
 
 msgid "Select background image"
-msgstr ""
-
+msgstr "Vælg baggrundsbillede"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Vælg destinationsmappe til {name}"
 
 
 msgid "Select file storage"
 msgstr "Vælg lagerplads"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Vælg profil eller indtast en adresse"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Send bytes ved at skrive i hex-værdier"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Sender data en byte ad gangen"
-
 
 
 msgid "Serial"
 msgstr "Seriel"
 
 
-
 msgid "Serial connection"
 msgstr "Seriel forbindelse"
-
 
 
 msgid "Set master passphrase"
 msgstr "Opsæt hovedadgangskode"
 
 
-
 msgid "Set passphrase"
 msgstr "Indstil adgangskode"
-
 
 
 msgid "Set password"
 msgstr "Angiv adgangskode"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Sæt Tabby som %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Sæt til 0 for at deaktivere seneste profiler"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
-msgstr ""
-
+msgstr "Angiver SSH-agentens named pipe-sti."
 
 
 msgid "Settings"
 msgstr "Indstillinger"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell understøtter ikke detektion af aktuel sti"
-
 
 
 msgid "Shell integration"
 msgstr "Shell integration"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
-msgstr ""
-
+msgstr "Vis"
 
 
 msgid "Show a confirmation box when pasting multiple lines"
-msgstr ""
-
+msgstr "Vis en bekræftelsesboks ved indsættelse af flere linjer"
 
 
 msgid "Show command selector"
-msgstr ""
-
+msgstr "Vis kommandovælger"
 
 
 msgid "Show config file"
 msgstr "Vis konfigurationsfil"
 
 
-
 msgid "Show defaults"
 msgstr "Vis standardindstillinger"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Vis profilikon på arbejdsområdet"
 
 
 msgid "Show profile selector"
 msgstr "Vis profilvælger"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Vis profilsidelinje"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Vis seneste profiler i vælgeren"
 
 
-
 msgid "Show release notes"
 msgstr "Vis udgivelsesnoter"
-
 
 
 msgid "Show Serial connections"
 msgstr "Vis serielle forbindelser"
 
 
-
 msgid "Show vault contents"
 msgstr "Vis indhold i boksen"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Vis arbejdsområdelinjen i fuldskærmstilstand"
 
 
 msgid "Sixel graphics support (experimental)"
-msgstr ""
-
+msgstr "Sixel-grafikunderstøttelse (eksperimentel)"
 
 
 msgid "Skip MoTD/banner"
 msgstr "Spring over MoTD/banner"
 
 
-
 msgid "Slow feed"
 msgstr "Langsom feed"
-
 
 
 msgid "Snaps the window to a side of the screen"
 msgstr "Snap'er vinduet til en side af skærmen"
 
 
-
 msgid "SOCKS proxy"
 msgstr "SOCKS proxy"
-
 
 
 msgid "SOCKS proxy host"
 msgstr "SOCKS proxy vært"
 
 
-
 msgid "SOCKS proxy port"
 msgstr "SOCKS proxy port"
 
 
-
 msgid "Sound"
-msgstr ""
-
+msgstr "Lyd"
 
 
 msgid "Source code"
 msgstr "Kildekode"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Space"
 
 
 msgid "Spaciness"
-msgstr ""
-
+msgstr "Luftighed"
 
 
 msgid "Split"
 msgstr "Opdel"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Opdel det aktuelle arbejdsområde i separate arbejdsområder"
 
 
 msgid "Split to the bottom"
 msgstr "Opdel i bunden"
 
 
-
 msgid "Split to the left"
 msgstr "Opdel til venstre"
-
 
 
 msgid "Split to the right"
 msgstr "Opdel til højre"
 
 
-
 msgid "Split to the top"
 msgstr "Opdel til toppen"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH forbindelse"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "SSH adgangskode for {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Opstart"
 
 
-
 msgid "Stop bits"
 msgstr "Stopbits"
-
 
 
 msgid "Strip"
 msgstr "Fjern"
 
 
-
 msgid "Substitutions allowed."
-msgstr ""
-
+msgstr "Erstatninger tilladt."
 
 
 msgid "Switch color scheme"
-msgstr ""
-
+msgstr "Skift farvetema"
 
 
 msgid "Switch profile"
 msgstr "Skift profil"
 
 
-
 msgid "Switch profile in the active pane"
 msgstr "Skift profil i den aktive rude"
-
 
 
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Skifter terminal frontend implementering (eksperimentel)"
 
 
-
 msgid "Sync"
 msgstr "Synkronisering"
-
 
 
 msgid "Sync automatically"
 msgstr "Synkroniser automatisk"
 
 
-
 msgid "Sync host"
 msgstr "Synkroniseringsvært"
-
 
 
 msgid "Sync hotkeys"
 msgstr "Synkroniser genvejstaster"
 
 
-
 msgid "Sync Vault"
 msgstr "Synkronisér Boksen"
-
 
 
 msgid "Sync window settings"
 msgstr "Synkroniser vinduesindstillinger"
 
 
-
 msgid "Tab activity"
 msgstr "Fane aktivitet"
-
 
 
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby kunne ikke starte med dine plugins, så alle tredjeparts-plugins er blevet deaktiveret i denne session. Fejlen var:"
 
 
-
 msgid "Telnet session"
 msgstr "Telnet session"
-
 
 
 msgid "Terminal"
 msgstr "Terminal"
 
 
-
 msgid "Terminal background"
 msgstr "Terminalbaggrund"
-
 
 
 msgid "Terminal bell"
 msgstr "Terminalklokke"
 
 
-
 msgid "Terminal identification"
-msgstr ""
-
+msgstr "Terminalidentifikation"
 
 
 msgid "Thank you for downloading Tabby!"
 msgstr "Tak fordi du har downloadet Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Mappen kunne ikke oprettes"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Mappen blev oprettet"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Boksen skal låses op for at indlæse din konfiguration."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Der er aktive filoverførsler"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Der er en gemt adgangskode til denne forbindelse"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Disse gælder for alle profiler af en given type"
 
 
-
 msgid "These apply to all profiles of a given type in this group"
-msgstr ""
-
+msgstr "Disse gælder for alle profiler af en given type i denne gruppe"
 
 
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Markér dette, hvis du oplever aliasing, ghosting eller andre visuelle problemer"
 
 
-
 msgid "Toggle fullscreen mode"
 msgstr "Skift fuldskærmstilstand"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Skift til seneste arbejdsområde"
 
 
 msgid "Toggle terminal window"
-msgstr ""
-
+msgstr "Vis/skjul terminalvinduet"
 
 
 msgid "Toggles the Tabby window visibility"
-msgstr ""
-
+msgstr "Skifter synligheden af Tabby-vinduet"
 
 
 msgid "Top"
 msgstr "Toppen"
 
 
-
 msgid "Trim whitespace and newlines"
-msgstr ""
-
+msgstr "Beskær mellemrum og linjeskift"
 
 
 msgid "Try again"
 msgstr "Prøv igen"
 
 
-
 msgid "Ungrouped"
 msgstr "Ugrupperet"
-
 
 
 msgid "Uninstall"
 msgstr "Afinstallér"
 
 
-
 msgid "Unknown"
 msgstr "Ukendt"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Ukendt hemmelighed for typen {type} for {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Unavngiven gruppe"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Unavngivet arbejdsområde"
 
 
 msgid "Up"
 msgstr "Op"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Opgradér til {version}"
-
 
 
 msgid "Upload"
 msgstr "Upload"
 
 
-
 msgid "Upload as a new config"
 msgstr "Upload som ny konfiguration"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Upload filer"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Upload mappe"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Brug {altKeyName} som Meta tasten"
 
 
-
 msgid "Use ConPTY"
 msgstr "Brug ConPTY"
-
 
 
 msgid "User default"
 msgstr "Brugerstandard"
 
 
-
 msgid "Username"
 msgstr "Brugernavn"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Brugernavn til {host}"
 
 
 msgid "Using CONNECT method"
-msgstr ""
-
+msgstr "Bruger CONNECT-metoden"
 
 
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Bruger gemt adgangskode"
 
 
 msgid "Vault"
 msgstr "Boksen"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Boksen er en altid-krypteret beholder til hemmeligheder, såsom SSH-adgangskoder og private nøgleadgangskoder."
-
 
 
 msgid "Vault is empty"
 msgstr "Boksen er tom"
 
 
-
 msgid "Vault is locked"
 msgstr "Boksen er låst"
-
 
 
 msgid "Vault is not configured"
 msgstr "Boksen er ikke konfigureret"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Boksens master adgangskode skal indstilles for at tillade lagring af hemmeligheder"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Verificér værtsnøgler ved tilslutning"
 
 
-
 msgid "Version"
 msgstr "Version"
-
 
 
 msgid "Version: {version}"
 msgstr "Version: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Vibrancy"
-
 
 
 msgid "Visual"
 msgstr "Visuel"
 
 
-
 msgid "Warn on multi-line paste"
-msgstr ""
-
+msgstr "Advar ved indsættelse af flere linjer"
 
 
 msgid "Warn when closing active connections"
 msgstr "Advar ved lukning af aktive forbindelser"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Advarsel: Den eksterne værtsnøgle er pludselig ændret!"
-
 
 
 msgid "Welcome"
 msgstr "Velkommen"
 
 
-
 msgid "What's new"
 msgstr "Nyheder"
 
 
-
 msgid "When a session ends"
-msgstr ""
-
+msgstr "Når en session afsluttes"
 
 
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Når aktiveret, er links kun klikbare mens du holder denne tast nede"
 
 
-
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
-msgstr ""
-
+msgstr "Når WinSCP registreres, kan du starte en SCP-session fra kontekstmenuen."
 
 
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Om de genererede lyse temafarver skal inverteres. Det hjælper med at give 256-farvepaletten mere semantisk betydning."
 
 
 msgid "Will prevent the SSH greeting from showing up"
-msgstr ""
-
+msgstr "Forhindrer, at SSH-hilsenen vises"
 
 
 msgid "Window"
 msgstr "Vindue"
 
 
-
 msgid "Window dimension along the edge"
-msgstr ""
-
+msgstr "Vinduesdimension langs kanten"
 
 
 msgid "Window dimension away from the edge"
-msgstr ""
-
+msgstr "Vinduesdimension væk fra kanten"
 
 
 msgid "Windows"
-msgstr ""
-
+msgstr "Windows"
 
 
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Windows 10 build 18309 eller derover anbefales til ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCP sti"
 
 
-
 msgid "Word separators"
 msgstr "Ordseparatorer"
-
 
 
 msgid "Working directory"
 msgstr "Arbejdsmappe"
 
 
-
 msgid "Working directory detection"
 msgstr "Detektering af arbejdsmappe"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Arbejdsområde {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Placering af arbejdsområdelinjen"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Bredde af arbejdsområdelinjen"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Arbejdsområder"
 
 
 msgid "X11 forwarding"
 msgstr "X11 videresendelse"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Gul"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Du kan ændre det senere, men det er uopretteligt, hvis det glemmes."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Du kunne være under et man-in-the-middle angreb lige nu, eller værtsnøglen kunne lige være blevet ændret."
 
 
-
 msgid "Zoom in"
 msgstr "Zoom ind"
-
 
 
 msgid "Zoom out"
 msgstr "Zoom ud"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Hovedadgangskode"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Opdel i uescapade argumenter"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Kombinér til én escaped kommando"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Variabelnavn"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Værdi"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Hjemmemappe"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Spørg hver gang"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Svar"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filter..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Automatisk registrering"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Forgrund"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Baggrund"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Markørfarve"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Forgrund for blokmarkør"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Baggrund for markering"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Forgrund for markering"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI-farve {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Forvent"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 

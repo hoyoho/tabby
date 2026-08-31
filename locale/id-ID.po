@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} salin"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "Keluarga huruf kedua digunakan untuk menampilkan karakter yang hilang di huruf utama"
 
 
-
 msgid "Abort all"
 msgstr "Batalkan semua"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Terima"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Terima sesi ZMODEM?"
 
 
 msgid "Accept and remember key"
 msgstr "Terima dan ingat kunci"
 
 
-
 msgid "Accept just this once"
 msgstr "Terima kali ini saja"
-
 
 
 msgid "Accessibility"
 msgstr "Aksesbilitas"
 
 
-
 msgid "Acrylic background"
 msgstr "Latar belakang akrilik"
-
 
 
 msgid "Add"
 msgstr "Tambah"
 
 
-
 msgid "Add a port forward"
 msgstr "Tambah port forward"
-
 
 
 msgid "Add a private key"
 msgstr "Tambah kunci pribadi"
 
 
-
 msgid "Add..."
 msgstr "Tambah..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Ruang tambahan antar baris"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Sesuaikan lapisan gelap di belakang antarmuka"
 
 
 msgid "Advanced"
 msgstr "Lanjutan"
 
 
-
 msgid "Agent"
 msgstr "Agen"
-
 
 
 msgid "Agent forwarding"
 msgstr "Penerusan agen"
 
 
-
 msgid "Agent pipe path"
 msgstr "Jalur pipa agen"
-
 
 
 msgid "Agent type"
 msgstr "Jenis agen"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Mengizinkan membuka berkas .bat sebagai sesi, tetapi merusak beberapa shell"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Izinkan buka dengan cepat terminal di direktori terpilih"
 
 
-
 msgid "Always dark"
 msgstr "Selalu gelap"
-
 
 
 msgid "Always light"
 msgstr "Selalu terang"
 
 
-
 msgid "Appearance"
 msgstr "Tampilan"
-
 
 
 msgid "Application"
 msgstr "Aplikasi"
 
 
-
 msgid "Application settings"
 msgstr "Pengaturan aplikasi"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Anda yakin ingin menutup Tabby? Anda bisa menonaktifkan prompt ini di Pengaturan -> Jendela."
 
 
-
 msgid "Are you sure?"
 msgstr "Anda yakin?"
-
 
 
 msgid "Arguments"
 msgstr "Argumen"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Tanya sebelum tutup tab peramban"
-
 
 
 msgid "Audible"
 msgstr "Terdengar"
 
 
-
 msgid "Authentication method"
 msgstr "Metode otentikasi"
-
 
 
 msgid "Author"
 msgstr "Pencipta"
 
 
-
 msgid "Auto"
 msgstr "Otomatis"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Otomatis buka terminal saat memulai aplikasi"
 
 
-
 msgid "Automatic"
 msgstr "Otomatis"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Otomatis unggah perubahan dan cek pembaruan setiap menit"
 
 
-
 msgid "Available"
 msgstr "Tersedia"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Gambar latar belakang"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Kecerahan gambar latar belakang"
 
 
 msgid "Background type"
 msgstr "Jenis latar belakang"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
-msgstr ""
-
+msgstr "Mode tombol Backspace"
 
 
 msgid "Baud rate"
 msgstr "Baud rate"
 
 
-
 msgid "Beginning of the line"
 msgstr "Awal baris"
-
 
 
 msgid "Blink cursor"
 msgstr "Kursor berkedip"
 
 
-
 msgid "Blue"
 msgstr "Biru"
-
 
 
 msgid "Blur"
 msgstr "Buram"
 
 
-
 msgid "Bold font weight"
 msgstr "Ukuran ketebalan huruf"
-
 
 
 msgid "Bottom"
 msgstr "Bawah"
 
 
-
 msgid "Bracketed paste (requires shell support)"
 msgstr "Tempel tanda kurung (butuh dukungan shell)"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Jelajahi…"
 
 
 msgid "Built-in"
 msgstr "Bawaan"
 
 
-
 msgid "Cancel"
 msgstr "Batal"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Tidak dapat menangani skrip jenis ini"
 
 
 msgid "Change the master passphrase"
 msgstr "Ubah frasa sandi utama"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Ubah warna ruang kerja"
 
 
 msgid "Ciphers"
 msgstr "Sandi"
 
 
-
 msgid "Clear"
 msgstr "Bersihkan"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Bersihkan profil terbaru"
 
 
-
 msgid "Clear terminal"
 msgstr "Bersihkan terminal"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Bershikan terminal setelah koneksi"
 
 
-
 msgid "Clipboard"
 msgstr "Papan clip"
-
 
 
 msgid "Close"
 msgstr "Tutup"
 
 
-
 msgid "Close and never show again"
 msgstr "Tutup dan jangan tampilkan lagi"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Tutup sesi yang difokuskan"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Tutup ruang kerja lain"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Tutup sesi"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Tutup sesi hanya saat diakhiri secara eksplisit"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Tutup jendela setelah menutup ruang kerja terakhir"
 
+msgid "Cross-window drag"
+msgstr "Seret lintas jendela"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Mengizinkan menyeret ruang kerja atau sesi antar instansi. Sesi tanpa PTY yang dapat ditransfer (mis. SSH) akan tersambung kembali."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Tutup ruang kerja"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Tutup ruang kerja di atas"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Tutup ruang kerja di bawah"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Tutup ruang kerja di kiri"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Tutup ruang kerja di kanan"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Ciutkan grup"
 
 
 msgid "Color"
 msgstr "Warna"
 
 
-
 msgid "Color scheme"
 msgstr "Skema warna"
-
 
 
 msgid "Color schemes"
 msgstr "Warna Skema"
 
 
-
 msgid "Colors"
 msgstr "Warna-warna"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Gabungkan semua ruang kerja menjadi satu ruang kerja"
 
 
 msgid "Command line"
 msgstr "Baris perintah"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Perintah stdin/stdout digunakan sebagai pengganti koneksi jaringan"
-
 
 
 msgid "Commands"
 msgstr "Perintah-perintah"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Komunitas"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Kompresi"
 
 
 msgid "Config deleted"
 msgstr "Konfigurasi telah dihapus"
 
 
-
 msgid "Config downloaded"
 msgstr "Konfigurasi diunduh"
-
 
 
 msgid "Config file"
 msgstr "Berkas konfigurasi"
 
 
-
 msgid "Config sync"
 msgstr "Sinkronisasi konfigurasi"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Sinkronisasi konfigurasi memerlukan instansi layanan Tabby Web."
 
 
 msgid "Config uploaded"
 msgstr "Konfigurasi diunggah"
 
 
-
 msgid "Configs"
 msgstr "Konfigurasi"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Terhubung melalui server proxy"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Hubungkan ke \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Hubungkan ke host yang berbeda terlebih dahulu dan gunakan sebagai proxy"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Terhubung"
 
 
 msgid "Connecting"
 msgstr "Menghubungkan"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Menghubungkan ke {host}"
 
 
 msgid "Connection"
 msgstr "Koneksi"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Koneksi tertutup"
 
 
 msgid "Connection failed: {error}"
 msgstr "Koneksi gagal: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Nama koneksi akan digunakan sebagai gantinya"
-
 
 
 msgid "Context menu"
 msgstr "Menu konteks"
 
 
-
 msgid "Controls the amount of space between elements"
-msgstr ""
-
+msgstr "Mengatur jumlah ruang antar elemen"
 
 
 msgid "Copied"
 msgstr "Disalin"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Disalin ke papan klip"
 
 
 msgid "Copy"
 msgstr "Salin"
 
 
-
 msgid "Copy current path"
 msgstr "Salin jalur saat ini"
-
 
 
 msgid "Copy full path"
 msgstr "Salin alamat lengkap"
 
 
-
 msgid "Copy on select"
 msgstr "Salin pada saat pilih"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Salin keluaran sesi (debug)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Salin status terminal (debug)"
 
 
 msgid "Copy to clipboard"
 msgstr "Salin ke papan klip"
 
 
-
 msgid "Copy with formatting"
 msgstr "Salin dengan formatting"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Tidak bisa mendekripsi konfigurasi"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Tidak bisa membaca kunci pribadi"
 
 
 msgid "Create"
 msgstr "Buat"
 
 
-
 msgid "Create directory"
 msgstr "Buat direktori"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Saat ini"
 
 
-
 msgid "Current color scheme"
 msgstr "Skema warna saat ini"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Sidik jari kunci host saat ini"
 
 
-
 msgid "Current process: {name}"
 msgstr "Proses saat ini: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Bentuk kursor"
 
 
-
 msgid "Custom"
 msgstr "Kustom"
-
 
 
 msgid "Custom CSS"
 msgstr "CSS khusus"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
-msgstr ""
-
+msgstr "Mode gelap"
 
 
 msgid "Data bits"
 msgstr "Data bits"
 
 
-
 msgid "Debugging"
 msgstr "Men-debug"
 
 
-
 msgid "Default \"Connect to\" type"
-msgstr ""
-
+msgstr "Jenis \"Hubungkan ke\" bawaan"
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
-msgstr ""
-
+msgstr "Jenis koneksi bawaan yang digunakan fitur sambung cepat (mis. SSH, Telnet)"
 
 
 msgid "Default profile group settings"
-msgstr ""
-
+msgstr "Pengaturan grup profil bawaan"
 
 
 msgid "Default profile settings"
 msgstr "Pengaturan profil bawaan"
 
 
-
 msgid "Defaults"
 msgstr "Bawaan"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Bawaan untuk {type}"
 
 
-
 msgid "Delete"
 msgstr "Hapus"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Hapus \"{name}\"?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Hapus {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Hapus seluruh baris"
 
 
-
 msgid "Delete next word"
 msgstr "Hapus kata selanjutnya"
-
 
 
 msgid "Delete previous word"
 msgstr "Hapus kata sebelumnya"
 
 
-
 msgid "Delete the config on the remote side?"
-msgstr ""
-
+msgstr "Hapus konfigurasi di sisi jarak jauh?"
 
 
 msgid "Delete the group's profiles?"
 msgstr "Hapus profil grup?"
 
 
-
 msgid "Delete this script?"
 msgstr "Hapus skrip ini?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Hapus konten vault?"
 
 
-
 msgid "Deleting"
 msgstr "Menghapus"
-
 
 
 msgid "Device"
 msgstr "Perangkat"
 
 
-
 msgid "Direct"
 msgstr "Langsung"
-
 
 
 msgid "Disable"
 msgstr "Matikan"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Nonaktifkan judul sesi dinamis"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Nonaktifkan latar belakang yang lancar saat menyeret"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Matikan akselerasi GPU"
-
 
 
 msgid "Disabled"
 msgstr "Dinonaktifkan"
 
 
-
 msgid "Disconnect"
 msgstr "Putuskan"
 
 
-
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
-msgstr ""
-
+msgstr "Putuskan tab saat ini (Serial/Telnet/SSH)"
 
 
 msgid "Disconnect from {host}?"
 msgstr "Putuskan dari {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Tampilkan gambar di belakang jendela terminal"
 
 
 msgid "Display images via Sixel escape sequences"
-msgstr ""
-
+msgstr "Tampilkan gambar melalui urutan escape Sixel"
 
 
 msgid "Display on"
 msgstr "Tampil pada"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Menampilkan seluruh hierarki profil di bilah samping."
 
 
 msgid "Do not abort"
 msgstr "Jangan dibatalkan"
 
 
-
 msgid "Do not close"
 msgstr "Jangan tutup"
-
 
 
 msgid "Do not remember"
 msgstr "Jangan ingat"
 
 
-
 msgid "Dock always on top"
 msgstr "Kait selalu diatas"
-
 
 
 msgid "Dock the terminal"
 msgstr "Kaitkan terminal"
 
 
-
 msgid "Docked terminal size"
 msgstr "Kaitkan ukuran terminal"
-
 
 
 msgid "Docked terminal space"
 msgstr "Kaitkan ruang terminal"
 
 
-
 msgid "Docking"
 msgstr "Mengaitkan"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Pilihan klik dua kali akan berhenti di karakter ini"
 
 
-
 msgid "Down"
 msgstr "Turun"
-
 
 
 msgid "Download"
 msgstr "Unduh"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Direktori unduhan"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Unduh di sini"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Menampilkan teks tebal dalam warna cerah"
 
 
-
 msgid "Duplicate"
 msgstr "Duplikasi"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Duplikasi sesi"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Duplikasi ruang kerja"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dinamis"
 
 
 msgid "Edit"
 msgstr "Sunting"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Sunting grup"
 
 
 msgid "Edit locally"
 msgstr "Sunting Lokal"
 
 
-
 msgid "Enable"
 msgstr "Izinkan"
-
 
 
 msgid "Enable animations"
 msgstr "Aktifkan animasi"
 
 
-
 msgid "Enable fluent background option"
-msgstr ""
-
+msgstr "Aktifkan opsi latar belakang lancar"
 
 
 msgid "Enable font ligatures"
 msgstr "Aktifkan ligatur font"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktifkan hotkey global (Ctrl-Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Mengaktifkan Windows ConPTY API eksperimental"
 
 
-
 msgid "Encrypt config file"
 msgstr "Enkripsi berkas konfigurasi"
-
 
 
 msgid "End of the line"
 msgstr "Baris akhir"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Lingkungan"
 
 
-
 msgid "Erase config"
 msgstr "Hapus konfigurasi"
-
 
 
 msgid "Erase the Vault"
 msgstr "Hapus vault"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Eror di {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Genap"
 
 
 msgid "Exact match"
 msgstr "Paling cocok"
 
 
-
 msgid "Example:"
 msgstr "Contoh:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Perluas grup"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
-msgstr ""
-
+msgstr "Gaya latar belakang Windows 10 eksperimental yang diketahui menimbulkan masalah"
 
 
 msgid "Export"
 msgstr "Ekspor"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Ekspor ke berkas"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "perluas PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Gagal mengunduh folder: {error}"
 
 
 msgid "Fallback font"
 msgstr "Font cadangan"
 
 
-
 msgid "File transfers"
 msgstr "Transfer berkas"
-
 
 
 msgid "File: {description}"
 msgstr "Berkas: {description}"
 
 
-
 msgid "Filter"
 msgstr "Saring"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Saring hasil"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Selesai"
 
 
 msgid "Fixed"
 msgstr "Tetap"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Ratakan teks yang ditempel menjadi satu baris untuk terminal yang tidak mendukung tempel multibaris"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Lancar"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Latar belakang yang lancar terkadang menyebabkan kelambatan seret"
 
 
-
 msgid "Focus follows mouse"
-msgstr ""
-
+msgstr "Fokus mengikuti tetikus"
 
 
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Fokuskan sesi berikutnya"
 
 
 msgid "Focus pane {number}"
-msgstr ""
-
+msgstr "Fokuskan panel {number}"
 
 
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Fokuskan sesi sebelumnya"
 
 
 msgid "Focus the pane above"
 msgstr "Fokuskan panel di atas"
 
 
-
 msgid "Focus the pane below"
 msgstr "Fokuskan panel di bawah"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Fokuskan panel di kiri"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Fokuskan panel di kanan"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Ikuti Sekema Warna"
 
 
-
 msgid "Font"
 msgstr "Font"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Untuk pintasan keyboard"
 
 
-
 msgid "Force CR"
 msgstr "Paksakan CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Paksakan CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Paksakan LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Memaksa jenis koneksi agen SSH tertentu."
 
 
-
 msgid "Forget"
 msgstr "Lupakan"
-
 
 
 msgid "Forward port"
 msgstr "Port penerusan"
 
 
-
 msgid "Forwarded ports"
 msgstr "Port diteruskan"
-
 
 
 msgid "From color scheme"
 msgstr "Dari skema warna"
 
 
-
 msgid "From system"
-msgstr ""
-
+msgstr "Dari sistem"
 
 
 msgid "From theme"
 msgstr "Dari tema"
 
 
-
 msgid "Frontend"
 msgstr "Tampilan Depan"
-
 
 
 msgid "General"
 msgstr "Umum"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Hasilkan palet 256 warna"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Buat pra-diisi isu di GitHub"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Hasilkan palet 256 warna yang diperluas dari 16 warna dasar Anda"
 
 
 msgid "Get"
 msgstr "Dapatkan"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Dapatkan dari jendela pengaturan Web Tabby"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Beri jendela latar belakang transparan buram"
 
 
-
 msgid "Go up"
 msgstr "Naik"
-
 
 
 msgid "Green"
 msgstr "Hijau"
 
 
-
 msgid "Group"
 msgstr "Grup"
-
 
 
 msgid "Hacks"
 msgstr "Peretasan"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Palet harmonis"
 
 
 msgid "Help translate Tabby"
 msgstr "Bantu terjemahkan Tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "Heksadesimal"
 
 
-
 msgid "Hide"
-msgstr ""
-
+msgstr "Sembunyikan"
 
 
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Sembunyikan Tabby dari tray atau bilah menu."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Sembunyikan ikon tray"
 
 
 msgid "Hide window on focus loss"
 msgstr "Sembunyikan jendela saat kehilangan fokus"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Sembunyikan tombol tutup ruang kerja"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Sembunyikan indeks ruang kerja"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Sembunyikan tombol opsi ruang kerja"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Sembunyikan terminal yang terkait saat Anda mengklik."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Beranda"
 
 
-
 msgid "Host"
 msgstr "Host"
-
 
 
 msgid "Host key"
 msgstr "Kunci host"
 
 
-
 msgid "Host key verification"
 msgstr "Kunci verifikasi host"
-
 
 
 msgid "Hotkeys"
 msgstr "Pintasan"
 
 
-
 msgid "How Tabby presents itself through environment vars"
-msgstr ""
-
+msgstr "Bagaimana Tabby menampilkan dirinya melalui variabel lingkungan"
 
 
 msgid "HTTP proxy"
 msgstr "HTTP proxy"
 
 
-
 msgid "HTTP proxy host"
 msgstr "Host HTTP proxy"
-
 
 
 msgid "HTTP proxy port"
 msgstr "Port HTTP proxy"
 
 
-
 msgid "Icon"
 msgstr "Ikon"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Jika Anda tidak memintanya, ini bisa menjadi tanda aktivitas berbahaya."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Segera menggemakan masukan Anda secara lokal"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "CR implisit pada setiap LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "LF implisit pada setiap CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Frasa sandi salah"
 
 
 msgid "Input"
-msgstr ""
-
+msgstr "Masukan"
 
 
 msgid "Input is sent as you type"
 msgstr "Masukan dikirim saat Anda mengetik"
 
 
-
 msgid "Input mode"
 msgstr "Modus masukan"
-
 
 
 msgid "Input newlines"
 msgstr "Masukan garis baru"
 
 
-
 msgid "Installed"
 msgstr "Terpasang"
-
 
 
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Ctrl-C cerdas (salin/batal)"
 
 
-
 msgid "Interactive"
 msgstr "Interaktif"
-
 
 
 msgid "Invalid syntax"
 msgstr "Sintaks tidak sah"
 
 
-
 msgid "Jump host"
 msgstr "Lompat host"
-
 
 
 msgid "Jump to next word"
 msgstr "Lompat ke kata berikutnya"
 
 
-
 msgid "Jump to previous word"
 msgstr "Lompat ke kata sebelumnya"
-
 
 
 msgid "Keep"
 msgstr "Tetap"
 
 
-
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Interval Tetap Hidup (Milidetik)"
-
 
 
 msgid "Keep docked terminal always on top"
 msgstr "Terminal tetap selalu diatas"
 
 
-
 msgid "Key"
 msgstr "Kunci"
-
 
 
 msgid "Key exchange"
 msgstr "Bertukar kunci"
 
 
-
 msgid "Keyboard"
 msgstr "Papan ketik"
-
 
 
 msgid "Keyboard-interactive auth"
 msgstr "Otentikasi keyboard-interaktif"
 
 
-
 msgid "Language"
 msgstr "Bahasa"
 
 
-
 msgid "Last known host key fingerprint"
-msgstr ""
-
+msgstr "Sidik jari kunci host yang terakhir diketahui"
 
 
 msgid "Launch WinSCP"
 msgstr "Buka WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Buka WinSCP untuk sesi SSH saat ini"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Pelajari cara mengizinkan Tabby mendeteksi direktori kerja shell jarak jauh."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Pelajari lebih lanjut"
 
 
 msgid "Left"
 msgstr "Kiri"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Biarkan shell menangani kunci Meta daripada OS"
 
 
-
 msgid "Light mode"
-msgstr ""
-
+msgstr "Mode terang"
 
 
 msgid "Line by line"
 msgstr "Baris per baris"
 
 
-
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Editor baris, masukkan dikirim setelah Anda tekan Enter"
-
 
 
 msgid "Line padding"
 msgstr "Bantalan garis"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Muat keluaran sesi (debug)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Muat status terminal (debug)"
 
 
 msgid "Loading"
 msgstr "Memuat"
 
 
-
 msgid "Loading configs..."
 msgstr "Memuat konfigurasi..."
-
 
 
 msgid "Local"
 msgstr "Lokal"
 
 
-
 msgid "Local echo"
 msgstr "Echo Lokal"
-
 
 
 msgid "Local terminal"
 msgstr "Terminal lokal"
 
 
-
 msgid "Login scripts"
 msgstr "Skrip masuk"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Klik lama untuk menu konteks"
 
 
-
 msgid "Manage profiles"
 msgstr "Kelola profil"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Tandai"
 
 
 msgid "Max Keep Alive Count"
-msgstr ""
-
+msgstr "Jumlah Tetap Hidup Maksimum"
 
 
 msgid "Minimum contrast ratio"
-msgstr ""
-
+msgstr "Rasio kontras minimum"
 
 
 msgid "Modified on {date}"
 msgstr "Diubah pada {date}"
 
 
-
 msgid "Mouse"
 msgstr "Kursor"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Geser pembatas kiri ke kiri"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Geser pembatas kiri ke kanan"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Geser pembatas bawah ke bawah"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Geser pembatas bawah ke atas"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Geser pembatas kanan ke kiri"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Geser pembatas kanan ke kanan"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Pindahkan ke \"Tanpa Group\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Geser pembatas atas ke bawah"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Geser pembatas atas ke atas"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Pindahkan ruang kerja ke kiri"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Pindahkan ruang kerja ke kanan"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
-msgstr ""
-
+msgstr "Menggerakkan tetikus di atas panel yang tidak aktif akan mengaktifkannya"
 
 
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multipleks banyak shell melalui koneksi yang sama"
 
 
 msgid "Name"
 msgstr "Nama"
 
 
-
 msgid "Name for the new config"
 msgstr "Nama untuk konfigurasi baru"
-
 
 
 msgid "Name for the new directory"
 msgstr "Nama untuk direktori baru"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Pipa bernama"
 
 
 msgid "New"
-msgstr ""
-
+msgstr "Baru"
 
 
 msgid "New admin session"
-msgstr ""
-
+msgstr "Sesi admin baru"
 
 
 msgid "New config on {platform}"
 msgstr "Pengaturan baru di {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Grup baru"
 
 
 msgid "New item"
 msgstr "Item baru"
 
 
-
 msgid "New name"
 msgstr "Nama baru"
-
 
 
 msgid "New profile"
 msgstr "Profil baru"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Sesi baru"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Sesi baru ditambahkan ke panel ruang kerja aktif, bukan ke ruang kerja terpisah."
 
 
 msgid "New tab"
 msgstr "Tab Baru"
 
 
-
 msgid "New window"
 msgstr "Jendela baru"
-
 
 
 msgid "New Window"
 msgstr "Jendela Baru"
 
 
-
 msgid "New with profile"
 msgstr "Buka baru dengan profil tertentu"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Ruang kerja baru"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Berikutnya"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Ruang kerja berikutnya"
 
 
 msgid "No color"
 msgstr "Tidak berwarna"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Tidak ada berkas yang cocok dengan filter \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Tidak ada modifier"
 
 
-
 msgid "None"
 msgstr "Tidak ada"
-
 
 
 msgid "Normal"
 msgstr "Normal"
 
 
-
 msgid "Normal font weight"
 msgstr "Ketebalan font normal"
-
 
 
 msgid "Not found"
 msgstr "Tidak ditemukan"
 
 
-
 msgid "Notify on activity"
 msgstr "Beri tahu tentang aktivitas"
-
 
 
 msgid "Notify when done"
 msgstr "Beri tahu saat selesai"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Jumlah baris yang disimpan dalam buffer"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Ganjil"
 
 
 msgid "Off"
 msgstr "Mati"
 
 
-
 msgid "Official"
 msgstr "Resmi"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "Di Discord"
 
 
 msgid "Opacity"
 msgstr "Keburaman"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Buka"
 
 
 msgid "Open DevTools"
 msgstr "Buka DevTools"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Buka sesi baru di ruang kerja saat ini"
 
 
 msgid "Open Settings"
 msgstr "Buka Pengaturan"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Buka panel SFTP"
-
 
 
 msgid "Optional"
 msgstr "Opsional"
 
 
-
 msgid "Options"
 msgstr "Pilihan"
-
 
 
 msgid "Orange"
 msgstr "Oranye"
 
 
-
 msgid "OS default"
 msgstr "Default OS"
-
 
 
 msgid "OS default ({name})"
 msgstr "Default OS ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Output ditampilkan sebagai hexdump"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Luaran ditampilkan layaknya saat diterima"
 
 
-
 msgid "Output mode"
 msgstr "Mode luaran"
-
 
 
 msgid "Output newlines"
 msgstr "Baris baru luaran"
 
 
-
 msgid "Override X11 display"
 msgstr "Ganti tampilan X11"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Timpa lokal dan sinkronkan"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Timpa jarak jauh dan sinkronkan"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Timpa konfigurasi di sisi jarak jauh dan mulai menyinkronkan?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Timpa konfigurasi lokal dan mulai menyinkronkan?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Langkah mengubah ukuran panel"
 
 
-
 msgid "Panes"
 msgstr "Panel"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Grup Induk"
 
 
 msgid "Parity"
 msgstr "Keseimbangan"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Sinkronisasi konfigurasi parsial tidak dimungkinkan saat konfigurasi dienkripsi melalui Vault."
 
 
-
 msgid "Pass-through"
-msgstr ""
-
+msgstr "Lewat langsung"
 
 
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Frasa sandi untuk kunci pribadi dengan hash {hash}..."
 
 
-
 msgid "Password"
 msgstr "Kata sandi"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Kata sandi untuk {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Tempel"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Tempel \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Tempel dari papanklip"
 
 
-
 msgid "Paste if no selection, else copy"
-msgstr ""
-
+msgstr "Tempel jika tidak ada pilihan, jika tidak salin"
 
 
 msgid "Paste multiple lines?"
 msgstr "Tempel beberapa baris?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Tempel di klik tengah"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Tempel keluaran sesi (debug)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Tempel status terminal (debug)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Jalur atau alamat soket X11 lokal"
 
 
-
 msgid "Pin"
 msgstr "Pin"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Sematkan atau lepas sematan ruang kerja"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Sematkan ruang kerja"
 
 
 msgid "Plugins"
 msgstr "Plugin"
 
 
-
 msgid "Plugins folder"
 msgstr "Folder plugin"
-
 
 
 msgid "Port"
 msgstr "Port"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Port tertutup"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Penerusan port"
 
 
 msgid "Port opened"
 msgstr "Port dibuka"
 
 
-
 msgid "Ports"
 msgstr "Port"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Tekan tombol apa saja untuk menghubungkan ulang"
 
 
-
 msgid "Press the key now"
 msgstr "Tekan tombol sekarang"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Cegah keluar tak disengaja"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Mencegah eksekusi tidak sengaja dari perintah yang ditempel"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Ruang kerja sebelumnya"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Frasa sandi kunci pribadi"
 
 
 msgid "Private keys"
-msgstr ""
-
+msgstr "Kunci pribadi"
 
 
 msgid "Process completed"
 msgstr "Proses selesai"
 
 
-
 msgid "Profile name"
 msgstr "Nama profil"
-
 
 
 msgid "Profiles"
 msgstr "Profil"
 
 
-
 msgid "Profiles & connections"
 msgstr "Profil & koneksi"
-
 
 
 msgid "Program"
 msgstr "Program"
 
 
-
 msgid "Proxy command"
-msgstr ""
-
+msgstr "Perintah proxy"
 
 
 msgid "Purple"
 msgstr "Ungu"
 
 
-
 msgid "Puts all of Tabby's configuration into the vault"
-msgstr ""
-
+msgstr "Menyimpan seluruh konfigurasi Tabby ke dalam brankas"
 
 
 msgid "Quick connect"
 msgstr "Sambung Cepat"
 
 
-
 msgid "Quit"
 msgstr "Keluar"
 
 
-
 msgid "Raw socket connection"
-msgstr ""
-
+msgstr "Koneksi socket mentah"
 
 
 msgid "Ready Timeout (Milliseconds)"
-msgstr ""
-
+msgstr "Batas Waktu Siap (Milidetik)"
 
 
 msgid "Recent"
 msgstr "Terbaru"
 
 
-
 msgid "Reconnect"
 msgstr "Sambungkan Kembali"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
-msgstr ""
-
+msgstr "Sambungkan kembali tab saat ini (Serial/Telnet/SSH)"
 
 
 msgid "Red"
 msgstr "Merah"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Segarkan"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Segarkan variabel lingkungan dari registri"
 
 
 msgid "Regex"
 msgstr "Ekspresi reguler"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Tolak"
 
 
 msgid "Release notes"
 msgstr "Catatan Rilis"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Muat ulang PATH dan variabel lain dari registri Windows untuk setiap sesi baru"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Ingat"
 
 
 msgid "Remember for {time}"
 msgstr "Ingat untuk {time}"
 
 
-
 msgid "Remote"
 msgstr "Jarak Jauh"
 
 
-
 msgid "Remove whitespace and newlines around the copied text"
-msgstr ""
-
+msgstr "Hapus spasi dan baris baru di sekitar teks yang disalin"
 
 
 msgid "Rename"
 msgstr "Ganti Nama"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Ganti nama sesi"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Ganti nama ruang kerja"
 
 
 msgid "Rendering"
 msgstr "Rendering"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Buka kembali ruang kerja terakhir"
 
 
 msgid "Replace"
 msgstr "Menggantikan"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Ganti pergantian baris dengan spasi"
 
 
 msgid "Report a problem"
 msgstr "Laporkan Masalah"
 
 
-
 msgid "Require a key to click links"
 msgstr "Perlukan tombol khusus untuk membuka tautan"
-
 
 
 msgid "Reset zoom"
 msgstr "Ukuran Semula"
 
 
-
 msgid "Restart current serial session"
 msgstr "Mulai ulang sesi serial saat ini"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Mulai ulang sesi SSH saat ini"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Mulai ulang sesi Telnet saat ini"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Mulai ulang aplikasi untuk menerapkan perubahan"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Mulai ulang ruang kerja"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Kembali ke settingan sebelumnya ?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
-msgstr ""
-
+msgstr "Kembalikan pengaturan ke bawaan yang diwarisi ?"
 
 
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Persistensi sesi"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Menjaga shell tetap aktif dengan tmux sehingga menyeret tab ke jendela lain tidak memicu koneksi ulang."
-
-
-
-
-
-
-
-
-
+msgstr "Pulihkan ruang kerja saat aplikasi dimulai"
 
 
 msgid "Not set"
 msgstr "Belum diatur"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Seluruh kata"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Gunakan sesi untuk banyak tab"
-
 
 
 msgid "Right"
 msgstr "Kanan"
 
 
-
 msgid "Right click"
 msgstr "Klik kanan"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Jalankan"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Jalankan \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Jalan sebagai administrator"
 
 
-
 msgid "Save"
 msgstr "Simpan"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Simpan password di keychain"
 
 
-
 msgid "Save and apply"
 msgstr "Simpan dan terapkan"
-
 
 
 msgid "Save as profile"
 msgstr "Simpan sebagai profil"
 
 
-
 msgid "Save layout as profile"
 msgstr "Simpan tata letak sebagai profil"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Simpan keluaran sesi (debug)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Simpan status terminal (debug)"
 
 
 msgid "Saved layout"
 msgstr "Tata letak tersimpan"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Disimpan ke {path}"
 
 
 msgid "Scroll on input"
 msgstr "Gulir saat input"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Gulir terminal satu baris ke bawah"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Gulir terminal satu baris ke atas"
 
 
 msgid "Scroll terminal one page down"
-msgstr ""
-
+msgstr "Gulir terminal satu halaman ke bawah"
 
 
 msgid "Scroll terminal one page up"
-msgstr ""
-
+msgstr "Gulir terminal satu halaman ke atas"
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Gulir terminal ke bawah"
 
 
-
 msgid "Scroll terminal to top"
-msgstr ""
-
+msgstr "Gulir terminal ke atas"
 
 
 msgid "Scrollback"
 msgstr "Gulir kembali"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Gulir terminal ke bawah saat pengguna meng-input"
-
 
 
 msgid "Search"
 msgstr "Cari"
 
 
-
 msgid "Search color schemes"
 msgstr "Cari skema warna"
-
 
 
 msgid "Search hotkeys"
 msgstr "Cari hotkey"
 
 
-
 msgid "Search plugins"
 msgstr "Cari pluggin"
-
 
 
 msgid "Secret sync token"
 msgstr "Token sinkronisasi rahasia"
 
 
-
 msgid "Select"
 msgstr "Pilih"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Pilih templat"
 
 
 msgid "Select all"
 msgstr "Pilih semua"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Pilih gambar latar belakang"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Pilih folder tujuan untuk {name}"
 
 
 msgid "Select file storage"
 msgstr "Pilih penyimpanan file"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Pilih profile atau masukkan alamat"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Kirim byte dengan mengetik nilai hex"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Kirim data satu byte pada suatu waktu"
-
 
 
 msgid "Serial"
 msgstr "Serial"
 
 
-
 msgid "Serial connection"
 msgstr "Koneksi serial"
-
 
 
 msgid "Set master passphrase"
 msgstr "Buat kata sandi utama"
 
 
-
 msgid "Set passphrase"
 msgstr "Buat kata sandi"
-
 
 
 msgid "Set password"
 msgstr "Buat kata sandi"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Atur Tabby sebagai %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Atur ke 0 untuk men-disable profile saat ini"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
-msgstr ""
-
+msgstr "Mengatur jalur pipa bernama agen SSH."
 
 
 msgid "Settings"
 msgstr "Pengaturan"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell tidak mendukung deteksi path saat ini"
-
 
 
 msgid "Shell integration"
 msgstr "Integrasi Shell"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
-msgstr ""
-
+msgstr "Tampilkan"
 
 
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Tampilkan dialog konfirmasi ketika menempel banyak baris"
 
 
-
 msgid "Show command selector"
 msgstr "Tampilkan pemilihan perintah"
-
 
 
 msgid "Show config file"
 msgstr "Tampilkan file konfigurasi"
 
 
-
 msgid "Show defaults"
 msgstr "Tampilkan bawaan"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Tampilkan ikon profil pada ruang kerja"
 
 
 msgid "Show profile selector"
 msgstr "Tampilkan selector profil"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Tampilkan bilah samping profil"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Tampilkan profil terbaru di selector"
 
 
-
 msgid "Show release notes"
 msgstr "Tampilkan catatan pembaruan"
 
 
-
 msgid "Show Serial connections"
-msgstr ""
-
+msgstr "Tampilkan koneksi Serial"
 
 
 msgid "Show vault contents"
-msgstr ""
-
+msgstr "Tampilkan isi brankas"
 
 
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Tampilkan bilah ruang kerja dalam mode layar penuh"
 
 
 msgid "Sixel graphics support (experimental)"
-msgstr ""
-
+msgstr "Dukungan grafis Sixel (eksperimental)"
 
 
 msgid "Skip MoTD/banner"
-msgstr ""
-
+msgstr "Lewati MoTD/banner"
 
 
 msgid "Slow feed"
-msgstr ""
-
+msgstr "Umpan lambat"
 
 
 msgid "Snaps the window to a side of the screen"
-msgstr ""
-
+msgstr "Menempelkan jendela ke sisi layar"
 
 
 msgid "SOCKS proxy"
-msgstr ""
-
+msgstr "Proxy SOCKS"
 
 
 msgid "SOCKS proxy host"
-msgstr ""
-
+msgstr "Host proxy SOCKS"
 
 
 msgid "SOCKS proxy port"
-msgstr ""
-
+msgstr "Port proxy SOCKS"
 
 
 msgid "Sound"
 msgstr "Bunyi"
 
 
-
 msgid "Source code"
 msgstr "Kode Sumber"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Space"
 
 
 msgid "Spaciness"
-msgstr ""
-
+msgstr "Keluasan"
 
 
 msgid "Split"
 msgstr "Bagi"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Pisahkan ruang kerja saat ini menjadi ruang kerja terpisah"
 
 
 msgid "Split to the bottom"
 msgstr "Membelah ke bawah"
 
 
-
 msgid "Split to the left"
 msgstr "Membelah ke kiri"
-
 
 
 msgid "Split to the right"
 msgstr "Membelah ke kanan"
 
 
-
 msgid "Split to the top"
 msgstr "Membelah ke atas"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "Koneksi SSH"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "Password SSH untuk {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Permulaan"
 
 
-
 msgid "Stop bits"
 msgstr "Berhentikan Bit"
-
 
 
 msgid "Strip"
 msgstr "Strip"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Pergantian diperbolehkan."
 
 
-
 msgid "Switch color scheme"
-msgstr ""
-
+msgstr "Ganti skema warna"
 
 
 msgid "Switch profile"
 msgstr "Beralih Profil"
 
 
-
 msgid "Switch profile in the active pane"
 msgstr "Beralih profil di panel yang aktif"
-
 
 
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Gantikan terminal implementasi frontend (Experimetal)"
 
 
-
 msgid "Sync"
 msgstr "Sinkronisasi"
-
 
 
 msgid "Sync automatically"
 msgstr "Sinkron dengan Otomatis"
 
 
-
 msgid "Sync host"
 msgstr "Sinkron Host"
-
 
 
 msgid "Sync hotkeys"
 msgstr "Sinkron Hotkeys"
 
 
-
 msgid "Sync Vault"
 msgstr "Sinkron Brankas"
-
 
 
 msgid "Sync window settings"
 msgstr "Sinkron Penganturan Jendela"
 
 
-
 msgid "Tab activity"
 msgstr "Aktifitas tab"
-
 
 
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby tidak bisa memulai dengan plugin anda, sehingga plugin pihak ketiga telah di nonaktifkan untuk sesi ini. Errornya adalah:"
 
 
-
 msgid "Telnet session"
 msgstr "Sesi Telnet"
-
 
 
 msgid "Terminal"
 msgstr "Terminal"
 
 
-
 msgid "Terminal background"
 msgstr "Background Terminal"
-
 
 
 msgid "Terminal bell"
 msgstr "Bell Terminal"
 
 
-
 msgid "Terminal identification"
-msgstr ""
-
+msgstr "Identifikasi terminal"
 
 
 msgid "Thank you for downloading Tabby!"
 msgstr "Terima Kasih telah mengunduh Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Direktori tidak dapat dibuat"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Direktori berhasil dibuat"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Brankas harus dibuka kuncinya untuk memuat konfigurasi Anda."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Sedang ada transfer file aktif"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Ada password tersimpan untuk koneksi ini"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Ini diterapkan ke seluruh profile dari tipe tersebut"
 
 
-
 msgid "These apply to all profiles of a given type in this group"
-msgstr ""
-
+msgstr "Ini diterapkan ke seluruh profil dari tipe tertentu di grup ini"
 
 
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Centang ini jika anda mengalami aliasing, ghosting atau isu visual lainnya"
 
 
-
 msgid "Toggle fullscreen mode"
 msgstr "Beralih ke mode layar penuh"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Beralih ke ruang kerja terakhir"
 
 
 msgid "Toggle terminal window"
 msgstr "Aktifkan jendela terminal"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Alihkan visibilitas jendela Tabby"
-
 
 
 msgid "Top"
 msgstr "Atas"
 
 
-
 msgid "Trim whitespace and newlines"
-msgstr ""
-
+msgstr "Potong spasi dan baris baru"
 
 
 msgid "Try again"
 msgstr "Coba Kembali"
 
 
-
 msgid "Ungrouped"
 msgstr "Bubarkan Grup"
-
 
 
 msgid "Uninstall"
 msgstr "Hapus Aplikasi"
 
 
-
 msgid "Unknown"
 msgstr "Tidak Diketahui"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Tidak Diketahui tipe secret {type} untuk {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Grup tanpa judul"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Ruang kerja tanpa judul"
 
 
 msgid "Up"
-msgstr ""
-
+msgstr "Naik"
 
 
 msgid "Upgrade to {version}"
 msgstr "Pemutahiran ke {version}"
 
 
-
 msgid "Upload"
 msgstr "Unggah"
-
 
 
 msgid "Upload as a new config"
 msgstr "Unggah sebagai pengaturan baru"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Unggah berkas"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Unggah folder"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Gunakan {altKeyName} sebagai tombol Meta"
 
 
-
 msgid "Use ConPTY"
 msgstr "Gunakan ConPTY"
 
 
-
 msgid "User default"
-msgstr ""
-
+msgstr "Bawaan pengguna"
 
 
 msgid "Username"
-msgstr ""
-
+msgstr "Nama pengguna"
 
 
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Nama pengguna untuk {host}"
 
 
 msgid "Using CONNECT method"
-msgstr ""
-
+msgstr "Menggunakan metode CONNECT"
 
 
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Menggunakan kata sandi tersimpan"
 
 
 msgid "Vault"
 msgstr "Brankas"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Brankas adalah kotak penyimpanan yang selalu dienkripsi, berisi sandi rahasia seperti sandi SSH dan passphrase private key."
-
 
 
 msgid "Vault is empty"
 msgstr "Brankas kosong"
 
 
-
 msgid "Vault is locked"
 msgstr "Brankas terkunci"
 
 
-
 msgid "Vault is not configured"
-msgstr ""
-
+msgstr "Brankas tidak dikonfigurasi"
 
 
 msgid "Vault master passphrase needs to be set to allow storing secrets"
-msgstr ""
-
+msgstr "Frasa sandi utama brankas perlu diatur untuk mengizinkan penyimpanan rahasia"
 
 
 msgid "Verify host keys when connecting"
-msgstr ""
-
+msgstr "Verifikasi kunci host saat menyambung"
 
 
 msgid "Version"
 msgstr "Versi"
 
 
-
 msgid "Version: {version}"
 msgstr "Versi: {version}"
 
 
-
 msgid "Vibrancy"
-msgstr ""
-
+msgstr "Vibransi"
 
 
 msgid "Visual"
-msgstr ""
-
+msgstr "Visual"
 
 
 msgid "Warn on multi-line paste"
 msgstr "Peringatkan ketika menempel lebih dari satu baris"
 
 
-
 msgid "Warn when closing active connections"
 msgstr "Peringatkan ketika menutup sambungan yang masih aktif"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
-msgstr ""
-
+msgstr "Peringatan: kunci host jarak jauh tiba-tiba berubah!"
 
 
 msgid "Welcome"
 msgstr "Selamat datang"
 
 
-
 msgid "What's new"
-msgstr ""
-
+msgstr "Yang baru"
 
 
 msgid "When a session ends"
-msgstr ""
-
+msgstr "Saat sesi berakhir"
 
 
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Jika diaktifkan, tautan hanya bisa diklik bila tombol ini sedang ditekan"
 
 
-
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
-msgstr ""
-
+msgstr "Saat WinSCP terdeteksi, Anda dapat memulai sesi SCP dari menu konteks."
 
 
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Apakah warna tema terang yang dihasilkan harus dibalik. Ini membantu memberi makna semantik lebih pada palet 256 warna."
 
 
 msgid "Will prevent the SSH greeting from showing up"
-msgstr ""
-
+msgstr "Akan mencegah salam SSH ditampilkan"
 
 
 msgid "Window"
-msgstr ""
-
+msgstr "Jendela"
 
 
 msgid "Window dimension along the edge"
-msgstr ""
-
+msgstr "Dimensi jendela sepanjang tepi"
 
 
 msgid "Window dimension away from the edge"
-msgstr ""
-
+msgstr "Dimensi jendela menjauhi tepi"
 
 
 msgid "Windows"
 msgstr "Windows"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Windows 10 build 18309 atau lebih baru disarankan untuk ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
-msgstr ""
-
+msgstr "Jalur WinSCP"
 
 
 msgid "Word separators"
 msgstr "Pemisah kata"
 
 
-
 msgid "Working directory"
 msgstr "Direktori kerja"
 
 
-
 msgid "Working directory detection"
-msgstr ""
-
+msgstr "Deteksi direktori kerja"
 
 
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Ruang kerja {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Lokasi bilah ruang kerja"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Lebar bilah ruang kerja"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Ruang kerja"
 
 
 msgid "X11 forwarding"
-msgstr ""
-
+msgstr "Penerusan X11"
 
 
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Kuning"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
-msgstr ""
-
+msgstr "Anda dapat mengubahnya nanti, tetapi tidak dapat dipulihkan jika terlupa."
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
-msgstr ""
-
+msgstr "Anda bisa saja sedang diserang man-in-the-middle saat ini, atau kunci host baru saja diubah."
 
 
 msgid "Zoom in"
 msgstr "Perbesar"
 
 
-
 msgid "Zoom out"
 msgstr "Perkecil"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Frasa sandi utama"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Pisahkan menjadi argumen tanpa escape"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Gabungkan menjadi satu perintah dengan escape"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Nama variabel"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Nilai"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Direktori rumah"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Tanya setiap kali"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Respons"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Saring..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Deteksi otomatis"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Latar depan"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Latar belakang"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Warna kursor"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Latar depan kursor blok"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Latar belakang pilihan"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Latar depan pilihan"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "Warna ANSI {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Harapkan"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Kirim"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 

@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} kopie"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "'n Tweede lettertipefamilie wat gebruik word om karakters wat in die hooflettertipe ontbreek, te vertoon"
 
 
-
 msgid "Abort all"
 msgstr "Stop alles"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Aanvaar"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Aanvaar 'n ZMODEM-sessie?"
 
 
 msgid "Accept and remember key"
 msgstr "Aanvaar en onthou sleutel"
 
 
-
 msgid "Accept just this once"
 msgstr "Aanvaar net hierdie eenkeer"
-
 
 
 msgid "Accessibility"
 msgstr "Toeganklikheid"
 
 
-
 msgid "Acrylic background"
 msgstr "Akriel agtergrond"
-
 
 
 msgid "Add"
 msgstr "Voeg by"
 
 
-
 msgid "Add a port forward"
 msgstr "Voeg 'n poort aanstuurder by"
-
 
 
 msgid "Add a private key"
 msgstr "Voeg 'n privaat sleutel by"
 
 
-
 msgid "Add..."
 msgstr "Voeg by..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Bykomende spasie tussen lyne"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Pas die donker laag agter die koppelvlak aan"
 
 
 msgid "Advanced"
 msgstr "Gevorderd"
 
 
-
 msgid "Agent"
 msgstr "Agent"
-
 
 
 msgid "Agent forwarding"
 msgstr "Agent aanstuur"
 
 
-
 msgid "Agent pipe path"
 msgstr "Agent pyp pad"
-
 
 
 msgid "Agent type"
 msgstr "Agent tipe"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Laat toe om .bat-lêers as sessies oop te maak, maar breek sommige doppers"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Laat toe om 'n terminaal vinnig oop te maak in die geselekteerde vouer"
 
 
-
 msgid "Always dark"
 msgstr "Altyd Donker"
-
 
 
 msgid "Always light"
 msgstr "Altyd Lig"
 
 
-
 msgid "Appearance"
 msgstr "Voorkoms"
-
 
 
 msgid "Application"
 msgstr "Toepassing"
 
 
-
 msgid "Application settings"
 msgstr "Toepassing instellings"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Is jy seker jy wil Tabby toemaak? U kan hierdie boodskap deaktiveer in Instellings -> Venster."
 
 
-
 msgid "Are you sure?"
 msgstr "Is jy seker?"
-
 
 
 msgid "Arguments"
 msgstr "Argumente"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Vra voordat die blaaieroortjie toegemaak word"
-
 
 
 msgid "Audible"
 msgstr "Hoorbaar"
 
 
-
 msgid "Authentication method"
 msgstr "Stawing metode"
-
 
 
 msgid "Author"
 msgstr "Skrywer"
 
 
-
 msgid "Auto"
 msgstr "Outo"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Maak 'n terminaal outomaties oop wanneer die toep begin"
 
 
-
 msgid "Automatic"
 msgstr "Outomaties"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Laai veranderinge outomaties op en kyk elke minuut vir opdaterings"
 
 
-
 msgid "Available"
 msgstr "Beskikbaar"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Agtergrondbeeld"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Helderheid van die agtergrondbeeld"
 
 
 msgid "Background type"
 msgstr "Agtergrond tipe"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Terugspasie-sleutelmodus"
 
 
-
 msgid "Baud rate"
 msgstr "Baud koers"
-
 
 
 msgid "Beginning of the line"
 msgstr "Begin van die lyn"
 
 
-
 msgid "Blink cursor"
 msgstr "Flikker wyser"
-
 
 
 msgid "Blue"
 msgstr "Blou"
 
 
-
 msgid "Blur"
 msgstr "Vervaag"
-
 
 
 msgid "Bold font weight"
 msgstr "Vet lettertipe gewig"
 
 
-
 msgid "Bottom"
 msgstr "Onderkant"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Plak tussen hakies (vereis dop ondersteuning)"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Blaai…"
 
 
 msgid "Built-in"
 msgstr "Ingeboude"
 
 
-
 msgid "Cancel"
 msgstr "Kanselleer"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Kan nie skripte van hierdie tipe hanteer nie"
 
 
 msgid "Change the master passphrase"
 msgstr "Verander die hoofwagfrase"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Verander werkspasiekleur"
 
 
 msgid "Ciphers"
 msgstr "Syfers"
 
 
-
 msgid "Clear"
 msgstr "Opruim"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Vee onlangse profiele uit"
 
 
-
 msgid "Clear terminal"
 msgstr "Maak terminaal skoon"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Maak terminaal skoon na verbinding"
 
 
-
 msgid "Clipboard"
 msgstr "Knipbord"
-
 
 
 msgid "Close"
 msgstr "Maak toe"
 
 
-
 msgid "Close and never show again"
 msgstr "Maak toe en wys nooit weer nie"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Maak die fokus-sessie toe"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Maak ander werkspasies toe"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Maak sessie toe"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Maak die sessie slegs toe wanneer dit uitdruklik beëindig word"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Maak die venster toe nadat die laaste werkspasie toegemaak is"
 
+msgid "Cross-window drag"
+msgstr "Sleep tussen vensters"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Laat toe dat werkspasies of sessies tussen instansies gesleep word. Sessies sonder oordraagbare PTY (bv. SSH) sal herverbind."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Maak werkspasie toe"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Maak werkspasies hierbo toe"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Maak werkspasies hieronder toe"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Maak werkspasies links toe"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Maak werkspasies regs toe"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Vou groep in"
 
 
 msgid "Color"
 msgstr "Kleur"
 
 
-
 msgid "Color scheme"
 msgstr "Kleur skema"
-
 
 
 msgid "Color schemes"
 msgstr "Kleurskemas"
 
 
-
 msgid "Colors"
 msgstr "Kleure"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Kombineer alle werkspasies in een werkspasie"
 
 
 msgid "Command line"
 msgstr "Bevelreël"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "Command se stdin/stdout word gebruik in plaas van 'n netwerkverbinding"
-
 
 
 msgid "Commands"
 msgstr "Bevele"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Gemeenskap"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Kompressie"
 
 
 msgid "Config deleted"
 msgstr "Opstelling geskrap"
 
 
-
 msgid "Config downloaded"
 msgstr "Opstelling afgelaai"
-
 
 
 msgid "Config file"
 msgstr "Opstelling lêer"
 
 
-
 msgid "Config sync"
 msgstr "Opstelling sinchronisering"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "Opstellingsinkronisering vereis 'n instansie van die Tabby Web-diens."
 
 
 msgid "Config uploaded"
 msgstr "Opstelling opgelaai"
 
 
-
 msgid "Configs"
 msgstr "Opstellings"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Koppel deur 'n instaanbediener"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Koppel aan \"%s\"..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Koppel eers aan 'n ander gasheer en gebruik dit as 'n instaanbediener"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Gekoppel"
 
 
 msgid "Connecting"
 msgstr "Koppel tans"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Koppel tans aan {host}"
 
 
 msgid "Connection"
 msgstr "Koppel"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Verbinding gesluit"
 
 
 msgid "Connection failed: {error}"
 msgstr "Koppel het misluk: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "Koppelnaam sal eerder gebruik word"
-
 
 
 msgid "Context menu"
 msgstr "Kontekskieslys"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Beheer die hoeveelheid spasie tussen elemente"
-
 
 
 msgid "Copied"
 msgstr "Gekopieer"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Gekopieer na knipbord"
 
 
 msgid "Copy"
 msgstr "Kopieer"
 
 
-
 msgid "Copy current path"
 msgstr "Kopieer huidige pad"
-
 
 
 msgid "Copy full path"
 msgstr "Kopieer volle pad"
 
 
-
 msgid "Copy on select"
 msgstr "Kopieer op kies"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Kopieer sessie-uitset (ontfouting)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Kopieer terminaaltoestand (ontfouting)"
 
 
 msgid "Copy to clipboard"
 msgstr "Kopieer na knipbord"
 
 
-
 msgid "Copy with formatting"
 msgstr "Kopieer met formatering"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Kon nie opstelling dekripteer nie"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Kon nie die privaat sleutel lees nie"
 
 
 msgid "Create"
 msgstr "Skep"
 
 
-
 msgid "Create directory"
 msgstr "Skep gids"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Huidige"
 
 
-
 msgid "Current color scheme"
 msgstr "Huidige kleurskema"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Huidige gasheersleutel-vingerafdruk"
 
 
-
 msgid "Current process: {name}"
 msgstr "Huidige proses: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Wyser vorm"
 
 
-
 msgid "Custom"
 msgstr "Pasgemaak"
-
 
 
 msgid "Custom CSS"
 msgstr "Pasgemaakte CSS"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Donker modus"
 
 
-
 msgid "Data bits"
 msgstr "Data bisse"
-
 
 
 msgid "Debugging"
 msgstr "Ontfouting"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Standaard \"Koppel aan\" tiepe"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Standaard verbindingssoort gebruik deur die vinnige koppelingsfunksie (bv. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Standaard profielgroepinstellings"
-
 
 
 msgid "Default profile settings"
 msgstr "Verstekprofiel instellings"
 
 
-
 msgid "Defaults"
 msgstr "Verstekke"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Verstekke vir {type}"
 
 
-
 msgid "Delete"
 msgstr "Skrap"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Skrap \"{name}\"?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Skrap {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Skrap hele reël"
 
 
-
 msgid "Delete next word"
 msgstr "Skrap volgende woord"
-
 
 
 msgid "Delete previous word"
 msgstr "Skrap vorige woord"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Verwyder die konfigurasie aan die afgeleë kant?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Skrap die groep se profiele?"
 
 
-
 msgid "Delete this script?"
 msgstr "Skrap hierdie skrip?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Skrap kluisinhoud?"
 
 
-
 msgid "Deleting"
 msgstr "Skrap tans"
-
 
 
 msgid "Device"
 msgstr "Toestel"
 
 
-
 msgid "Direct"
 msgstr "Direk"
-
 
 
 msgid "Disable"
 msgstr "Deaktiveer"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Deaktiveer dinamiese sessietitel"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Deaktiveer vlot-agtergrond terwyl jy sleep"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Deaktiveer GVE-versnelling"
-
 
 
 msgid "Disabled"
 msgstr "Gediaktiveer"
 
 
-
 msgid "Disconnect"
 msgstr "Ontkoppel"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Ontkoppel huidige oortjie (Serieel/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "Ontkoppel van {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Vertoon 'n beeld agter die terminaalvenster"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Vertoon beelde via Sixel-ontsnappingsreekse"
 
 
-
 msgid "Display on"
 msgstr "Skerm aan"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Vertoon 'n volledige boom van profiele in die sybalk."
 
 
 msgid "Do not abort"
 msgstr "Moenie aborteer nie"
 
 
-
 msgid "Do not close"
 msgstr "Moenie toemaak nie"
-
 
 
 msgid "Do not remember"
 msgstr "Moet nie onthou nie"
 
 
-
 msgid "Dock always on top"
 msgstr "Dok altyd bo-op"
-
 
 
 msgid "Dock the terminal"
 msgstr "Dok die terminaal"
 
 
-
 msgid "Docked terminal size"
 msgstr "Gedokte terminaalgrootte"
-
 
 
 msgid "Docked terminal space"
 msgstr "Gedokte terminaalruimte"
 
 
-
 msgid "Docking"
 msgstr "Dokering"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "Dubbelklik seleksie sal stop by hierdie karakters"
 
 
-
 msgid "Down"
 msgstr "Af"
-
 
 
 msgid "Download"
 msgstr "Aflaai"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Laai gids af"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Laai hier af"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Teken vet teks in helder kleure"
 
 
-
 msgid "Duplicate"
 msgstr "Dupliseer"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Dupliseer sessie"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Dupliseer werkspasie"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dinamies"
 
 
 msgid "Edit"
 msgstr "Wysig"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Wysig groep"
 
 
 msgid "Edit locally"
 msgstr "Wysig plaaslik"
 
 
-
 msgid "Enable"
 msgstr "Aktiveer"
-
 
 
 msgid "Enable animations"
 msgstr "Aktiveer animasies"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Aktiveer vloeiende agtergrondopsie"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Aktiveer lettertipe-ligatuur"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktiveer globale snelsleutel (Ctrl-Space)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Aktiveer die eksperimentele Windows ConPTY API"
 
 
-
 msgid "Encrypt config file"
 msgstr "Enkripteer konfigurasielêer"
-
 
 
 msgid "End of the line"
 msgstr "Einde van die lyn"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Omgewing"
 
 
-
 msgid "Erase config"
 msgstr "Vee konfigurasie uit"
-
 
 
 msgid "Erase the Vault"
 msgstr "Vee die Kluis uit"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Fout in {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Ewe"
 
 
 msgid "Exact match"
 msgstr "Presiese passing"
 
 
-
 msgid "Example:"
 msgstr "Voorbeeld:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Vou groep uit"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Eksperimentele Windows 10 agtergrondstyl wat bekend is om probleme te veroorsaak"
 
 
-
 msgid "Export"
 msgstr "Uitvoer"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Voer na lêer uit"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "brei PATH uit"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Kon nie die vouer aflaai nie: {error}"
 
 
 msgid "Fallback font"
 msgstr "Terugval-lettertipe"
 
 
-
 msgid "File transfers"
 msgstr "Lêeroordragte"
-
 
 
 msgid "File: {description}"
 msgstr "Lêer: {description}"
 
 
-
 msgid "Filter"
 msgstr "Filter"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Filtreer resultate"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Voltooi"
 
 
 msgid "Fixed"
 msgstr "Vaste"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Maak geplakte teks een reël vir terminale wat nie veelreël-plak ondersteun nie"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Vloeiend"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Vloeiende agtergrond veroorsaak soms sleep vertraging"
 
 
-
 msgid "Focus follows mouse"
 msgstr "Fokus volg muis"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Fokus volgende sessie"
 
 
 msgid "Focus pane {number}"
 msgstr "Fokus ruit {number}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Fokus vorige sessie"
 
 
 msgid "Focus the pane above"
 msgstr "Fokus op die ruit hierbo"
 
 
-
 msgid "Focus the pane below"
 msgstr "Fokus die ruit hieronder"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Fokus die ruit aan die linkerkant"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Fokus die ruit aan die regterkant"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Volg die kleurskema"
 
 
-
 msgid "Font"
 msgstr "Lettertipe"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Vir sleutelbord kortpaaie"
 
 
-
 msgid "Force CR"
 msgstr "Dwing CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Dwing CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Dwing LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Dwing 'n spesifieke tipe SSH-agentverbinding."
 
 
-
 msgid "Forget"
 msgstr "Vergeet"
-
 
 
 msgid "Forward port"
 msgstr "Stuur poort aan"
 
 
-
 msgid "Forwarded ports"
 msgstr "Aangestuurde poorte"
-
 
 
 msgid "From color scheme"
 msgstr "Van kleurskema"
 
 
-
 msgid "From system"
 msgstr "Van stelsel"
-
 
 
 msgid "From theme"
 msgstr "Van tema"
 
 
-
 msgid "Frontend"
 msgstr "Voorkant"
-
 
 
 msgid "General"
 msgstr "Algemeen"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Genereer 'n 256-kleur-palet"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Genereer 'n vooraf ingevulde GitHub-kwessie"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Genereer 'n uitgebreide 256-kleur-palet vanuit jou 16 basiskleure"
 
 
 msgid "Get"
 msgstr "Kry"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Kry dit uit die Tabby Web-instellingsvenster"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Gee die venster 'n vaag deursigtige agtergrond"
 
 
-
 msgid "Go up"
 msgstr "Gaan op"
-
 
 
 msgid "Green"
 msgstr "Groen"
 
 
-
 msgid "Group"
 msgstr "Groep"
-
 
 
 msgid "Hacks"
 msgstr "Kappe"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Harmonieuse palet"
 
 
 msgid "Help translate Tabby"
 msgstr "Help om Tabby te vertaal"
 
 
-
 msgid "Hexadecimal"
 msgstr "Heksadesimaal"
-
 
 
 msgid "Hide"
 msgstr "Versteek"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Versteek Tabby uit die laai of kiesbalk."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Versteek die laaikoon"
 
 
 msgid "Hide window on focus loss"
 msgstr "Versteek venster op fokusverlies"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Versteek die werkspasie se sluitknoppie"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Versteek werkspasie-indeks"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Versteek die werkspasie se opsieknoppie"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Versteek die gekoppelde terminaal wanneer jy wegklik."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Tuisblad"
 
 
-
 msgid "Host"
 msgstr "Gasheer"
-
 
 
 msgid "Host key"
 msgstr "Gasheer sleutel"
 
 
-
 msgid "Host key verification"
 msgstr "Gasheersleutel verifikasie"
-
 
 
 msgid "Hotkeys"
 msgstr "Sneltoetse"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Hoe Tabby homself deur omgewingsveranderlikes voorstel"
-
 
 
 msgid "HTTP proxy"
 msgstr "HTTP-instaanbediener"
 
 
-
 msgid "HTTP proxy host"
 msgstr "HTTP-instaanbediener gasheer"
-
 
 
 msgid "HTTP proxy port"
 msgstr "HTTP-instaanbediener poort"
 
 
-
 msgid "Icon"
 msgstr "Ikoon"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "As jy dit nie aangevra het nie, kan dit 'n teken van kwaadwillige aktiwiteit wees."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Onmiddellik eggo jou insette plaaslik"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "Implisiete CR in elke LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "Implisiete LF in elke CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Verkeerde wagfrase"
 
 
 msgid "Input"
 msgstr "Invoer"
 
 
-
 msgid "Input is sent as you type"
 msgstr "Invoer word gestuur soos jy tik"
-
 
 
 msgid "Input mode"
 msgstr "Invoermodus"
 
 
-
 msgid "Input newlines"
 msgstr "Voer nuwe lyne in"
-
 
 
 msgid "Installed"
 msgstr "Geïnstalleer"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Intelligente Ctrl-C (kopieer/aborteer)"
-
 
 
 msgid "Interactive"
 msgstr "Interaktief"
 
 
-
 msgid "Invalid syntax"
 msgstr "Ongeldige sintaksis"
-
 
 
 msgid "Jump host"
 msgstr "Spring gasheer"
 
 
-
 msgid "Jump to next word"
 msgstr "Spring na die volgende woord"
-
 
 
 msgid "Jump to previous word"
 msgstr "Spring na die vorige woord"
 
 
-
 msgid "Keep"
 msgstr "Behou"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Hou lewendig interval (millisekondes)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Hou gedokte terminaal altyd bo"
-
 
 
 msgid "Key"
 msgstr "Sleutel"
 
 
-
 msgid "Key exchange"
 msgstr "Sleutel ruil"
-
 
 
 msgid "Keyboard"
 msgstr "Sleutelbord"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Sleutelbord-interaktiewe verifikasie"
-
 
 
 msgid "Language"
 msgstr "Taal"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Laas bekende gasheersleutel-vingerafdruk"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Begin WinSCP"
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Begin WinSCP vir huidige SSH sessie"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Leer hoe om Tabby toe te laat om afgeleë dop se werkgids op te spoor."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Kom meer te wete"
 
 
 msgid "Left"
 msgstr "Links"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Laat die dop Meta-sleutel hanteer in plaas van BS"
-
 
 
 msgid "Light mode"
 msgstr "Ligte modus"
 
 
-
 msgid "Line by line"
 msgstr "Reël vir reël"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Reël-redigeerder, insette word gestuur nadat u Enter gedruk het"
 
 
-
 msgid "Line padding"
 msgstr "Reël-vulling"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Laai sessie-uitset (ontfouting)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Laai terminaaltoestand (ontfouting)"
 
 
 msgid "Loading"
 msgstr "Laai tans"
 
 
-
 msgid "Loading configs..."
 msgstr "Laai tans opstellings..."
-
 
 
 msgid "Local"
 msgstr "Plaaslike"
 
 
-
 msgid "Local echo"
 msgstr "Plaaslike eggo"
-
 
 
 msgid "Local terminal"
 msgstr "Plaaslike terminaal"
 
 
-
 msgid "Login scripts"
 msgstr "Aanmelding skripte"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Langkliek vir kontekskieslys"
 
 
-
 msgid "Manage profiles"
 msgstr "Bestuur profiele"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Merk"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Maks. hou-lewendig tel"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Minimum kontrasverhouding"
-
 
 
 msgid "Modified on {date}"
 msgstr "Gewysig op {date}"
 
 
-
 msgid "Mouse"
 msgstr "Muis"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Skuif die linker splitser links"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Skuif die linker splitser regs"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Skuif die onderste splitser af"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Skuif die onderste splitser op"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Skuif die regter splitser links"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Skuif die regter splitser regs"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Skuif na \"Ongegroepeer\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Skuif die boonste splitser af"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Skuif die boonste splitser op"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Skuif werkspasie na links"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Skuif werkspasie na regs"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Deur die muis oor 'n onaktiewe paneel te beweeg, sal dit aktiveer"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multipleks veelvuldige doppers deur dieselfde verbinding"
 
 
 msgid "Name"
 msgstr "Naam"
 
 
-
 msgid "Name for the new config"
 msgstr "Naam vir die nuwe opstelling"
-
 
 
 msgid "Name for the new directory"
 msgstr "Naam vir die nuwe gids"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Benoemde pyp"
 
 
 msgid "New"
 msgstr "Nuwe"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Nuwe administrateursessie"
 
 
 msgid "New config on {platform}"
 msgstr "Nuwe opstelling op {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Nuwe groep"
 
 
 msgid "New item"
 msgstr "Nuwe item"
 
 
-
 msgid "New name"
 msgstr "Nuwe naam"
-
 
 
 msgid "New profile"
 msgstr "Nuwe profiel"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Nuwe sessie"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "Nuwe sessies word by die aktiewe werkspasie-paneel gevoeg in plaas van 'n aparte werkspasie."
 
 
 msgid "New tab"
 msgstr "Nuwe oortjie"
 
 
-
 msgid "New window"
 msgstr "Nuwe venster"
-
 
 
 msgid "New Window"
 msgstr "Nuwe Venster"
 
 
-
 msgid "New with profile"
 msgstr "Nuut met profiel"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Nuwe werkspasie"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Volgende"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Volgende werkspasie"
 
 
 msgid "No color"
 msgstr "Geen kleur"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Geen lêers pas die filter \"{filterText}\" nie"
 
 
 msgid "No modifier"
 msgstr "Geen wysiger nie"
 
 
-
 msgid "None"
 msgstr "Geen"
-
 
 
 msgid "Normal"
 msgstr "Normaal"
 
 
-
 msgid "Normal font weight"
 msgstr "Normale lettertipe gewig"
-
 
 
 msgid "Not found"
 msgstr "Nie gevind nie"
 
 
-
 msgid "Notify on activity"
 msgstr "Stel in kennis van aktiwiteit"
-
 
 
 msgid "Notify when done"
 msgstr "Stel in kennis wanneer klaar is"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Aantal lyne wat in die buffer gehou word"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Onewe"
 
 
 msgid "Off"
 msgstr "Af"
 
 
-
 msgid "Official"
 msgstr "Amptelik"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "Op Discord"
 
 
 msgid "Opacity"
 msgstr "Ondeursigtigheid"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Maak oop"
 
 
 msgid "Open DevTools"
 msgstr "Maak DevTools oop"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Maak nuwe sessies in die huidige werkspasie oop"
 
 
 msgid "Open Settings"
 msgstr "Maak instellings oop"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Maak die SFTP-paneel oop"
-
 
 
 msgid "Optional"
 msgstr "Opsioneel"
 
 
-
 msgid "Options"
 msgstr "Opsies"
-
 
 
 msgid "Orange"
 msgstr "Oranje"
 
 
-
 msgid "OS default"
 msgstr "OS verstek"
-
 
 
 msgid "OS default ({name})"
 msgstr "OS verstek ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "Uitset word as 'n heksstort getoon"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "Uitset word getoon soos dit ontvang word"
 
 
-
 msgid "Output mode"
 msgstr "Uitset modus"
-
 
 
 msgid "Output newlines"
 msgstr "Uitset nuwelyne"
 
 
-
 msgid "Override X11 display"
 msgstr "Oorskryf X11-vertoning"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Oorskryf plaaslik en sinkroniseer"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Oorskryf afgeleë en sinkroniseer"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Oorskryf die opstelling aan die afgeleë kant en begin sinkroniseer?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Oorskryf die plaaslike opstelling en begin sinkroniseer?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Paneel herskaleer stap"
 
 
-
 msgid "Panes"
 msgstr "Panele"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Ouer groep"
 
 
 msgid "Parity"
 msgstr "Pariteit"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Gedeeltelike opstelling-sinkronisering is nie moontlik wanneer die opstelling via Vault geënkripteer is nie."
-
 
 
 msgid "Pass-through"
 msgstr "Deurlaat"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Wagfrase vir 'n private sleutel met hash {hash}..."
-
 
 
 msgid "Password"
 msgstr "Wagwoord"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Wagwoord vir {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Plak"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Plak \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Plak uit knipbord"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Plak indien geen seleksie nie, anders kopieer"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Plak veelvuldige reëls?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Plak op middel-klik"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Plak sessie-uitset (ontfouting)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Plak terminaaltoestand (ontfouting)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Pad of adres van die plaaslike X11-sok"
 
 
-
 msgid "Pin"
 msgstr "Speld vas"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Speld werkspasie vas of los"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Speld werkspasie vas"
 
 
 msgid "Plugins"
 msgstr "Inproppe"
 
 
-
 msgid "Plugins folder"
 msgstr "Inprop vouer"
-
 
 
 msgid "Port"
 msgstr "Poort"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Poort gesluit"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Poortaanstuur"
 
 
 msgid "Port opened"
 msgstr "Port oopgemaak"
 
 
-
 msgid "Ports"
 msgstr "Poorte"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Druk enige sleutel om weer te koppel"
 
 
-
 msgid "Press the key now"
 msgstr "Druk die sleutel nou"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Voorkom toevallige sluiting"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Voorkom toevallige uitvoering van geplakte bevele"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Vorige werkspasie"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Wagfrase vir private sleutel"
 
 
 msgid "Private keys"
 msgstr "Privaat sleutels"
 
 
-
 msgid "Process completed"
 msgstr "Proses voltooi"
-
 
 
 msgid "Profile name"
 msgstr "Profielnaam"
 
 
-
 msgid "Profiles"
 msgstr "Profiele"
-
 
 
 msgid "Profiles & connections"
 msgstr "Profiele en verbindings"
 
 
-
 msgid "Program"
 msgstr "Programma"
-
 
 
 msgid "Proxy command"
 msgstr "Instaanbediener bevel"
 
 
-
 msgid "Purple"
 msgstr "Pers"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Plaas al Tabby se opstelling in die kluis"
 
 
-
 msgid "Quick connect"
 msgstr "Vinnig verbind"
-
 
 
 msgid "Quit"
 msgstr "Verlaat"
 
 
-
 msgid "Raw socket connection"
 msgstr "Rou-sok verbinding"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Gereed-uitteltyd (Millisekondes)"
 
 
-
 msgid "Recent"
 msgstr "Onlangse"
-
 
 
 msgid "Reconnect"
 msgstr "Herkoppel"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Herkoppel huidige oortjie (Serieel/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Rooi"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Verfris"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Verfris omgewingsveranderlikes uit die register"
 
 
 msgid "Regex"
 msgstr "Regeks"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Weier"
 
 
 msgid "Release notes"
 msgstr "Vrystelling notas"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Laai PATH en ander veranderlikes uit die Windows-register vir elke nuwe sessie"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Onthou"
 
 
 msgid "Remember for {time}"
 msgstr "Onthou vir {time}"
 
 
-
 msgid "Remote"
 msgstr "Afgeleë"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Verwyder witspasie en nuwe lyne rondom die gekopieerde teks"
 
 
-
 msgid "Rename"
 msgstr "Hernoem"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Hernoem sessie"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Hernoem werkspasie"
 
 
 msgid "Rendering"
 msgstr "Beeldbouing"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Maak die laaste werkspasie weer oop"
 
 
 msgid "Replace"
 msgstr "Vervang"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Vervang reëlbreuke met spasies"
 
 
 msgid "Report a problem"
 msgstr "Meld ’n probleem"
 
 
-
 msgid "Require a key to click links"
 msgstr "Vereis 'n sleutel om skakels te klik"
-
 
 
 msgid "Reset zoom"
 msgstr "Herstel zoom"
 
 
-
 msgid "Restart current serial session"
 msgstr "Herbegin huidige reeks-sessie"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Herbegin huidige SSH-sessie"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Herbegin huidige Telnet-sessie"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Herbegin die toep om veranderinge toe te pas"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Herbegin werkspasie"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Herstel instellings na verstek ?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Herstel instellings na oorgeërfde verstekwaardes ?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Sessie-persistensie"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Hou die dop aan die lewe met tmux sodat die sleep van 'n oortjie na 'n ander venster nie herkonneksie veroorsaak nie."
-
-
-
-
-
-
-
-
-
+msgstr "Herstel werkspasies wanneer die toepassing begin"
 
 
 msgid "Not set"
 msgstr "Nie gestel nie"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Hele woord"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Hergebruik sessie vir veelvuldige oortjies"
-
 
 
 msgid "Right"
 msgstr "Regs"
 
 
-
 msgid "Right click"
 msgstr "Regs klik"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Laat loop"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Laat loop \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Laat loop as administrateur"
 
 
-
 msgid "Save"
 msgstr "Stoor"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Stoor 'n wagwoord in die sleutelhanger"
 
 
-
 msgid "Save and apply"
 msgstr "Stoor en pas toe"
-
 
 
 msgid "Save as profile"
 msgstr "Stoor as profiel"
 
 
-
 msgid "Save layout as profile"
 msgstr "Stoor uitleg as profiel"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Stoor sessie-uitset (ontfouting)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Stoor terminaaltoestand (ontfouting)"
 
 
 msgid "Saved layout"
 msgstr "Gestoorde uitleg"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Gestoor na {path}"
 
 
 msgid "Scroll on input"
 msgstr "Rol op inset"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Rol terminaal een reël af"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Rol terminaal een reël op"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Rol terminaal een bladsy af"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Rol terminaal een bladsy op"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Rol terminaal tot onder"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Rol terminaal tot bo"
-
 
 
 msgid "Scrollback"
 msgstr "Rol terug"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Rol die terminaal tot onder op Gebruiker inset"
-
 
 
 msgid "Search"
 msgstr "Soek"
 
 
-
 msgid "Search color schemes"
 msgstr "Soek deur kleurskemas"
-
 
 
 msgid "Search hotkeys"
 msgstr "Soek deur sneltoetse"
 
 
-
 msgid "Search plugins"
 msgstr "Soek deur inproppe"
-
 
 
 msgid "Secret sync token"
 msgstr "Geheime sinchronisasie-kenteken"
 
 
-
 msgid "Select"
 msgstr "Kies"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Kies 'n sjabloon"
 
 
 msgid "Select all"
 msgstr "Kies alles"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Kies agtergrondbeeld"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Kies 'n bestemmingsvouer vir {name}"
 
 
 msgid "Select file storage"
 msgstr "Kies lêerberging"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Kies profiel of voer 'n adres in"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Stuur grepe deur hex-waardes in te tik"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Stuur data een greep op 'n slag"
-
 
 
 msgid "Serial"
 msgstr "Serie"
 
 
-
 msgid "Serial connection"
 msgstr "Serieverbinding"
-
 
 
 msgid "Set master passphrase"
 msgstr "Stel hoofwagfrase"
 
 
-
 msgid "Set passphrase"
 msgstr "Stel wagfrase"
-
 
 
 msgid "Set password"
 msgstr "Stel wagwoord"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Stel Tabby as %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Stel na 0 om onlangse profiele te deaktiveer"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "Stel die SSH-agent se benoemde pyppad."
-
 
 
 msgid "Settings"
 msgstr "Stellings"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Dop ondersteun nie huidige padbespeuring nie"
-
 
 
 msgid "Shell integration"
 msgstr "Dop Integrasies"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Wys"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Wys 'n bevestigingsblokkie wanneer jy veelvuldige reëls plak"
-
 
 
 msgid "Show command selector"
 msgstr "Wys bevelkieser"
 
 
-
 msgid "Show config file"
 msgstr "Wys opstellingslêer"
-
 
 
 msgid "Show defaults"
 msgstr "Wys verstek waardes"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Wys profiel-ikoon op die werkspasie"
 
 
 msgid "Show profile selector"
 msgstr "Wys profielkieser"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Wys profielsybalk"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Wys onlangse profiele in die kieser"
 
 
-
 msgid "Show release notes"
 msgstr "Wys vrystellingnotas"
-
 
 
 msgid "Show Serial connections"
 msgstr "Show Serie verbindings"
 
 
-
 msgid "Show vault contents"
 msgstr "Wys kluisinhoud"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Wys werkspasielbalk in volskermmodus"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Sixel grafiese ondersteuning (eksperimenteel)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "Slaan BvDD/banier oor"
-
 
 
 msgid "Slow feed"
 msgstr "Stadige voer"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Knip die venster na 'n kant van die skerm"
-
 
 
 msgid "SOCKS proxy"
 msgstr "SOCKS instaanbediener"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "SOCKS instaanbediener gasheer"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "SOCKS instaanbediener poort"
 
 
-
 msgid "Sound"
 msgstr "Klank"
-
 
 
 msgid "Source code"
 msgstr "Bronkode"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Spasie"
 
 
 msgid "Spaciness"
 msgstr "Ruimtelikheid"
 
 
-
 msgid "Split"
 msgstr "Verdeel"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Verdeel die huidige werkspasie in aparte werkspasies"
 
 
 msgid "Split to the bottom"
 msgstr "Verdeel na onder"
 
 
-
 msgid "Split to the left"
 msgstr "Verdeel na links"
-
 
 
 msgid "Split to the right"
 msgstr "Verdeel na regs"
 
 
-
 msgid "Split to the top"
 msgstr "Verdeel na bo"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "SSH verbinding"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "SSH-wagwoord vir {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Begin"
 
 
-
 msgid "Stop bits"
 msgstr "Stop bisse"
-
 
 
 msgid "Strip"
 msgstr "Strook"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Plaasvervangers toegelaat."
-
 
 
 msgid "Switch color scheme"
 msgstr "Skakel kleurskema"
 
 
-
 msgid "Switch profile"
 msgstr "Wissel profiel"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Wissel profiel in die aktiewe paneel"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Wissel die terminaal voorkant implementering (eksperimenteel)"
-
 
 
 msgid "Sync"
 msgstr "Sinkroniseer"
 
 
-
 msgid "Sync automatically"
 msgstr "Sinkroniseer outomaties"
-
 
 
 msgid "Sync host"
 msgstr "Sinkroniseer gasheer"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Sinkroniseer sneltoetse"
-
 
 
 msgid "Sync Vault"
 msgstr "Sinkroniseer Kluis"
 
 
-
 msgid "Sync window settings"
 msgstr "Sinkroniseer vensterinstellings"
-
 
 
 msgid "Tab activity"
 msgstr "Oortjie-aktiwiteit"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby kon nie met jou inproppe begin nie, so alle derdeparty-inproppe is in hierdie sessie gedeaktiveer. Die fout was:"
-
 
 
 msgid "Telnet session"
 msgstr "Telnet sessie"
 
 
-
 msgid "Terminal"
 msgstr "Terminaal"
-
 
 
 msgid "Terminal background"
 msgstr "Terminaal agtergrond"
 
 
-
 msgid "Terminal bell"
 msgstr "Terminaal klok"
-
 
 
 msgid "Terminal identification"
 msgstr "Terminale identifikasie"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Dankie dat jy Tabby afgelaai het!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Die gids kon nie geskep word nie"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Die gids is suksesvol geskep"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "Die kluis moet ontsluit word om jou opstelling te laai."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Daar is aktiewe lêeroordragte"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Daar is 'n gestoorde wagwoord vir hierdie verbinding"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Dit is van toepassing op alle profiele van 'n gegewe tipe"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Dit is van toepassing op alle profiele van 'n gegewe tipe in hierdie groep"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Merk dit as jy aliasing, spookbeelde of ander visuele probleme ondervind"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Wissel volskerm modus"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Wissel laaste werkspasie"
 
 
 msgid "Toggle terminal window"
 msgstr "Wissel terminaal venster"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Wissel die sigbaarheid van die Tabby-venster"
-
 
 
 msgid "Top"
 msgstr "Bo"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Knip witspasie en nuwe lyne af"
-
 
 
 msgid "Try again"
 msgstr "Probeer weer"
 
 
-
 msgid "Ungrouped"
 msgstr "Ongegroepeer"
-
 
 
 msgid "Uninstall"
 msgstr "Deïnstalleer"
 
 
-
 msgid "Unknown"
 msgstr "Onbekend"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Onbekende geheim van tipe {type} vir {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Naamlose groep"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Naamlose werkspasie"
 
 
 msgid "Up"
 msgstr "Op"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Gradeer op na {version}"
-
 
 
 msgid "Upload"
 msgstr "Laai op"
 
 
-
 msgid "Upload as a new config"
 msgstr "Laai op as 'n nuwe opstelling"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Laai lêers op"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Laai vouer op"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Gebruik {altKeyName} as die Meta-sleutel"
 
 
-
 msgid "Use ConPTY"
 msgstr "Gebruik ConPTY"
-
 
 
 msgid "User default"
 msgstr "Gebruiker verstek"
 
 
-
 msgid "Username"
 msgstr "Gebruikersnaam"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Gebruikersnaam vir {host}"
 
 
 msgid "Using CONNECT method"
 msgstr "Gebruik CONNECT metode"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Gebruik gestoorde wagwoord"
 
 
 msgid "Vault"
 msgstr "Kluis"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "Vault is 'n altyd-geïnkripteer houer vir geheime soos SSH-wagwoorde en privaat sleutelwagfrases."
-
 
 
 msgid "Vault is empty"
 msgstr "Kluis is leeg"
 
 
-
 msgid "Vault is locked"
 msgstr "Kluis is gesluit"
-
 
 
 msgid "Vault is not configured"
 msgstr "Kluis is nie opgestel nie"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "Kluis-hoofwagfrase moet gestel word om geheime te stoor"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Verifieer gasheersleutels wanneer jy verbind"
 
 
-
 msgid "Version"
 msgstr "Weergawe"
-
 
 
 msgid "Version: {version}"
 msgstr "Weergawe: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Kleurhelderheid"
-
 
 
 msgid "Visual"
 msgstr "Visueel"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Waarsku op multi-reël plak"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Waarsku wanneer aktiewe verbindings gesluit word"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Waarskuwing: afgeleë gasheer se sleutel het skielik verander!"
-
 
 
 msgid "Welcome"
 msgstr "Welkom"
 
 
-
 msgid "What's new"
 msgstr "Wat's nuut"
-
 
 
 msgid "When a session ends"
 msgstr "Wanneer 'n sessie eindig"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Wanneer dit geaktiveer is, kan skakels slegs geklik word terwyl hierdie sleutel ingehou word"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "Wanneer WinSCP opgespoor word, kan u 'n SCP-sessie vanaf die kontekskieslys begin."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Of gegenereerde ligtema-kleure geïnverteer moet word. Dit help om die 256-kleur-palet meer semantiese betekenis te gee."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "Sal voorkom dat die SSH-groet verskyn"
 
 
-
 msgid "Window"
 msgstr "Venster"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Vensterafmeting langs die rand"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Vensterafmeting weg van die rand af"
-
 
 
 msgid "Windows"
 msgstr "Vensters"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Windows 10 bou 18309 of hoër word aanbeveel vir ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "WinSCP pad"
 
 
-
 msgid "Word separators"
 msgstr "Woordskeier"
-
 
 
 msgid "Working directory"
 msgstr "Werk gids"
 
 
-
 msgid "Working directory detection"
 msgstr "Werkgidsopsporing"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Werkspasie {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Ligging van die werkspasielbalk"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Wydte van die werkspasielbalk"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Werkspasies"
 
 
 msgid "X11 forwarding"
 msgstr "X11 aanstuuring"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Geel"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Jy kan dit later verander, maar dit is onherstelbaar as dit vergeet word."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Jy kan nou onder 'n man-in-die-middel-aanval wees, of die gasheersleutel kon net verander gewees het."
 
 
-
 msgid "Zoom in"
 msgstr "Zoom in"
-
 
 
 msgid "Zoom out"
 msgstr "Zoem uit"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Hoofwagfrase"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Verdeel in nie-ontsnapte argumente"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Kombineer in 'n enkele onsnapte bevel"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Veranderlikenaam"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Waarde"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Tuisgids"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Vra elke keer"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Antwoord"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filtreer..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Outo-opspoor"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Voorgrond"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Agtergrond"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Wyserkleur"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Blokwyser voorgrond"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Seleksie-achtergrond"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Seleksie-voorgrond"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "ANSI-kleur {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Verwag"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Stuur"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Dop"
 
 msgid "Menu"
-msgstr ""
+msgstr "Kieslys"
 
 

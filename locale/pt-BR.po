@@ -13,2383 +13,1895 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
-
 msgid "{name} copy"
 msgstr "{name} Copiar"
-
 
 
 msgid "A second font family used to display characters missing in the main font"
 msgstr "Uma segunda família de fontes usada para exibir caracteres faltando na fonte principal"
 
 
-
 msgid "Abort all"
 msgstr "Abortar tudo"
 
 
-
 msgid "Accept"
-msgstr ""
-
+msgstr "Aceitar"
 
 
 msgid "Accept a ZMODEM session?"
-msgstr ""
-
+msgstr "Aceitar uma sessão ZMODEM?"
 
 
 msgid "Accept and remember key"
 msgstr "Aceitar e salvar a tecla"
 
 
-
 msgid "Accept just this once"
 msgstr "Aceitar apenas desta vez"
-
 
 
 msgid "Accessibility"
 msgstr "Acessibilidade"
 
 
-
 msgid "Acrylic background"
 msgstr "Fundo acrílico"
-
 
 
 msgid "Add"
 msgstr "Adicionar"
 
 
-
 msgid "Add a port forward"
 msgstr "Adicionar um redirecionamento de porta"
-
 
 
 msgid "Add a private key"
 msgstr "Adicionar uma chave privada"
 
 
-
 msgid "Add..."
 msgstr "Adicionar..."
-
 
 
 msgid "Additional space between lines"
 msgstr "Espaço adicional entre as linhas"
 
 
-
 msgid "Adjust the dark scrim behind the interface"
-msgstr ""
-
+msgstr "Ajustar a camada escura atrás da interface"
 
 
 msgid "Advanced"
 msgstr "\"Avançado\""
 
 
-
 msgid "Agent"
 msgstr "Agente"
-
 
 
 msgid "Agent forwarding"
 msgstr "Encaminhamento de agente"
 
 
-
 msgid "Agent pipe path"
 msgstr "Caminho do agente pipe"
-
 
 
 msgid "Agent type"
 msgstr "Tipo de agente"
 
 
-
 msgid "Allows opening .bat files as sessions, but breaks some shells"
-msgstr ""
-
+msgstr "Permite abrir arquivos .bat como sessões, mas quebra alguns shells"
 
 
 msgid "Allows quickly opening a terminal in the selected folder"
 msgstr "Permite abrir rapidamente um terminal na pasta selecionada"
 
 
-
 msgid "Always dark"
 msgstr "Sempre escuro"
-
 
 
 msgid "Always light"
 msgstr "Sempre claro"
 
 
-
 msgid "Appearance"
 msgstr "Aparência"
-
 
 
 msgid "Application"
 msgstr "Aplicação"
 
 
-
 msgid "Application settings"
 msgstr "Configurações do aplicativo"
-
 
 
 msgid "Are you sure you want to close Tabby? You can disable this prompt in Settings -> Window."
 msgstr "Tem certeza que deseja fechar a \"Tabby\"? Você pode desativar essa mensagem em Configurações -> Janela."
 
 
-
 msgid "Are you sure?"
 msgstr "Você tem certeza?"
-
 
 
 msgid "Arguments"
 msgstr "Argumentos"
 
 
-
 msgid "Ask before closing the browser tab"
 msgstr "Perguntar antes de fechar a aba do navegador"
-
 
 
 msgid "Audible"
 msgstr "Audível"
 
 
-
 msgid "Authentication method"
 msgstr "Método de autenticação"
-
 
 
 msgid "Author"
 msgstr "Autor"
 
 
-
 msgid "Auto"
 msgstr "Automático"
-
 
 
 msgid "Auto-open a terminal on app start"
 msgstr "Abrir automaticamente um terminal no início da aplicação"
 
 
-
 msgid "Automatic"
 msgstr "Automático"
-
 
 
 msgid "Automatically upload changes and check for updates every minute"
 msgstr "Carregar automaticamente alterações e procurar por atualizações a cada minuto"
 
 
-
 msgid "Available"
 msgstr "Disponível"
 
 
-
 msgid "Background image"
-msgstr ""
-
+msgstr "Imagem de fundo"
 
 
 msgid "Background image brightness"
-msgstr ""
-
+msgstr "Brilho da imagem de fundo"
 
 
 msgid "Background type"
 msgstr "Tipo de fundo"
 
 
-
 msgid "BACKSPACE"
-msgstr ""
-
+msgstr "BACKSPACE"
 
 
 msgid "Backspace key mode"
 msgstr "Modo botão Backspace"
 
 
-
 msgid "Baud rate"
 msgstr "Taxa de dados (Baud Rate)"
-
 
 
 msgid "Beginning of the line"
 msgstr "Começo da linha"
 
 
-
 msgid "Blink cursor"
 msgstr "Piscar cursor"
-
 
 
 msgid "Blue"
 msgstr "Azul"
 
 
-
 msgid "Blur"
 msgstr "Desfocar"
-
 
 
 msgid "Bold font weight"
 msgstr "Peso da fonte em negrito"
 
 
-
 msgid "Bottom"
 msgstr "Inferior"
-
 
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Colar entre colchetes (requer suporte ao \"shell\")"
 
 
-
 msgid "Browse…"
-msgstr ""
-
+msgstr "Procurar…"
 
 
 msgid "Built-in"
 msgstr "Embutido"
 
 
-
 msgid "Cancel"
 msgstr "Cancelar"
 
 
-
 msgid "Cannot handle scripts of this type"
-msgstr ""
-
+msgstr "Não é possível manipular scripts deste tipo"
 
 
 msgid "Change the master passphrase"
 msgstr "Alterar a senha mestra"
 
 
-
 msgid "Change workspace color"
-msgstr ""
-
+msgstr "Alterar a cor do workspace"
 
 
 msgid "Ciphers"
 msgstr "Cifras"
 
 
-
 msgid "Clear"
 msgstr "Limpar"
-
 
 
 msgid "Clear recent profiles"
 msgstr "Limpar perfis recentes"
 
 
-
 msgid "Clear terminal"
 msgstr "Limpar terminal"
-
 
 
 msgid "Clear terminal after connection"
 msgstr "Limpar terminal após conexão"
 
 
-
 msgid "Clipboard"
 msgstr "Área de Transferência"
-
 
 
 msgid "Close"
 msgstr "Fechar"
 
 
-
 msgid "Close and never show again"
 msgstr "Fechar e nunca mais mostrar novamente"
 
 
-
 msgid "Close focused session"
-msgstr ""
-
+msgstr "Fechar sessão em foco"
 
 
 msgid "Close other workspaces"
-msgstr ""
-
+msgstr "Fechar outros workspaces"
 
 
 msgid "Close session"
-msgstr ""
-
+msgstr "Fechar sessão"
 
 
 msgid "Close the session only when explicitly terminated"
-msgstr ""
-
+msgstr "Fechar a sessão apenas quando encerrada explicitamente"
 
 
 msgid "Close the window after closing the last workspace"
-msgstr ""
+msgstr "Fechar a janela após fechar o último workspace"
 
+msgid "Cross-window drag"
+msgstr "Arrastar entre janelas"
+
+
+msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
+msgstr "Permite arrastar espaços de trabalho ou sessões entre instâncias. Sessões sem um PTY transferível (ex.: SSH) serão reconectadas."
 
 
 msgid "Close workspace"
-msgstr ""
-
+msgstr "Fechar workspace"
 
 
 msgid "Close workspaces above"
-msgstr ""
-
+msgstr "Fechar workspaces acima"
 
 
 msgid "Close workspaces below"
-msgstr ""
-
+msgstr "Fechar workspaces abaixo"
 
 
 msgid "Close workspaces to the left"
-msgstr ""
-
+msgstr "Fechar workspaces à esquerda"
 
 
 msgid "Close workspaces to the right"
-msgstr ""
-
+msgstr "Fechar workspaces à direita"
 
 
 msgid "Collapse group"
-msgstr ""
-
+msgstr "Recolher grupo"
 
 
 msgid "Color"
 msgstr "Cor"
 
 
-
 msgid "Color scheme"
 msgstr "Esquema de cores"
-
 
 
 msgid "Color schemes"
 msgstr "Esquema de cores"
 
 
-
 msgid "Colors"
 msgstr "Cores"
 
 
-
 msgid "Combine all workspaces into one workspace"
-msgstr ""
-
+msgstr "Combinar todos os workspaces em um só"
 
 
 msgid "Command line"
 msgstr "Linha de comando"
 
 
-
 msgid "Command's stdin/stdout is used instead of a network connection"
 msgstr "stdin/stdout do comando é usado ao invés de uma conexão de rede"
-
 
 
 msgid "Commands"
 msgstr "Comandos"
 
 
-
 msgid "Community"
-msgstr ""
-
+msgstr "Comunidade"
 
 
 msgid "Compression"
-msgstr ""
-
+msgstr "Compactação"
 
 
 msgid "Config deleted"
 msgstr "Configuração excluída"
 
 
-
 msgid "Config downloaded"
 msgstr "Configuração baixada"
-
 
 
 msgid "Config file"
 msgstr "Arquivo de configuração"
 
 
-
 msgid "Config sync"
 msgstr "Configurar sincronização"
 
 
-
 msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
+msgstr "A sincronização de configurações requer uma instância do serviço Web do Tabby."
 
 
 msgid "Config uploaded"
 msgstr "Configuração carregada"
 
 
-
 msgid "Configs"
 msgstr "Configurações"
-
 
 
 msgid "Connect through a proxy server"
 msgstr "Conectar-se através de um servidor proxy"
 
 
-
 msgid "Connect to \"%s\"..."
 msgstr "Conectando a %s..."
-
 
 
 msgid "Connect to a different host first and use it as a proxy"
 msgstr "Conecte-se a um host diferente primeiro e use-o como um proxy"
 
 
-
 msgid "Connected"
-msgstr ""
-
+msgstr "Conectado"
 
 
 msgid "Connecting"
 msgstr "Conectando"
 
 
-
 msgid "Connecting to {host}"
-msgstr ""
-
+msgstr "Conectando a {host}"
 
 
 msgid "Connection"
 msgstr "Conexão"
 
 
-
 msgid "Connection closed"
-msgstr ""
-
+msgstr "Conexão encerrada"
 
 
 msgid "Connection failed: {error}"
 msgstr "A conexão falhou: {error}"
 
 
-
 msgid "Connection name will be used instead"
 msgstr "O nome da conexão será usado no lugar"
-
 
 
 msgid "Context menu"
 msgstr "Menu de contexto"
 
 
-
 msgid "Controls the amount of space between elements"
 msgstr "Controla a quantidade de espaço entre elementos"
-
 
 
 msgid "Copied"
 msgstr "Copiado"
 
 
-
 msgid "Copied to clipboard"
-msgstr ""
-
+msgstr "Copiado para a área de transferência"
 
 
 msgid "Copy"
 msgstr "Copiar"
 
 
-
 msgid "Copy current path"
 msgstr "Copiar o caminho atual"
-
 
 
 msgid "Copy full path"
 msgstr "Copiar caminho completo"
 
 
-
 msgid "Copy on select"
 msgstr "Copiar a seleção"
 
 
-
 msgid "Copy session output (debug)"
-msgstr ""
-
+msgstr "Copiar saída da sessão (depuração)"
 
 
 msgid "Copy terminal state (debug)"
-msgstr ""
-
+msgstr "Copiar estado do terminal (depuração)"
 
 
 msgid "Copy to clipboard"
 msgstr "Copiar para área de transferência"
 
 
-
 msgid "Copy with formatting"
 msgstr "Copiar com formatação"
-
 
 
 msgid "Could not decrypt config"
 msgstr "Não foi possível descriptografar a configuração"
 
 
-
 msgid "Could not read the private key"
-msgstr ""
-
+msgstr "Não foi possível ler a chave privada"
 
 
 msgid "Create"
 msgstr "Criar"
 
 
-
 msgid "Create directory"
 msgstr "Criar diretório"
 
 
-
 msgid "Ctrl"
-msgstr ""
-
+msgstr "Ctrl"
 
 
 msgid "Current"
 msgstr "Atual"
 
 
-
 msgid "Current color scheme"
 msgstr "Esquema de cores atual"
-
 
 
 msgid "Current host key fingerprint"
 msgstr "Impressão digital da chave do host atual"
 
 
-
 msgid "Current process: {name}"
 msgstr "Processo atual: {name}"
-
 
 
 msgid "Cursor shape"
 msgstr "Formato do cursor"
 
 
-
 msgid "Custom"
 msgstr "Personalizado"
-
 
 
 msgid "Custom CSS"
 msgstr "CSS Personalizado"
 
 
-
 msgid "Cygwin"
-msgstr ""
-
+msgstr "Cygwin"
 
 
 msgid "Dark mode"
 msgstr "Modo escuro"
 
 
-
 msgid "Data bits"
 msgstr "Bits de dados"
-
 
 
 msgid "Debugging"
 msgstr "Depurando"
 
 
-
 msgid "Default \"Connect to\" type"
 msgstr "Tipo de \"Conectar a \" padrão"
-
 
 
 msgid "Default connection type used by quick connect feature (ex. SSH, Telnet)"
 msgstr "Tipo de conexão padrão usado pelo recurso de conexão rápida (ex. SSH, Telnet)"
 
 
-
 msgid "Default profile group settings"
 msgstr "Configurações de grupo de perfil padrão"
-
 
 
 msgid "Default profile settings"
 msgstr "Configurações do perfil padrão"
 
 
-
 msgid "Defaults"
 msgstr "Padrões"
-
 
 
 msgid "Defaults for {type}"
 msgstr "Padrões para {type}"
 
 
-
 msgid "Delete"
 msgstr "Excluir"
-
 
 
 msgid "Delete \"{name}\"?"
 msgstr "Excluir {name}?"
 
 
-
 msgid "Delete {fullPath}?"
 msgstr "Excluir {fullPath}?"
-
 
 
 msgid "Delete entire line"
 msgstr "Apagar linha inteira"
 
 
-
 msgid "Delete next word"
 msgstr "Excluir a próxima palavra"
-
 
 
 msgid "Delete previous word"
 msgstr "Excluir palavra anterior"
 
 
-
 msgid "Delete the config on the remote side?"
 msgstr "Excluir a configuração do lado remoto?"
-
 
 
 msgid "Delete the group's profiles?"
 msgstr "Excluir os perfis do grupo?"
 
 
-
 msgid "Delete this script?"
 msgstr "Excluir esse script?"
-
 
 
 msgid "Delete vault contents?"
 msgstr "Excluir conteúdo do vault?"
 
 
-
 msgid "Deleting"
 msgstr "Apagando"
-
 
 
 msgid "Device"
 msgstr "Dispositivo"
 
 
-
 msgid "Direct"
 msgstr "Direto"
-
 
 
 msgid "Disable"
 msgstr "Desabilitar"
 
 
-
 msgid "Disable dynamic session title"
-msgstr ""
-
+msgstr "Desativar título dinâmico da sessão"
 
 
 msgid "Disable fluent background while dragging"
 msgstr "Desativar fundo fluente enquanto arrasta"
 
 
-
 msgid "Disable GPU acceleration"
 msgstr "Desativar aceleração de GPU"
-
 
 
 msgid "Disabled"
 msgstr "Desabilitado"
 
 
-
 msgid "Disconnect"
 msgstr "Desconectar"
-
 
 
 msgid "Disconnect current tab (Serial/Telnet/SSH)"
 msgstr "Desconectar aba atual (Serial/Telnet/SSH)"
 
 
-
 msgid "Disconnect from {host}?"
 msgstr "Desconectar de {host}?"
 
 
-
 msgid "Display an image behind the terminal window"
-msgstr ""
-
+msgstr "Exibir uma imagem atrás da janela do terminal"
 
 
 msgid "Display images via Sixel escape sequences"
 msgstr "Exibir imagens através de sequências de escape Sixel"
 
 
-
 msgid "Display on"
 msgstr "Exibir em"
 
 
-
 msgid "Displays a full tree of profiles in the sidebar."
-msgstr ""
-
+msgstr "Exibe a árvore completa de perfis na barra lateral."
 
 
 msgid "Do not abort"
 msgstr "Não abortar"
 
 
-
 msgid "Do not close"
 msgstr "Não feche"
-
 
 
 msgid "Do not remember"
 msgstr "Não me lembre"
 
 
-
 msgid "Dock always on top"
 msgstr "Janela sempre no topo"
-
 
 
 msgid "Dock the terminal"
 msgstr "Encaixe o terminal"
 
 
-
 msgid "Docked terminal size"
 msgstr "Tamanho do terminal encaixado"
-
 
 
 msgid "Docked terminal space"
 msgstr "Espaço do terminal encaixado"
 
 
-
 msgid "Docking"
 msgstr "Encaixando"
-
 
 
 msgid "Double-click selection will stop at these characters"
 msgstr "A seleção com clique duplo irá parar nesses caracteres"
 
 
-
 msgid "Down"
 msgstr "Abaixo"
-
 
 
 msgid "Download"
 msgstr "Download"
 
 
-
 msgid "Download directory"
-msgstr ""
-
+msgstr "Diretório de download"
 
 
 msgid "Download here"
-msgstr ""
-
+msgstr "Baixar aqui"
 
 
 msgid "Draw bold text in bright colors"
 msgstr "Desenhar texto em negrito em cores brilhantes"
 
 
-
 msgid "Duplicate"
 msgstr "Duplicar"
 
 
-
 msgid "Duplicate session"
-msgstr ""
-
+msgstr "Duplicar sessão"
 
 
 msgid "Duplicate workspace"
-msgstr ""
-
+msgstr "Duplicar workspace"
 
 
 msgid "Dynamic"
-msgstr ""
-
+msgstr "Dinâmico"
 
 
 msgid "Edit"
 msgstr "Editar"
 
 
-
 msgid "Edit group"
-msgstr ""
-
+msgstr "Editar grupo"
 
 
 msgid "Edit locally"
 msgstr "Editar localmente"
 
 
-
 msgid "Enable"
 msgstr "Habilitar"
-
 
 
 msgid "Enable animations"
 msgstr "Permitir animações"
 
 
-
 msgid "Enable fluent background option"
 msgstr "Habilitar opção de fundo fluente"
-
 
 
 msgid "Enable font ligatures"
 msgstr "Habilitar ligaduras de fonte"
 
 
-
 msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Ativar atalho global (Ctrl-Espaço)"
-
 
 
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Habilita a API \"ConPTY\" experimental do Windows"
 
 
-
 msgid "Encrypt config file"
 msgstr "Criptografar arquivo de configuração"
-
 
 
 msgid "End of the line"
 msgstr "Fim da linha"
 
 
-
 msgid "ENTER"
-msgstr ""
-
+msgstr "ENTER"
 
 
 msgid "Environment"
 msgstr "Ambiente"
 
 
-
 msgid "Erase config"
 msgstr "Apagar configuração"
-
 
 
 msgid "Erase the Vault"
 msgstr "Apagar o Cofre"
 
 
-
 msgid "Error in {plugin}:"
 msgstr "Erro em {plugin}:"
 
 
-
 msgid "Even"
-msgstr ""
-
+msgstr "Par"
 
 
 msgid "Exact match"
 msgstr "Correspondência exata"
 
 
-
 msgid "Example:"
 msgstr "Exemplo:"
 
 
-
 msgid "Expand group"
-msgstr ""
-
+msgstr "Expandir grupo"
 
 
 msgid "Experimental Windows 10 background style known to cause issues"
 msgstr "Estilo experimental do Windows 10 conhecido por causar problemas"
 
 
-
 msgid "Export"
 msgstr "Exportar"
 
 
-
 msgid "Export to file"
-msgstr ""
-
+msgstr "Exportar para arquivo"
 
 
 msgid "extend PATH"
-msgstr ""
-
+msgstr "estender PATH"
 
 
 msgid "Failed to download folder: {error}"
-msgstr ""
-
+msgstr "Falha ao baixar a pasta: {error}"
 
 
 msgid "Fallback font"
 msgstr "Fonte alternativa"
 
 
-
 msgid "File transfers"
 msgstr "Transferências de arquivos"
-
 
 
 msgid "File: {description}"
 msgstr "Arquivo: {description}"
 
 
-
 msgid "Filter"
 msgstr "Filtro"
 
 
-
 msgid "Filter results"
-msgstr ""
-
+msgstr "Filtrar resultados"
 
 
 msgid "Finish"
-msgstr ""
-
+msgstr "Concluir"
 
 
 msgid "Fixed"
 msgstr "Corrigido"
 
 
-
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
-msgstr ""
-
+msgstr "Converter o texto colado em uma única linha para terminais que não suportam colagem de várias linhas"
 
 
 msgid "Fluent"
-msgstr ""
-
+msgstr "Fluent"
 
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Fundo fluente às vezes causa atraso de arrastar"
 
 
-
 msgid "Focus follows mouse"
 msgstr "O foco segue o mouse"
 
 
-
 msgid "Focus next session"
-msgstr ""
-
+msgstr "Focar próxima sessão"
 
 
 msgid "Focus pane {number}"
 msgstr "Foco do painel {number}"
 
 
-
 msgid "Focus previous session"
-msgstr ""
-
+msgstr "Focar sessão anterior"
 
 
 msgid "Focus the pane above"
 msgstr "Focar no painel acima"
 
 
-
 msgid "Focus the pane below"
 msgstr "Focar no painel abaixo"
-
 
 
 msgid "Focus the pane on the left"
 msgstr "Concentre no painel à esquerda"
 
 
-
 msgid "Focus the pane on the right"
 msgstr "Focar no painel à direita"
-
 
 
 msgid "Follow the color scheme"
 msgstr "Seguir o esquema de cores"
 
 
-
 msgid "Font"
 msgstr "Fonte"
-
 
 
 msgid "For keyboard shortcuts"
 msgstr "Para atalhos de teclado"
 
 
-
 msgid "Force CR"
 msgstr "Forçar CR"
-
 
 
 msgid "Force CRLF"
 msgstr "Forçar CRLF"
 
 
-
 msgid "Force LF"
 msgstr "Forçar LF"
-
 
 
 msgid "Forces a specific SSH agent connection type."
 msgstr "Força um tipo de conexão com agente SSH específico."
 
 
-
 msgid "Forget"
 msgstr "Esquecer"
-
 
 
 msgid "Forward port"
 msgstr "Encaminhar porta"
 
 
-
 msgid "Forwarded ports"
 msgstr "Portas encaminhadas"
-
 
 
 msgid "From color scheme"
 msgstr "Do esquema de cores"
 
 
-
 msgid "From system"
 msgstr "Do sistema"
-
 
 
 msgid "From theme"
 msgstr "Do tema"
 
 
-
 msgid "Frontend"
 msgstr "Interface"
-
 
 
 msgid "General"
 msgstr "Geral"
 
 
-
 msgid "Generate 256-color palette"
-msgstr ""
-
+msgstr "Gerar paleta de 256 cores"
 
 
 msgid "Generate a pre-filled GitHub issue"
 msgstr "Gerar uma issue pré-preenchida no GitHub"
 
 
-
 msgid "Generate extended 256-color palette from your base 16 colors"
-msgstr ""
-
+msgstr "Gerar paleta de 256 cores estendida a partir das suas 16 cores base"
 
 
 msgid "Get"
 msgstr "Obter"
 
 
-
 msgid "Get it from the Tabby Web settings window"
 msgstr "Obtenha-o na janela de configurações da Tabby Web"
 
 
-
 msgid "GitHub"
-msgstr ""
-
+msgstr "GitHub"
 
 
 msgid "Gives the window a blurred transparent background"
 msgstr "Dá à janela um fundo transparente borrado"
 
 
-
 msgid "Go up"
 msgstr "Ir para cima"
-
 
 
 msgid "Green"
 msgstr "Verde"
 
 
-
 msgid "Group"
 msgstr "Grupo"
-
 
 
 msgid "Hacks"
 msgstr "Hacks"
 
 
-
 msgid "Harmonious palette"
-msgstr ""
-
+msgstr "Paleta harmoniosa"
 
 
 msgid "Help translate Tabby"
 msgstr "Ajude a traduzir o tabby"
 
 
-
 msgid "Hexadecimal"
 msgstr "Hexadecimal"
-
 
 
 msgid "Hide"
 msgstr "Ocultar"
 
 
-
 msgid "Hide Tabby from tray or menu bar."
-msgstr ""
-
+msgstr "Ocultar o Tabby da bandeja ou da barra de menus."
 
 
 msgid "Hide tray icon"
-msgstr ""
-
+msgstr "Ocultar ícone da bandeja"
 
 
 msgid "Hide window on focus loss"
 msgstr "Ocultar janela em perda de foco"
 
 
-
 msgid "Hide workspace close button"
-msgstr ""
-
+msgstr "Ocultar botão de fechar do workspace"
 
 
 msgid "Hide workspace index"
-msgstr ""
-
+msgstr "Ocultar índice do workspace"
 
 
 msgid "Hide workspace options button"
-msgstr ""
-
+msgstr "Ocultar botão de opções do workspace"
 
 
 msgid "Hides the docked terminal when you click away."
 msgstr "Oculta o terminal quando você clica longe."
 
 
-
 msgid "HMAC"
-msgstr ""
-
+msgstr "HMAC"
 
 
 msgid "Homepage"
 msgstr "Página Inicial"
 
 
-
 msgid "Host"
 msgstr "Host"
-
 
 
 msgid "Host key"
 msgstr "Chave do host"
 
 
-
 msgid "Host key verification"
 msgstr "Verificação da chave do host"
-
 
 
 msgid "Hotkeys"
 msgstr "Teclas de atalho"
 
 
-
 msgid "How Tabby presents itself through environment vars"
 msgstr "Como Tabby se apresenta através de variáveis de ambiente"
-
 
 
 msgid "HTTP proxy"
 msgstr "Proxy HTTP"
 
 
-
 msgid "HTTP proxy host"
 msgstr "Host do proxy HTTP"
-
 
 
 msgid "HTTP proxy port"
 msgstr "Porta do Proxy HTTP"
 
 
-
 msgid "Icon"
 msgstr "Ícone"
 
 
-
 msgid "If you have not requested it, it could be a sign of malicious activity."
-msgstr ""
-
+msgstr "Se você não solicitou isso, pode ser sinal de atividade maliciosa."
 
 
 msgid "Immediately echoes your input locally"
 msgstr "Imediatamente repete sua entrada localmente"
 
 
-
 msgid "Implicit CR in every LF"
-msgstr ""
-
+msgstr "CR implícito em cada LF"
 
 
 msgid "Implicit LF in every CR"
-msgstr ""
-
+msgstr "LF implícito em cada CR"
 
 
 msgid "Incorrect passphrase"
-msgstr ""
-
+msgstr "Frase de senha incorreta"
 
 
 msgid "Input"
 msgstr "Entrada"
 
 
-
 msgid "Input is sent as you type"
 msgstr "O texto é enviado enquanto você digita"
-
 
 
 msgid "Input mode"
 msgstr "Modo de entrada"
 
 
-
 msgid "Input newlines"
 msgstr "Novas linhas de entrada"
-
 
 
 msgid "Installed"
 msgstr "Instalado"
 
 
-
 msgid "Intelligent Ctrl-C (copy/abort)"
 msgstr "Ctrl-C Inteligente (copiar/cancelar)"
-
 
 
 msgid "Interactive"
 msgstr "Interativo"
 
 
-
 msgid "Invalid syntax"
 msgstr "Sintaxe inválida"
-
 
 
 msgid "Jump host"
 msgstr "Servidor de Pulo"
 
 
-
 msgid "Jump to next word"
 msgstr "Pular para a próxima palavra"
-
 
 
 msgid "Jump to previous word"
 msgstr "Pular para a palavra anterior"
 
 
-
 msgid "Keep"
 msgstr "Manter"
-
 
 
 msgid "Keep Alive Interval (Milliseconds)"
 msgstr "Manter o intervalo vivo (milissegundos)"
 
 
-
 msgid "Keep docked terminal always on top"
 msgstr "Mantenha o terminal encaixado sempre no topo"
-
 
 
 msgid "Key"
 msgstr "Chave"
 
 
-
 msgid "Key exchange"
 msgstr "Troca de chaves"
-
 
 
 msgid "Keyboard"
 msgstr "Teclado"
 
 
-
 msgid "Keyboard-interactive auth"
 msgstr "Autenticação interativa do teclado"
-
 
 
 msgid "Language"
 msgstr "Idioma"
 
 
-
 msgid "Last known host key fingerprint"
 msgstr "Última impressão digital da chave de host é conhecida"
-
 
 
 msgid "Launch WinSCP"
 msgstr "Abrir \"WinSCP\""
 
 
-
 msgid "Launch WinSCP for current SSH session"
 msgstr "Inicie o \"WinSCP\" na sessão SSH atual"
-
 
 
 msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Aprenda como permitir que o \"Tabby\" detecte o diretório de trabalho da \"Shell\" remota."
 
 
-
 msgid "Learn more"
-msgstr ""
-
+msgstr "Saiba mais"
 
 
 msgid "Left"
 msgstr "Esquerda"
 
 
-
 msgid "Lets the shell handle Meta key instead of OS"
 msgstr "Permite que o shell manipule Meta key em vez de S.O"
-
 
 
 msgid "Light mode"
 msgstr "Modo claro"
 
 
-
 msgid "Line by line"
 msgstr "Linha por linha"
-
 
 
 msgid "Line editor, input is sent after you press Enter"
 msgstr "Editor de linha, a entrada é enviada depois que você pressionar Enter"
 
 
-
 msgid "Line padding"
 msgstr "Linha de preenchimento"
 
 
-
 msgid "Load session output (debug)"
-msgstr ""
-
+msgstr "Carregar saída da sessão (depuração)"
 
 
 msgid "Load terminal state (debug)"
-msgstr ""
-
+msgstr "Carregar estado do terminal (depuração)"
 
 
 msgid "Loading"
 msgstr "Carregando"
 
 
-
 msgid "Loading configs..."
 msgstr "Carregando configurações..."
-
 
 
 msgid "Local"
 msgstr "Local"
 
 
-
 msgid "Local echo"
 msgstr "Efeito local"
-
 
 
 msgid "Local terminal"
 msgstr "Terminal local"
 
 
-
 msgid "Login scripts"
 msgstr "Scripts de login"
-
 
 
 msgid "Long-click for context menu"
 msgstr "Clique longo para menu de contexto"
 
 
-
 msgid "Manage profiles"
 msgstr "Gerenciar perfil"
 
 
-
 msgid "Mark"
-msgstr ""
-
+msgstr "Marcar"
 
 
 msgid "Max Keep Alive Count"
 msgstr "Manter a contagem máxima viva"
 
 
-
 msgid "Minimum contrast ratio"
 msgstr "Relação de contraste mínima"
-
 
 
 msgid "Modified on {date}"
 msgstr "Modificado em {date}"
 
 
-
 msgid "Mouse"
 msgstr "mouse"
 
 
-
 msgid "Move left splitter left"
-msgstr ""
-
+msgstr "Mover divisor esquerdo para a esquerda"
 
 
 msgid "Move left splitter right"
-msgstr ""
-
+msgstr "Mover divisor esquerdo para a direita"
 
 
 msgid "Move lower splitter down"
-msgstr ""
-
+msgstr "Mover divisor inferior para baixo"
 
 
 msgid "Move lower splitter up"
-msgstr ""
-
+msgstr "Mover divisor inferior para cima"
 
 
 msgid "Move right splitter left"
-msgstr ""
-
+msgstr "Mover divisor direito para a esquerda"
 
 
 msgid "Move right splitter right"
-msgstr ""
-
+msgstr "Mover divisor direito para a direita"
 
 
 msgid "Move to \"Ungrouped\""
 msgstr "Mover para \"Desagrupado\""
 
 
-
 msgid "Move upper splitter down"
-msgstr ""
-
+msgstr "Mover divisor superior para baixo"
 
 
 msgid "Move upper splitter up"
-msgstr ""
-
+msgstr "Mover divisor superior para cima"
 
 
 msgid "Move workspace to the left"
-msgstr ""
-
+msgstr "Mover workspace para a esquerda"
 
 
 msgid "Move workspace to the right"
-msgstr ""
-
+msgstr "Mover workspace para a direita"
 
 
 msgid "Moving the mouse over an inactive pane will cause it to activate"
 msgstr "Mover o mouse sobre um painel inativo fará com que ele seja ativado"
 
 
-
 msgid "Multiplex multiple shells through the same connection"
-msgstr ""
-
+msgstr "Multiplexar vários shells pela mesma conexão"
 
 
 msgid "Name"
 msgstr "Nome"
 
 
-
 msgid "Name for the new config"
 msgstr "Nome para a nova configuração"
-
 
 
 msgid "Name for the new directory"
 msgstr "Nome para o novo diretório"
 
 
-
 msgid "Named pipe"
-msgstr ""
-
+msgstr "Pipe nomeado"
 
 
 msgid "New"
 msgstr "Novo"
 
 
-
 msgid "New admin session"
-msgstr ""
-
+msgstr "Nova sessão de administrador"
 
 
 msgid "New config on {platform}"
 msgstr "Nova configuração em {platform}"
 
 
-
 msgid "New group"
-msgstr ""
-
+msgstr "Novo grupo"
 
 
 msgid "New item"
 msgstr "Novo item"
 
 
-
 msgid "New name"
 msgstr "Novo nome"
-
 
 
 msgid "New profile"
 msgstr "Novo perfil"
 
 
-
 msgid "New session"
-msgstr ""
-
+msgstr "Nova sessão"
 
 
 msgid "New sessions are added to the active workspace pane instead of a separate workspace."
-msgstr ""
-
+msgstr "As novas sessões são adicionadas ao painel do workspace ativo em vez de um workspace separado."
 
 
 msgid "New tab"
 msgstr "Nova aba"
 
 
-
 msgid "New window"
 msgstr "Nova janela"
-
 
 
 msgid "New Window"
 msgstr "Nova Janela"
 
 
-
 msgid "New with profile"
 msgstr "Novo com perfil"
 
 
-
 msgid "New workspace"
-msgstr ""
-
+msgstr "Novo workspace"
 
 
 msgid "Next"
-msgstr ""
-
+msgstr "Avançar"
 
 
 msgid "Next workspace"
-msgstr ""
-
+msgstr "Próximo workspace"
 
 
 msgid "No color"
 msgstr "Sem cor"
 
 
-
 msgid "No files match the filter \"{filterText}\""
-msgstr ""
-
+msgstr "Nenhum arquivo corresponde ao filtro \"{filterText}\""
 
 
 msgid "No modifier"
 msgstr "Não modificar"
 
 
-
 msgid "None"
 msgstr "Nenhum"
-
 
 
 msgid "Normal"
 msgstr "Normal"
 
 
-
 msgid "Normal font weight"
 msgstr "Peso da fonte normal"
-
 
 
 msgid "Not found"
 msgstr "Não encontrado"
 
 
-
 msgid "Notify on activity"
 msgstr "Notificar sobre a atividade"
-
 
 
 msgid "Notify when done"
 msgstr "Notificar quando terminar"
 
 
-
 msgid "Number of lines kept in the buffer"
 msgstr "Número de linhas contidas no buffer"
 
 
-
 msgid "Odd"
-msgstr ""
-
+msgstr "Ímpar"
 
 
 msgid "Off"
 msgstr "Desligado"
 
 
-
 msgid "Official"
 msgstr "Oficial"
 
 
-
 msgid "OK"
-msgstr ""
-
+msgstr "OK"
 
 
 msgid "On Discord"
-msgstr ""
-
+msgstr "No Discord"
 
 
 msgid "Opacity"
 msgstr "Opacidade"
 
 
-
 msgid "Open"
-msgstr ""
-
+msgstr "Abrir"
 
 
 msgid "Open DevTools"
 msgstr "Abrir ferramentas de desenvolvimento"
 
 
-
 msgid "Open new sessions in the current workspace"
-msgstr ""
-
+msgstr "Abrir novas sessões no workspace atual"
 
 
 msgid "Open Settings"
 msgstr "Abrir configurações"
 
 
-
 msgid "Open SFTP panel"
 msgstr "Abrir painel SFTP"
-
 
 
 msgid "Optional"
 msgstr "Opcional"
 
 
-
 msgid "Options"
 msgstr "Opções"
-
 
 
 msgid "Orange"
 msgstr "Laranja"
 
 
-
 msgid "OS default"
 msgstr "Padrão do sistema"
-
 
 
 msgid "OS default ({name})"
 msgstr "Padrão do sistema ({name})"
 
 
-
 msgid "Output is shown as a hexdump"
 msgstr "A saída é mostrada como um hexadecimal"
-
 
 
 msgid "Output is shown as it is received"
 msgstr "A saída é mostrada como é recebida"
 
 
-
 msgid "Output mode"
 msgstr "Mode de saída"
-
 
 
 msgid "Output newlines"
 msgstr "Novas linhas de saída"
 
 
-
 msgid "Override X11 display"
 msgstr "Sobrepor a tela X11"
-
 
 
 msgid "Overwrite local and sync"
 msgstr "Sobrescrever local e sincronizar"
 
 
-
 msgid "Overwrite remote and sync"
 msgstr "Sobrescrever local e sincronizar"
-
 
 
 msgid "Overwrite the config on the remote side and start syncing?"
 msgstr "Substituir as configurações no lado remoto e começar a sincronizar?"
 
 
-
 msgid "Overwrite the local config and start syncing?"
 msgstr "Sobrescrever as configurações locais e começar a sincronizar?"
 
 
-
 msgid "Pageant"
-msgstr ""
-
+msgstr "Pageant"
 
 
 msgid "Pane resize step"
 msgstr "Passo de redimensionamento"
 
 
-
 msgid "Panes"
 msgstr "Painéis"
 
 
-
 msgid "Parent Group"
-msgstr ""
-
+msgstr "Grupo pai"
 
 
 msgid "Parity"
 msgstr "Paridade"
 
 
-
 msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr "Sincronização parcial de configuração não é possível quando a configuração é criptografada pelo Cofre."
-
 
 
 msgid "Pass-through"
 msgstr "Passar"
 
 
-
 msgid "Passphrase for a private key with hash {hash}..."
 msgstr "Frase de senha para uma chave privada com hash {hash}..."
-
 
 
 msgid "Password"
 msgstr "Senha"
 
 
-
 msgid "Password for {user}@{host}"
-msgstr ""
-
+msgstr "Senha para {user}@{host}"
 
 
 msgid "Paste"
 msgstr "Colar"
 
 
-
 msgid "Paste \"{text}\"?"
-msgstr ""
-
+msgstr "Colar \"{text}\"?"
 
 
 msgid "Paste from clipboard"
 msgstr "Colar da área de transferência"
 
 
-
 msgid "Paste if no selection, else copy"
 msgstr "Cola se não selecionado, senão copia selecionado"
-
 
 
 msgid "Paste multiple lines?"
 msgstr "Colar várias linhas?"
 
 
-
 msgid "Paste on middle-click"
 msgstr "Colar com clique central"
 
 
-
 msgid "Paste session output (debug)"
-msgstr ""
-
+msgstr "Colar saída da sessão (depuração)"
 
 
 msgid "Paste terminal state (debug)"
-msgstr ""
-
+msgstr "Colar estado do terminal (depuração)"
 
 
 msgid "Path or address of the local X11 socket"
 msgstr "Caminho ou endereço do soquete X11 local"
 
 
-
 msgid "Pin"
 msgstr "Pin"
 
 
-
 msgid "Pin or unpin workspace"
-msgstr ""
-
+msgstr "Fixar ou desafixar workspace"
 
 
 msgid "Pin workspace"
-msgstr ""
-
+msgstr "Fixar workspace"
 
 
 msgid "Plugins"
 msgstr "Plugins"
 
 
-
 msgid "Plugins folder"
 msgstr "Pasta de plugins"
-
 
 
 msgid "Port"
 msgstr "Porta"
 
 
-
 msgid "Port closed"
-msgstr ""
-
+msgstr "Porta fechada"
 
 
 msgid "Port forwarding"
-msgstr ""
-
+msgstr "Redirecionamento de porta"
 
 
 msgid "Port opened"
 msgstr "Porta aberta"
 
 
-
 msgid "Ports"
 msgstr "Portas"
-
 
 
 msgid "Press any key to reconnect"
 msgstr "Pressione qualquer tecla para reconectar"
 
 
-
 msgid "Press the key now"
 msgstr "Pressione a tecla agora"
-
 
 
 msgid "Prevents accidental closing"
 msgstr "Impede fechamento acidental"
 
 
-
 msgid "Prevents accidental execution of pasted commands"
 msgstr "Prevenir a execução acidental de comandos colados"
 
 
-
 msgid "Previous workspace"
-msgstr ""
-
+msgstr "Workspace anterior"
 
 
 msgid "Private key passphrase"
-msgstr ""
-
+msgstr "Frase de senha da chave privada"
 
 
 msgid "Private keys"
 msgstr "Chaves privadas"
 
 
-
 msgid "Process completed"
 msgstr "Processo concluído"
-
 
 
 msgid "Profile name"
 msgstr "Nome do Perfil"
 
 
-
 msgid "Profiles"
 msgstr "Perfils"
-
 
 
 msgid "Profiles & connections"
 msgstr "Perfis e conexões"
 
 
-
 msgid "Program"
 msgstr "Programa"
-
 
 
 msgid "Proxy command"
 msgstr "Comando do proxy"
 
 
-
 msgid "Purple"
 msgstr "Roxo"
-
 
 
 msgid "Puts all of Tabby's configuration into the vault"
 msgstr "Coloca todas as configurações da Tabby no cofre"
 
 
-
 msgid "Quick connect"
 msgstr "Conexão rápida"
-
 
 
 msgid "Quit"
 msgstr "Sair"
 
 
-
 msgid "Raw socket connection"
 msgstr "Conexão de soquete pura"
-
 
 
 msgid "Ready Timeout (Milliseconds)"
 msgstr "Tempo limite em(milissegundos)"
 
 
-
 msgid "Recent"
 msgstr "Récente"
-
 
 
 msgid "Reconnect"
 msgstr "Reconectar"
 
 
-
 msgid "Reconnect current tab (Serial/Telnet/SSH)"
 msgstr "Reconectar a aba atual (Serial/Telnet/SSH)"
-
 
 
 msgid "Red"
 msgstr "Vermelho"
 
 
-
 msgid "Refresh"
-msgstr ""
-
+msgstr "Atualizar"
 
 
 msgid "Refresh environment variables from registry"
-msgstr ""
-
+msgstr "Atualizar variáveis de ambiente do registro"
 
 
 msgid "Regex"
 msgstr "Regex"
 
 
-
 msgid "Reject"
-msgstr ""
-
+msgstr "Rejeitar"
 
 
 msgid "Release notes"
 msgstr "Notas da versão"
 
 
-
 msgid "Reload PATH and other variables from the Windows registry for each new session"
-msgstr ""
-
+msgstr "Recarregar o PATH e outras variáveis do registro do Windows a cada nova sessão"
 
 
 msgid "Remember"
-msgstr ""
-
+msgstr "Lembrar"
 
 
 msgid "Remember for {time}"
 msgstr "Lembrar do {time}"
 
 
-
 msgid "Remote"
 msgstr "Remoto"
-
 
 
 msgid "Remove whitespace and newlines around the copied text"
 msgstr "Remover espaços em branco e novas linhas em torno do texto copiado"
 
 
-
 msgid "Rename"
 msgstr "Renomear"
 
 
-
 msgid "Rename session"
-msgstr ""
-
+msgstr "Renomear sessão"
 
 
 msgid "Rename workspace"
-msgstr ""
-
+msgstr "Renomear workspace"
 
 
 msgid "Rendering"
 msgstr "Renderização"
 
 
-
 msgid "Reopen last workspace"
-msgstr ""
-
+msgstr "Reabrir o último workspace"
 
 
 msgid "Replace"
 msgstr "Substituir"
 
 
-
 msgid "Replace line breaks with spaces"
-msgstr ""
-
+msgstr "Substituir quebras de linha por espaços"
 
 
 msgid "Report a problem"
 msgstr "Reportar um problema"
 
 
-
 msgid "Require a key to click links"
 msgstr "Exigir uma tecla para clicar em links"
-
 
 
 msgid "Reset zoom"
 msgstr "Redefinir Zoom"
 
 
-
 msgid "Restart current serial session"
 msgstr "Reiniciar a sessão serial atual"
-
 
 
 msgid "Restart current SSH session"
 msgstr "Reiniciar a sessão SSH atual"
 
 
-
 msgid "Restart current Telnet session"
 msgstr "Reiniciar sessão de Telnet atual"
-
 
 
 msgid "Restart the app to apply changes"
 msgstr "Reinicie o aplicativo para aplicar as alterações"
 
 
-
 msgid "Restart workspace"
-msgstr ""
-
+msgstr "Reiniciar workspace"
 
 
 msgid "Restore settings to defaults ?"
 msgstr "Restaurar as configurações para o padrão?"
 
 
-
 msgid "Restore settings to inherited defaults ?"
 msgstr "Restaurar configurações para padrões herdados ?"
 
 
-
 msgid "Restore workspaces on app start"
-msgstr ""
-
-
-
-
-
-
-msgid "Session persistence"
-msgstr "Persistência de sessão"
-
-
-msgid "Keep the shell alive with tmux so dragging a tab to another window does not trigger a reconnect."
-msgstr "Mantém o shell vivo com tmux, para que arrastar uma aba para outra janela não dispare uma reconexão."
-
-
-
-
-
-
-
-
-
+msgstr "Restaurar workspaces ao iniciar o aplicativo"
 
 
 msgid "Not set"
 msgstr "Não definido"
-
-
-
-
 
 
 msgid "Description"
@@ -2416,1029 +1928,834 @@ msgid "Whole word"
 msgstr "Palavra inteira"
 
 
-
-
-
-
-
-
-
-
 msgid "Reuse session for multiple tabs"
 msgstr "Reutilizar a sessão para multiplas abas"
-
 
 
 msgid "Right"
 msgstr "Direita"
 
 
-
 msgid "Right click"
 msgstr "Clique direito"
 
 
-
 msgid "RTS / CTS"
-msgstr ""
-
+msgstr "RTS / CTS"
 
 
 msgid "Run"
-msgstr ""
-
+msgstr "Executar"
 
 
 msgid "Run \"{command}\"?"
-msgstr ""
-
+msgstr "Executar \"{command}\"?"
 
 
 msgid "Run as administrator"
 msgstr "Executar como administrador"
 
 
-
 msgid "Save"
 msgstr "Salvar"
-
 
 
 msgid "Save a password in the keychain"
 msgstr "Salvar uma senha no teclado"
 
 
-
 msgid "Save and apply"
 msgstr "Salvar e aplicar"
-
 
 
 msgid "Save as profile"
 msgstr "Salvar como perfil"
 
 
-
 msgid "Save layout as profile"
 msgstr "Salvar layout como perfil"
 
 
-
 msgid "Save session output (debug)"
-msgstr ""
-
+msgstr "Salvar saída da sessão (depuração)"
 
 
 msgid "Save terminal state (debug)"
-msgstr ""
-
+msgstr "Salvar estado do terminal (depuração)"
 
 
 msgid "Saved layout"
 msgstr "Layout salvo"
 
 
-
 msgid "Saved to {path}"
-msgstr ""
-
+msgstr "Salvo em {path}"
 
 
 msgid "Scroll on input"
 msgstr "Rolar na entrada"
 
 
-
 msgid "Scroll terminal one line down"
-msgstr ""
-
+msgstr "Rolar o terminal uma linha para baixo"
 
 
 msgid "Scroll terminal one line up"
-msgstr ""
-
+msgstr "Rolar o terminal uma linha para cima"
 
 
 msgid "Scroll terminal one page down"
 msgstr "Rolar terminal uma página para baixo"
 
 
-
 msgid "Scroll terminal one page up"
 msgstr "Rolar o terminal uma página para cima"
-
 
 
 msgid "Scroll terminal to bottom"
 msgstr "Rolar terminal para baixo"
 
 
-
 msgid "Scroll terminal to top"
 msgstr "Rolar o terminal para o topo"
-
 
 
 msgid "Scrollback"
 msgstr "Reverter"
 
 
-
 msgid "Scrolls the terminal to the bottom on user input"
 msgstr "Rola o terminal para a parte inferior na entrada do usuário"
-
 
 
 msgid "Search"
 msgstr "Pesquisar"
 
 
-
 msgid "Search color schemes"
 msgstr "Pesquisar esquemas de cores"
-
 
 
 msgid "Search hotkeys"
 msgstr "Procurar atalhos"
 
 
-
 msgid "Search plugins"
 msgstr "Buscar plugins"
-
 
 
 msgid "Secret sync token"
 msgstr "Token de sincronização secreta"
 
 
-
 msgid "Select"
 msgstr "Selecionar"
 
 
-
 msgid "Select a template"
-msgstr ""
-
+msgstr "Selecionar um modelo"
 
 
 msgid "Select all"
 msgstr "Selecionar tudo"
 
 
-
 msgid "Select background image"
-msgstr ""
-
+msgstr "Selecionar imagem de fundo"
 
 
 msgid "Select destination folder for {name}"
-msgstr ""
-
+msgstr "Selecionar pasta de destino para {name}"
 
 
 msgid "Select file storage"
 msgstr "Selecionar armazenamento de arquivos"
 
 
-
 msgid "Select profile or enter an address"
 msgstr "Selecione o perfil ou insira um endereço"
-
 
 
 msgid "Send bytes by typing in hex values"
 msgstr "Enviar bytes digitando em valores hexadecimais"
 
 
-
 msgid "Sends data one byte at a time"
 msgstr "Envia dados um byte por vez"
-
 
 
 msgid "Serial"
 msgstr "Série"
 
 
-
 msgid "Serial connection"
 msgstr "Conexão Serial"
-
 
 
 msgid "Set master passphrase"
 msgstr "Definir senha mestre"
 
 
-
 msgid "Set passphrase"
 msgstr "Definir senha"
-
 
 
 msgid "Set password"
 msgstr "Definir senha"
 
 
-
 msgid "Set Tabby as %COMSPEC%"
 msgstr "Definir Tabby como %COMSPEC%"
-
 
 
 msgid "Set to 0 to disable recent profiles"
 msgstr "Defina 0 para desativar os perfis recentes"
 
 
-
 msgid "Sets the SSH agent's named pipe path."
 msgstr "Define o caminho de tubo do agente SSH."
-
 
 
 msgid "Settings"
 msgstr "Configurações"
 
 
-
 msgid "Shell does not support current path detection"
 msgstr "Shell não suporta a detecção de caminho atual"
-
 
 
 msgid "Shell integration"
 msgstr "Integração com o Shell"
 
 
-
 msgid "Shift"
-msgstr ""
-
+msgstr "Shift"
 
 
 msgid "Show"
 msgstr "Mostrar"
 
 
-
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "Mostrar uma caixa de confirmação quando colar várias linhas"
-
 
 
 msgid "Show command selector"
 msgstr "Mostrar seletor de comandos"
 
 
-
 msgid "Show config file"
 msgstr "Mostrar arquivo de configuração"
-
 
 
 msgid "Show defaults"
 msgstr "Mostrar padrões"
 
 
-
 msgid "Show profile icon on the workspace"
-msgstr ""
-
+msgstr "Mostrar ícone do perfil no workspace"
 
 
 msgid "Show profile selector"
 msgstr "Mostrar seletor de perfil"
 
 
-
 msgid "Show profile sidebar"
-msgstr ""
-
+msgstr "Mostrar barra lateral de perfis"
 
 
 msgid "Show recent profiles in selector"
 msgstr "Mostrar perfis recentes no seletor"
 
 
-
 msgid "Show release notes"
 msgstr "Mostrar notas de lançamento"
-
 
 
 msgid "Show Serial connections"
 msgstr "Mostrar conexões em série"
 
 
-
 msgid "Show vault contents"
 msgstr "Mostrar conteúdo do cofre"
 
 
-
 msgid "Show workspace bar in fullscreen mode"
-msgstr ""
-
+msgstr "Mostrar barra de workspaces no modo de tela cheia"
 
 
 msgid "Sixel graphics support (experimental)"
 msgstr "Suporte gráfico Sixel (experimental)"
 
 
-
 msgid "Skip MoTD/banner"
 msgstr "Pular banner do MoTD/"
-
 
 
 msgid "Slow feed"
 msgstr "Feed lento"
 
 
-
 msgid "Snaps the window to a side of the screen"
 msgstr "Toca a janela em um lado da tela"
-
 
 
 msgid "SOCKS proxy"
 msgstr "Usar proxy SOCKS"
 
 
-
 msgid "SOCKS proxy host"
 msgstr "Host do proxy SOCKS"
-
 
 
 msgid "SOCKS proxy port"
 msgstr "Porta do proxy SOCKS"
 
 
-
 msgid "Sound"
 msgstr "Som"
-
 
 
 msgid "Source code"
 msgstr "Código-fonte"
 
 
-
 msgid "Space"
-msgstr ""
-
+msgstr "Espaço"
 
 
 msgid "Spaciness"
 msgstr "Espaçamento"
 
 
-
 msgid "Split"
 msgstr "Dividir"
 
 
-
 msgid "Split current workspace into separate workspaces"
-msgstr ""
-
+msgstr "Dividir o workspace atual em workspaces separados"
 
 
 msgid "Split to the bottom"
 msgstr "Dividir para baixo"
 
 
-
 msgid "Split to the left"
 msgstr "Dividir para a esquerda"
-
 
 
 msgid "Split to the right"
 msgstr "Dividir para a direita"
 
 
-
 msgid "Split to the top"
 msgstr "Rolar para o topo"
 
 
-
 msgid "SSH"
-msgstr ""
-
+msgstr "SSH"
 
 
 msgid "SSH connection"
 msgstr "Conexão SSH"
 
 
-
 msgid "SSH password for {user}@{host}:{port}"
 msgstr "Senha SSH para {user}@{host}:{port}"
-
 
 
 msgid "Startup"
 msgstr "Startup"
 
 
-
 msgid "Stop bits"
 msgstr "Pare os bits"
-
 
 
 msgid "Strip"
 msgstr "Tirar"
 
 
-
 msgid "Substitutions allowed."
 msgstr "Substituições permitidas."
-
 
 
 msgid "Switch color scheme"
 msgstr "Alternar esquema de cores"
 
 
-
 msgid "Switch profile"
 msgstr "Alternar perfil"
-
 
 
 msgid "Switch profile in the active pane"
 msgstr "Trocar perfil no painel ativo"
 
 
-
 msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Alterna a implementação do terminal frontend (experimental)"
-
 
 
 msgid "Sync"
 msgstr "Sincronizar"
 
 
-
 msgid "Sync automatically"
 msgstr "Sincronizar automaticamente"
-
 
 
 msgid "Sync host"
 msgstr "Sincronizar host"
 
 
-
 msgid "Sync hotkeys"
 msgstr "Sincronizar atalhos"
-
 
 
 msgid "Sync Vault"
 msgstr "Sincronizar Cofre"
 
 
-
 msgid "Sync window settings"
 msgstr "Sincronizar configurações de janela"
-
 
 
 msgid "Tab activity"
 msgstr "Atividade da aba"
 
 
-
 msgid "Tabby could not start with your plugins, so all third party plugins have been disabled in this session. The error was:"
 msgstr "Tabby não pôde iniciar com seus plugins, então todos os plugins de terceiros foram desativados nesta sessão. O erro foi:"
-
 
 
 msgid "Telnet session"
 msgstr "Sessão telefônica"
 
 
-
 msgid "Terminal"
 msgstr "Terminal"
-
 
 
 msgid "Terminal background"
 msgstr "Fundo do terminal"
 
 
-
 msgid "Terminal bell"
 msgstr "Aviso do terminal"
-
 
 
 msgid "Terminal identification"
 msgstr "Identificação do terminal"
 
 
-
 msgid "Thank you for downloading Tabby!"
 msgstr "Obrigado por baixar Tabby!"
 
 
-
 msgid "The directory could not be created"
-msgstr ""
-
+msgstr "Não foi possível criar o diretório"
 
 
 msgid "The directory was created successfully"
-msgstr ""
-
+msgstr "Diretório criado com sucesso"
 
 
 msgid "The vault must be unlocked to load your configuration."
-msgstr ""
-
+msgstr "O Cofre precisa estar desbloqueado para carregar sua configuração."
 
 
 msgid "Theme"
 msgstr "Tema"
 
 
-
 msgid "There are active file transfers"
 msgstr "Existem transferências de arquivos ativas"
-
 
 
 msgid "There is a saved password for this connection"
 msgstr "Existe uma senha salva para esta conexão"
 
 
-
 msgid "These apply to all profiles of a given type"
 msgstr "Estas se aplicam a todos os perfis de um determinado tipo"
-
 
 
 msgid "These apply to all profiles of a given type in this group"
 msgstr "Estas se aplicam a todos os perfis de um determinado tipo neste grupo"
 
 
-
 msgid "Tick this if you're experiencing aliasing, ghosting or other visual issues"
 msgstr "Marque isto se estiver enfrentando problemas visuais, como aliasing, fantasmas ou outros problemas visuais"
-
 
 
 msgid "Toggle fullscreen mode"
 msgstr "Ativar/desativar modo tela cheia"
 
 
-
 msgid "Toggle last workspace"
-msgstr ""
-
+msgstr "Alternar para o último workspace"
 
 
 msgid "Toggle terminal window"
 msgstr "Alternar janela do terminal"
 
 
-
 msgid "Toggles the Tabby window visibility"
 msgstr "Alterna a visibilidade da janela da aba"
-
 
 
 msgid "Top"
 msgstr "Topo"
 
 
-
 msgid "Trim whitespace and newlines"
 msgstr "Aparar espaços em branco e linhas novas"
-
 
 
 msgid "Try again"
 msgstr "Tentar novamente"
 
 
-
 msgid "Ungrouped"
 msgstr "Desagrupado"
-
 
 
 msgid "Uninstall"
 msgstr "Desinstalar"
 
 
-
 msgid "Unknown"
 msgstr "Desconhecido"
-
 
 
 msgid "Unknown secret of type {type} for {key}"
 msgstr "Chave desconhecida do tipo {type} para {key}"
 
 
-
 msgid "Untitled group"
-msgstr ""
-
+msgstr "Grupo sem título"
 
 
 msgid "Untitled workspace"
-msgstr ""
-
+msgstr "Workspace sem título"
 
 
 msgid "Up"
 msgstr "Para cima"
 
 
-
 msgid "Upgrade to {version}"
 msgstr "Fazer upgrade para {version}"
-
 
 
 msgid "Upload"
 msgstr "Transferir"
 
 
-
 msgid "Upload as a new config"
 msgstr "Fazer upload como uma nova configuração"
 
 
-
 msgid "Upload files"
-msgstr ""
-
+msgstr "Enviar arquivos"
 
 
 msgid "Upload folder"
-msgstr ""
-
+msgstr "Enviar pasta"
 
 
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Use {altKeyName} como Meta key"
 
 
-
 msgid "Use ConPTY"
 msgstr "Usar ConPTY"
-
 
 
 msgid "User default"
 msgstr "Usuário padrão"
 
 
-
 msgid "Username"
 msgstr "Nome de usuário"
 
 
-
 msgid "Username for {host}"
-msgstr ""
-
+msgstr "Nome de usuário para {host}"
 
 
 msgid "Using CONNECT method"
 msgstr "Usando o método CONNECT"
 
 
-
 msgid "Using saved password"
-msgstr ""
-
+msgstr "Usando senha salva"
 
 
 msgid "Vault"
 msgstr "Cofre"
 
 
-
 msgid "Vault is an always-encrypted container for secrets such as SSH passwords and private key passphrases."
 msgstr "O Cofre é um contêiner sempre criptografado para segredos, como senhas de SSH e senhas de chave privada."
-
 
 
 msgid "Vault is empty"
 msgstr "O cofre está vazio"
 
 
-
 msgid "Vault is locked"
 msgstr "O cofre está trancado"
-
 
 
 msgid "Vault is not configured"
 msgstr "O cofre não está configurado"
 
 
-
 msgid "Vault master passphrase needs to be set to allow storing secrets"
 msgstr "A senha mestre do cofre precisa ser definida para permitir armazenamento"
-
 
 
 msgid "Verify host keys when connecting"
 msgstr "Verificar as chaves do host ao conectar"
 
 
-
 msgid "Version"
 msgstr "Versão"
-
 
 
 msgid "Version: {version}"
 msgstr "Versão: {version}"
 
 
-
 msgid "Vibrancy"
 msgstr "Vibração"
-
 
 
 msgid "Visual"
 msgstr "Visual"
 
 
-
 msgid "Warn on multi-line paste"
 msgstr "Avisar ao colar multi-linha"
-
 
 
 msgid "Warn when closing active connections"
 msgstr "Avisar ao fechar conexões ativas"
 
 
-
 msgid "Warning: remote host's key has suddenly changed!"
 msgstr "Aviso: a chave do host remoto mudou repentinamente!"
-
 
 
 msgid "Welcome"
 msgstr "Bem-vindo"
 
 
-
 msgid "What's new"
 msgstr "Novidades"
-
 
 
 msgid "When a session ends"
 msgstr "Quando uma sessão termina"
 
 
-
 msgid "When enabled, links are only clickable while holding this key"
 msgstr "Quando ativado, os links só são clicáveis enquanto segura esta chave"
-
 
 
 msgid "When WinSCP is detected, you can launch an SCP session from the context menu."
 msgstr "Quando o WinSCP é detectado, você pode iniciar uma sessão SCP no menu de contexto."
 
 
-
 msgid "Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning."
-msgstr ""
-
+msgstr "Se as cores geradas do tema claro devem ser invertidas. Isso ajuda a dar mais significado semântico à paleta de 256 cores."
 
 
 msgid "Will prevent the SSH greeting from showing up"
 msgstr "Impede que a saudação por SSH apareça"
 
 
-
 msgid "Window"
 msgstr "Janela"
-
 
 
 msgid "Window dimension along the edge"
 msgstr "Dimensão da janela ao longo da borda"
 
 
-
 msgid "Window dimension away from the edge"
 msgstr "Dimensão da janela fora da borda"
-
 
 
 msgid "Windows"
 msgstr "Janelas"
 
 
-
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
 msgstr "Windows 10 Compilação 18309 ou superior é recomendada para ConPTY"
 
 
-
 msgid "Windows Terminal"
-msgstr ""
-
+msgstr "Windows Terminal"
 
 
 msgid "WinSCP path"
 msgstr "Caminho do WinSCP"
 
 
-
 msgid "Word separators"
 msgstr "Separadores de palavra"
-
 
 
 msgid "Working directory"
 msgstr "Diretório de trabalho"
 
 
-
 msgid "Working directory detection"
 msgstr "Detectar de diretório de trabalho"
 
 
-
 msgid "Workspace {number}"
-msgstr ""
-
+msgstr "Workspace {number}"
 
 
 msgid "Workspace bar location"
-msgstr ""
-
+msgstr "Localização da barra de workspaces"
 
 
 msgid "Workspace bar width"
-msgstr ""
-
+msgstr "Largura da barra de workspaces"
 
 
 msgid "Workspaces"
-msgstr ""
-
+msgstr "Workspaces"
 
 
 msgid "X11 forwarding"
 msgstr "Encaminhamento X11"
 
 
-
 msgid "Xany"
-msgstr ""
-
+msgstr "Xany"
 
 
 msgid "XOFF"
-msgstr ""
-
+msgstr "XOFF"
 
 
 msgid "XON"
-msgstr ""
-
+msgstr "XON"
 
 
 msgid "xterm (canvas)"
-msgstr ""
-
+msgstr "xterm (canvas)"
 
 
 msgid "xterm (WebGL)"
-msgstr ""
-
+msgstr "xterm (WebGL)"
 
 
 msgid "Yellow"
 msgstr "Amarelo"
 
 
-
 msgid "You can change it later, but it's unrecoverable if forgotten."
 msgstr "Você pode mudá-lo mais tarde, mas é inrecuperável se esquecido."
-
 
 
 msgid "You could be under a man-in-the-middle attack right now, or the host key could have just been changed."
 msgstr "Você pode estar sob um ataque no meio agora mesmo, ou a chave do anfitrião poderia ter sido alterada."
 
 
-
 msgid "Zoom in"
 msgstr "Aumentar zoom"
-
 
 
 msgid "Zoom out"
 msgstr "Diminuir zoom"
 
 
-
 msgid "Master passphrase"
-msgstr ""
+msgstr "Senha mestra"
 
 
 msgid "Split into unescaped arguments"
-msgstr ""
+msgstr "Dividir em argumentos sem escape"
 
 
 msgid "Combine into a single escaped command"
-msgstr ""
+msgstr "Combinar em um único comando com escape"
 
 
 msgid "Variable name"
-msgstr ""
+msgstr "Nome da variável"
 
 
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 
 msgid "Home directory"
-msgstr ""
+msgstr "Diretório inicial"
 
 
 msgid "Ask every time"
-msgstr ""
+msgstr "Perguntar sempre"
 
 
 msgid "Response"
-msgstr ""
+msgstr "Resposta"
 
 
 msgid "Filter..."
-msgstr ""
+msgstr "Filtrar..."
 
 
 msgid "Auto-detect"
-msgstr ""
+msgstr "Detecção automática"
 
 
 msgid "Foreground"
-msgstr ""
+msgstr "Primeiro plano"
 
 
 msgid "Background"
-msgstr ""
+msgstr "Fundo"
 
 
 msgid "Cursor color"
-msgstr ""
+msgstr "Cor do cursor"
 
 
 msgid "Block cursor foreground"
-msgstr ""
+msgstr "Primeiro plano do cursor de bloco"
 
 
 msgid "Selection background"
-msgstr ""
+msgstr "Fundo da seleção"
 
 
 msgid "Selection foreground"
-msgstr ""
+msgstr "Primeiro plano da seleção"
 
 
 msgid "ANSI color {idx}"
-msgstr ""
+msgstr "Cor ANSI {idx}"
 
 
 msgid "Expect"
-msgstr ""
+msgstr "Expect"
 
 
 msgid "Send"
-msgstr ""
+msgstr "Enviar"
 
 
 msgid "Shell"
-msgstr ""
+msgstr "Shell"
 
 msgid "Menu"
-msgstr ""
+msgstr "Menu"
 
 
