@@ -403,8 +403,9 @@ ngx-colors-panel .opened {
         color: var(--bs-body-color) !important;
     }
 
-    .button svg {
-        fill: white;
+    .button svg,
+    .colors .add svg {
+        fill: var(--bs-body-color);
     }
 }
 
