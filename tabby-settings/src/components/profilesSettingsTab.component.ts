@@ -129,14 +129,17 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
     }
 
     async showProfileEditModal (profile: PartialProfile<Profile>): Promise<PartialProfile<Profile>|null> {
+        const provider = this.profilesService.providerForProfile(profile)
+        if (!provider) {
+            // The plugin that owns this profile type is disabled (the profile
+            // itself remains in the config) — the edit modal cannot initialize
+            // without a provider, so silently no-op.
+            return null
+        }
         const modal = this.ngbModal.open(
             EditProfileModalComponent,
             { size: 'lg' },
         )
-        const provider = this.profilesService.providerForProfile(profile)
-        if (!provider) {
-            throw new Error('Cannot edit a profile without a provider')
-        }
         modal.componentInstance.partialProfile = deepClone(profile)
         modal.componentInstance.profileProvider = provider
 
