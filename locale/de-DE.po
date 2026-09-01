@@ -2160,6 +2160,9 @@ msgid "Show profile selector"
 msgstr "Profilauswahl anzeigen"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "Profilseitenleiste anzeigen oder ausblenden"
+
 msgid "Show profile sidebar"
 msgstr "Profilseitenleiste anzeigen"
 

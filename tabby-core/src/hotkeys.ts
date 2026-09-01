@@ -19,6 +19,10 @@ export class AppHotkeyProvider extends HotkeyProvider {
             name: this.translate.instant('Toggle fullscreen mode'),
         },
         {
+            id: 'toggle-profile-tree',
+            name: this.translate.instant('Show or hide the profile sidebar'),
+        },
+        {
             id: 'rename-tab',
             name: this.translate.instant('Rename workspace'),
         },

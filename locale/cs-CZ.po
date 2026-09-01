@@ -2160,6 +2160,9 @@ msgid "Show profile selector"
 msgstr "Zobrazit výběr profilu"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "Zobrazit nebo skrýt postranní panel profilů"
+
 msgid "Show profile sidebar"
 msgstr "Zobrazit postranní panel profilů"
 

@@ -2136,6 +2136,10 @@ msgid "Show defaults"
 msgstr ""
 
 
+msgid "Show or hide the profile sidebar"
+msgstr ""
+
+
 msgid "Show profile icon on the workspace"
 msgstr ""
 

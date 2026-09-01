@@ -34,18 +34,13 @@ export class ProfileTreeComponent extends BaseComponent {
 
     panelMinWidth = 200
     panelMaxWidth = 600
-    // Below this released width the panel hides; between here and panelMinWidth
-    // it snaps back to panelMinWidth (avoids accidental collapse).
+    // Below this released width the panel closes entirely; between here and
+    // panelMinWidth it snaps back to panelMinWidth (avoids accidental close).
     panelCollapseThreshold = 30
-    panelCollapsed: boolean = window.localStorage.profileTreeCollapsed === 'true'
-    panelInternalWidth: number = this.panelCollapsed ? 0 : parseInt(window.localStorage.profileTreeWidth ?? '300')
+    panelInternalWidth: number = parseInt(window.localStorage.profileTreeWidth ?? '300')
     panelStartWidth = this.panelInternalWidth
     panelIsResizing = false
     panelStartX = 0
-
-    @HostBinding('class.collapsed') get isCollapsed (): boolean {
-        return this.panelCollapsed
-    }
 
     @HostBinding('class.resizing') get isResizing (): boolean {
         return this.panelIsResizing
@@ -409,7 +404,7 @@ export class ProfileTreeComponent extends BaseComponent {
     startResize (event: MouseEvent): void {
         this.panelIsResizing = true
         this.panelStartX = event.clientX
-        this.panelStartWidth = this.panelCollapsed ? 0 : this.panelWidth
+        this.panelStartWidth = this.panelWidth
         event.preventDefault()
     }
 
@@ -417,14 +412,11 @@ export class ProfileTreeComponent extends BaseComponent {
     onMouseMove (event: MouseEvent): void {
         if (!this.panelIsResizing) { return }
         const delta = event.clientX - this.panelStartX
-        // The width tracks the mouse continuously (0..max); the collapse/min
+        // The width tracks the mouse continuously (0..max); the close/min
         // decision is deferred to mouseup so the handle never teleports under
         // the cursor.
         const width = Math.max(0, Math.min(this.panelMaxWidth, this.panelStartWidth + delta))
         this.panelWidth = width
-        if (width > 0 && this.panelCollapsed) {
-            this.panelCollapsed = false
-        }
         this.cdr.markForCheck()
     }
 
@@ -432,14 +424,14 @@ export class ProfileTreeComponent extends BaseComponent {
     stopResize (): boolean {
         this.panelIsResizing = false
         if (this.panelWidth < this.panelCollapseThreshold) {
-            this.panelCollapsed = true
-            this.panelWidth = 0
+            // Released near the left edge: close the panel entirely, it can
+            // be re-enabled from the settings or the hotkey.
+            this.config.store.showProfileTree = false
+            this.config.save()
         } else {
-            this.panelCollapsed = false
             this.panelWidth = Math.min(this.panelMaxWidth, Math.max(this.panelMinWidth, this.panelWidth))
+            window.localStorage.profileTreeWidth = this.panelWidth
         }
-        window.localStorage.profileTreeWidth = this.panelWidth
-        window.localStorage.profileTreeCollapsed = JSON.stringify(this.panelCollapsed)
         this.cdr.markForCheck()
         return true
     }

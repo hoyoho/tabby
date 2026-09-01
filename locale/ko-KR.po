@@ -2160,6 +2160,9 @@ msgid "Show profile selector"
 msgstr "프로필 선택창 열기"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "프로필 사이드바 표시/숨기기"
+
 msgid "Show profile sidebar"
 msgstr "프로필 사이드바 표시"
 

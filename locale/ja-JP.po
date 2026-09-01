@@ -2160,6 +2160,9 @@ msgid "Show profile selector"
 msgstr "プロファイルセレクターを表示"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "プロファイルのサイドバーの表示/非表示"
+
 msgid "Show profile sidebar"
 msgstr "プロファイルのサイドバーを表示"
 

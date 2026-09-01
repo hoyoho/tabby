@@ -2,6 +2,8 @@ hotkeys:
   toggle-fullscreen:
     - 'F11'
     - 'Alt-Enter'
+  toggle-profile-tree:
+    - 'Ctrl-Shift-B'
   close-tab:
     - 'Ctrl-Shift-W'
   reopen-tab:

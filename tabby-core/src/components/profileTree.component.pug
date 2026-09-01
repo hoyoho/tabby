@@ -74,6 +74,6 @@
                         ng-container(*ngFor='let child of group.children')
                             ng-container(*ngTemplateOutlet='recursiveGroup; context: {$implicit: child, depth: depth + 1}')
 
-.grabber(
+.sash(
     (mousedown)='startResize($event)'
 )

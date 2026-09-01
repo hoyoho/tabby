@@ -2160,6 +2160,9 @@ msgid "Show profile selector"
 msgstr "Wys profielkieser"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "Wys of verberg die profielsybalk"
+
 msgid "Show profile sidebar"
 msgstr "Wys profielsybalk"
 

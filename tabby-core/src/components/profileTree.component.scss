@@ -2,10 +2,22 @@
     background-color: var(--theme-bg-more-2);
     position: relative;
     border-right: 1px solid var(--theme-secondary);
+    display: flex;
+
+    // As a grid item the host would otherwise be floored at its intrinsic
+    // min-content width (~21px: .p-2 padding + sash), stalling the drag
+    // before the panel can be dragged shut.
+    min-width: 0;
+    overflow: hidden;
 
     &:not(.resizing) {
         transition: width 0.12s ease;
     }
+}
+
+.p-2 {
+    flex: 1 1 0%;
+    min-width: 0;
 }
 
 input {
@@ -91,31 +103,29 @@ input {
     }
 }
 
-.grabber {
-    position: absolute;
+// VS Code-style sash: a full-height strip sitting between the tree and the
+// session area (in normal flow, so it never overlaps the session). Invisible
+// while idle, highlighted on hover and while dragging. Releasing a drag near
+// the left edge closes the panel entirely (re-enable from settings/hotkey).
+.sash {
+    position: relative;
     z-index: 1;
-    width: 7px;
-    height: 25px;
-    display: block;
-    background-color: var(--theme-secondary-fg);
-    border: 3px solid var(--theme-secondary);
-    border-radius: 0.4rem;
-    top: 50%;
-    right: -4px;
-    cursor: col-resize;
+    flex: none;
+    width: 4px;
+    cursor: ew-resize;
+    background: transparent;
     -webkit-app-region: no-drag;
-}
 
-:host.collapsed {
-    border-right: none;
-    overflow: visible;
-
-    .p-2 {
-        display: none;
+    // The visible hover/drag highlight fills the sash
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: transparent;
     }
 
-    .grabber {
-        right: auto;
-        left: 2px;
+    &:hover::before,
+    :host(.resizing) &::before {
+        background-color: var(--theme-primary);
     }
 }

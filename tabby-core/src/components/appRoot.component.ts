@@ -149,6 +149,10 @@ export class AppRootComponent {
             if (hotkey === 'toggle-fullscreen') {
                 hostWindow.toggleFullscreen()
             }
+            if (hotkey === 'toggle-profile-tree') {
+                this.config.store.showProfileTree = !this.config.store.showProfileTree
+                this.config.save()
+            }
         })
 
         this.hostWindow.windowCloseRequest$.subscribe(async () => {

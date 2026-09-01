@@ -2152,6 +2152,10 @@ msgid "Show defaults"
 msgstr "顯示預設檔"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "顯示或隱藏設定檔側邊欄"
+
+
 msgid "Show profile icon on the workspace"
 msgstr "在工作區上顯示設定檔圖示"
 

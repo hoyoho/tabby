@@ -2161,6 +2161,9 @@ msgid "Show profile selector"
 msgstr "Profil seçiciyi göster"
 
 
+msgid "Show or hide the profile sidebar"
+msgstr "Profil kenar çubuğunu göster veya gizle"
+
 msgid "Show profile sidebar"
 msgstr "Profil kenar çubuğunu göster"
 

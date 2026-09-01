@@ -1,6 +1,8 @@
 hotkeys:
   toggle-fullscreen:
     - 'Ctrl+⌘+F'
+  toggle-profile-tree:
+    - '⌘-Shift-B'
   close-tab:
     - '⌘-W'
   reopen-tab:
