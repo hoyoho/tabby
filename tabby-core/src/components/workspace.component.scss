@@ -22,11 +22,11 @@
     }
 }
 
-// 消除 pane 内终端与标题栏之间的顶部间隙（内容器 margin-top）
 ::ng-deep split-tab > .child .content,
 ::ng-deep split-tab > .pane-tab-view .content {
     margin-top: 0 !important;
     margin-right: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 :host > .pane-header {
