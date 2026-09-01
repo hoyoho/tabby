@@ -187,7 +187,10 @@ function menuShapeOf (item: MenuItemOptions): any {
         // Normalize presentation fields so the legacy assembly (type: undefined,
         // no label) and the registry round-trip (type: 'normal', label: '') are
         // compared on equal footing — only real structural drift should warn.
-        type: item.type ?? 'normal',
+        // 'submenu' is likewise presentation-only: the legacy parent passes
+        // `type: undefined + submenu` while the registry rewrites it to
+        // 'submenu'; presence is already encoded by the submenu field itself.
+        type: item.type === 'submenu' ? 'normal' : (item.type ?? 'normal'),
         label: item.label ?? '',
         sublabel: item.sublabel,
         commandLabel: item.commandLabel,
