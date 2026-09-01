@@ -17,6 +17,37 @@
 
 $tab-border-radius: 4px;
 
+.window {
+    display: flex;
+}
+
+// With tabs on top the tab bar doubles as the window title bar, so it must
+// span the full window width; the profile tree and the session area sit side
+// by side underneath it. `display: contents` hoists the tab bar and the
+// session container out of .content.main so the grid can place them.
+.window.tabs-on-top {
+    display: grid;
+    grid-template-areas: 'tab-bar tab-bar' 'tree content';
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+
+    > profile-tree {
+        grid-area: tree;
+    }
+
+    > .content.main {
+        display: contents;
+
+        > .tab-bar {
+            grid-area: tab-bar;
+        }
+
+        > .content {
+            grid-area: content;
+        }
+    }
+}
+
 .wrap {
   display: flex;
   width: 100vw;

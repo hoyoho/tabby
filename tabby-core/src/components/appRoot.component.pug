@@ -5,11 +5,14 @@ title-bar(
   [class.inset]='hostApp.platform == Platform.macOS && !hostWindow.isFullscreen'
 )
 
-.window.h-100.d-flex
+.window.h-100(
+    [class.tabs-on-top]='config.store?.appearance?.tabsLocation == "top"',
+)
     profile-tree(
         *ngIf='ready && config.store.showProfileTree',
         [class.mac-inset]='hostApp.platform == Platform.macOS \
-        && !hostWindow.isFullscreen'
+        && !hostWindow.isFullscreen \
+        && config.store.appearance.tabsLocation != "top"'
     )
 
     .content.main.h-100(
@@ -27,8 +30,8 @@ title-bar(
             app-menu(*ngIf='hostApp.platform !== Platform.macOS && !isTitleBarNeeded()')
             .inset.background(*ngIf='hostApp.platform == Platform.macOS \
             && !hostWindow.isFullscreen \
-            && (config.store.appearance.tabsLocation == "top" || config.store.appearance.tabsLocation == "left") \
-            && !config.store.showProfileTree')
+            && (config.store.appearance.tabsLocation == "top" \
+            || (config.store.appearance.tabsLocation == "left" && !config.store.showProfileTree))')
             .tabs(
                 cdkDropList,
                 [cdkDropListOrientation]='(config.store.appearance.tabsLocation == "top" || config.store.appearance.tabsLocation == "bottom") ? "horizontal" : "vertical"',
