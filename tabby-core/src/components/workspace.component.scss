@@ -26,6 +26,7 @@
 ::ng-deep split-tab > .child .content,
 ::ng-deep split-tab > .pane-tab-view .content {
     margin-top: 0 !important;
+    margin-right: 0 !important;
 }
 
 :host > .pane-header {
