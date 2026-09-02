@@ -1,6 +1,5 @@
 import { Observable, Subject, first, auditTime, debounce, interval } from 'rxjs'
 import { Spinner } from 'cli-spinner'
-import colors from 'ansi-colors'
 import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
 import { AppService, ConfigService, SessionTab, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
@@ -67,7 +66,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     session: BaseSession|null = null
     savedState?: any
-    savedStateIsLive = false
+    /** Set when a saved terminal state was restored into this tab (drag/recovery). */
+    protected hasRestoredState = false
 
     @Input() zoom = 0
 
@@ -430,10 +430,13 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
         this.frontendIsReady = true
         if (this.savedState) {
             this.frontend!.restoreState(this.savedState)
-            if (!this.savedStateIsLive) {
-                this.frontend!.write('\r\n\r\n')
-                this.frontend!.write(colors.bgWhite.black(' * ') + colors.bgBlackBright.white(' History restored '))
-                this.frontend!.write('\r\n\r\n')
+            // Mark before any async session continuation (e.g. the
+            // clear-on-connect path) gets a chance to wipe the scrollback.
+            this.hasRestoredState = true
+            // Swallow the ConPTY initial clear so it cannot wipe the
+            // freshly restored scrollback (Windows local sessions).
+            if (this.frontend instanceof XTermFrontend) {
+                this.frontend.armClearSuppression()
             }
         }
 

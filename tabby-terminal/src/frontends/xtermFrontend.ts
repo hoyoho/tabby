@@ -471,6 +471,15 @@ export class XTermFrontend extends Frontend {
     }
 
     async write (data: string): Promise<void> {
+        // ConPTY (Windows local sessions) opens with a full-screen clear +
+        // blank repaint, which would wipe a freshly restored scrollback.
+        // When armed (right after restoring state), swallow that first clear.
+        if (this.suppressNextClearSequence) {
+            if (/\x1b\[2J|\x1b\[3J/.test(data)) {
+                data = data.replace(/\x1b\[(?:2|3)J/g, '').replace(/\x1b\[H/g, '').replace(/^(?:\r?\n)+/, '')
+                this.suppressNextClearSequence = false
+            }
+        }
         // Capture pinned state before the write — the async write yields
         // to the event loop, and RAF callbacks (e.g. from wheel events)
         // could change pinnedToBottom mid-write.
@@ -666,8 +675,21 @@ export class XTermFrontend extends Frontend {
         return this.serializeAddon.serialize({
             excludeAltBuffer: true,
             excludeModes: true,
-            scrollback: 1000,
+            // Honor the user's configured scrollback so drag transfers and
+            // recovery snapshots carry the full visible history.
+            scrollback: this.configService.store.terminal.scrollbackLines,
         })
+    }
+
+    private suppressNextClearSequence = false
+
+    /**
+     * Arm right after restoring scrollback state: swallows the initial
+     * full-screen clear that ConPTY emits when a Windows session starts,
+     * which would otherwise wipe the freshly restored history.
+     */
+    armClearSuppression (): void {
+        this.suppressNextClearSequence = true
     }
 
     restoreState (state: string): void {

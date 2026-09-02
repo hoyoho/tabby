@@ -17,6 +17,8 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
 
     protected reconnectOffered = false
     protected isDisconnectedByHand = false
+    // hasRestoredState is declared on BaseTerminalTabComponent and set in
+    // its onFrontendReady() when a saved state was restored.
 
     constructor (protected injector: Injector) {
         super(injector)
@@ -124,7 +126,9 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
     }
 
     private clearServiceMessagesOnConnect (): void {
-        if (this.profile.clearServiceMessagesOnConnect && this.session?.open) {
+        // A restored buffer is live session history, not leftover service
+        // messages — clearing it would blank out the transferred scrollback.
+        if (this.profile.clearServiceMessagesOnConnect && this.session?.open && !this.hasRestoredState) {
             this.frontend?.clear()
         }
     }
