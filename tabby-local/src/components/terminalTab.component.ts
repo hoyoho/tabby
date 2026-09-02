@@ -50,7 +50,6 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
 
     protected onFrontendReady (): void {
         this.initializeSession(this.size.columns, this.size.rows)
-        this.savedStateIsLive = this.profile.options.restoreFromPTYID === this.session?.getID()
         super.onFrontendReady()
     }
 

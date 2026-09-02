@@ -99,12 +99,29 @@ export class Session extends BaseSession {
             // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             let cwd = options.cwd || process.env.HOME
 
+            // WSL launchers (system32 wsl.exe / bash.exe) never inherit the
+            // Windows working directory — the distro always starts in the
+            // default user's home. Forward the requested directory explicitly
+            // via `--cd`, which accepts both Linux and Windows paths.
+            let wslCdArgs: string[] = []
+            if (this.hostApp.platform === Platform.Windows && options.cwd) {
+                const exe = options.command.toLowerCase()
+                if (exe.endsWith('\\system32\\wsl.exe') || exe === 'wsl.exe' || exe.endsWith('\\system32\\bash.exe')) {
+                    wslCdArgs = ['--cd', options.cwd]
+                    if (!fsSync.existsSync(options.cwd)) {
+                        // Linux-side path: keep the ConPTY process in a real
+                        // Windows directory, the real cwd rides on --cd.
+                        cwd = process.env.USERPROFILE ?? process.env.HOME
+                    }
+                }
+            }
+
             if (!fsSync.existsSync(cwd!)) {
                 console.warn('Ignoring non-existent CWD:', cwd)
                 cwd = undefined
             }
 
-            pty = await this.ptyInterface.spawn(options.command, options.args, {
+            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], {
                 name: 'xterm-256color',
                 cols: options.width ?? 80,
                 rows: options.height ?? 30,

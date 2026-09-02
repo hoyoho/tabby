@@ -84,6 +84,9 @@ export class ElectronPTYProxy extends PTYProxy {
         for (const k of this.subscriptions.keys()) {
             ipcRenderer.off(k, this.subscriptions.get(k))
         }
+        // Notify the main process that this window no longer owns the PTY so
+        // a kept-alive (dragged) session enters the abandonment countdown.
+        ipcRenderer.send('pty:detach', this.id)
     }
 
     async resize (columns: number, rows: number): Promise<void> {

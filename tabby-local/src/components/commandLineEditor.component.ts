@@ -32,7 +32,9 @@ export class CommandLineEditorComponent {
     }
 
     parseCommand () {
-        const args = shellQuote.parse(this.command)
+        // `shell-quote` represents shell control operators (`|`, `&&`, …) as
+        // objects; a session command line never contains them — keep raw strings.
+        const args = shellQuote.parse(this.command).filter((x): x is string => typeof x === 'string')
         this.model.command = args[0] ?? ''
         this.model.args = args.slice(1)
     }
