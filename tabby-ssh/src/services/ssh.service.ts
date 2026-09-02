@@ -122,7 +122,7 @@ export class SSHService {
 
         let tmpFile: tmp.FileResult|null = null
         try {
-            if (session.activePrivateKey && session.profile.options.privateKeys.length > 0) {
+            if (session.usedPrivateKey && session.profile.options.privateKeys.length > 0) {
                 const profile = session.profile
                 const privateKeyPairs = await this.convertPrivateKeyFileToPuTTYFormat(profile)
                 tmpFile = privateKeyPairs.privateKeyFile

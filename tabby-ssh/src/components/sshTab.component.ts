@@ -1,7 +1,6 @@
-import * as russh from 'russh'
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector, HostListener } from '@angular/core'
+import { Component, Injector, HostListener, Input } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { Platform, ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
@@ -29,6 +28,10 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     sftpPanelVisible = false
     sftpPath = '/'
     activeKIPrompt: KeyboardInteractivePrompt|null = null
+
+    /** Set by the recovery provider when re-attaching a live connection. */
+    @Input() restoreConnectionId?: string|null
+    @Input() restoreChannelId?: string|null
 
     constructor (
         injector: Injector,
@@ -72,8 +75,23 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         super.ngOnInit()
     }
 
-    async setupOneSession (injector: Injector, profile: SSHProfile, multiplex = true): Promise<SSHSession> {
-        let session = await this.sshMultiplexer.getSession(profile)
+    // eslint-disable-next-line max-statements
+    async setupOneSession (injector: Injector, profile: SSHProfile, multiplex = true, restoreConnectionId?: string|null): Promise<SSHSession> {
+        let session: SSHSession|null = null
+        let jumpSession: SSHSession|null = null
+
+        if (restoreConnectionId) {
+            // Prefer a live transferred connection over the multiplexer.
+            session = new SSHSession(injector, profile)
+            if (!await session.attach(restoreConnectionId)) {
+                session = null
+            }
+        }
+
+        if (!session) {
+            session = await this.sshMultiplexer.getSession(profile)
+        }
+
         if (!multiplex || !session || !profile.options.reuseSession) {
             session = new SSHSession(injector, profile)
 
@@ -84,36 +102,22 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
                     throw new Error(`${profile.options.host}: jump host "${profile.options.jumpHost}" not found in your config`)
                 }
 
-                const jumpSession = await this.setupOneSession(
+                jumpSession = await this.setupOneSession(
                     this.injector,
                     this.profilesService.getConfigProxyForProfile<SSHProfile>(jumpConnection),
                 )
 
                 jumpSession.ref()
-                session.willDestroy$.subscribe(() => jumpSession.unref())
+                session.willDestroy$.subscribe(() => jumpSession!.unref())
                 jumpSession.willDestroy$.subscribe(() => {
                     if (session?.open) {
                         session.destroy()
                     }
                 })
-
-                if (!(jumpSession.ssh instanceof russh.AuthenticatedSSHClient)) {
-                    throw new Error('Jump session is not authenticated yet somehow')
-                }
-
-                try {
-                    session.jumpChannel = await jumpSession.ssh.openTCPForwardChannel({
-                        addressToConnectTo: profile.options.host,
-                        portToConnectTo: profile.options.port ?? 22,
-                        originatorAddress: '127.0.0.1',
-                        originatorPort: 0,
-                    })
-                } catch (err) {
-                    jumpSession.emitServiceMessage(colors.bgRed.black(' X ') + ` Could not set up port forward on ${jumpConnection.name}`)
-                    throw err
-                }
             }
         }
+
+        session = session!
 
         this.attachSessionHandler(session.serviceMessage$, msg => {
             msg = msg.replace(/\n/g, '\r\n      ')
@@ -137,7 +141,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             this.startSpinner(this.translate.instant(_('Connecting')))
 
             try {
-                await session.start()
+                await session.start({ jumpConnectionId: jumpSession?.getID() ?? null })
             } finally {
                 this.stopSpinner()
             }
@@ -158,7 +162,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     }
 
     private async initializeSessionMaybeMultiplex (multiplex = true): Promise<void> {
-        this.sshSession = await this.setupOneSession(this.injector, this.profile, multiplex)
+        this.sshSession = await this.setupOneSession(this.injector, this.profile, multiplex, this.restoreConnectionId)
         const session = new SSHShellSession(this.injector, this.sshSession, this.profile)
 
         this.setSession(session)
@@ -168,7 +172,9 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             session.resize(this.size.columns, this.size.rows)
         })
 
-        await session.start()
+        await session.start({ restoreFromChannelId: this.restoreChannelId ?? null })
+        this.restoreConnectionId = null
+        this.restoreChannelId = null
 
         this.session?.resize(this.size.columns, this.size.rows)
     }
@@ -178,6 +184,8 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         try {
             await this.initializeSessionMaybeMultiplex(true)
         } catch {
+            this.restoreConnectionId = null
+            this.restoreChannelId = null
             try {
                 await this.initializeSessionMaybeMultiplex(false)
             } catch (e) {
@@ -191,6 +199,8 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
         return {
             ...(await super.getRecoveryToken(options)),
+            sshConnectionId: options?.includeState && this.sshSession?.getID() || null,
+            shellChannelId: options?.includeState && this.session?.getID() || null,
         }
     }
 
