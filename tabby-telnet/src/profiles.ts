@@ -14,7 +14,7 @@ export class TelnetProfilesService extends QuickConnectProfileProvider<TelnetPro
         options: {
             host: null,
             port: 23,
-            inputMode: 'local-echo',
+            inputMode: null,
             outputMode: null,
             inputNewlines: null,
             outputNewlines: 'crlf',
@@ -36,7 +36,10 @@ export class TelnetProfilesService extends QuickConnectProfileProvider<TelnetPro
                 options: {
                     host: '',
                     port: 23,
-                    inputMode: 'readline',
+                    // Real telnet servers negotiate ECHO/SGA and do their own
+                    // line editing — raw passthrough is the correct default.
+                    // 'readline'/'local-echo' remain selectable per profile.
+                    inputMode: null,
                     outputMode: null,
                     inputNewlines: null,
                     outputNewlines: 'crlf',
@@ -91,7 +94,7 @@ export class TelnetProfilesService extends QuickConnectProfileProvider<TelnetPro
             options: {
                 host,
                 port,
-                inputMode: 'readline',
+                inputMode: null,
                 outputNewlines: 'crlf',
             },
         }

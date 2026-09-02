@@ -1,7 +1,7 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector } from '@angular/core'
-import { Platform } from 'tabby-core'
+import { Component, Injector, Input } from '@angular/core'
+import { Platform, GetRecoveryTokenOptions } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
 import { TelnetProfile, TelnetSession } from '../session'
 
@@ -16,6 +16,9 @@ import { TelnetProfile, TelnetSession } from '../session'
 export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetProfile> {
     Platform = Platform
     session: TelnetSession|null = null
+
+    /** Set by the recovery provider when re-attaching a live telnet connection. */
+    @Input() restoreSocketId?: string|null
 
     // eslint-disable-next-line @typescript-eslint/no-useless-constructor
     constructor (
@@ -58,7 +61,8 @@ export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetPr
             })
 
             try {
-                await session.start()
+                await session.start(this.restoreSocketId ? { restoreFromSocketID: this.restoreSocketId } : undefined)
+                this.restoreSocketId = null
                 this.stopSpinner()
             } catch (e) {
                 this.stopSpinner()
@@ -67,6 +71,13 @@ export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetPr
             }
         } catch (e) {
             this.write(colors.black.bgRed(' X ') + ' ' + colors.red(e.message) + '\r\n')
+        }
+    }
+
+    override async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<any> {
+        return {
+            ...await super.getRecoveryToken(options),
+            socketId: options?.includeState && this.session?.getID() || null,
         }
     }
 

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import { Socket } from 'net'
+import { IpcRendererEvent, ipcRenderer } from 'electron'
 import colors from 'ansi-colors'
 import stripAnsi from 'strip-ansi'
 import { Injector } from '@angular/core'
@@ -58,18 +58,146 @@ class UnescapeFFMiddleware extends SessionMiddleware {
     }
 }
 
+type TelnetSocketEvent = 'open'|'data'|'close'|'error'
+
+/**
+ * Renderer-side stand-in for the telnet TCP socket. The real socket lives in
+ * the Electron main process (`app/lib/telnet.ts`); this proxy only forwards
+ * IPC events, mirroring how local PTYs are accessed via `ElectronPTYProxy`.
+ * The connection survives window closes/drag transfers as long as it is not
+ * explicitly killed.
+ */
+export class TelnetSocketProxy {
+    private id: string|null = null
+    private handlers = new Map<TelnetSocketEvent, Set<(...args: any[]) => void>>()
+    private wiredChannels = new Set<string>()
+
+    getID (): string|null {
+        return this.id
+    }
+
+    on (event: TelnetSocketEvent, handler: (...args: any[]) => void): void {
+        if (!this.handlers.has(event)) {
+            this.handlers.set(event, new Set())
+        }
+        this.handlers.get(event)!.add(handler)
+    }
+
+    /**
+     * Claims an existing main-process connection (cross-window transfer).
+     * Returns false if the connection is gone — caller falls back to a fresh
+     * connect.
+     */
+    async tryRestore (id: string): Promise<boolean> {
+        const ok: boolean = ipcRenderer.sendSync('telnet:attach', id)
+        if (!ok) {
+            return false
+        }
+        this.id = id
+        this.wire()
+        return true
+    }
+
+    async connect (port: number, host: string): Promise<void> {
+        const id: string = ipcRenderer.sendSync('telnet:spawn', host, port)
+        this.id = id
+        this.wire()
+        await new Promise<void>((resolve, reject) => {
+            const openHandler = () => {
+                cleanup()
+                resolve()
+            }
+            const errorHandler = (_e: IpcRendererEvent, message: string) => {
+                cleanup()
+                reject(new Error(message))
+            }
+            ipcRenderer.on(`telnet:${id}:open`, openHandler)
+            ipcRenderer.on(`telnet:${id}:error`, errorHandler)
+            const cleanup = () => {
+                ipcRenderer.off(`telnet:${id}:open`, openHandler)
+                ipcRenderer.off(`telnet:${id}:error`, errorHandler)
+            }
+        })
+    }
+
+    write (data: Buffer): void {
+        if (this.id) {
+            ipcRenderer.send('telnet:write', this.id, data)
+        }
+    }
+
+    /** Releases the connection without killing it (cross-window transfer). */
+    detach (): void {
+        if (this.id) {
+            ipcRenderer.send('telnet:detach', this.id)
+        }
+        this.unsubscribeAll()
+        this.id = null
+    }
+
+    destroy (): void {
+        if (this.id) {
+            ipcRenderer.send('telnet:kill', this.id)
+        }
+        this.unsubscribeAll()
+        this.id = null
+    }
+
+    unsubscribeAll (): void {
+        for (const channel of this.wiredChannels) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ipcRenderer.removeAllListeners(channel as any)
+        }
+        this.wiredChannels.clear()
+    }
+
+    private wire (): void {
+        if (!this.id) {
+            return
+        }
+        for (const [event, handlers] of this.handlers) {
+            const channel = `telnet:${this.id}:${event}`
+            if (this.wiredChannels.has(channel)) {
+                continue
+            }
+            this.wiredChannels.add(channel)
+            const listener = (_e: IpcRendererEvent, ...args: any[]) => {
+                for (const handler of [...handlers]) {
+                    handler(...args)
+                }
+                // Flow control: acknowledge received data so the main-process
+                // TelnetDataQueue keeps draining its in-flight window.
+                if (event === 'data' && Buffer.isBuffer(args[0])) {
+                    ipcRenderer.send('telnet:ack', this.id, args[0].length)
+                }
+            }
+            // Keep a stable reference so removeAllListeners below only ever
+            // touches channels this proxy owns.
+            ipcRenderer.on(channel, listener)
+        }
+    }
+}
+
 export class TelnetSession extends BaseSession {
     get serviceMessage$ (): Observable<string> { return this.serviceMessage }
 
     private translate: TranslateService
     private serviceMessage = new Subject<string>()
-    private socket: Socket
+    private socket: TelnetSocketProxy|null = null
     private streamProcessor: TerminalStreamProcessor
     private telnetProtocol = false
     private lastWidth = 0
     private lastHeight = 0
     private requestedOptions = new Set<number>()
     private telnetRemoteEcho = false
+    private destroying = false
+
+    /**
+     * When set, destroy() releases the underlying main-process connection
+     * without killing it — the target window of a cross-window drag re-attaches
+     * it by id, exactly like `keepPTYAlive` for local PTYs.
+     */
+    keepPTYAlive = false
 
     constructor (
         injector: Injector,
@@ -83,29 +211,40 @@ export class TelnetSession extends BaseSession {
         this.setLoginScriptsOptions(profile.options)
     }
 
-    async start (): Promise<void> {
-        this.socket = new Socket()
+    async start (options?: { restoreFromSocketID?: string|null }): Promise<void> {
+        const socket = this.socket = new TelnetSocketProxy()
+
+        socket.on('error', err => {
+            this.emitServiceMessage(colors.bgRed.black(' X ') + ` Socket error: ${err as any}`)
+            this.destroy()
+        })
+        socket.on('close', () => {
+            this.emitServiceMessage(this.translate.instant('Connection closed'))
+            this.destroy()
+        })
+        socket.on('data', data => this.onData(data as Buffer))
+
+        if (options?.restoreFromSocketID && await socket.tryRestore(options.restoreFromSocketID)) {
+            // Re-attached to the live main-process connection after a
+            // cross-window drag — skip handshake messaging and login scripts.
+            this.open = true
+            setTimeout(() => this.streamProcessor.start())
+            return
+        }
+
         this.emitServiceMessage(this.translate.instant('Connecting to {host}', { host: this.profile.options.host }))
 
-        return new Promise((resolve, reject) => {
-            this.socket.on('error', err => {
-                this.emitServiceMessage(colors.bgRed.black(' X ') + ` Socket error: ${err as any}`)
-                reject(err)
-                this.destroy()
-            })
-            this.socket.on('close', () => {
-                this.emitServiceMessage(this.translate.instant('Connection closed'))
-                this.destroy()
-            })
-            this.socket.on('data', data => this.onData(data))
-            this.socket.connect(this.profile.options.port ?? 23, this.profile.options.host, () => {
-                this.emitServiceMessage(this.translate.instant('Connected'))
-                this.open = true
-                setTimeout(() => this.streamProcessor.start())
-                this.loginScriptProcessor?.executeUnconditionalScripts()
-                resolve()
-            })
-        })
+        try {
+            await socket.connect(this.profile.options.port ?? 23, this.profile.options.host)
+        } catch (err) {
+            this.destroy()
+            throw err
+        }
+
+        this.emitServiceMessage(this.translate.instant('Connected'))
+        this.open = true
+        setTimeout(() => this.streamProcessor.start())
+        this.loginScriptProcessor?.executeUnconditionalScripts()
     }
 
     requestOption (cmd: TelnetCommands, option: TelnetOptions): void {
@@ -134,12 +273,12 @@ export class TelnetSession extends BaseSession {
 
     emitTelnet (command: TelnetCommands, option: TelnetOptions): void {
         this.logger.debug('>', TelnetCommands[command], TelnetOptions[option] || option)
-        this.socket.write(Buffer.from([TelnetCommands.IAC, command, option]))
+        this.socket?.write(Buffer.from([TelnetCommands.IAC, command, option]))
     }
 
     emitTelnetSuboption (option: TelnetOptions, value: Buffer): void {
         this.logger.debug('>', 'SUBOPTION', TelnetOptions[option], value)
-        this.socket.write(Buffer.from([
+        this.socket?.write(Buffer.from([
             TelnetCommands.IAC,
             TelnetCommands.SUBOPTION,
             option,
@@ -265,19 +404,44 @@ export class TelnetSession extends BaseSession {
         }
     }
 
+    getID (): string|null {
+        return this.socket?.getID() ?? null
+    }
+
     write (data: Buffer): void {
-        this.socket.write(data)
+        this.socket?.write(data)
     }
 
     kill (_signal?: string): void {
-        this.socket.destroy()
+        this.socket?.destroy()
     }
 
-    async destroy (): Promise<void> {
+    override async destroy (): Promise<void> {
+        if (this.destroying) {
+            return
+        }
+        this.destroying = true
+        if (this.keepPTYAlive) {
+            // Detach without killing the live main-process connection so the
+            // target window of a cross-window drag can re-attach it by id.
+            this.socket?.detach()
+            this.open = false
+            this.middleware.close()
+            this.closed.next()
+            this.destroyed.next()
+            this.closed.complete()
+            this.destroyed.complete()
+            this.output.complete()
+            this.binaryOutput.complete()
+            this.socket = null
+            return
+        }
         this.streamProcessor.close()
         this.serviceMessage.complete()
         this.kill()
         await super.destroy()
+        this.socket?.destroy()
+        this.socket = null
     }
 
     async getChildProcesses (): Promise<any[]> {

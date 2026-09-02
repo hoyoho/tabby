@@ -18,6 +18,7 @@ export class RecoveryProvider extends TabRecoveryProvider<TelnetTabComponent> {
             inputs: {
                 profile: this.injector.get(ProfilesService).getConfigProxyForProfile(recoveryToken.profile),
                 savedState: recoveryToken.savedState,
+                restoreSocketId: (recoveryToken as any).socketId || null,
             },
         }
     }
