@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "目前"
-
-
 msgid "Current color scheme"
 msgstr "目前配色方案"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "透過Sixel跳脫序列顯示圖片"
 
 
-msgid "Display on"
-msgstr "顯示在"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "在側邊欄顯示完整的設定檔樹。"
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "永遠貼齊在最上方"
 
 
-msgid "Dock the terminal"
-msgstr "貼齊終端機"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2200,10 +2192,6 @@ msgid "Slow feed"
 msgstr "逐字節接收"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "將視窗貼齊螢幕的其中一邊"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS 代理"
 
@@ -2761,5 +2749,3 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "選單"
-
-

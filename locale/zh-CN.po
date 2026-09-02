@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "当前"
-
-
 msgid "Current color scheme"
 msgstr "当前配色方案"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "通过 Sixel 转义序列显示图像"
 
 
-msgid "Display on"
-msgstr "显示于"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "在侧边栏显示完整的配置文件树。"
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "窗口保持置顶"
 
 
-msgid "Dock the terminal"
-msgstr "停靠终端"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2200,10 +2192,6 @@ msgid "Slow feed"
 msgstr "慢速发送"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "将窗口贴靠至屏幕的一侧"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS 代理"
 
@@ -2813,5 +2801,3 @@ msgstr "终端"
 
 msgid "Menu"
 msgstr "菜单"
-
-

@@ -1,20 +1,30 @@
-.app-menu-group([class.indented]='depth > 1')
-    ng-container(*ngIf='hasChildren')
-        button.app-menu-header(
-            [class.expanded]='expanded',
-            (click)='toggle()',
+ng-container(*ngIf='hasChildren')
+    .app-menu-sub(
+        (mouseenter)='setSubOpen(true)',
+        (mouseleave)='setSubOpen(false)',
+        (focusin)='setSubOpen(true)',
+        [class.open]='subOpen'
+    )
+        button.dropdown-item.app-menu-sub-toggle(
+            type='button',
+            (click)='openSub()',
         )
-            span {{item.label | translate}}
+            span.app-menu-item-icon(*ngIf='depth > 0')
+            span.app-menu-item-label {{item.label | translate}}
             i.fa.fa-chevron-right.app-menu-chevron
-        .app-menu-body(*ngIf='expanded')
+        .app-menu-submenu(
+            *ngIf='subOpen',
+            [class.has-nested]='hasNestedChildren'
+        )
             ng-container(*ngFor='let child of item.children')
                 .dropdown-divider(*ngIf='child.separatorBefore')
                 ng-container(*ngIf='child.type !== "separator"')
                     app-menu-node(
                         *ngIf='child.children?.length',
                         [item]='child',
-                        [depth]='depth + 1',
                         [onRun]='onRun',
+                        [resetKey]='resetKey',
+                        [depth]='depth + 1',
                     )
                     button.dropdown-item(
                         *ngIf='!child.children?.length',
@@ -22,13 +32,16 @@
                         [class.checked]='isChecked(child)',
                         (click)='runItem(child)',
                     )
-                        i.fa.fa-check.me-1(*ngIf='isChecked(child)')
-                        span {{child.label | translate}}
-    ng-container(*ngIf='!hasChildren')
-        button.dropdown-item(
-            [disabled]='!enabled',
-            [class.checked]='checked',
-            (click)='runItem(item)',
-        )
-            i.fa.fa-check.me-1(*ngIf='checked')
-            span {{item.label | translate}}
+                        span.app-menu-item-icon
+                            i.fa.fa-check.app-menu-check(*ngIf='isChecked(child)')
+                        span.app-menu-item-label {{child.label | translate}}
+
+ng-container(*ngIf='!hasChildren')
+    button.dropdown-item(
+        [disabled]='!enabled',
+        [class.checked]='checked',
+        (click)='runItem(item)',
+    )
+        span.app-menu-item-icon(*ngIf='depth > 0')
+            i.fa.fa-check.app-menu-check(*ngIf='checked')
+        span.app-menu-item-label {{item.label | translate}}

@@ -6,6 +6,8 @@ export interface AppMenuItem {
     checked?: boolean
     /** 菜单内排序权重（小在前），默认 0 */
     weight?: number
+    /** 子菜单项（渲染为展开组/子菜单） */
+    children?: AppMenuItem[]
 }
 
 export interface AppMenu {

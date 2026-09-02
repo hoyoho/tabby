@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Тренутно"
-
-
 msgid "Current color scheme"
 msgstr "Тренутна шема боја"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Прикажи слике преко Sixel излазних секвенци"
 
 
-msgid "Display on"
-msgstr "Прикажи на"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Prikazuje celo stablo profila u bočnoj traci."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "На врху осталих прозора"
 
 
-msgid "Dock the terminal"
-msgstr "Usidri terminal"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Sporo slanje"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Prilepljuje prozor uz ivicu ekrana"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS proksi"
 
@@ -2760,5 +2748,3 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "Meni"
-
-

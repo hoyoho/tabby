@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "현재"
-
-
 msgid "Current color scheme"
 msgstr "현재 색상 구성"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Sixel 이스케이프 시퀀스로 이미지 표시"
 
 
-msgid "Display on"
-msgstr "표시할 곳"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "사이드바에 전체 프로필 트리를 표시합니다."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "독을 항상 맨 위에"
 
 
-msgid "Dock the terminal"
-msgstr "터미널 도킹"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "저속 전송"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "화면 가장자리에 창을 스냅합니다."
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS 프록시"
 
@@ -2760,5 +2748,3 @@ msgstr "셸"
 
 msgid "Menu"
 msgstr "메뉴"
-
-

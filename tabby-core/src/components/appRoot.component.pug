@@ -1,7 +1,7 @@
 title-bar(
   *ngIf='ready && !hostWindow.isFullscreen && isTitleBarNeeded()',
-  (dblclick)='config.store.appearance.dock == "off" && toggleMaximize()',
-  [hideControls]='(hostApp.platform !== Platform.Linux || config.store.appearance.dock != "off") && !hostWindow.isFullscreen',
+  (dblclick)='!isDocked() && toggleMaximize()',
+  [hideControls]='(hostApp.platform !== Platform.Linux || isDocked()) && !hostWindow.isFullscreen',
   [class.inset]='hostApp.platform == Platform.macOS && !hostWindow.isFullscreen'
 )
 
@@ -25,7 +25,7 @@ title-bar(
         .tab-bar(
             *ngIf='!hostWindow.isFullscreen || config.store.appearance.tabsInFullscreen',
             [class.tab-bar-no-controls-overlay]='hostApp.platform == Platform.macOS',
-            (dblclick)='config.store.appearance.dock == "off" && !isTitleBarNeeded() && toggleMaximize()'
+            (dblclick)='!isDocked() && !isTitleBarNeeded() && toggleMaximize()'
         )
             app-menu(*ngIf='hostApp.platform !== Platform.macOS && !isTitleBarNeeded()')
             .inset.background(*ngIf='hostApp.platform == Platform.macOS \

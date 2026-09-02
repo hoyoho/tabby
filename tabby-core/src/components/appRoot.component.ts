@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Component, Input, HostListener, HostBinding, ViewChildren, ViewChild } from '@angular/core'
+import { Component, Input, HostListener, HostBinding, ViewChildren, ViewChild, Optional } from '@angular/core'
 import { trigger, style, animate, transition, state } from '@angular/animations'
 import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { CdkDragDrop } from '@angular/cdk/drag-drop'
@@ -23,6 +23,7 @@ import {
     HostWindowService,
     PlatformService,
     ActionSurface,
+    DockingService,
 } from '../api'
 import { ActionRegistry } from '../services/action.service'
 
@@ -96,6 +97,7 @@ export class AppRootComponent {
         log: LogService,
         ngbModal: NgbModal,
         _themes: ThemesService,
+        @Optional() private docking?: DockingService,
     ) {
         // document.querySelector('app-root')?.remove()
         this.logger = log.create('main')
@@ -276,6 +278,10 @@ export class AppRootComponent {
 
     toggleMaximize (): void {
         this.hostWindow.toggleMaximize()
+    }
+
+    isDocked (): boolean {
+        return !!this.docking?.isDocked
     }
 
     protected isTitleBarNeeded (): boolean {

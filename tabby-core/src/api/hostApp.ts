@@ -78,6 +78,14 @@ export abstract class HostAppService {
     get settingsUIRequest$ (): Observable<void> { return this.settingsUIRequest }
 
     /**
+     * Opens this window's Settings UI (used by the macOS application menu's
+     * Preferences item).
+     */
+    openSettings (): void {
+        this.settingsUIRequest.next()
+    }
+
+    /**
      * Fired when another window modified the config file
      */
     get configChangeBroadcast$ (): Observable<void> { return this.configChangeBroadcast }

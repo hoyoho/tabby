@@ -1,46 +1,87 @@
-.app-menu-group {
-    &.indented {
-        padding-left: 16px;
-    }
+.app-menu-sub {
+    position: relative;
 }
 
-.app-menu-header {
+.app-menu-item-icon {
+    display: inline-block;
+    width: 18px;
+    margin-right: 8px;
+    text-align: center;
+    flex: none;
+}
+
+.app-menu-item-label {
+    flex: 1;
+    min-width: 0;
+}
+
+.app-menu-sub-toggle {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     width: 100%;
-    padding: 7px 12px;
-    border: none;
-    background: transparent;
-    color: var(--bs-body-color);
     font-size: 13px;
-    font-weight: bold;
-    text-align: left;
     -webkit-app-region: no-drag;
 
-    &:hover {
-        background: var(--theme-secondary);
+    .app-menu-chevron {
+        margin-left: 16px;
+        font-size: 10px;
+        color: #aaa;
+        flex: none;
     }
 
-    &.expanded .app-menu-chevron {
-        transform: rotate(90deg);
+    &:focus,
+    &:active {
+        outline: none;
+        box-shadow: none;
     }
 }
 
-.app-menu-chevron {
-    font-size: 10px;
-    color: #aaa;
-    transition: transform 0.1s ease;
+.app-menu-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: -4px;
+    z-index: 1;
+    min-width: 200px;
+    max-height: 70vh;
+    padding: 4px;
+    overflow-y: auto;
+    background: var(--bs-dropdown-bg, var(--theme-background));
+    border: 1px solid var(--bs-dropdown-border-color, var(--bs-border-color));
+    border-radius: var(--bs-dropdown-border-radius, 0.375rem);
+    box-shadow: var(--bs-dropdown-box-shadow, 0 0.5rem 1rem rgba(0, 0, 0, 0.15));
+
+    // A submenu that itself contains flyout levels must not clip them.
+    // `overflow-y: auto` forces `overflow-x` to auto as well, which would hide
+    // the deeper panels — so such panels render fully visible instead.
+    &.has-nested {
+        overflow: visible;
+        max-height: none;
+    }
 }
 
-.app-menu-body {
-    margin-bottom: 2px;
-}
-
+.app-menu-submenu .dropdown-item,
 button.dropdown-item {
+    display: flex;
+    align-items: center;
     font-size: 13px;
 
     &.checked {
         color: var(--bs-primary);
+
+        .app-menu-check {
+            color: var(--bs-primary);
+        }
     }
+}
+
+.app-menu-check {
+    font-size: 11px;
+}
+
+.app-menu-sub .dropdown-divider {
+    height: 0;
+    margin: 4px 8px;
+    overflow: hidden;
+    border-top: 1px solid var(--bs-dropdown-divider-bg, var(--bs-border-color));
 }

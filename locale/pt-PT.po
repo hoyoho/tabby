@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Atual"
-
-
 msgid "Current color scheme"
 msgstr "Esquema de cores atual"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Mostrar imagens através de sequências de escape Sixel"
 
 
-msgid "Display on"
-msgstr "Ecrã ligado"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Mostra a árvore completa de perfis na barra lateral."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Ancorar sempre no topo"
 
 
-msgid "Dock the terminal"
-msgstr "Ancorar o terminal"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Transmissão lenta"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Ajusta a janela a um lado do ecrã"
-
-
 msgid "SOCKS proxy"
 msgstr "Proxy SOCKS"
 
@@ -2760,5 +2748,3 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "Menu"
-
-

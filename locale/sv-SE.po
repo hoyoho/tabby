@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Nuvarande"
-
-
 msgid "Current color scheme"
 msgstr "Nuvarande färgschema"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Visa bilder via Sixel escape-sekvenser"
 
 
-msgid "Display on"
-msgstr "Display på"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Visar ett fullständigt träd med profiler i sidofältet."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Dock alltid på toppen"
 
 
-msgid "Dock the terminal"
-msgstr "Docka terminalen"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Långsam matning"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Fäster fönstret mot en sida av skärmen"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS proxy"
 
@@ -2760,5 +2748,3 @@ msgstr "Skal"
 
 msgid "Menu"
 msgstr "Meny"
-
-

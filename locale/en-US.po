@@ -488,10 +488,6 @@ msgid "Ctrl"
 msgstr ""
 
 
-msgid "Current"
-msgstr ""
-
-
 msgid "Current color scheme"
 msgstr ""
 
@@ -648,10 +644,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr ""
 
 
-msgid "Display on"
-msgstr ""
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr ""
 
@@ -672,7 +664,7 @@ msgid "Dock always on top"
 msgstr ""
 
 
-msgid "Dock the terminal"
+msgid "Dock position"
 msgstr ""
 
 
@@ -2184,10 +2176,6 @@ msgid "Slow feed"
 msgstr ""
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr ""
-
-
 msgid "SOCKS proxy"
 msgstr ""
 
@@ -2745,5 +2733,3 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
-
-

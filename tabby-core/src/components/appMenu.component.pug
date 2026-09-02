@@ -1,4 +1,4 @@
-div.app-menu-root(ngbDropdown, #menuDropdown='ngbDropdown', container='body', (openChange)='onOpen($event)')
+div.app-menu-root(ngbDropdown, #menuDropdown='ngbDropdown', autoClose='outside', container='body', (openChange)='onOpen($event)')
     button.btn.app-menu-btn(
         ngbDropdownToggle,
         [attr.aria-label]="'Menu' | translate",
@@ -10,28 +10,9 @@ div.app-menu-root(ngbDropdown, #menuDropdown='ngbDropdown', container='body', (o
         ngbDropdownMenu
     )
         ng-container(*ngFor='let menu of menus')
-            .app-menu-section(*ngIf='menu.children?.length')
-                button.app-menu-header(
-                    [class.expanded]='isExpanded(menu)',
-                    (click)='toggle(menu)',
-                )
-                    span {{menu.label | translate}}
-                    i.fa.fa-chevron-right.app-menu-chevron
-                .app-menu-body(*ngIf='isExpanded(menu)')
-                    ng-container(*ngFor='let child of menu.children')
-                        .dropdown-divider(*ngIf='child.separatorBefore')
-                        ng-container(*ngIf='child.type !== "separator"')
-                            app-menu-node(
-                                *ngIf='child.children?.length',
-                                [item]='child',
-                                [depth]='1',
-                                [onRun]='run',
-                            )
-                            button.dropdown-item(
-                                *ngIf='!child.children?.length',
-                                [disabled]='!isEnabled(child)',
-                                [class.checked]='isChecked(child)',
-                                (click)='run(child)',
-                            )
-                                i.fa.fa-check.me-1(*ngIf='isChecked(child)')
-                                span {{child.label | translate}}
+            app-menu-node(
+                *ngIf='menu.children?.length',
+                [item]='menu',
+                [onRun]='run',
+                [resetKey]='generation',
+            )

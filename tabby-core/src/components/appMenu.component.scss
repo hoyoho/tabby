@@ -45,49 +45,13 @@
 }
 
 .app-menu {
-    min-width: 230px;
-    max-height: 75vh;
-    overflow-y: auto;
+    min-width: 200px;
     padding: 4px;
-}
 
-.app-menu-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 7px 12px;
-    border: none;
-    background: transparent;
-    color: var(--bs-body-color);
-    font-size: 13px;
-    font-weight: bold;
-    text-align: left;
-    -webkit-app-region: no-drag;
-
-    &:hover {
-        background: var(--theme-secondary);
-    }
-
-    &.expanded .app-menu-chevron {
-        transform: rotate(90deg);
-    }
-}
-
-.app-menu-chevron {
-    font-size: 10px;
-    color: #aaa;
-    transition: transform 0.1s ease;
-}
-
-.app-menu-body {
-    margin-bottom: 2px;
-}
-
-.app-menu-body .dropdown-item {
-    font-size: 13px;
-
-    &.checked {
-        color: var(--bs-primary);
+    .dropdown-divider {
+        height: 0;
+        margin: 4px 8px;
+        overflow: hidden;
+        border-top: 1px solid var(--bs-dropdown-divider-bg, var(--bs-border-color));
     }
 }

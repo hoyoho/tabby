@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Injectable, Injector } from '@angular/core'
+import { Injectable, Injector, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigService } from './services/config.service'
 import { ProfilesService } from './services/profiles.service'
@@ -9,6 +9,7 @@ import { HomeBaseService } from './services/homeBase.service'
 import { PlatformService } from './api/platform'
 import { HostWindowService } from './api/hostWindow'
 import { MenuProvider, AppMenu, AppMenuItem } from './api/menuProvider'
+import { DockSide, DockingService } from './services/docking.service'
 
 /** @hidden */
 @Injectable()
@@ -24,6 +25,7 @@ export class AppMenuProvider extends MenuProvider {
         private hostWindow: HostWindowService,
         private platform: PlatformService,
         private homeBase: HomeBaseService,
+        @Optional() private docking?: DockingService,
     ) {
         super()
     }
@@ -105,6 +107,7 @@ export class AppMenuProvider extends MenuProvider {
                         checked: this.config.store.showProfileTree,
                         click: () => this.toggleProfileTree(),
                     },
+                    ...this.dockPositionMenu(),
                 ],
             },
             {
@@ -141,6 +144,36 @@ export class AppMenuProvider extends MenuProvider {
                 this.profiles.launchProfile(p as any)
             },
         }))
+    }
+
+    /**
+     * Dock position is session-scoped and applies only to the window this menu
+     * is opened in — it is never persisted and never affects other windows.
+     */
+    private dockPositionMenu (): AppMenuItem[] {
+        const docking = this.docking
+        if (!docking) {
+            return []
+        }
+        const labels: Record<DockSide, string> = {
+            off: 'Off',
+            left: 'Left',
+            right: 'Right',
+            top: 'Top',
+            bottom: 'Bottom',
+        }
+        const sides: DockSide[] = ['off', 'left', 'right', 'top', 'bottom']
+        return [{
+            separatorBefore: true,
+            weight: 35,
+            label: this.t('Dock position'),
+            click: () => undefined,
+            children: sides.map(side => ({
+                label: this.t(labels[side]),
+                checked: docking.dockSide === side,
+                click: () => docking.setDockSide(side),
+            })),
+        }]
     }
 
     private toggleProfileTree (): void {

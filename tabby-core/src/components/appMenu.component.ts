@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core'
 import { NgbDropdown } from '@ng-bootstrap/ng-bootstrap'
 import { Action, ActionContext, ActionSurface } from '../api/action'
 import { ActionRegistry } from '../services/action.service'
@@ -13,7 +13,7 @@ export class AppMenuComponent implements OnInit {
     @ViewChild('menuDropdown') menuDropdown?: NgbDropdown
 
     menus: Action[] = []
-    expandedMenu: string|null = null
+    generation = 0
     private ctx: ActionContext = {}
 
     constructor (private actions: ActionRegistry) { }
@@ -26,16 +26,18 @@ export class AppMenuComponent implements OnInit {
         if (!opening) {
             return
         }
+        // Remount all levels collapsed on every open (classic cascading menus).
+        this.generation++
         this.menus = this.actions.get(ActionSurface.Menu, this.ctx)
     }
 
-    isExpanded (menu: Action): boolean {
-        return this.expandedMenu === (menu.id ?? menu.label)
-    }
-
-    toggle (menu: Action): void {
-        const key = menu.id ?? menu.label
-        this.expandedMenu = this.expandedMenu === key ? null : key
+    /**
+     * The OS window lost focus (e.g. the user clicked another application) —
+     * collapse the menu.
+     */
+    @HostListener('window:blur')
+    onWindowBlur (): void {
+        this.menuDropdown?.close()
     }
 
     isEnabled (action: Action): boolean {
@@ -46,7 +48,11 @@ export class AppMenuComponent implements OnInit {
         return action.checked ? action.checked(this.ctx) : false
     }
 
-    run (action: Action): void {
+    /**
+     * Runs a leaf action and collapses the menu. Exposed as an arrow field so
+     * child menu nodes keep the correct `this` when invoked through `[onRun]`.
+     */
+    run = (action: Action): void => {
         this.menuDropdown?.close()
         this.actions.run(action, this.ctx)
     }

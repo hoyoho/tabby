@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Aktuální"
-
-
 msgid "Current color scheme"
 msgstr "Aktuální barevné schéma"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Zobrazit obrázky přes únikové sekvence Sixel"
 
 
-msgid "Display on"
-msgstr "Zobrazit na"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Zobrazuje celý strom profilů v postranním panelu."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Vždy nahoře"
 
 
-msgid "Dock the terminal"
-msgstr "Připevnit terminál"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Pomalé odesílání"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Přichytí okno na stranu obrazovky"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS proxy"
 
@@ -2760,5 +2748,3 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "Menu"
-
-

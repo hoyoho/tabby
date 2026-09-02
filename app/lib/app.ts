@@ -155,6 +155,7 @@ export class Application {
                 this.windows[0]?.makeMain()
                 this.windows[0]?.present()
             }
+            this.refreshDockIcon()
         })
         if (process.platform === 'darwin') {
             this.setupMenu()
@@ -185,6 +186,29 @@ export class Application {
     presentAllWindows (): void {
         for (const window of this.windows) {
             window.present()
+        }
+    }
+
+    /**
+     * macOS: keep the Dock icon in sync with the docked windows. The icon is
+     * hidden only while at least one window is docked with "always on top",
+     * and shown again as soon as none is — regardless of which window changed.
+     */
+    refreshDockIcon (): void {
+        if (process.platform !== 'darwin') {
+            return
+        }
+        const anyDockedOnTop = this.windows.some(w => !w.isDestroyed() && w.isDockedOnTop())
+        try {
+            if (anyDockedOnTop) {
+                if (app.dock.isVisible()) {
+                    app.dock.hide()
+                }
+            } else if (!app.dock.isVisible()) {
+                app.dock.show()
+            }
+        } catch {
+            // Dock may be unavailable (e.g. helper/headless runs)
         }
     }
 

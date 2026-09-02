@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Huidige"
-
-
 msgid "Current color scheme"
 msgstr "Huidige kleurskema"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Vertoon beelde via Sixel-ontsnappingsreekse"
 
 
-msgid "Display on"
-msgstr "Skerm aan"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Vertoon 'n volledige boom van profiele in die sybalk."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Dok altyd bo-op"
 
 
-msgid "Dock the terminal"
-msgstr "Dok die terminaal"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Stadige voer"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Knip die venster na 'n kant van die skerm"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS instaanbediener"
 
@@ -2760,5 +2748,3 @@ msgstr "Dop"
 
 msgid "Menu"
 msgstr "Kieslys"
-
-

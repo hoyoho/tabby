@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Saat ini"
-
-
 msgid "Current color scheme"
 msgstr "Skema warna saat ini"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Tampilkan gambar melalui urutan escape Sixel"
 
 
-msgid "Display on"
-msgstr "Tampil pada"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Menampilkan seluruh hierarki profil di bilah samping."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Kait selalu diatas"
 
 
-msgid "Dock the terminal"
-msgstr "Kaitkan terminal"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Umpan lambat"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Menempelkan jendela ke sisi layar"
-
-
 msgid "SOCKS proxy"
 msgstr "Proxy SOCKS"
 
@@ -2760,5 +2748,3 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "Menu"
-
-

@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "Текущий"
-
-
 msgid "Current color scheme"
 msgstr "Текущая цветовая схема"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Отображать изображения при помощи управляющей последовательности Sixel"
 
 
-msgid "Display on"
-msgstr "Отобразить на"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "Показывает полное дерево профилей в боковой панели."
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "Закрепить поверх всех окон"
 
 
-msgid "Dock the terminal"
-msgstr "Закрепить терминал"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "Медленная отсылка"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "Закрепляет окно к выбранному краю экрана"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKS прокси"
 
@@ -2760,5 +2748,3 @@ msgstr "Оболочка"
 
 msgid "Menu"
 msgstr "Меню"
-
-

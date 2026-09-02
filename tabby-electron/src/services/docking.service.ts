@@ -1,6 +1,6 @@
-import { Injectable, NgZone, Inject } from '@angular/core'
+import { Injectable, NgZone } from '@angular/core'
 import type { Display } from 'electron'
-import { ConfigService, DockingService, Screen, PlatformService, BootstrapData, BOOTSTRAP_DATA } from 'tabby-core'
+import { ConfigService, DockingService, Screen, PlatformService } from 'tabby-core'
 import { ElectronService } from '../services/electron.service'
 import { ElectronHostWindow, Bounds } from './hostWindow.service'
 
@@ -12,31 +12,38 @@ export class ElectronDockingService extends DockingService {
         private zone: NgZone,
         private hostWindow: ElectronHostWindow,
         platform: PlatformService,
-        @Inject(BOOTSTRAP_DATA) private bootstrapData: BootstrapData,
     ) {
         super()
-        this.screensChanged$.subscribe(() => this.repositionWindow())
-        platform.displayMetricsChanged$.subscribe(() => this.repositionWindow())
+        this.screensChanged$.subscribe(() => this.onDisplayChanged())
+        platform.displayMetricsChanged$.subscribe(() => this.onDisplayChanged())
 
         electron.ipcRenderer.on('host:displays-changed', () => {
             this.zone.run(() => this.screensChanged.next())
         })
+
+        // Global dock options (size / space / always-on-top) changed — re-apply
+        // to this window if it is docked. Position itself is session-scoped and
+        // only ever changed through the View menu.
+        config.changed$.subscribe(() => {
+            if (this.isDocked) {
+                this.dock()
+            }
+        })
     }
 
     dock (): void {
-        const dockSide = this.config.store.appearance.dock
+        const dockSide = this.dockSide
 
-        if (dockSide === 'off' || !this.bootstrapData.isMainWindow) {
+        // Keep the main process in sync so it can manage window styles
+        // (movable / maximizable / hide-on-blur, macOS dock icon).
+        this.electron.ipcRenderer.send('window-set-dock-side', dockSide)
+
+        if (dockSide === 'off') {
             this.hostWindow.setAlwaysOnTop(false)
             return
         }
 
-        let display = this.electron.screen.getAllDisplays()
-            .filter(x => x.id === this.config.store.appearance.dockScreen)[0]
-        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-        if (!display) {
-            display = this.getCurrentScreen()
-        }
+        const display = this.getCurrentScreen()
 
         const newBounds: Bounds = { x: 0, y: 0, width: 0, height: 0 }
 
@@ -88,8 +95,27 @@ export class ElectronDockingService extends DockingService {
         })
     }
 
+    /**
+     * The display the window currently lives on. Unlike the old configurable
+     * `dockScreen`, a docked window always snaps to the screen that contains it.
+     */
     private getCurrentScreen (): Display {
+        const window = this.hostWindow.getWindow()
+        if (!window.isDestroyed()) {
+            const bounds = window.getBounds()
+            if (bounds.width > 0 && bounds.height > 0) {
+                return this.electron.screen.getDisplayMatching(bounds)
+            }
+        }
         return this.electron.screen.getDisplayNearestPoint(this.electron.screen.getCursorScreenPoint())
+    }
+
+    private onDisplayChanged (): void {
+        if (this.isDocked) {
+            this.dock()
+        } else {
+            this.repositionWindow()
+        }
     }
 
     private repositionWindow () {

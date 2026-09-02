@@ -88,6 +88,7 @@ export class MenuActionAdapter extends ActionProvider {
     }
 
     private itemToAction (item: AppMenuItem, id: string): Action {
+        const children = item.children?.map((child, childIndex) => this.itemToAction(child, `${id}:${childIndex}`))
         return {
             ...commonMenuItemParts(item),
             id,
@@ -96,6 +97,7 @@ export class MenuActionAdapter extends ActionProvider {
             surfaces: [ActionSurface.Menu],
             type: item.checked !== undefined ? 'checkbox' : 'normal',
             separatorBefore: item.separatorBefore,
+            children,
         }
     }
 }

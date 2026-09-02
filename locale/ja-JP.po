@@ -504,10 +504,6 @@ msgid "Ctrl"
 msgstr "Ctrl"
 
 
-msgid "Current"
-msgstr "現在"
-
-
 msgid "Current color scheme"
 msgstr "使用中の配色"
 
@@ -664,10 +660,6 @@ msgid "Display images via Sixel escape sequences"
 msgstr "Sixelエスケープシーケンスによって画像を表示します"
 
 
-msgid "Display on"
-msgstr "表示"
-
-
 msgid "Displays a full tree of profiles in the sidebar."
 msgstr "サイドバーにプロファイルの完全なツリーを表示します。"
 
@@ -688,8 +680,8 @@ msgid "Dock always on top"
 msgstr "ドックを常に最前面表示"
 
 
-msgid "Dock the terminal"
-msgstr "端末をドック表示する"
+msgid "Dock position"
+msgstr ""
 
 
 msgid "Docked terminal size"
@@ -2199,10 +2191,6 @@ msgid "Slow feed"
 msgstr "低速送信"
 
 
-msgid "Snaps the window to a side of the screen"
-msgstr "画面の端にウィンドウをスナップします"
-
-
 msgid "SOCKS proxy"
 msgstr "SOCKSプロキシ"
 
@@ -2760,5 +2748,3 @@ msgstr "シェル"
 
 msgid "Menu"
 msgstr "メニュー"
-
-

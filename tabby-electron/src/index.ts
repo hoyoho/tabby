@@ -16,6 +16,7 @@ import { ElectronFileProvider } from './services/fileProvider.service'
 import { ElectronHostAppService } from './services/hostApp.service'
 import { ElectronService } from './services/electron.service'
 import { DockMenuService } from './services/dockMenu.service'
+import { NativeAppMenuService } from './services/nativeAppMenu.service'
 import { ElectronUACService } from './services/uac.service'
 
 import { ElectronHotkeyProvider } from './hotkeys'
@@ -87,7 +88,7 @@ import { VSDevToolsProvider } from './shells/vs'
 })
 export default class ElectronModule {
     constructor (
-        private config: ConfigService,
+        private         config: ConfigService,
         private hostApp: ElectronHostAppService,
         private electron: ElectronService,
         private hostWindow: ElectronHostWindow,
@@ -96,6 +97,7 @@ export default class ElectronModule {
         themeService: ThemesService,
         app: AppService,
         dockMenu: DockMenuService,
+        _nativeAppMenu: NativeAppMenuService,
     ) {
         config.ready$.toPromise().then(() => {
             touchbar.update()

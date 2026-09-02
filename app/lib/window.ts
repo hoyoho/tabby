@@ -21,6 +21,8 @@ export interface WindowOptions {
     hidden?: boolean
 }
 
+type DockSide = 'off'|'left'|'right'|'top'|'bottom'
+
 abstract class GlasstronWindow extends BrowserWindow {
     blurType: string
     abstract setBlur (_: boolean)
@@ -45,7 +47,12 @@ export class Window {
     private disableVibrancyWhileDragging = false
     private touchBarControl: any
     private isFluentVibrancy = false
-    private dockHidden = false
+
+    /**
+     * Current dock side of this window. Session-scoped: it is only ever
+     * changed by the window's own renderer (View menu) and never persisted.
+     */
+    private dockSide: DockSide = 'off'
 
     get visible$ (): Observable<boolean> { return this.visible }
     get closed$ (): Observable<void> { return this.closed }
@@ -142,7 +149,7 @@ export class Window {
 
         this.window.on('blur', () => {
             if (
-                (this.configStore.appearance?.dock ?? 'off') !== 'off' &&
+                this.isDocked() &&
                 this.configStore.appearance?.dockHideOnBlur &&
                 !BrowserWindow.getFocusedWindow()
             ) {
@@ -267,11 +274,11 @@ export class Window {
     }
 
     isDockedOnTop (): boolean {
-        return this.isMainWindow && this.configStore.appearance?.dock && this.configStore.appearance?.dock !== 'off' && (this.configStore.appearance?.dockAlwaysOnTop ?? true)
+        return this.isDocked() && (this.configStore.appearance?.dockAlwaysOnTop ?? true)
     }
 
     isDocked (): boolean {
-        return this.isMainWindow && this.configStore.appearance?.dock && this.configStore.appearance?.dock !== 'off'
+        return this.dockSide !== 'off'
     }
 
     private syncDockingState (): void {
@@ -361,10 +368,6 @@ export class Window {
         this.syncDockingState()
         if (process.platform === 'darwin') {
             if (enabled) {
-                if (!this.dockHidden) {
-                    app.dock.hide()
-                    this.dockHidden = true
-                }
                 this.window.setAlwaysOnTop(true, 'screen-saver', 1)
                 if (!this.window.isVisibleOnAllWorkspaces()) {
                     this.window.setVisibleOnAllWorkspaces(true, { visibleOnFullScreen: true })
@@ -373,10 +376,6 @@ export class Window {
                     this.window.setFullScreenable(false)
                 }
             } else {
-                if (this.dockHidden) {
-                    await app.dock.show()
-                    this.dockHidden = false
-                }
                 if (this.window.isAlwaysOnTop()) {
                     this.window.setAlwaysOnTop(false)
                 }
@@ -388,6 +387,7 @@ export class Window {
                 }
             }
         }
+        this.application.refreshDockIcon()
     }
 
     private setupWindowManagement () {
@@ -530,6 +530,16 @@ export class Window {
 
         this.on('window-set-always-on-top', (_, flag) => {
             this.window?.setAlwaysOnTop(flag)
+        })
+
+        this.on('window-set-dock-side', (_, side: DockSide) => {
+            const valid: DockSide[] = ['off', 'left', 'right', 'top', 'bottom']
+            if (!valid.includes(side)) {
+                side = 'off'
+            }
+            this.dockSide = side
+            this.syncDockingState()
+            this.enableDockedWindowStyles(this.isDockedOnTop())
         })
 
         this.on('window-set-vibrancy', (_, enabled, type) => {
