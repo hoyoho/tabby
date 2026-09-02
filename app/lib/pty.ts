@@ -5,6 +5,14 @@ import { Application } from './app'
 import { UTF8Splitter } from './utfSplitter'
 import { Subject, debounceTime } from 'rxjs'
 
+/**
+ * How long a PTY with no owning window survives. Covers the cross-window
+ * drag race: the source window detaches (keepPTYAlive) before the target
+ * window attaches, and a dropped/failed transfer must not leak a live
+ * shell (and its ConPTY/conhost) forever.
+ */
+const GRACE_PERIOD_MS = 10000
+
 class PTYDataQueue {
     private buffers: Buffer[] = []
     private delta = 0
@@ -112,6 +120,13 @@ export class PTY {
     private outputQueue: PTYDataQueue
     exited = false
     private killing = false
+    private graceTimer: NodeJS.Timeout|null = null
+
+    /**
+     * WebContents id of the window currently owning this PTY. Local PTYs are
+     * single-attacher: ownership moves during a cross-window drag.
+     */
+    attacher: number|null = null
 
     constructor (private id: string, private app: Application, ...args: any[]) {
         this.pty = (nodePTY as any).spawn(...args)
@@ -165,6 +180,38 @@ export class PTY {
         this.outputQueue.ack(length)
     }
 
+    /** Claims ownership for a window and cancels any pending abandonment kill. */
+    attach (webContentsId: number): void {
+        this.attacher = webContentsId
+        this.cancelGrace()
+    }
+
+    /** Drops ownership and starts the abandoned-connection countdown. */
+    detach (): void {
+        this.attacher = null
+        this.armGrace()
+    }
+
+    cancelGrace (): void {
+        if (this.graceTimer) {
+            clearTimeout(this.graceTimer)
+            this.graceTimer = null
+        }
+    }
+
+    /** Starts the abandoned-PTY countdown (no-op if a window still owns it). */
+    armGrace (): void {
+        if (this.graceTimer || this.exited || this.killing || this.attacher !== null) {
+            return
+        }
+        this.graceTimer = setTimeout(() => {
+            this.graceTimer = null
+            if (this.attacher === null && !this.exited && !this.killing) {
+                this.kill()
+            }
+        }, GRACE_PERIOD_MS)
+    }
+
     /**
      * Tears the PTY down in a way that minimises the native ConPTY close/monitor
      * race: stop the output pump first, mark the PTY as killing so no late
@@ -211,11 +258,26 @@ export class PTYManager {
             event.returnValue = id
             const pty = new PTY(id, app, ...options)
             pty.bindCleanup(() => this.removePty(id))
+            pty.attach(event.sender.id)
             this.ptys[id] = pty
         })
 
         ipcMain.on('pty:exists', (event, id) => {
-            event.returnValue = this.ptys[id] && !this.ptys[id].exited
+            const pty = this.ptys[id]
+            const alive = !!pty && !pty.exited
+            if (alive) {
+                // Restore path: the new window claims ownership, cancelling any
+                // abandonment countdown started by the source window's detach.
+                pty.attach(event.sender.id)
+            }
+            event.returnValue = alive
+        })
+
+        ipcMain.on('pty:detach', (_event, id) => {
+            const pty = this.ptys[id]
+            if (pty && !pty.exited) {
+                pty.detach()
+            }
         })
 
         ipcMain.on('pty:get-pid', (event, id) => {
@@ -241,6 +303,15 @@ export class PTYManager {
         ipcMain.on('pty:ack-data', (_event, id, length) => {
             this.ptys[id]?.ackData(length)
         })
+    }
+
+    /** The window closed: its kept-alive PTYs start the abandonment countdown. */
+    windowClosed (webContentsId: number): void {
+        for (const pty of Object.values(this.ptys)) {
+            if (pty && !pty.exited && pty.attacher === webContentsId) {
+                pty.detach()
+            }
+        }
     }
 
     private removePty (id: string): void {

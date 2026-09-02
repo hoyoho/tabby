@@ -11,6 +11,9 @@ import { saveConfig, loadConfig } from './config'
 import { Window, WindowOptions } from './window'
 import { pluginManager } from './pluginManager'
 import { PTYManager } from './pty'
+import { TelnetManager } from './telnet'
+import { SSHConnectionManager } from './ssh'
+import { SerialManager } from './serial'
 
 /* eslint-disable block-scoped-var */
 
@@ -21,6 +24,9 @@ try {
 export class Application {
     private tray?: Tray
     private ptyManager = new PTYManager()
+    private telnetManager = new TelnetManager()
+    private sshManager = new SSHConnectionManager()
+    private serialManager = new SerialManager()
     private windows: Window[] = []
     private cachedPlasmaVersion?: [number, number] | null
     private globalHotkey$ = new Subject<void>()
@@ -34,6 +40,9 @@ export class Application {
         remote.initialize()
         this.useBuiltinGraphics()
         this.ptyManager.init(this)
+        this.telnetManager.init(this)
+        this.sshManager.init(this)
+        this.serialManager.init(this)
 
         ipcMain.handle('app:save-config', async (event, config) => {
             await saveConfig(config)
@@ -104,6 +113,9 @@ export class Application {
 
         app.on('before-quit', () => {
             this.quitRequested = true
+            this.telnetManager.destroyAll()
+            this.sshManager.destroyAll()
+            this.serialManager.destroyAll()
         })
 
         app.on('window-all-closed', () => {
@@ -132,8 +144,13 @@ export class Application {
                 this.enableTray()
             }
         })
+        const webContentsId = window.webContents.id
         window.closed$.subscribe(() => {
             this.windows = this.windows.filter(x => x !== window)
+            this.telnetManager.windowClosed(webContentsId)
+            this.sshManager.windowClosed(webContentsId)
+            this.serialManager.windowClosed(webContentsId)
+            this.ptyManager.windowClosed(webContentsId)
             if (!this.windows.some(x => x.isMainWindow)) {
                 this.windows[0]?.makeMain()
                 this.windows[0]?.present()
