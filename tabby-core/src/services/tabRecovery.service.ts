@@ -46,6 +46,9 @@ export class TabRecoveryService {
     }
 
     async recoverTab (token: RecoveryToken): Promise<NewTabParameters<BaseTabComponent>|null> {
+        if (!token) {
+            return null
+        }
         for (const provider of this.config.enabledServices(this.tabRecoveryProviders ?? [])) {
             try {
                 if (!await provider.applicableTo(token)) {
