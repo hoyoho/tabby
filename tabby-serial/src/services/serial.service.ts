@@ -1,7 +1,6 @@
 import { Injectable, Injector } from '@angular/core'
+import { ipcRenderer } from 'electron'
 import WSABinding from 'serialport-binding-webserialapi'
-import AbstractBinding from '@serialport/binding-abstract'
-import { autoDetect } from '@serialport/bindings-cpp'
 import { HostAppService, PartialProfile, Platform, ProfilesService } from 'tabby-core'
 import { SerialPortInfo, SerialProfile } from '../api'
 import { SerialTabComponent } from '../components/serialTab.component'
@@ -13,16 +12,16 @@ export class SerialService {
         private hostApp: HostAppService,
     ) { }
 
-    detectBinding (): typeof AbstractBinding {
-        return this.hostApp.platform === Platform.Web ? WSABinding : autoDetect()
-    }
-
     async listPorts (): Promise<SerialPortInfo[]> {
         try {
-            return (await this.detectBinding().list()).map(x => ({
-                name: x.path,
-                description: `${x.manufacturer ?? ''} ${x.serialNumber ?? ''}`.trim() || undefined,
-            }))
+            if (this.hostApp.platform === Platform.Web) {
+                return (await WSABinding.list()).map(x => ({
+                    name: x.path,
+                    description: `${x.manufacturer ?? ''} ${x.serialNumber ?? ''}`.trim() || undefined,
+                }))
+            }
+            // Native bindings load in the main process (app/lib/serial.ts).
+            return await ipcRenderer.invoke('serial:list-ports')
         } catch (err) {
             console.error('Failed to list serial ports', err)
             return []

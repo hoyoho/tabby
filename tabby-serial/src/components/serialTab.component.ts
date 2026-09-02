@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector } from '@angular/core'
-import { Platform, SelectorService } from 'tabby-core'
+import { Component, Injector, Input } from '@angular/core'
+import { Platform, SelectorService, GetRecoveryTokenOptions } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
 import { SerialSession, BAUD_RATES, SerialProfile } from '../api'
 
@@ -16,6 +16,9 @@ import { SerialSession, BAUD_RATES, SerialProfile } from '../api'
 export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialProfile> {
     session: SerialSession|null = null
     Platform = Platform
+
+    /** Set by the recovery provider when re-attaching a live serial port. */
+    @Input() restorePortId?: string|null
 
     // eslint-disable-next-line @typescript-eslint/no-useless-constructor
     constructor (
@@ -59,7 +62,8 @@ export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialPr
         this.startSpinner(this.translate.instant(_('Connecting')))
 
         try {
-            await this.session!.start()
+            await this.session!.start(this.restorePortId ? { restoreFromPortID: this.restorePortId } : undefined)
+            this.restorePortId = null
             this.stopSpinner()
             session.emitServiceMessage(this.translate.instant(_('Port opened')))
         } catch (e) {
@@ -96,6 +100,13 @@ export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialPr
         )
         this.session?.serial?.update({ baudRate: rate })
         this.profile.options.baudrate = rate
+    }
+
+    override async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<any> {
+        return {
+            ...await super.getRecoveryToken(options),
+            portId: options?.includeState && this.session?.getID() || null,
+        }
     }
 
     protected isSessionExplicitlyTerminated (): boolean {
