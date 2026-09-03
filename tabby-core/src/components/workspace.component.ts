@@ -1060,7 +1060,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
                 // there); drop our detached copy without touching the PTY.
                 session.keepPTYAlive = true
             }
-            this.removeSessionView(tab)
+            // Destroy the source tab outright: keep-alive routes the session
+            // into the detach path instead of killing it. Merely detaching the
+            // view leaked the tab — it stayed focused and kept its session
+            // wired, so window hotkeys (e.g. ctrl-c) still reached the moved
+            // session from this window.
+            void tab.destroy()
             this.cleanRoot()
         })
         this.hostApp.windowDragCancelled$.subscribe(() => {
@@ -1088,24 +1093,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             session.keepPTYAlive = false
         }
         this.hostApp.windowDragCancel()
-    }
-
-    private removeSessionView (tab: SessionTab): void {
-        const pane = this.getPaneOf(tab)
-        if (pane) {
-            pane.tabs = pane.tabs.filter(x => x !== tab)
-            if (pane.activeTab === tab) {
-                pane.activeTab = pane.tabs[0] ?? null
-            }
-        }
-        if (tab.parent) {
-            tab.removeFromContainer()
-            tab.parent = null
-        }
-        this.viewRefs.delete(tab)
-        this.tabRemoved.next(tab)
-        this.layout()
-        this.updateTitle()
     }
 
     destroy (): void {

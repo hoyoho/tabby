@@ -640,7 +640,10 @@ export class AppService {
             done = true
             commitSub.unsubscribe()
             cancelSub.unsubscribe()
-            this.removeTab(tab)
+            // Destroy (not just detach): the workspace's sessions carry the
+            // keep-alive flag and survive via the target window's re-attach;
+            // leaving this tab alive would leak it focused with live sessions.
+            void tab.destroy()
             this.maybeCloseWindowWhenEmpty()
         })
         const cancelSub = this.hostApp.windowDragCancelled$.subscribe(() => {
@@ -688,7 +691,10 @@ export class AppService {
                 session.keepPTYAlive = true
             }
         }
-        this.removeTab(tab)
+        // Destroy our copy: the sessions detach (keep-alive) and the target
+        // window re-attaches them from the token; a live leftover tab here
+        // would stay focused and keep reacting to window hotkeys.
+        void tab.destroy()
         this.maybeCloseWindowWhenEmpty()
         this.hostApp.newWindow({
             recoveryToken: transferToken,
