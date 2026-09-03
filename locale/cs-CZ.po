@@ -296,12 +296,6 @@ msgstr "Zavřít relaci pouze při výslovném ukončení"
 msgid "Close the window after closing the last workspace"
 msgstr "Zavřít okno po zavření posledního pracovního prostoru"
 
-msgid "Cross-window drag"
-msgstr "Přetahování mezi okny"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Umožňuje přetahovat pracovní prostory nebo relace mezi instancemi. Relace bez přenositelného PTY (např. SSH) se znovu připojí."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Vždy nahoře"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Pozice doku"
 
 
 msgid "Docked terminal size"

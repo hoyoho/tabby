@@ -296,12 +296,6 @@ msgstr ""
 msgid "Close the window after closing the last workspace"
 msgstr ""
 
-msgid "Cross-window drag"
-msgstr ""
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr ""
 
 
 msgid "Close workspace"

@@ -297,12 +297,6 @@ msgstr "Oturumu yalnızca açıkça sonlandırıldığında kapat"
 msgid "Close the window after closing the last workspace"
 msgstr "Son çalışma alanı kapatıldıktan sonra pencereyi kapat"
 
-msgid "Cross-window drag"
-msgstr "Pencereler arası sürükleme"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Çalışma alanlarının veya oturumların örnekler arasında sürüklenmesine izin verir. Aktarılabilir PTY olmayan oturumlar (örn. SSH) yeniden bağlanır."
 
 
 msgid "Close workspace"
@@ -682,7 +676,7 @@ msgstr "Dock her zaman üstte"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Dock konumu"
 
 
 msgid "Docked terminal size"

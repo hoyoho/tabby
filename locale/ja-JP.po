@@ -296,12 +296,6 @@ msgstr "明示的に終了した場合にのみセッションを閉じる"
 msgid "Close the window after closing the last workspace"
 msgstr "最後のワークスペースを閉じた後にウィンドウを閉じる"
 
-msgid "Cross-window drag"
-msgstr "ウィンドウ間ドラッグ"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "ワークスペースやセッションをインスタンス間でドラッグできます。転送可能な PTY を持たないセッション（SSH など）は再接続されます。"
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "ドックを常に最前面表示"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "ドックの位置"
 
 
 msgid "Docked terminal size"

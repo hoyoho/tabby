@@ -296,12 +296,6 @@ msgstr "Fechar a sessão apenas quando encerrada explicitamente"
 msgid "Close the window after closing the last workspace"
 msgstr "Fechar a janela após fechar o último workspace"
 
-msgid "Cross-window drag"
-msgstr "Arrastar entre janelas"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Permite arrastar espaços de trabalho ou sessões entre instâncias. Sessões sem um PTY transferível (ex.: SSH) serão reconectadas."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Janela sempre no topo"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Posição do dock"
 
 
 msgid "Docked terminal size"

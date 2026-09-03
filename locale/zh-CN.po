@@ -297,11 +297,6 @@ msgid "Close the window after closing the last workspace"
 msgstr "关闭最后一个工作区后关闭窗口"
 
 
-msgid "Cross-window drag"
-msgstr "跨窗口拖拽"
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "允许跨实例拖拽工作区或会话，无可迁移 PTY 的会话（如 SSH）会重新连接"
 
 
 msgid "Close workspace"
@@ -681,7 +676,7 @@ msgstr "窗口保持置顶"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "停靠位置"
 
 
 msgid "Docked terminal size"

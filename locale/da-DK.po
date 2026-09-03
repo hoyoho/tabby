@@ -296,12 +296,6 @@ msgstr "Luk kun sessionen, når den udtrykkeligt afsluttes"
 msgid "Close the window after closing the last workspace"
 msgstr "Luk vinduet efter lukning af det sidste arbejdsområde"
 
-msgid "Cross-window drag"
-msgstr "Træk på tværs af vinduer"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Tillader at arbejdsområder eller sessioner trækkes på tværs af instanser. Sessioner uden en overførselbar PTY (f.eks. SSH) får igen forbindelse."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Dock altid øverst"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Dockposition"
 
 
 msgid "Docked terminal size"

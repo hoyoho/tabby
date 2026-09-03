@@ -297,15 +297,6 @@ h3.mt-4(translate) Workspaces
         (ngModelChange)='config.save();',
     )
 
-.form-line
-    .header
-        .title(translate) Cross-window drag
-        .description(translate) Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect.
-    toggle(
-        [(ngModel)]='config.store.appearance.crossWindowDrag',
-        (ngModelChange)='config.save();',
-    )
-
 h3.mt-4(translate) Panes
 
 .form-line()

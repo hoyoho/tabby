@@ -296,12 +296,6 @@ msgstr "Tutup sesi hanya saat diakhiri secara eksplisit"
 msgid "Close the window after closing the last workspace"
 msgstr "Tutup jendela setelah menutup ruang kerja terakhir"
 
-msgid "Cross-window drag"
-msgstr "Seret lintas jendela"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Mengizinkan menyeret ruang kerja atau sesi antar instansi. Sesi tanpa PTY yang dapat ditransfer (mis. SSH) akan tersambung kembali."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Kait selalu diatas"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Posisi dok"
 
 
 msgid "Docked terminal size"

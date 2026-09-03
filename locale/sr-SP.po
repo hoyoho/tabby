@@ -296,12 +296,6 @@ msgstr "Zatvori sesiju samo kada je eksplicitno prekinuta"
 msgid "Close the window after closing the last workspace"
 msgstr "Zatvori prozor nakon zatvaranja poslednjeg radnog prostora"
 
-msgid "Cross-window drag"
-msgstr "Prevlačenje između prozora"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Omogućava prevlačenje radnih prostora ili sesija između instanci. Sesije bez prenosivog PTY-ja (npr. SSH) biće ponovo povezane."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "На врху осталих прозора"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Pozicija doka"
 
 
 msgid "Docked terminal size"

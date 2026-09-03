@@ -1014,11 +1014,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.cleanRoot()
     }
 
-    /** @hidden Config switch for the cross-window drag feature. */
-    get crossWindowDragEnabled (): boolean {
-        return this.config.store.appearance.crossWindowDrag
-    }
-
     /**
      * When a session drag crosses this window's bounds: capture its recovery
      * token (with the live PTY id) while the session is still alive and hand

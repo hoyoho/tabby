@@ -296,12 +296,6 @@ msgstr "Закрывать сессию только при явном заве�
 msgid "Close the window after closing the last workspace"
 msgstr "Закрывать окно после закрытия последней рабочей области"
 
-msgid "Cross-window drag"
-msgstr "Перетаскивание между окнами"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Позволяет перетаскивать рабочие области и сеансы между экземплярами. Сеансы без переносимого PTY (например, SSH) будут переподключены."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Закрепить поверх всех окон"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Положение панели"
 
 
 msgid "Docked terminal size"

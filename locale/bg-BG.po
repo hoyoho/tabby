@@ -296,12 +296,6 @@ msgstr "Затваряне на сесията само при изрично п
 msgid "Close the window after closing the last workspace"
 msgstr "Затваряне на прозореца след затваряне на последната работна област"
 
-msgid "Cross-window drag"
-msgstr "Плъзгане между прозорци"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Позволява плъзгане на работни области или сесии между екземпляри. Сесии без преносим PTY (напр. SSH) ще се свържат отново."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Закрепи винаги отгоре"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Позиция на дока"
 
 
 msgid "Docked terminal size"

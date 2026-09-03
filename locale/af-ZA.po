@@ -296,12 +296,6 @@ msgstr "Maak die sessie slegs toe wanneer dit uitdruklik beëindig word"
 msgid "Close the window after closing the last workspace"
 msgstr "Maak die venster toe nadat die laaste werkspasie toegemaak is"
 
-msgid "Cross-window drag"
-msgstr "Sleep tussen vensters"
-
-
-msgid "Allow dragging workspaces or sessions across instances. Sessions without a transferable PTY (e.g. SSH) will reconnect."
-msgstr "Laat toe dat werkspasies of sessies tussen instansies gesleep word. Sessies sonder oordraagbare PTY (bv. SSH) sal herverbind."
 
 
 msgid "Close workspace"
@@ -681,7 +675,7 @@ msgstr "Dok altyd bo-op"
 
 
 msgid "Dock position"
-msgstr ""
+msgstr "Dok-posisie"
 
 
 msgid "Docked terminal size"
