@@ -318,6 +318,8 @@ class SSHConnection {
     private savedPassword?: string
     private graceTimer: NodeJS.Timeout|null = null
     private destroying = false
+    private mainSftp: russh.SFTP|null = null
+    private mainSftpOpening: Promise<russh.SFTP>|null = null
 
     constructor (
         private id: string,
@@ -1186,16 +1188,38 @@ class SSHConnection {
             throw new Error('Cannot open SFTP session before auth')
         }
         if (!this.mainSftp) {
-            this.mainSftp = await client.activateSFTP(await client.openSessionChannel())
+            this.mainSftpOpening ??= this.openMainSftp(client).finally(() => {
+                this.mainSftpOpening = null
+            })
+            await this.mainSftpOpening
+        }
+        if (!this.mainSftp) {
+            throw new Error('SFTP session closed right after opening')
         }
         const id = uuidv4().toString()
         const entry: SFTPEntry = { id, sftp: this.mainSftp, handles: new Map() }
         this.sftps.set(id, entry)
-        this.mainSftp.closed$.subscribe(() => {
-            this.emit('sftp-closed', id)
-            this.sftps.delete(id)
-        })
         return id
+    }
+
+    private async openMainSftp (client: russh.AuthenticatedSSHClient): Promise<russh.SFTP> {
+        const channel = await client.openSessionChannel()
+        // NewChannel cannot be closed from JS: if activateSFTP() rejects, the
+        // native layer owns the channel and cleans it up with the connection.
+        const sftp = await client.activateSFTP(channel)
+        this.mainSftp = sftp
+        sftp.closed$.subscribe(() => {
+            if (this.mainSftp === sftp) {
+                this.mainSftp = null
+            }
+            const closedIds = [...this.sftps.keys()]
+            this.sftps.clear()
+            // Clear before emitting so a listener may synchronously reopen.
+            for (const id of closedIds) {
+                this.emit('sftp-closed', id)
+            }
+        })
+        return sftp
     }
 
     private getSftp (id: string): russh.SFTP {
@@ -1282,8 +1306,6 @@ class SSHConnection {
         } catch { /* already gone */ }
     }
 
-    private mainSftp: russh.SFTP|null = null
-
     // ── teardown ──────────────────────────────────────────────────────────
 
     cancelGrace (): void {
@@ -1327,6 +1349,8 @@ class SSHConnection {
         }
         this.channels.clear()
         this.sftps.clear()
+        this.mainSftp = null
+        this.mainSftpOpening = null
         if (this.client) {
             try {
                 this.client.disconnect()

@@ -2,7 +2,7 @@ import { NgModule, ModuleWithProviders, LOCALE_ID } from '@angular/core'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import { NgbModule, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap'
+import { NgbModalRef, NgbModule, NgbTooltipConfig } from '@ng-bootstrap/ng-bootstrap'
 import { NgxFilesizeModule } from 'ngx-filesize'
 import { DragDropModule } from '@angular/cdk/drag-drop'
 import { TranslateModule, TranslateCompiler, MissingTranslationHandler } from '@ngx-translate/core'
@@ -58,6 +58,23 @@ import { LastCLIHandler, ProfileCLIHandler } from './cli'
 import { SplitLayoutProfilesService } from './profiles'
 import { CoreCommandProvider } from './commands'
 import { AppMenuProvider } from './menu'
+
+// Workaround for an ng-bootstrap race condition: closing/dismissing a modal
+// again (e.g. ESC key or backdrop click) while the hide animation is already
+// running calls _removeModalElements() twice, and the second run crashes with
+// "Cannot read properties of null (reading 'location')" because the component
+// refs have been nulled by the first run.
+const ngbModalRefPrototype = NgbModalRef.prototype as any
+if (typeof ngbModalRefPrototype._removeModalElements === 'function') {
+    const originalRemoveModalElements = ngbModalRefPrototype._removeModalElements
+    ngbModalRefPrototype._removeModalElements = function (this: any) {
+        if (this._tabbyModalRemoving) {
+            return
+        }
+        this._tabbyModalRemoving = true
+        originalRemoveModalElements.apply(this, arguments)
+    }
+}
 
 export function TranslateMessageFormatCompilerFactory (): TranslateMessageFormatCompiler {
     return new TranslateMessageFormatCompiler()
