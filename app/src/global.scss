@@ -58,6 +58,10 @@ a, button {
     }
 }
 
+input.form-control.color-picker {
+    height: calc(1.5em + .75rem + 2px);
+}
+
 input[type=range] {
     -webkit-appearance: none;
     background: transparent;

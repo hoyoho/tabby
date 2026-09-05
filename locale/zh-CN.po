@@ -1988,7 +1988,7 @@ msgstr "保存终端状态（调试）"
 
 
 msgid "Saved layout"
-msgstr "已保存的布局"
+msgstr "保存布局"
 
 
 msgid "Saved to {path}"
@@ -2333,6 +2333,10 @@ msgstr "Tabby 无法在加载插件后启动，因此本次会话已禁用所有
 
 msgid "Telnet session"
 msgstr "Telnet 会话"
+
+
+msgid "Telnet"
+msgstr "Telnet"
 
 
 msgid "Terminal"

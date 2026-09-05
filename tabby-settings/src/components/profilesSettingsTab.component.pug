@@ -141,7 +141,7 @@ ul.nav-tabs(ngbNav, #nav='ngbNav')
                     option(
                         *ngFor='let provider of getQuickConnectProviders()',
                         [ngValue]='provider.id'
-                    ) {{provider.name}}
+                    ) {{provider.name|translate}}
 
             .form-line.content-box
                 .header

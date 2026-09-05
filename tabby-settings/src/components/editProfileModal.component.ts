@@ -84,7 +84,7 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
     iconSearch: OperatorFunction<string, string[]> = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(200),
-            map(term => iconsClassList.filter(v => v.toLowerCase().includes(term.toLowerCase())).slice(0, 10)),
+            map(term => iconsClassList.filter(v => v.toLowerCase().includes(term.toLowerCase()))),
         )
 
     save () {

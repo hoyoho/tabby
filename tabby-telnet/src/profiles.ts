@@ -1,3 +1,4 @@
+import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import { Injectable } from '@angular/core'
 import { NewTabParameters, PartialProfile, TranslateService, QuickConnectProfileProvider } from 'tabby-core'
 import { TelnetProfileSettingsComponent } from './components/telnetProfileSettings.component'
@@ -7,7 +8,7 @@ import { TelnetProfile } from './session'
 @Injectable({ providedIn: 'root' })
 export class TelnetProfilesService extends QuickConnectProfileProvider<TelnetProfile> {
     id = 'telnet'
-    name = 'Telnet'
+    name = _('Telnet')
     supportsQuickConnect = true
     settingsComponent = TelnetProfileSettingsComponent
     configDefaults = {

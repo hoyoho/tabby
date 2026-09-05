@@ -4,12 +4,12 @@
 .modal-header(*ngIf='defaultsMode !== "disabled"')
     h3.m-0(
         translate='Defaults for {type}',
-        [translateParams]='{type: profileProvider.name}'
+        [translateParams]='{type: profileProvider.name | translate}'
     )
 
 .modal-body
     .row
-        .col-12.col-lg-4
+        .col-12.col-lg-5
             .mb-3(*ngIf='defaultsMode === "disabled"')
                 label(translate) Name
                 input.form-control(
@@ -51,16 +51,21 @@
                     i([class]='"fa-fw " + r')
                     ngb-highlight.ms-2([result]='r', [term]='t')
 
-            .form-line
-                .header
-                    .title(translate) Color
-                input.form-control.w-50(
-                    type='text',
-                    [(ngModel)]='profile.color',
-                    placeholder='#000000',
-                    [ngbTypeahead]='colorsAutocomplete',
-                    [resultFormatter]='colorsFormatter'
-                )
+            .mb-3
+                label(translate) Color
+                .input-group
+                    input.form-control.color-picker(
+                        type='color',
+                        [(ngModel)]='profile.color',
+                        [ngbTypeahead]='colorsAutocomplete',
+                        [resultFormatter]='colorsFormatter'
+                    )
+                    input.form-control(
+                        type='text',
+                        [(ngModel)]='profile.color',
+                        [ngbTypeahead]='colorsAutocomplete',
+                        [resultFormatter]='colorsFormatter'
+                    )
 
             .form-line
                 .header
@@ -88,7 +93,7 @@
                 )
             .mb-4
 
-        .col-12.col-lg-8(*ngIf='this.profileProvider.settingsComponent')
+        .col-12.col-lg-7(*ngIf='this.profileProvider.settingsComponent')
             ng-template(#placeholder)
 
 .modal-footer

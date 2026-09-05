@@ -29,6 +29,7 @@ export class LinuxDefaultShellProvider extends ShellProvider {
             return [{
                 id: 'default',
                 name: this.translate.instant('User default'),
+                icon: 'fas fa-terminal',
                 command: '/bin/sh',
                 env: {},
                 shellType: 'unix',
@@ -37,6 +38,7 @@ export class LinuxDefaultShellProvider extends ShellProvider {
             return [{
                 id: 'default',
                 name: this.translate.instant('User default'),
+                icon: 'fas fa-terminal',
                 command: line.split(':')[6],
                 args: ['--login'],
                 hidden: true,

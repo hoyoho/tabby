@@ -3,7 +3,7 @@
 
 .modal-body
     .row
-        .col-12.col-lg-4
+        .col-12.col-lg-5
             .mb-3
                 label(translate) Name
                 input.form-control(
@@ -61,7 +61,7 @@
                         [resultFormatter]='colorsFormatter'
                     )
 
-        .col-12.col-lg-8(*ngIf='providers.length !== 0')
+        .col-12.col-lg-7(*ngIf='providers.length !== 0')
             .form-line.content-box
                 .header
                     .title(translate) Default profile group settings

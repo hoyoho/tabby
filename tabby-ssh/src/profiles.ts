@@ -1,3 +1,4 @@
+import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import { Injectable, InjectFlags, Injector } from '@angular/core'
 import { NewTabParameters, PartialProfile, TranslateService, QuickConnectProfileProvider } from 'tabby-core'
 import { SSHProfileSettingsComponent } from './components/sshProfileSettings.component'
@@ -10,7 +11,7 @@ import { defaultAlgorithms } from './algorithms'
 @Injectable({ providedIn: 'root' })
 export class SSHProfilesService extends QuickConnectProfileProvider<SSHProfile> {
     id = 'ssh'
-    name = 'SSH'
+    name = _('SSH')
     settingsComponent = SSHProfileSettingsComponent
     configDefaults = {
         options: {
