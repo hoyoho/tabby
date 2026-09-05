@@ -45,6 +45,10 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         this.profileProviders.sort((a, b) => a.name.localeCompare(b.name))
     }
 
+    get defaultProviders (): ProfileProvider<Profile>[] {
+        return this.profileProviders.filter(x => x.id !== 'split-layout')
+    }
+
     /** Providers that declared themselves part of this tab's advanced section */
     get sectionProviders (): SettingsTabProvider[] {
         return this.settingsTabProviders

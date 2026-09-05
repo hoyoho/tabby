@@ -78,6 +78,7 @@
                     .title(translate) When a session ends
                     .description(*ngIf='profile.behaviorOnSessionEnd == "auto"', translate) Close the session only when explicitly terminated
                 select.form-control(
+                    style='width: 45%',
                     [(ngModel)]='profile.behaviorOnSessionEnd',
                 )
                     option(ngValue='auto', translate) Auto
