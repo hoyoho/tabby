@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "Zamknij wszystkie sesje w panelu"
+
+msgid "Close sessions to the left"
+msgstr "Zamknij sesje po lewej"
+
+msgid "Close sessions to the right"
+msgstr "Zamknij sesje po prawej"
+
+msgid "Focus all sessions"
+msgstr "Skup się na wszystkich sesjach"
+
 msgid "{name} copy"
 msgstr "Kopia {name}"
 

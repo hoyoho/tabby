@@ -95,6 +95,11 @@ export class XTermFrontend extends Frontend {
     private pendingRendererRecovery = false
     private rendererRecoveryAttempts = 0
 
+    // Broadcast (focus-all) state: while forced, the terminal behaves as
+    // focused (blinking cursor) even though the real DOM focus is elsewhere.
+    private forcedFocus = false
+    private originalIsFocusedGetter: (() => boolean)|null = null
+
     private configService: ConfigService
     private hotkeysService: HotkeysService
     private platformService: PlatformService
@@ -307,6 +312,25 @@ export class XTermFrontend extends Frontend {
         this.xterm.open(host)
         this.opened = true
 
+        // While broadcast-forced, a real blur (clicking another terminal)
+        // clears xterm's focus state — re-assert it on the next tick, after
+        // xterm's own blur handler (registered during open()) ran.
+        this.xterm.textarea?.addEventListener('blur', () => {
+            if (this.forcedFocus) {
+                setTimeout(() => {
+                    if (this.forcedFocus && this.opened) {
+                        this.xtermCore._renderService?.handleFocus()
+                    }
+                })
+            }
+        })
+
+        // The forced-focus request may have arrived before the frontend was
+        // attached (renderer not created yet) — apply it now.
+        if (this.forcedFocus) {
+            this.applyForcedFocusState()
+        }
+
         // Work around font loading bugs
         await new Promise(resolve => setTimeout(resolve, this.hostApp.platform === Platform.Web ? 1000 : 0))
 
@@ -470,6 +494,70 @@ export class XTermFrontend extends Frontend {
         setTimeout(() => this.xterm.focus())
     }
 
+    /**
+     * Broadcast (focus-all) support: makes the terminal act focused (blinking
+     * cursor) while the real DOM focus lives elsewhere. Works across all three
+     * renderers:
+     * - DOM: handleFocus() adds the row-container focus class that gates the
+     *   CSS blink animation.
+     * - Canvas/WebGL: handleFocus() resumes the blink state manager, and the
+     *   shadowed `isFocused` getter keeps the renderer drawing the active
+     *   cursor style.
+     */
+    setForcedFocus (enabled: boolean): void {
+        if (this.forcedFocus === enabled) {
+            return
+        }
+        this.forcedFocus = enabled
+        // cursorBlink must be on for any blink machinery to exist at all.
+        this.xterm.options.cursorBlink = enabled || this.configService.store.terminal.cursorBlink
+        if (this.opened) {
+            this.applyForcedFocusState()
+        }
+    }
+
+    private applyForcedFocusState (): void {
+        const renderService = this.xtermCore._renderService
+        const coreBrowserService = this.xtermCore._coreBrowserService
+        if (!renderService || !coreBrowserService) {
+            return
+        }
+        if (this.forcedFocus) {
+            this.shadowIsFocused(true)
+            renderService.handleFocus()
+        } else {
+            this.shadowIsFocused(false)
+            // Only clear the visual focus state if the terminal does not hold
+            // the real DOM focus; otherwise xterm's own state is authoritative.
+            if (document.activeElement !== this.xterm.textarea) {
+                renderService.handleBlur()
+            }
+        }
+    }
+
+    /**
+     * Overrides (or restores) the CoreBrowserService.isFocused accessor on the
+     * instance, so renderers treat this terminal as focused while broadcast-
+     * forced without touching real DOM focus.
+     */
+    private shadowIsFocused (enabled: boolean): void {
+        const svc = this.xtermCore._coreBrowserService
+        if (enabled) {
+            if (this.originalIsFocusedGetter) {
+                return
+            }
+            const descriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(svc), 'isFocused')
+            if (!descriptor?.get) {
+                return
+            }
+            this.originalIsFocusedGetter = descriptor.get.bind(svc)
+            Object.defineProperty(svc, 'isFocused', { get: () => true, configurable: true })
+        } else if (this.originalIsFocusedGetter) {
+            Object.defineProperty(svc, 'isFocused', { get: this.originalIsFocusedGetter, configurable: true })
+            this.originalIsFocusedGetter = null
+        }
+    }
+
     async write (data: string): Promise<void> {
         // ConPTY (Windows local sessions) opens with a full-screen clear +
         // blank repaint, which would wipe a freshly restored scrollback.
@@ -601,7 +689,7 @@ export class XTermFrontend extends Frontend {
         this.xterm.options.cursorStyle = {
             beam: 'bar',
         }[config.terminal.cursor] || config.terminal.cursor
-        this.xterm.options.cursorBlink = config.terminal.cursorBlink
+        this.xterm.options.cursorBlink = this.forcedFocus || config.terminal.cursorBlink
         this.xterm.options.macOptionIsMeta = config.terminal.altIsMeta
         this.xterm.options.scrollback = config.terminal.scrollbackLines
         this.xterm.options.wordSeparator = config.terminal.wordSeparator

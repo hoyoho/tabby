@@ -1,3 +1,15 @@
+msgid "Close all sessions in pane"
+msgstr ""
+
+msgid "Close sessions to the left"
+msgstr ""
+
+msgid "Close sessions to the right"
+msgstr ""
+
+msgid "Focus all sessions"
+msgstr ""
+
 msgid "{name} copy"
 msgstr ""
 

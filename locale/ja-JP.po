@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "ペイン内のすべてのセッションを閉じる"
+
+msgid "Close sessions to the left"
+msgstr "左側のセッションを閉じる"
+
+msgid "Close sessions to the right"
+msgstr "右側のセッションを閉じる"
+
+msgid "Focus all sessions"
+msgstr "すべてのセッションをフォーカス"
+
 msgid "{name} copy"
 msgstr "{name} コピー"
 

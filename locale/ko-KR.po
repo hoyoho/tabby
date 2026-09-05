@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "항목의 모든 세션 닫기"
+
+msgid "Close sessions to the left"
+msgstr "왼쪽 세션 닫기"
+
+msgid "Close sessions to the right"
+msgstr "오른쪽 세션 닫기"
+
+msgid "Focus all sessions"
+msgstr "모든 세션 포커스"
+
 msgid "{name} copy"
 msgstr "{name} 복사"
 

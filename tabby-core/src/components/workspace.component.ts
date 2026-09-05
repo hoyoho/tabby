@@ -150,6 +150,16 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     focusedTab: SessionTab|null = null
     private viewRefs: Map<SessionTab, EmbeddedViewRef<any>> = new Map()
 
+    /**
+     * Broadcast (focus-all) mode: while on, the foreground session of every
+     * pane shares keyboard input (keystrokes/paste typed into the focused
+     * terminal are replicated to the others) and all of them show a blinking
+     * cursor. Deliberately NOT persisted: the flag lives in memory on this
+     * workspace instance only, so it survives workspace switches but dies
+     * with the workspace (restart/recovery always starts with it off).
+     */
+    focusAllMode = false
+
     /** @hidden Pane-tab drag gesture controller (self-contained drag state) */
     private readonly paneDrag: PaneDragController
     /** Monotonic guard for stale cross-window drag results. */
@@ -256,12 +266,26 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             } else {
                 this.focusAnyIn(this.root)
             }
+            // Coming back to a focus-all workspace: re-assert the blinking
+            // cursor on the current foreground sessions (configure() may have
+            // restored config-driven blink state meanwhile).
+            if (this.focusAllMode) {
+                this.applyFocusAllState()
+            }
         })
         this.blurred$.subscribe(() => this.getAllTabs().forEach(x => x.emitBlurred()))
         this.visibility$.subscribe(visibility => this.getAllTabs().forEach(x => x.emitVisibility(visibility)))
 
         this.tabAdded$.subscribe(() => this.updateTitle())
         this.tabRemoved$.subscribe(() => this.updateTitle())
+
+        // Follow pane-active switches while broadcasting: the session that
+        // just became a pane's foreground joins, the previous one leaves.
+        this.focusChanged$.subscribe(() => {
+            if (this.focusAllMode) {
+                this.applyFocusAllState()
+            }
+        })
 
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, hotkey => {
             if (!this.hasFocus || !this.focusedTab) {
@@ -327,6 +351,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
                     break
                 case 'close-session':
                     this.focusedTab.destroy()
+                    break
+                case 'focus-all-sessions':
+                    this.toggleFocusAll()
                     break
                 case 'splitter-top-up':
                     this.paneNav.moveSplitter('up', 1)
@@ -422,6 +449,35 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     /** @returns Flat list of all sessions in this workspace */
     getAllTabs (): SessionTab[] {
         return this.root.getAllTabs()
+    }
+
+    /**
+     * @returns the sessions currently displayed in each pane's foreground
+     * (one per pane, `pane.tab`), i.e. the broadcast participants.
+     */
+    getForegroundTabs (): SessionTab[] {
+        return collectPanes(this.root)
+            .map(pane => pane.tab)
+            .filter((tab): tab is SessionTab => !!tab)
+    }
+
+    /** Toggles broadcast (focus-all) mode for this workspace */
+    toggleFocusAll (): void {
+        this.focusAllMode = !this.focusAllMode
+        this.applyFocusAllState()
+    }
+
+    /**
+     * Syncs the broadcast-participation mark of every session with the current
+     * layout: the active session of each pane participates (blinking cursor),
+     * background sessions don't.
+     */
+    private applyFocusAllState (): void {
+        for (const pane of collectPanes(this.root)) {
+            for (const tab of pane.tabs) {
+                tab.setBroadcastFocus(this.focusAllMode && pane.tab === tab)
+            }
+        }
     }
 
     getFocusedTab (): SessionTab|null {
@@ -603,12 +659,21 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         ])
         items = items.filter(item => !workspaceOnlyIds.has(item.id!) && !workspaceOnlyLabels.has(item.label!))
 
-        // "Close" is the primary action for a session — keep it on top.
+        // The close family — "Close" plus the pane-scoped bulk close items —
+        // is the primary action group for a session: keep it together on top
+        // of the menu, visually separated from the remaining entries.
+        const closeFamilyIds = new Set([
+            'context:close-sessions-to-the-left',
+            'context:close-sessions-to-the-right',
+            'context:close-sessions-all-in-pane',
+        ])
         const closeLabel = this.translate.instant('Close')
-        const closeItem = items.find(item => item.label === closeLabel)
-        if (closeItem && items[0] !== closeItem) {
-            items = items.filter(item => item !== closeItem)
-            items.unshift(closeItem)
+        const isCloseFamily = (item: { id?: string, label?: string }): boolean =>
+            (item.id !== undefined && closeFamilyIds.has(item.id)) || item.label === closeLabel
+        const closeFamily = items.filter(isCloseFamily)
+        if (closeFamily.length) {
+            items = items.filter(item => !isCloseFamily(item))
+            items.unshift(...closeFamily, { type: 'separator' })
         }
 
         if (items.length) {
@@ -780,6 +845,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             tab.destroy()
             return
         }
+        // The session leaves this workspace: drop its broadcast mark before it
+        // lands anywhere else (another workspace may not be in focus-all mode).
+        tab.setBroadcastFocus(false)
         pane.tabs = pane.tabs.filter(x => x !== tab)
         tab.removeFromContainer()
         tab.parent = null
@@ -788,6 +856,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
         if (pane.activeTab === tab) {
             pane.activeTab = pane.tabs[0] ?? null
+        }
+        if (this.focusAllMode) {
+            this.applyFocusAllState()
         }
         this.cleanRoot()
         this.updateTitle()
@@ -815,16 +886,24 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     replaceTab (tab: BaseTabComponent, newTab: BaseTabComponent): void {
-        const pane = this.getPaneOf(tab)
+        // Callers only ever swap sessions here (a page host cannot be nested
+        // in a pane); SessionTab is structurally BaseTabComponent + the
+        // broadcast hook, hence the assertions.
+        const pane = this.getPaneOf(tab as SessionTab)
         if (pane) {
-            const position = pane.tabs.indexOf(tab)
+            const position = pane.tabs.indexOf(tab as SessionTab)
             if (position < 0) { return }
+            const newSession = newTab as SessionTab
+            if (tab instanceof SessionTab) { tab.setBroadcastFocus(false) }
             tab.removeFromContainer()
-            this.adoptTab(newTab)
-            pane.tabs[position] = newTab
-            if (pane.activeTab === tab) { pane.activeTab = newTab }
-            this.attachTabView(newTab)
-            this.onAfterTabAdded(newTab)
+            this.adoptTab(newSession)
+            pane.tabs[position] = newSession
+            if (pane.activeTab === tab) { pane.activeTab = newSession }
+            this.attachTabView(newSession)
+            this.onAfterTabAdded(newSession)
+            if (this.focusAllMode) {
+                this.applyFocusAllState()
+            }
             this.recoveryStateChangedHint.next()
             this.updateTitle()
         }

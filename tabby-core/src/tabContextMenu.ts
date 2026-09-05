@@ -1,4 +1,4 @@
-﻿/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Injectable } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { TranslateService } from '@ngx-translate/core'
@@ -89,6 +89,38 @@ export class TabManagementContextMenu extends TabContextMenuItemProvider {
                 },
             ]
         } else if (tab.parent instanceof WorkspaceComponent) {
+            // Pane-scoped bulk close: a pane may stack several sessions; offer
+            // closing the neighbours of the right-clicked one (left/right keep
+            // it, "all" also closes it). Only meaningful with 2+ sessions and
+            // strictly limited to the hosting pane.
+            const pane = tab.parent.getPaneOf(tab as SessionTab)
+            const index = pane?.tabs.indexOf(tab as SessionTab) ?? -1
+            if (pane && pane.tabs.length > 1) {
+                const closeSessions = (sessions: SessionTab[]): void => {
+                    for (const session of sessions) {
+                        void this.closeSubTab(session)
+                    }
+                }
+                items.push(
+                    {
+                        id: 'context:close-sessions-to-the-left',
+                        label: this.translate.instant('Close sessions to the left'),
+                        enabled: index > 0,
+                        click: () => closeSessions(pane.tabs.slice(0, index)),
+                    },
+                    {
+                        id: 'context:close-sessions-to-the-right',
+                        label: this.translate.instant('Close sessions to the right'),
+                        enabled: index < pane.tabs.length - 1,
+                        click: () => closeSessions(pane.tabs.slice(index + 1)),
+                    },
+                    {
+                        id: 'context:close-sessions-all-in-pane',
+                        label: this.translate.instant('Close all sessions in pane'),
+                        click: () => closeSessions([...pane.tabs]),
+                    },
+                )
+            }
             const directions: SplitDirection[] = ['r', 'b', 'l', 't']
             items.push({
                 label: this.translate.instant('Split'),
@@ -185,6 +217,13 @@ export class CommonOptionsContextMenu extends TabContextMenuItemProvider {
                 ...isSession
                     ? []
                     : [{
+                        id: 'context:focus-all-sessions',
+                        label: this.translate.instant('Focus all sessions'),
+                        type: 'checkbox',
+                        checked: (tab as WorkspaceComponent).focusAllMode,
+                        click: () => (tab as WorkspaceComponent).toggleFocusAll(),
+                    },
+                    {
                         label: this.translate.instant('Pin'),
                         commandLabel: this.translate.instant('Pin workspace'),
                         type: 'checkbox',

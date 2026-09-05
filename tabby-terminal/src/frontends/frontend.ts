@@ -99,4 +99,11 @@ export abstract class Frontend {
      * Called on session reconnection to prevent stale modes from leaking
      */
     resetTerminalModes (): void { } // eslint-disable-line
+
+    /**
+     * Broadcast (focus-all) support: pretend the terminal is focused so its
+     * cursor blinks without moving the real DOM focus. `false` restores the
+     * normal focus-follows-DOM behavior.
+     */
+    setForcedFocus (_enabled: boolean): void { } // eslint-disable-line
 }

@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "Zatvori sve sesije u oknu"
+
+msgid "Close sessions to the left"
+msgstr "Zatvori sesije lijevo"
+
+msgid "Close sessions to the right"
+msgstr "Zatvori sesije desno"
+
+msgid "Focus all sessions"
+msgstr "Fokusiraj sve sesije"
+
 msgid "{name} copy"
 msgstr "kopija {name}"
 

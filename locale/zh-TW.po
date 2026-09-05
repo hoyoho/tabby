@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "關閉窗格中的全部工作階段"
+
+msgid "Close sessions to the left"
+msgstr "關閉左側工作階段"
+
+msgid "Close sessions to the right"
+msgstr "關閉右側工作階段"
+
+msgid "Focus all sessions"
+msgstr "聚焦所有工作階段"
+
 msgid "{name} copy"
 msgstr "{name} 複製"
 

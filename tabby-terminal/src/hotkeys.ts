@@ -66,6 +66,10 @@ export class TerminalHotkeyProvider extends HotkeyProvider {
             name: this.translate.instant('Intelligent Ctrl-C (copy/abort)'),
         },
         {
+            id: 'focus-all-sessions',
+            name: this.translate.instant('Focus all sessions'),
+        },
+        {
             id: 'copy-current-path',
             name: this.translate.instant('Copy current path'),
         },

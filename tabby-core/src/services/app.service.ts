@@ -266,7 +266,7 @@ export class AppService {
         const appendToPaneByDefault = sessionSettings.appendToPaneByDefault ?? true
         // By this point the workspace type was routed to openNewTabRaw, so the
         // created tab is a session.
-        const session = tab as SessionTab
+        const session = tab as unknown as SessionTab
         if (active instanceof WorkspaceComponent && !openInNewWorkspace && appendToPaneByDefault) {
             // Reuse the focused workspace: add the session to its current pane
             void active.addTabToPane(session)
@@ -340,7 +340,7 @@ export class AppService {
     getParentTab (tab: BaseTabComponent): WorkspaceComponent|null {
         for (const topLevelTab of this.tabs) {
             if (topLevelTab instanceof WorkspaceComponent) {
-                if (topLevelTab.getAllTabs().includes(tab)) {
+                if (topLevelTab.getAllTabs().includes(tab as SessionTab)) {
                     return topLevelTab
                 }
             }
@@ -494,7 +494,7 @@ export class AppService {
         // Prefill with what the user currently sees (same resolution order
         // as the pane header: rename > profile name / dynamic title).
         const defaultName = tab.parent instanceof WorkspaceComponent
-            ? tab.parent.sessionDisplayTitle(tab)
+            ? tab.parent.sessionDisplayTitle(tab as SessionTab)
             : tab.customTitle || tab.title
         modal.componentInstance.value = defaultName
         modal.result.then(result => {

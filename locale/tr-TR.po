@@ -13,6 +13,18 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Close all sessions in pane"
+msgstr "Bölmedeki tüm oturumları kapat"
+
+msgid "Close sessions to the left"
+msgstr "Soldaki oturumları kapat"
+
+msgid "Close sessions to the right"
+msgstr "Sağdaki oturumları kapat"
+
+msgid "Focus all sessions"
+msgstr "Tüm oturumlara odaklan"
+
 msgid "{name} copy"
 msgstr "{name} kopyalandı"
 

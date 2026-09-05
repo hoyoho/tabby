@@ -2,7 +2,7 @@ import { Observable, Subject, first, auditTime, debounce, interval } from 'rxjs'
 import { Spinner } from 'cli-spinner'
 import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
-import { AppService, ConfigService, SessionTab, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
+import { AppService, ConfigService, SessionTab, WorkspaceComponent, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
 
 import { BaseSession } from '../session'
 
@@ -463,9 +463,45 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
             data = Buffer.from(data, 'utf-8')
         }
         this.session?.feedFromTerminal(data)
+        this.forwardBroadcastInput(data)
         if (this.config.store.terminal.scrollOnInput && !data.equals(OSC_FOCUS_IN) && !data.equals(OSC_FOCUS_OUT)) {
             this.frontend?.scrollToBottom()
         }
+    }
+
+    /**
+     * Broadcast (focus-all) support: while the host workspace is in
+     * focus-all mode, keystrokes/paste typed into the focused terminal are
+     * replicated to the foreground session of every other pane of the same
+     * workspace. The recipient set is resolved at input time, so a pane that
+     * switched to another session starts receiving the broadcast immediately.
+     */
+    private forwardBroadcastInput (data: Buffer): void {
+        if (!(this.parent instanceof WorkspaceComponent)) {
+            return
+        }
+        if (!this.parent.focusAllMode) {
+            return
+        }
+        // Only the terminal that owns the real keyboard focus broadcasts;
+        // recipients never re-broadcast (they are not the focused tab), so
+        // this cannot loop.
+        if (this.parent.getFocusedTab() !== this) {
+            return
+        }
+        for (const tab of this.parent.getForegroundTabs()) {
+            if (tab !== this && tab instanceof BaseTerminalTabComponent) {
+                tab.sendInput(data)
+            }
+        }
+    }
+
+    /**
+     * Broadcast (focus-all) support: marks this terminal as a broadcast
+     * participant (blinking cursor without real DOM focus) or clears the mark.
+     */
+    setBroadcastFocus (enabled: boolean): void {
+        this.frontend?.setForcedFocus(enabled)
     }
 
     /**

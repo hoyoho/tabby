@@ -5,6 +5,7 @@ import { DefaultColorSchemes } from './colorSchemes'
 export class TerminalConfigProvider extends ConfigProvider {
     defaults = {
         hotkeys: {
+            'focus-all-sessions': ['Ctrl-Shift-I'],
             'copy-current-path': [],
             'debug-save-state': ['Ctrl-Shift-Alt-1'],
             'debug-load-state': ['Ctrl-Shift-Alt-2'],

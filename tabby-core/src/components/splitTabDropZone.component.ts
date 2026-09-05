@@ -49,7 +49,6 @@ export class SplitTabDropZoneComponent extends SelfPositioningComponent {
         }
         const allTabs = this.parent.getAllTabs()
         return !(
-            tab === this.parent ||
             allTabs.length === 1 && allTabs.includes(tab) ||
             this.dropZone.type === 'relative' && tab === (this.dropZone.relativeTo as any)
         )

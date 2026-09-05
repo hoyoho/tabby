@@ -273,6 +273,10 @@ msgid "Close"
 msgstr "关闭"
 
 
+msgid "Close all sessions in pane"
+msgstr "关闭窗格会话"
+
+
 msgid "Close and never show again"
 msgstr "关闭且不再提示"
 
@@ -287,6 +291,14 @@ msgstr "关闭其他工作区"
 
 msgid "Close session"
 msgstr "关闭会话"
+
+
+msgid "Close sessions to the left"
+msgstr "关闭左侧会话"
+
+
+msgid "Close sessions to the right"
+msgstr "关闭右侧会话"
 
 
 msgid "Close the session only when explicitly terminated"
@@ -869,6 +881,10 @@ msgstr "流畅"
 
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Fluent 背景有时会导致拖动延迟"
+
+
+msgid "Focus all sessions"
+msgstr "聚焦所有会话"
 
 
 msgid "Focus follows mouse"
