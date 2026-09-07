@@ -471,27 +471,36 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     /**
      * Broadcast (focus-all) support: while the host workspace is in
-     * focus-all mode, keystrokes/paste typed into the focused terminal are
-     * replicated to the foreground session of every other pane of the same
-     * workspace. The recipient set is resolved at input time, so a pane that
-     * switched to another session starts receiving the broadcast immediately.
+     * focus-all mode, keystrokes/paste arriving at any pane's foreground
+     * terminal are replicated to the foreground session of every other pane of
+     * the same workspace. The recipient set is resolved at input time, so a
+     * pane that switched to another session starts receiving the broadcast
+     * immediately.
      */
+    private receivingBroadcast = false
     private forwardBroadcastInput (data: Buffer): void {
+        // A copy being delivered to this terminal by another pane's broadcast
+        // must not be re-broadcast; this is the loop guard (independent of
+        // which tab the workspace considers focused, so paste into a pane that
+        // was never left-clicked — e.g. a fresh session via middle-click —
+        // still broadcasts, since the middle button does not fire `click`).
+        if (this.receivingBroadcast) {
+            return
+        }
         if (!(this.parent instanceof WorkspaceComponent)) {
             return
         }
         if (!this.parent.focusAllMode) {
             return
         }
-        // Only the terminal that owns the real keyboard focus broadcasts;
-        // recipients never re-broadcast (they are not the focused tab), so
-        // this cannot loop.
-        if (this.parent.getFocusedTab() !== this) {
-            return
-        }
         for (const tab of this.parent.getForegroundTabs()) {
             if (tab !== this && tab instanceof BaseTerminalTabComponent) {
-                tab.sendInput(data)
+                tab.receivingBroadcast = true
+                try {
+                    tab.sendInput(data)
+                } finally {
+                    tab.receivingBroadcast = false
+                }
             }
         }
     }
