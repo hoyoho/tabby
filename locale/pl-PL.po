@@ -2754,3 +2754,9 @@ msgstr "Powłoka"
 
 msgid "Menu"
 msgstr "Menu"
+
+msgid "Open in new window"
+msgstr "Otwórz w nowym oknie"
+
+msgid "Open workspace in new window"
+msgstr "Otwórz obszar roboczy w nowym oknie"

@@ -1,4 +1,4 @@
-import { BaseTabComponent, GetRecoveryTokenOptions } from './baseTab.component'
+import { GetRecoveryTokenOptions } from './baseTab.component'
 import { SessionTab } from '../api/session'
 import { RecoveryToken } from '../api/tabRecovery'
 import { TabRecoveryService } from '../services/tabRecovery.service'
@@ -401,25 +401,6 @@ export class SplitContainer {
 }
 
 /**
- * A drop target on the workspace canvas: outer/relative edge bands and the
- * center of a pane cell. Produced by [[layoutTree]], consumed by the
- * `split-tab-drop-zone` component.
- */
-export type SplitDropZoneInfo = {
-    x: number
-    y: number
-    w: number
-    h: number
-} & ({
-    type: 'relative'
-    relativeTo?: TabView|BaseTabComponent
-    side: SplitDirection
-} | {
-    type: 'center'
-    pane: Pane
-})
-
-/**
  * The pixel rect a leaf pane occupies during this layout pass, plus the pane
  * itself so the caller can position the pane's tab DOM underneath the header.
  */
@@ -434,13 +415,12 @@ export interface PanePlacement {
 /**
  * Everything the layout pass computes about the pane tree, as plain data.
  * [[WorkspaceComponent]] consumes this to (re)build its view-model arrays
- * (`_spanners` / `_dropZones` / `_paneHeaders`) and to style the tab DOM.
+ * (`_spanners` / `_paneHeaders`) and to style the tab DOM.
  */
 export interface WorkspaceLayoutResult {
     placements: PanePlacement[]
     paneHeaders: SplitTabPaneHeaderData[]
     spanners: SplitSpannerInfo[]
-    dropZones: SplitDropZoneInfo[]
 }
 
 /**
@@ -451,7 +431,7 @@ export interface WorkspaceLayoutResult {
  *
  * Writes geometry back into every container (`x/y/w/h`, `pixelSizes`,
  * `pixelOffsets`) and returns the derived pane placements plus the gutter /
- * drop-zone / header view data in the exact recursive order the DOM expects.
+ * header view data in the exact recursive order the DOM expects.
  *
  * @param recreate When false (mid pixel-resize drag) zonal/spanner/header data
  *   is omitted so the previous view arrays are left untouched; geometry and
@@ -469,7 +449,6 @@ export function layoutTree (
     const placements: PanePlacement[] = []
     const paneHHeaders: SplitTabPaneHeaderData[] = []
     const spanners: SplitSpannerInfo[] = []
-    const dropZones: SplitDropZoneInfo[] = []
 
     const walk = (node: SplitContainer, nx: number, ny: number, nw: number, nh: number): void => {
         const vertical = node.orientation === 'v'
@@ -500,13 +479,6 @@ export function layoutTree (
             off += node.pixelSizes[i] + (i < n - 1 ? SPLITTER_BAND : 0)
         }
 
-        if (node === root && recreate) {
-            dropZones.push({ x: nx - SPLITTER_BAND, y: ny, w: SPLITTER_BAND, h: nh, type: 'relative', side: 'l' })
-            dropZones.push({ x: nx, y: ny - SPLITTER_BAND, w: nw, h: SPLITTER_BAND, type: 'relative', side: 't' })
-            dropZones.push({ x: nx + nw, y: ny, w: SPLITTER_BAND, h: nh, type: 'relative', side: 'r' })
-            dropZones.push({ x: nx, y: ny + nh, w: nw, h: SPLITTER_BAND, type: 'relative', side: 'b' })
-        }
-
         node.children.forEach((child, i) => {
             const size = node.pixelSizes[i]
             const offset = node.pixelOffsets[i]
@@ -521,38 +493,10 @@ export function layoutTree (
                 placements.push({ pane: child, x: childX, y: childY, w: childW, h: childH })
                 if (recreate) {
                     paneHHeaders.push({ pane: child, x: childX, y: childY, w: childW, h: paneHeaderHeight })
-                    dropZones.push({
-                        type: 'center',
-                        pane: child,
-                        x: childX,
-                        y: childY + paneHeaderHeight,
-                        w: childW,
-                        h: Math.max(childH - paneHeaderHeight, 0),
-                    })
                 }
             }
 
             if (recreate) {
-                if (i !== n - 1) {
-                    dropZones.push({
-                        type: 'relative',
-                        relativeTo: child,
-                        side: vertical ? 'b' : 'r',
-                        x: vertical ? nx : nx + node.pixelOffsets[i + 1] - SPLITTER_BAND,
-                        y: vertical ? ny + node.pixelOffsets[i + 1] - SPLITTER_BAND : ny,
-                        w: vertical ? nw : SPLITTER_BAND,
-                        h: vertical ? SPLITTER_BAND : nh,
-                    })
-                }
-
-                if (vertical) {
-                    dropZones.push({ x: nx, y: ny + offset, w: SPLITTER_BAND, h: size, type: 'relative', relativeTo: child, side: 'l' })
-                    dropZones.push({ x: nx + nw - SPLITTER_BAND, y: ny + offset, w: SPLITTER_BAND, h: size, type: 'relative', relativeTo: child, side: 'r' })
-                } else {
-                    dropZones.push({ x: nx + offset, y: ny, w: size, h: SPLITTER_BAND, type: 'relative', relativeTo: child, side: 't' })
-                    dropZones.push({ x: nx + offset, y: ny + nh - SPLITTER_BAND, w: size, h: SPLITTER_BAND, type: 'relative', relativeTo: child, side: 'b' })
-                }
-
                 if (i !== 0) {
                     spanners.push({ container: node, index: i })
                 }
@@ -561,5 +505,5 @@ export function layoutTree (
     }
 
     walk(root, x, y, w, h)
-    return { placements, paneHeaders: paneHHeaders, spanners, dropZones }
+    return { placements, paneHeaders: paneHHeaders, spanners }
 }

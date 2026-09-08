@@ -25,24 +25,30 @@ export class WebHostApp extends HostAppService {
         throw new Error('Not implemented')
     }
 
-    windowDragStart (_kind: 'session'|'workspace', _token: any): void {
+    nativeDragStart (_dragId: string, _savedState: any): void {
         // No cross-window drag in the web build
     }
 
-    windowDragEnd (): void {
+    nativeDragEnd (_dragId: string): void {
         // No cross-window drag in the web build
     }
 
-    windowDragCancel (): void {
+    nativeDragState (_dragId: string): any {
+        // No cross-window drag in the web build
+        return null
+    }
+
+    nativeDragStateUpdate (_dragId: string, _state: any): void {
         // No cross-window drag in the web build
     }
 
-    windowDragAccepted (): void {
+    nativeDragAccepted (_dragId: string): void {
         // No cross-window drag in the web build
     }
 
-    windowDragCard (_card: { title: string, color?: string|null }): void {
-        // No cross-window drag in the web build
+    getCursorScreenPoint (): { x: number, y: number }|null {
+        // No main process to ask in the web build
+        return null
     }
 
     relaunch (): void {

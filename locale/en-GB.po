@@ -2754,3 +2754,9 @@ msgstr ""
 
 msgid "Menu"
 msgstr ""
+
+msgid "Open in new window"
+msgstr ""
+
+msgid "Open workspace in new window"
+msgstr ""

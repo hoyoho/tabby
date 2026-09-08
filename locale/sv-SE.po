@@ -2754,3 +2754,9 @@ msgstr "Skal"
 
 msgid "Menu"
 msgstr "Meny"
+
+msgid "Open in new window"
+msgstr "Öppna i nytt fönster"
+
+msgid "Open workspace in new window"
+msgstr "Öppna arbetsyta i nytt fönster"

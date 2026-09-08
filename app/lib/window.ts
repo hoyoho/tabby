@@ -19,6 +19,15 @@ if (process.platform === 'win32') {
 
 export interface WindowOptions {
     hidden?: boolean
+    /**
+     * Explicit window placement (DIP). When provided (workspace detached into
+     * a new window), it overrides the persisted windowBounds and skips the
+     * off-screen recalculation, so the window appears at the release point.
+     */
+    x?: number
+    y?: number
+    width?: number
+    height?: number
 }
 
 type DockSide = 'off'|'left'|'right'|'top'|'bottom'
@@ -57,12 +66,6 @@ export class Window {
     get visible$ (): Observable<boolean> { return this.visible }
     get closed$ (): Observable<void> { return this.closed }
 
-    /**
-     * Last time this window received focus — used as a z-order heuristic when
-     * several windows overlap so a drop can be routed to the one on top.
-     */
-    activatedAt = Date.now()
-
     get isAlwaysOnTop (): boolean {
         return !!(this.window && !this.window.isDestroyed() && this.window.isAlwaysOnTop())
     }
@@ -94,7 +97,15 @@ export class Window {
             acceptFirstMouse: true,
         }
 
-        if (this.windowBounds) {
+        if (options.x !== undefined && options.y !== undefined) {
+            // Explicit placement (workspace detach): wins over persisted bounds.
+            Object.assign(bwOptions, {
+                x: options.x,
+                y: options.y,
+                ...(options.width !== undefined ? { width: options.width } : {}),
+                ...(options.height !== undefined ? { height: options.height } : {}),
+            })
+        } else if (this.windowBounds) {
             Object.assign(bwOptions, this.windowBounds)
             const closestDisplay = screen.getDisplayNearestPoint( { x: this.windowBounds.x, y: this.windowBounds.y } )
 
@@ -183,7 +194,11 @@ export class Window {
 
         this.ready = new Promise(resolve => {
             const listener = event => {
-                if (event.sender === this.window.webContents) {
+                // The window can be closed mid-bootstrap (tear-off merged
+                // away): `this.window` is already nulled by the closed handler
+                // while the queued app:ready still arrives — guard it, the
+                // unhandled throw would take the whole main process down.
+                if (this.window && event.sender === this.window.webContents) {
                     ipcMain.removeListener('app:ready', listener as any)
                     resolve()
                 }
@@ -483,7 +498,6 @@ export class Window {
         })
 
         this.window.on('focus', () => {
-            this.activatedAt = Date.now()
             this.send('host:window-focused')
         })
 

@@ -241,8 +241,21 @@ export class AppRootComponent {
         // a session dragged between workspaces goes through the pane drag
         // controller instead, so the reordered item is always in `tabs`.
         const tab: BaseTabComponent = event.item.data
+        this.app.hideTabReorderHint()
+        // Sorting is disabled (see tabSortDisabled) — the real reorder is
+        // committed by TabHeaderComponent, so this only ever reports no-op.
+        if (event.previousIndex === event.currentIndex) {
+            return
+        }
         this.app.moveTabToIndex(tab, event.currentIndex)
     }
+
+    /**
+     * TabHeaderComponent drives the in-bar slide itself (placeholder clone
+     * follows the pointer, siblings shift aside); CDK's discrete mid-drag
+     * sorting would fight it, so it is switched off.
+     */
+    tabSortDisabled = (): boolean => false
 
     onTransfersChange () {
         if (this.activeTransfers.length === 0) {

@@ -2754,3 +2754,9 @@ msgstr "シェル"
 
 msgid "Menu"
 msgstr "メニュー"
+
+msgid "Open in new window"
+msgstr "新しいウィンドウで開く"
+
+msgid "Open workspace in new window"
+msgstr "ワークスペースを新しいウィンドウで開く"

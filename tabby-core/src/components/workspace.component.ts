@@ -1,4 +1,4 @@
-import { Observable, Subject, takeWhile } from 'rxjs'
+import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
 import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
@@ -13,11 +13,12 @@ import { ActionSurface } from '../api/action'
 import { actionsToMenuItems } from '../api/adapters'
 import { ActionRegistry } from '../services/action.service'
 
-import { SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, SplitSpannerInfo, SplitTabPaneHeaderData, findPaneForTab, findParentContainer, collectPanes, sideDirectionOf, addPaneInto, cleanNode, resolveRelativeTab, SplitDropZoneInfo, PanePlacement, layoutTree } from './workspace.layout'
-export { SplitOrientation, SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, PANE_MIN_SIZE, minSizeOf, SplitSpannerInfo, SplitTabPaneHeaderData, SplitDropZoneInfo } from './workspace.layout'
-import { PaneDragController, PaneDragHost, DragHintState } from './workspace.dragDrop'
+import { SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, SplitSpannerInfo, SplitTabPaneHeaderData, findPaneForTab, findParentContainer, collectPanes, sideDirectionOf, addPaneInto, cleanNode, PanePlacement, layoutTree } from './workspace.layout'
+export { SplitOrientation, SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, PANE_MIN_SIZE, minSizeOf, SplitSpannerInfo, SplitTabPaneHeaderData } from './workspace.layout'
+import { PaneDragController, PaneDragHost, DragHintState, NativeDragPayload, TABBY_DRAG_MIME, PaneHit } from './workspace.dragDrop'
 import { PaneNavigation, PaneNavigationHost } from './workspace.navigation'
 import { HostAppService } from '../api/hostApp'
+import { HostWindowService } from '../api/hostWindow'
 import { SessionTab } from '../api/session'
 
 /**
@@ -40,13 +41,6 @@ import { SessionTab } from '../api/session'
             (change)='onSpannerAdjusted(spanner)'
             (resizing)='onSpannerResizing($event)'
         ></split-tab-spanner>
-        <split-tab-drop-zone
-            *ngFor='let dropZone of _dropZones'
-            [parent]='this'
-            [dropZone]='dropZone'
-            (tabDropped)='onTabDropped($event, dropZone)'
-        >
-        </split-tab-drop-zone>
 <div
             *ngFor='let header of _paneHeaders; trackBy: paneHeaderBy'
             class='pane-header'
@@ -60,16 +54,13 @@ import { SessionTab } from '../api/session'
                 (click)='activatePaneTab(header.pane, paneTab)'
                 (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
                 (contextmenu)='openPaneTabContextMenu($event, paneTab)'
-                (pointerdown)='onPaneTabPointerDown($event, paneTab)'
+                draggable='true'
+                (dragstart)='onPaneTabDragStart($event, paneTab)'
+                (dragend)='onPaneTabDragEnd($event, paneTab)'
             ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span>
         </div>
         <div class='pane-drop-hint'
             [class.visible]='_dragHintVisible'
-            [class.side-all]='_dragHintSide === "all"'
-            [class.side-l]='_dragHintSide === "l"'
-            [class.side-r]='_dragHintSide === "r"'
-            [class.side-t]='_dragHintSide === "t"'
-            [class.side-b]='_dragHintSide === "b"'
             [ngStyle]='{left: _dragHintX + "px", top: _dragHintY + "px", width: _dragHintW + "px", height: _dragHintH + "px"}'
         ></div>
     `,
@@ -118,10 +109,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     _spanners: SplitSpannerInfo[] = []
 
     /** @hidden */
-    _dropZones: SplitDropZoneInfo[] = []
+    _paneHeaders: SplitTabPaneHeaderData[] = []
 
     /** @hidden */
-    _paneHeaders: SplitTabPaneHeaderData[] = []
+    _paneCells: PanePlacement[] = []
 
     /** @hidden */
     isEmpty = true
@@ -162,15 +153,22 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden Pane-tab drag gesture controller (self-contained drag state) */
     private readonly paneDrag: PaneDragController
-    /** Monotonic guard for stale cross-window drag results. */
-    private crossWindowArmId = 0
     /** @hidden Pane/session keyboard navigation + splitter-step controller */
     private readonly paneNav: PaneNavigation
+
+    /** @hidden window/document listeners installed by the drag gesture */
+    private dragOverListener: ((event: DragEvent) => void)|null = null
+    private dragEnterListener: ((event: DragEvent) => void)|null = null
+    private dragLeaveListener: ((event: DragEvent) => void)|null = null
+
+    /** @hidden PaneDragHost — only the active top-level workspace is a drop target. */
+    get isActiveWorkspace (): boolean {
+        return this.app.activeTab === this
+    }
 
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
         this._dragHintVisible = hint?.visible ?? false
-        this._dragHintSide = hint?.side ?? 'all'
         this._dragHintX = hint?.x ?? 0
         this._dragHintY = hint?.y ?? 0
         this._dragHintW = hint?.w ?? 0
@@ -199,7 +197,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     _dragHintY = 0
     _dragHintW = 0
     _dragHintH = 0
-    _dragHintSide: SplitDirection|'all' = 'all'
 
     private tabAdded = new Subject<BaseTabComponent>()
     private tabAdopted = new Subject<BaseTabComponent>()
@@ -242,16 +239,44 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         private actions: ActionRegistry,
         private injector: Injector,
         private hostApp: HostAppService,
+        private hostWindow: HostWindowService,
     ) {
         super(injector)
         this.root = new SplitContainer()
         this.setTitle(this.translate.instant('Untitled workspace'))
 
-        // Monotonic guard: each arming of a cross-window session drag gets a
-        // fresh id so stale committed/cancelled/subscription results from a
-        // previous (cancelled) attempt are ignored.
+        // Single gesture host for the pane-tab native (HTML5/system DnD) drag.
         this.paneDrag = new PaneDragController(this)
         this.paneNav = new PaneNavigation(this)
+
+        // The OS routes the native drag to whichever window is underneath; each
+        // window's active workspace previews the drop zone and resolves drops.
+        this.dragOverListener = (event: DragEvent) => this.paneDrag.onNativeDragOver(event)
+        this.dragEnterListener = (event: DragEvent) => this.paneDrag.onNativeDragEnter(event)
+        this.dragLeaveListener = (event: DragEvent) => {
+            if (!this.isActiveWorkspace) { return }
+            if (!event.dataTransfer || !event.dataTransfer.types?.includes(TABBY_DRAG_MIME)) { return }
+            // The pointer left this window (another Electron window, the
+            // desktop, or another app): the last dragover hint is now stale.
+            // Inter-element moves inside this document do NOT leave the window
+            // — dragleave fires on every crossed element with a relatedTarget
+            // that still belongs to this document — so only clear when the
+            // relatedTarget lives elsewhere (or is null).
+            const related = event.relatedTarget
+            if (related && (related as Node).ownerDocument === document) {
+                return
+            }
+            this.paneDrag.clearHint()
+        }
+        // NOTE: no document-level `drop` listener here. Drop resolution is
+        // routed through the single per-window router (AppService), which
+        // sends own drags back to the source workspace and foreign drags to
+        // the active one — several mounted workspaces each listening on the
+        // document cannot disambiguate a drop whose active tab changes
+        // mid-handling.
+        document.addEventListener('dragover', this.dragOverListener)
+        document.addEventListener('dragenter', this.dragEnterListener)
+        document.addEventListener('dragleave', this.dragLeaveListener)
 
         // app.service imports this component and this component imported
         // AppService in the constructor signature → a circular module graph
@@ -391,8 +416,15 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             this.layout()
             setTimeout(() => {
                 if (this.hasFocus) {
-                    for (const tab of this.getAllTabs()) {
-                        this.focus(tab)
+                    // Re-assert the blinking cursor on each pane's foreground
+                    // session only — NEVER focus() every session, that would
+                    // clobber the restored per-pane activeTab (a multi-session
+                    // pane would end up on its last tab).
+                    for (const pane of collectPanes(this.root)) {
+                        const tab = pane.tab
+                        if (tab) {
+                            this.focus(tab)
+                        }
                     }
                 }
             }, 100)
@@ -434,8 +466,20 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden */
     ngOnDestroy (): void {
-        // An in-flight pane-tab drag installs window listeners — drop them
-        // before teardown so the gesture can't keep a live reference to us.
+        // An in-flight drag installs document listeners — drop them before
+        // teardown so the gesture can't keep a live reference to us.
+        if (this.dragOverListener) {
+            document.removeEventListener('dragover', this.dragOverListener)
+            this.dragOverListener = null
+        }
+        if (this.dragEnterListener) {
+            document.removeEventListener('dragenter', this.dragEnterListener)
+            this.dragEnterListener = null
+        }
+        if (this.dragLeaveListener) {
+            document.removeEventListener('dragleave', this.dragLeaveListener)
+            this.dragLeaveListener = null
+        }
         this.paneDrag.abort()
         this.resizeObserver?.disconnect()
         this.resizeObserver = null
@@ -681,13 +725,159 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
     }
 
-    /* ------------------------------------------------------------------ */
-    /* Pointer-based pane-tab drag (logic lives in PaneDragController)      */
-    /* ------------------------------------------------------------------ */
+/* ------------------------------------------------------------------ */
+/* Native (HTML5/system DnD) pane-tab drag                             */
+/* (gesture logic lives in PaneDragController)                          */
+/* ------------------------------------------------------------------ */
 
     /** @hidden */
-    onPaneTabPointerDown (event: PointerEvent, tab: SessionTab): void {
-        this.paneDrag.begin(event, tab)
+    onPaneTabDragStart (event: DragEvent, tab: SessionTab): void {
+        this.paneDrag.beginNativeDrag(event, tab)
+    }
+
+    /** @hidden */
+    onPaneTabDragEnd (event: DragEvent, _tab: SessionTab): void {
+        this.paneDrag.endNativeDrag(event)
+    }
+
+    /** @hidden PaneDragHost */
+    beginNativeDrag (dragId: string, savedState: any): void {
+        // Register as OUR OWN drag first: a drop of it re-dispatched after the
+        // move already settled (the target workspace is active by then) must
+        // never fall into the cross-window restore path and duplicate the
+        // session onto the same PTY.
+        this.app.registerOwnDrag(dragId)
+        this.hostApp.nativeDragStart(dragId, savedState)
+    }
+
+    /** @hidden PaneDragHost */
+    getNativeDragState (dragId: string): any {
+        return this.hostApp.nativeDragState(dragId)
+    }
+
+    /** @hidden PaneDragHost */
+    endNativeDrag (dragId: string): void {
+        this.hostApp.nativeDragEnd(dragId)
+    }
+
+    /** @hidden PaneDragHost */
+    hostRect (): { left: number, top: number, width: number, height: number }|null {
+        const host = this.hostElement()
+        if (!host) {
+            return null
+        }
+        const r = host.getBoundingClientRect()
+        return { left: r.left, top: r.top, width: r.width, height: r.height }
+    }
+
+    /** @hidden PaneDragHost */
+    acceptNativeDrag (dragId: string): void {
+        this.hostApp.nativeDragAccepted(dragId)
+    }
+
+    /** @hidden Whether this workspace's pane-drag controller owns the drag
+      * with the given id (drop routing, see AppService). */
+    ownsPaneDrag (dragId: string): boolean {
+        return this.paneDrag.ownsDrag(dragId)
+    }
+
+    /** @hidden Resolves the drop of this workspace's own pane drag (routed
+      * here exclusively by the per-window drop router in AppService). */
+    resolveOwnDrop (event: DragEvent): void {
+        this.paneDrag.resolveOwnDrop(event)
+    }
+
+    /** @hidden PaneDragHost — GoldenLayout-demo hit test over the pane CELL
+     * boxes. Cells come from the layout pass (`_paneCells`), never from
+     * getBoundingClientRect of the mid-transition terminal DOM, so a drop can
+     * only ever resolve to the pane whose highlight is showing. Head UI
+     * parity: the pane's header chip strip is NOT a drop target, and the
+     * merge zone ('all') is the UPPER BAND of the pane BODY — the hint rect
+     * is the body box (header never tinted). Below the merge band: left/right
+     * 25% columns → 'l'/'r'; upper/lower remainder → 't'/'b'. */
+    paneHit (x: number, y: number): PaneHit|null {
+        const host = this.hostElement()
+        const cells = this._paneCells
+        if (!host || !cells?.length) {
+            return null
+        }
+        const origin = host.getBoundingClientRect()
+        const headerH = this.paneHeaderHeight
+        for (const cell of cells) {
+            const left = origin.left + cell.x
+            const top = origin.top + cell.y
+            if (x < left || x > left + cell.w || y < top || y > top + cell.h) {
+                continue
+            }
+            const bodyY = top + headerH
+            const bodyH = Math.max(cell.h - headerH, 1)
+            if (y < bodyY) {
+                // The pane header chip strip: deliberately NOT a drop target
+                // (HEAD parity) — releasing there snaps the session back.
+                continue
+            }
+            const rect = { left, top: bodyY, width: cell.w, height: bodyH }
+            if (y < bodyY + Math.min(headerH, bodyH)) {
+                return { pane: cell.pane, side: 'all', rect }                       // upper body band — merge (full-area highlight)
+            }
+            if (x >= left && x <= left + cell.w * 0.25) { return { pane: cell.pane, side: 'l', rect } }
+            if (x >= left + cell.w * 0.75 && x <= left + cell.w) { return { pane: cell.pane, side: 'r', rect } }
+            if (y <= bodyY + bodyH * 0.5) { return { pane: cell.pane, side: 't', rect } }
+            return { pane: cell.pane, side: 'b', rect }
+        }
+        // The gutter bands BETWEEN panes (the splitter seams, including where
+        // they meet a header) belong to no cell: deliberately NOT a drop target.
+        // Highlighting whichever pane happens to be nearest here (or letting the
+        // OS report no-drop while a pane is highlighted) reads as a lie, so the
+        // seams are left genuinely dead — no highlight, no accept.
+        return null
+    }
+
+    /** @hidden PaneDragHost */
+    onNativeDragCommitted (handler: (dragId: string) => void): Subscription {
+        return this.hostApp.nativeDragCommitted$.subscribe(handler)
+    }
+
+    /** @hidden PaneDragHost */
+    keepSessionAlive (tab: SessionTab, alive: boolean): void {
+        const session = (tab as any).session
+        if (session && typeof session.keepPTYAlive === 'boolean') {
+            session.keepPTYAlive = alive
+        }
+    }
+
+    /** @hidden PaneDragHost */
+    /** @hidden PaneDragHost */
+    async acceptProfileIntoWorkspace (payload: NativeDragPayload, x: number, y: number): Promise<boolean> {
+        console.log('[pane-drag] acceptProfileIntoWorkspace (RECOVERY path): dragId=' + payload.dragId +
+            ' restoreFromPTYID=' + (payload.profile?.options?.restoreFromPTYID ?? 'null'))
+        const params = await this.tabRecovery.recoverTab({
+            type: 'app:local-tab',
+            profile: payload.profile,
+            savedState: payload.savedState,
+        })
+        if (!params) {
+            return false
+        }
+        const session = this.tabsService.create(params as NewTabParameters<any>)
+        this.app.selectTab(this)
+
+        // Same placement routing as the in-window gesture: header / body centre
+        // merge into the HOVERED pane as a tab (one shown, the rest hidden);
+        // body edges split. Nowhere valid → merge into the focused pane.
+        const hit = this.paneHit(x, y)
+        if (hit && hit.side !== 'all') {
+            await this.addTabAt(session, hit.pane.tabs[0] ?? null, hit.side)
+        } else if (hit) {
+            await this.addSessionAt(session, { pane: hit.pane, side: 'all' })
+        } else {
+            await this.addTabToPane(session)
+        }
+        // VSCode parity: a cross-window drop RAISES the receiving window —
+        // otherwise a drop that fell through an overlaying app silently lands
+        // in a window behind it and looks lost.
+        this.hostWindow.bringToFront()
+        return true
     }
 
     /** @returns the number of panes (leaf cells) this workspace contains */
@@ -955,28 +1145,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this._pixelResizing = state
     }
 
-    /** @hidden */
-    onTabDropped (tab: BaseTabComponent, zone: SplitDropZoneInfo) { // eslint-disable-line @typescript-eslint/explicit-module-boundary-types
-        if (tab === this) { return }
-        if (!(tab instanceof SessionTab)) {
-            // Only a session (a running connection) may be moved into this
-            // workspace's panes. Every other top-level tab — other workspaces,
-            // settings, welcome, release notes — must never be nested as a pane
-            // sub-tab (it would end up rendered inside the pane's title bar).
-            return
-        }
-        const session = tab
-
-        if (zone.type === 'center') {
-            this.dropTabInto(session, { pane: zone.pane, side: 'all' })
-        } else {
-            const relativeRef = zone.relativeTo
-            const relativeTab = resolveRelativeTab(relativeRef as TabView | SessionTab, session)
-            this.dropTabInto(session, { pane: null, relativeTab, side: zone.side })
-        }
-        this.tabAdopted.next(tab)
-    }
-
     /**
      * Moves a pane session into another pane (side 'all' → merge into
      * `target.pane`) or into a freshly-created pane at `side` (split, relative
@@ -1041,29 +1209,11 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return null
     }
 
-    /**
-     * Pane-level drop target under a client point (the exact pane and the
-     * split/merge side), mirroring the in-window drag gesture. Used by the
-     * cross-window drop path so a session dragged from another window can be
-     * inserted at the precise cursor location inside a split workspace.
-     * @hidden
-     */
-    dropZoneAt (x: number, y: number): { pane: Pane, side: SplitDirection|'all' }|null {
-        const hit = this.paneDrag.hitTestPane(x, y)
-        return hit ? { pane: hit.pane, side: hit.side } : null
-    }
-
-    /**
-     * Renders the in-window drop-hint overlay for a client point (pane merge
-     * or split edge), so the cross-window drag previews where the drop lands.
-     * @hidden
-     */
-    showDropHintAt (x: number, y: number): void {
-        this.paneDrag.updateDragHint(x, y)
-    }
-
     /** @hidden PaneDragHost */
     async moveSessionToWorkspace (tab: SessionTab, target: WorkspaceComponent): Promise<void> {
+        console.log('[pane-drag] moveSessionToWorkspace: tab=' + (tab.customTitle || tab.title) +
+            ' targetIsEmpty=' + (target.getAllTabs().length === 0) +
+            ' guards: self=' + (target === this) + ' parentMismatch=' + (tab.parent !== this))
         if (target === this || tab.parent !== this) {
             return
         }
@@ -1093,87 +1243,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.cleanRoot()
     }
 
-    /**
-     * When a session drag crosses this window's bounds: capture its recovery
-     * token (with the live PTY id) while the session is still alive and hand
-     * control to the main process, which routes the cursor to other windows.
-     */
-    beginCrossWindowDrag (tab: SessionTab): void {
-        this.crossWindowArmId++
-        const session = (tab as any).session
-        if (session && typeof session.keepPTYAlive === 'boolean') {
-            // The target window will restore this session from its PTY id; the
-            // source session must not kill the underlying PTY when detached.
-            session.keepPTYAlive = true
-        }
-        // Drag card first, synchronously: the main process holds it until the
-        // (slower, async) token serialization finishes and the drag starts.
-        // Use the same text the tab header shows (profile name fallback).
-        this.hostApp.windowDragCard({
-            title: tab.customTitle || tab.getProfile()?.name || tab.title,
-            color: null,
-        })
-        void this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
-            .then(token => {
-                if (token) {
-                    this.hostApp.windowDragStart('session', token)
-                }
-            })
-            .catch(err => console.error('[workspace] cross-window drag token failed:', err))
-    }
-
-    /**
-     * The pointer was released mid cross-window drag. The main process decides
-     * the target window; we stay parked until it reports committed/cancelled.
-     */
-    endCrossWindowDrag (tab: SessionTab): void {
-        const armId = this.crossWindowArmId
-        const session = (tab as any).session
-        let done = false
-        const sub = this.hostApp.windowDragCommitted$.subscribe(() => {
-            if (done || this.crossWindowArmId !== armId) { return }
-            done = true
-            sub.unsubscribe()
-            if (session && typeof session.keepPTYAlive === 'boolean') {
-                // Session now lives in the other window (its PTY was restored
-                // there); drop our detached copy without touching the PTY.
-                session.keepPTYAlive = true
-            }
-            // Destroy the source tab outright: keep-alive routes the session
-            // into the detach path instead of killing it. Merely detaching the
-            // view leaked the tab — it stayed focused and kept its session
-            // wired, so window hotkeys (e.g. ctrl-c) still reached the moved
-            // session from this window.
-            void tab.destroy()
-            this.cleanRoot()
-        })
-        this.hostApp.windowDragCancelled$.subscribe(() => {
-            if (done || this.crossWindowArmId !== armId) { return }
-            done = true
-            sub.unsubscribe()
-            // The drag landed on nothing — the session stays here, and its
-            // PTY must be killable again if the user closes it normally.
-            if (session && typeof session.keepPTYAlive === 'boolean') {
-                session.keepPTYAlive = false
-            }
-        })
-        this.hostApp.windowDragEnd()
-    }
-
-    /**
-     * The pointer re-entered this window while a cross-window drag was in
-     * flight — cancel the protocol (drop the ghost, undoes keep-alives) so the
-     * tab can be moved inside this workspace again.
-     */
-    reenterCrossWindowDrag (tab: SessionTab): void {
-        this.crossWindowArmId++
-        const session = (tab as any).session
-        if (session && typeof session.keepPTYAlive === 'boolean') {
-            session.keepPTYAlive = false
-        }
-        this.hostApp.windowDragCancel()
-    }
-
     destroy (): void {
         for (const x of this.getAllTabs()) {
             // Only destroy sub-tabs still attached to the view; tabs already
@@ -1200,7 +1269,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const recreate = !this._pixelResizing
         if (recreate) {
             this._spanners = []
-            this._dropZones = []
             this._paneHeaders = []
         }
 
@@ -1208,9 +1276,11 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         if (recreate) {
             // Layout-derived view data in the exact recursive order the template expects.
             this._spanners = result.spanners
-            this._dropZones = result.dropZones
             this._paneHeaders = result.paneHeaders
         }
+        // Live cell boxes (full pane cells, header included) for hit-testing —
+        // updated on every pass so panes tracked mid resize stay accurate.
+        this._paneCells = result.placements
 
         // Even mid-pixel-resize the tab DOM must follow the new geometry.
         for (const placement of result.placements) {
@@ -1274,6 +1344,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     private adoptTab (tab: SessionTab): void {
+        console.log('[pane-drag] adoptTab: tab=' + (tab.customTitle || tab.title) +
+            ' prevParent=' + (tab.parent instanceof WorkspaceComponent ? 'ws' : String(tab.parent)))
         if (tab.parent instanceof WorkspaceComponent) { tab.parent.removeTab(tab) }
         tab.removeFromContainer()
         tab.pinned = false // sessions never participate in pinning
@@ -1293,6 +1365,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
         if (this.viewRefs.has(tab)) {
             // already attached; do not double-insert the same host view
+            console.log('[pane-drag] attachTabView: ALREADY ATTACHED, skipped')
             return
         }
         // Every session that gets its view attached here belongs to this

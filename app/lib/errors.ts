@@ -7,6 +7,11 @@ import * as path from 'path'
 // while importing those modules (which run before index.ts's own body) still get logged.
 nodeModule.enableCompileCache?.()
 
+const isBenignX11BadWindow = (err: unknown): boolean =>
+    process.platform === 'linux' &&
+    err instanceof Error &&
+    err.message === 'Bad window'
+
 export function logMainError (label: string, err: unknown): void {
     const detail = err instanceof Error ? err.stack ?? err.message : String(err)
     const message = `[${new Date().toISOString()}] ${label}: ${detail}\n`
@@ -18,4 +23,8 @@ export function logMainError (label: string, err: unknown): void {
 }
 
 process.on('uncaughtException', err => logMainError('uncaughtException', err))
-process.on('unhandledRejection', reason => logMainError('unhandledRejection', reason))
+process.on('unhandledRejection', reason => {
+    if (!isBenignX11BadWindow(reason)) {
+        logMainError('unhandledRejection', reason)
+    }
+})

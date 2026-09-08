@@ -2754,3 +2754,9 @@ msgstr "Оболонка"
 
 msgid "Menu"
 msgstr "Меню"
+
+msgid "Open in new window"
+msgstr "Відкрити у новому вікні"
+
+msgid "Open workspace in new window"
+msgstr "Відкрити робочу область у новому вікні"

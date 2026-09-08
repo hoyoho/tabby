@@ -1,7 +1,7 @@
 // Registers main-process error logging - must be first so it catches import-time errors
 import { logMainError } from './errors'
 
-import { app, ipcMain, Menu, dialog, crashReporter } from 'electron'
+import { app, ipcMain, Menu, dialog, crashReporter, screen } from 'electron'
 
 // set userData Path on portable version
 import './portable'
@@ -16,8 +16,7 @@ import './sentry'
 import './lru'
 import { parseArgs } from './cli'
 import { Application } from './app'
-import { Window as TabbyWindow } from './window'
-import { setupWindowDrag } from './windowDrag'
+import { setupNativeDrag } from './nativeDrag'
 import electronDebug from 'electron-debug'
 import { loadConfig } from './config'
 
@@ -47,30 +46,35 @@ if (process.defaultApp) {
 }
 
 ipcMain.on('app:new-window', async (_event, payload) => {
-    let targetWindow: TabbyWindow|null = null
-    if (payload?.x != null && payload?.y != null) {
-        // Cross-window drag: send the workspace to the window under the drop
-        // point (fall back to a new window when it lands outside every window).
-        const px = payload.x
-        const py = payload.y
-        targetWindow = application.getWindows().find(w => {
-            const b = w.bounds
-            return (
-                px >= b.x && px <= b.x + b.width &&
-                py >= b.y && py <= b.y + b.height
-            )
-        }) ?? null
-    }
-    const window = targetWindow ?? await application.newWindow()
+    // The window is ALWAYS new: drops into an existing window travel through
+    // the native drop handlers instead, and a release point that merely sits
+    // within the bounds of a COVERED window must never silently re-home the
+    // workspace into it (the detach would look like nothing happened).
+    const options = payload?.x != null && payload?.y != null
+        // Detach placement: open the workspace's window at the release point,
+        // with its top-left clamped into the display that point sits on (vscode
+        // maybeCreateAuxiliaryEditorPartAt parity) — the explicit placement
+        // skips the persisted-bounds off-screen recalculation, so an edge
+        // release would otherwise half-leave the screen.
+        ? (() => {
+            const point = { x: payload.x, y: payload.y }
+            const workArea = screen.getDisplayNearestPoint(point).workArea
+            return {
+                x: Math.max(point.x, workArea.x),
+                y: Math.max(point.y, workArea.y),
+            }
+        })()
+        : undefined
+    const window = await application.newWindow(options)
     if (payload?.recoveryToken) {
-        // Deliver a workspace recovery token to the target window so it can
-        // rebuild the dragged-out workspace (drag-out / move-to-window).
+        // Deliver a workspace recovery token so the fresh window can rebuild
+        // the dragged-out workspace (drag-out detach / move-to-window).
         window.send('window:open-recovery-token', payload.recoveryToken)
     }
 })
 
 // Cross-window drag & drop coordination (Chrome-style tab moving).
-setupWindowDrag(application)
+setupNativeDrag(application)
 
 process.on('uncaughtException', err => {
     application.broadcast('uncaughtException', err)

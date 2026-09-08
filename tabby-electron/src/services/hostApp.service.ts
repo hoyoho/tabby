@@ -55,33 +55,8 @@ export class ElectronHostAppService extends HostAppService {
             })
         })
 
-        electron.ipcRenderer.on('window:drag-enter', (_$event, payload) => this.zone.run(() => {
-            this.windowDragEnter.next({
-                kind: payload?.kind,
-                token: payload?.token,
-                x: payload?.x,
-                y: payload?.y,
-            })
-        }))
-
-        electron.ipcRenderer.on('window:drag-move', (_$event, payload) => this.zone.run(() => {
-            this.windowDragMove.next({ x: payload?.x, y: payload?.y })
-        }))
-
-        electron.ipcRenderer.on('window:drag-leave', () => this.zone.run(() => {
-            this.windowDragLeave.next()
-        }))
-
-        electron.ipcRenderer.on('window:drag-commit', (_$event, payload) => this.zone.run(() => {
-            this.windowDragCommit.next({ kind: payload?.kind, token: payload?.token })
-        }))
-
-        electron.ipcRenderer.on('window:drag-committed', () => this.zone.run(() => {
-            this.windowDragCommitted.next()
-        }))
-
-        electron.ipcRenderer.on('window:drag-cancelled', () => this.zone.run(() => {
-            this.windowDragCancelled.next()
+        electron.ipcRenderer.on('window:native-drag-committed', (_$event, dragId) => this.zone.run(() => {
+            this.nativeDragCommitted.next(String(dragId))
         }))
 
         if (isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
@@ -93,24 +68,28 @@ export class ElectronHostAppService extends HostAppService {
         this.electron.ipcRenderer.send('app:new-window', payload ?? undefined)
     }
 
-    windowDragStart (kind: 'session'|'workspace', token: any): void {
-        this.electron.ipcRenderer.send('app:window-drag-start', { kind, token: JSON.parse(JSON.stringify(token)) })
+    nativeDragStart (dragId: string, savedState: any): void {
+        this.electron.ipcRenderer.send('app:native-drag-start', dragId, savedState)
     }
 
-    windowDragEnd (): void {
-        this.electron.ipcRenderer.send('app:window-drag-end')
+    nativeDragEnd (dragId: string): void {
+        this.electron.ipcRenderer.send('app:native-drag-end', dragId)
     }
 
-    windowDragCancel (): void {
-        this.electron.ipcRenderer.send('app:window-drag-cancel')
+    nativeDragState (dragId: string): any {
+        return this.electron.ipcRenderer.sendSync('app:native-drag-state', dragId)
     }
 
-    windowDragAccepted (): void {
-        this.electron.ipcRenderer.send('app:window-drag-accepted')
+    nativeDragStateUpdate (dragId: string, state: any): void {
+        this.electron.ipcRenderer.send('app:native-drag-state-update', dragId, state)
     }
 
-    windowDragCard (card: { title: string, color?: string|null }): void {
-        this.electron.ipcRenderer.send('app:window-drag-card', card)
+    nativeDragAccepted (dragId: string): void {
+        this.electron.ipcRenderer.send('app:native-drag-accepted', dragId)
+    }
+
+    getCursorScreenPoint (): { x: number, y: number }|null {
+        return this.electron.ipcRenderer.sendSync('app:get-cursor-screen-point')
     }
 
     async saveConfig (data: string): Promise<void> {

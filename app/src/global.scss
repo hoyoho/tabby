@@ -12,6 +12,18 @@ body {
     -webkit-app-region: no-drag;
 }
 
+// While a workspace tab is being dragged (system DnD active), the title-bar
+// app-region:drag areas (the blank .btn-space beside the tabs, macOS .inset)
+// would swallow dragover/drop — Chromium treats them as non-document chrome
+// and reports dragleave, so a release there is rejected and the source opens a
+// brand-new window. Disable region-drag for the duration of the drag so the
+// whole window is an ordinary drop target (window dragging can't happen mid-way
+// anyway — the user is dragging a workspace).
+body.ws-workspace-drag .tab-bar .btn-space,
+body.ws-workspace-drag .tab-bar .inset {
+    -webkit-app-region: no-drag !important;
+}
+
 .selectable {
     user-select: text;
 }

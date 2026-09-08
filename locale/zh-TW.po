@@ -2755,3 +2755,9 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "選單"
+
+msgid "Open in new window"
+msgstr "新視窗中開啟"
+
+msgid "Open workspace in new window"
+msgstr "在新視窗中開啟工作區"

@@ -35,7 +35,9 @@ title-bar(
             .tabs(
                 cdkDropList,
                 [cdkDropListOrientation]='(config.store.appearance.tabsLocation == "top" || config.store.appearance.tabsLocation == "bottom") ? "horizontal" : "vertical"',
+                [cdkDropListSortPredicate]='tabSortDisabled',
                 (cdkDropListDropped)='onTabsReordered($event)',
+                (cdkDropListExited)='app.hideTabReorderHint()',
                 cdkAutoDropGroup='app-tabs'
             )
                 tab-header(
@@ -43,7 +45,6 @@ title-bar(
                     [index]='idx',
                     [tab]='tab',
                     [active]='tab == app.activeTab',
-                    [class.cross-window-drop-target]='app.crossWindowDragTarget === tab',
                     [@animateTab]='{value: "in", params: {size: targetTabSize}}',
                     [@.disabled]='hasVerticalTabs() || !config.store.accessibility.animations',
                     (click)='app.selectTab(tab)',

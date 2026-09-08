@@ -20,9 +20,20 @@ profile-icon(
     cdkDrag,
     cdkDragRootElement='tab-header',
     [cdkDragData]='tab',
+    [cdkDragDisabled]='isWorkspaceTab',
+    [attr.draggable]='isWorkspaceTab ? "true" : null',
     (cdkDragStarted)='onTabDragStart(tab)',
+    (cdkDragMoved)='onTabDragMove($event)',
+    (cdkDragDropped)='onTabDropped()',
     (cdkDragEnded)='onTabDragEnd($event)',
-) {{tab.customTitle || tab.title}}
+)
+    | {{tab.customTitle || tab.title}}
+    //-
+        The preview stays an empty node: the visible "tab" during the drag is
+        the placeholder clone sliding inside the bar (driven by onTabDragMove),
+        so a second floating copy would only be noise.
+    ng-template(cdkDragPreview)
+        span
 
 .buttons
     button(*ngIf='!config.store.terminal.hideTabOptionsButton',(click)='onContextMenu($event)') !{require('../icons/tab-options.svg')}

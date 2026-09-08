@@ -1,10 +1,9 @@
 import { Injectable, Inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { Observable, Subject, AsyncSubject, takeUntil, debounceTime } from 'rxjs'
+import { Observable, Subject, AsyncSubject, Subscription, takeUntil, debounceTime } from 'rxjs'
 
 import { BaseTabComponent } from '../components/baseTab.component'
 import { WorkspaceComponent } from '../components/workspace.component'
-import { Pane, SplitDirection } from '../components/workspace.layout'
 import { RenameTabModalComponent } from '../components/renameTabModal.component'
 import { SessionTab } from '../api/session'
 import { TopLevelTab } from '../api/topLevelTab'
@@ -18,6 +17,7 @@ import { ConfigService } from './config.service'
 import { TabRecoveryService } from './tabRecovery.service'
 import { TabsService, NewTabParameters } from './tabs.service'
 import { SelectorService } from './selector.service'
+import { TABBY_DRAG_MIME, TABBY_WORKSPACE_DRAG_MIME, NativeDragPayload, WorkspaceDragPayload, isWorkspaceDraggedOver, setupWorkspaceDraggedOverTracking } from '../components/workspace.dragDrop'
 
 class CompletionObserver {
     get done$ (): Observable<void> { return this.done }
@@ -56,8 +56,33 @@ export class AppService {
     private _activeTab: TopLevelTab | null = null
     private closedTabsStack: RecoveryToken[] = []
 
-    /** The workspace whose tab header is currently hovered by the drag. */
-    crossWindowDragTarget: { workspace: WorkspaceComponent, zone: { pane: Pane, side: SplitDirection|'all' }|null }|null = null
+    /** The workspace whose tab header is currently hovered by a workspace drag. */
+    private wsInsertionMarker: HTMLDivElement|null = null
+    /**
+     * Source side of a native workspace-tab drag (this window has the tab
+     * being dragged). Non-null only while a drag is pending resolution.
+     */
+    private workspaceNativeDrag: { dragId: string, tab: WorkspaceComponent, committedSub: Subscription, settled: boolean, acceptTimer: number|null }|null = null
+    // dragIds of native drags this window started, kept briefly. A very late
+    // `drop` of our own drag (missed earlier, or re-dispatched after the
+    // source already settled it) must never re-create the dragged item in
+    // this window via the cross-window restore path.
+    private selfDragIds: string[] = []
+
+    /** Registers a drag id as originating from THIS window (workspace tabs
+      * and pane sessions alike) so a late/re-dispatched drop of it can never
+      * take the cross-window restore path here. */
+    registerOwnDrag (dragId: string): void {
+        this.selfDragIds.push(dragId)
+        if (this.selfDragIds.length > 8) {
+            this.selfDragIds.shift()
+        }
+    }
+
+    /** Whether the drag id was started in this window (see [[registerOwnDrag]]). */
+    isOwnDrag (dragId: string): boolean {
+        return this.selfDragIds.includes(dragId)
+    }
 
     private activeTabChange = new Subject<BaseTabComponent|null>()
     private tabsChanged = new Subject<void>()
@@ -126,55 +151,17 @@ export class AppService {
             }
         })
 
-        // Cross-window drag targeting this window: track a hovered workspace
-        // (its tab header in the tab bar) and, on drop, restore the dragged
-        // session into that workspace.
-        this.hostApp.windowDragMove$.subscribe(({ x, y }) => {
-            this.crossWindowDragTarget = this.crossWindowDropTargetAt(
-                x - window.screenX,
-                y - window.screenY,
-            )
-        })
+        // Receiving side for native workspace-tab drags (system DnD, like pane
+        // sessions): any window accepts, and a drop re-homes the workspace as a
+        // TOP-LEVEL tab there — same window reorders, another window rebuilds it
+        // from the out-of-band recovery token. It is never merged INTO another
+        // workspace; the tab bar previews the drop as an insertion divider.
+        this.setupWorkspaceNativeDrop()
 
-        this.hostApp.windowDragEnter$.subscribe(() => {
-            this.clearCrossWindowDragTarget()
-        })
-
-        this.hostApp.windowDragLeave$.subscribe(() => {
-            this.clearCrossWindowDragTarget()
-        })
-
-        this.hostApp.windowDragCommit$.subscribe(async ({ token }) => {
-            const target = this.crossWindowDragTarget ?? (
-                this._activeTab instanceof WorkspaceComponent ? { workspace: this._activeTab, zone: null } : null
-            )
-            this.clearCrossWindowDragTarget()
-            try {
-                const params = await this.tabRecovery.recoverTab(token)
-                if (!params) {
-                    this.hostApp.windowDragAccepted()
-                    return
-                }
-                if (target?.workspace && params?.type.prototype instanceof SessionTab) {
-                    // Re-home the restored session into the hovered workspace.
-                    const session = this.tabsService.create(params as NewTabParameters<SessionTab>)
-                    this.selectTab(target.workspace)
-                    if (target.zone) {
-                        // Drop landed on a precise pane edge/center — insert at
-                        // the exact cursor location (merge or split).
-                        await target.workspace.addSessionAt(session, target.zone)
-                    } else {
-                        await target.workspace.addTabToPane(session)
-                    }
-                } else {
-                    this.openNewTabRaw(params as any)
-                }
-                this.hostApp.windowDragAccepted()
-            } catch (err) {
-                console.error('[app] cross-window drop failed:', err)
-                this.hostApp.windowDragAccepted()
-            }
-        })
+        // Per-window half of the global "dragged over" tracker (vscode dnd.ts
+        // parity): dragend consults it to tell a drop that landed in one of
+        // our windows apart from one a foreign app swallowed.
+        setupWorkspaceDraggedOverTracking()
 
         this.tabClosed$.subscribe(() => {
             if (!this.tabs.length && this.config.store.appearance.lastTabClosesWindow) {
@@ -183,6 +170,61 @@ export class AppService {
         })
 
         hostWindow.windowFocused$.subscribe(() => this._activeTab?.emitFocused())
+
+        // Single per-window ROUTER for native (HTML5/system DnD) session drops.
+        // Every mounted workspace used to listen for drops on the document and
+        // disambiguate at runtime — a drop re-dispatched after the source's
+        // selectTab flipped the active workspace then slipped into the
+        // cross-window restore path and duplicated the session onto the same
+        // PTY. Ownership is decided ONCE here instead:
+        //   - own drag (started in this window) → routed back to the SOURCE
+        //     workspace's controller, the single owner of its resolution
+        //   - foreign drag → restored into the active workspace (or a fresh
+        //     one when the active tab hosts no workspace)
+        window.addEventListener('dragover', e => {
+            if (this._activeTab instanceof WorkspaceComponent) { return }
+            const dt = e.dataTransfer
+            if (!dt || !dt.types.includes(TABBY_DRAG_MIME)) { return }
+            e.preventDefault()
+            dt.dropEffect = 'move'
+        })
+        window.addEventListener('drop', e => {
+            const dt = e.dataTransfer
+            if (!dt || !dt.types.includes(TABBY_DRAG_MIME)) { return }
+            const payload = (() => {
+                try {
+                    return JSON.parse(dt.getData(TABBY_DRAG_MIME)) as NativeDragPayload
+                } catch {
+                    // fallthrough: not a parseable tabby payload
+                    return null
+                }
+            })()
+            if (!payload) { return }
+            // Accept only once the payload parses — otherwise the drop stays
+            // rejected and the source snaps the session back immediately.
+            e.preventDefault()
+            this.clearDragPreview()
+            if (this.isOwnDrag(payload.dragId)) {
+                // Same-window move: the SOURCE workspace owns the resolution.
+                const source = this.tabs.find((t): t is WorkspaceComponent =>
+                    t instanceof WorkspaceComponent && t.ownsPaneDrag(payload.dragId))
+                source?.resolveOwnDrop(e)
+                return
+            }
+            // Foreign drag: restore into the active workspace (or a fresh one
+            // when the active tab hosts no workspace).
+            payload.savedState = this.hostApp.nativeDragState(payload.dragId)
+            void (async () => {
+                const target = this._activeTab instanceof WorkspaceComponent
+                    ? this._activeTab
+                    : this.createWorkspaceTab()
+                const restored = await target.acceptProfileIntoWorkspace(payload, e.clientX, e.clientY)
+                if (restored) {
+                    this.hostApp.nativeDragAccepted(payload.dragId)
+                    this.hostWindow.bringToFront()
+                }
+            })()
+        })
     }
 
     addTabRaw (tab: BaseTabComponent, index: number|null = null): void {
@@ -528,91 +570,87 @@ export class AppService {
     }
 
     /**
-     * Cross-window drop target under a local (client) point. Resolves to the
-     * precise pane/edge of the focused workspace when the cursor is over its
-     * panes (so the dragged session can be merged/split at the exact drop
-     * point), otherwise to the workspace whose tab header is hovered.
+     * Dismisses the in-window drag preview: the tab-bar insertion divider and
+     * the pane drop-hint overlay.
      */
-    crossWindowDropTargetAt (x: number, y: number): { workspace: WorkspaceComponent, zone: { pane: Pane, side: SplitDirection|'all' }|null }|null {
-        const active = this._activeTab
-        if (active instanceof WorkspaceComponent) {
-            // Only the focused workspace's panes are rendered, so precise
-            // pane-level targeting applies to it.
-            const zone = active.dropZoneAt(x, y)
-            if (zone) {
-                active.showDropHintAt(x, y)
-                return { workspace: active, zone }
-            }
-            // Not over a pane — keep the hint in sync (it may still highlight
-            // another workspace's tab header via the workspace-target fallback).
-            active.showDropHintAt(x, y)
-        }
-        const workspace = this.findWorkspaceAt(x, y)
-        if (workspace) {
-            return { workspace, zone: null }
-        }
-        return null
-    }
-
-    clearCrossWindowDragTarget (): void {
-        this.crossWindowDragTarget = null
+    clearDragPreview (): void {
+        this.hideWsInsertionMarker()
         if (this._activeTab instanceof WorkspaceComponent) {
             this._activeTab.setDragHint(null)
         }
     }
 
     /**
-     * The workspace (of this window) whose top-level tab header covers a local
-     * point — the cross-window drop target.
+     * Chrome-style insertion caret: a thin highlighted divider shown at the
+     * boundary a workspace drop would land at (left edge of the target header,
+     * right edge of the last header when appending, or the start of the tab
+     * strip for an empty tab bar — between the menu button and the new-tab
+     * button). The blank area of the tab strip therefore gives feedback
+     * instead of feeling dead.
      */
-    findWorkspaceAt (x: number, y: number): WorkspaceComponent|null {
-        // Map tab headers to tabs by DOM order: the tab bar renders one
-        // `tab-header` per entry of `AppService.tabs`, in the same order.
-        const headers = document.querySelectorAll('tab-header')
-        if (headers.length !== this.tabs.length) {
-            return null
+    private showWsInsertionMarker (x: number, y: number): void {
+        const vertical = this.config.store.appearance.tabsLocation === 'left' || this.config.store.appearance.tabsLocation === 'right'
+        // Strip-only headers — stray `tab-header` clones from an interrupted
+        // drag linger in the body and would skew the index/geometry below.
+        const headers = Array.from(document.querySelectorAll('.tab-bar tab-header')) as HTMLElement[]
+        const index = this.workspaceDropIndex(x, y)
+        const strip = document.querySelector('.tab-bar') as HTMLElement|null
+        const stripRect = strip?.getBoundingClientRect()
+        let markerX: number
+        let markerY: number
+        if (headers.length && index < headers.length) {
+            const r = headers[index].getBoundingClientRect()
+            markerX = vertical ? (stripRect ? stripRect.left + stripRect.width / 2 : 0) : r.left
+            markerY = vertical ? r.top : r.top + r.height / 2
+        } else if (headers.length) {
+            const r = headers[headers.length - 1].getBoundingClientRect()
+            markerX = vertical ? (stripRect ? stripRect.left + stripRect.width / 2 : 0) : r.right
+            markerY = vertical ? r.bottom : r.top + r.height / 2
+        } else {
+            const tabsEl = document.querySelector('.tab-bar .tabs') as HTMLElement|null
+            const tr = tabsEl?.getBoundingClientRect()
+            markerX = vertical
+                ? (stripRect ? stripRect.left + stripRect.width / 2 : (tr?.left ?? 0))
+                : (tr?.left ?? stripRect?.left ?? 0) + 6
+            markerY = vertical
+                ? (tr?.top ?? stripRect?.top ?? 0) + 6
+                : (stripRect ? stripRect.top + stripRect.height / 2 : 19)
         }
-        for (let i = 0; i < this.tabs.length; i++) {
-            const tab = this.tabs[i]
-            if (!(tab instanceof WorkspaceComponent)) {
-                continue
-            }
-            const rect = (headers[i] as HTMLElement).getBoundingClientRect()
-            if (x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom) {
-                return tab
-            }
-        }
-        return null
+        // Vertical (left/right) tab bar: a horizontal divider spanning the full
+        // strip width; horizontal tab bar: a vertical divider the header height.
+        const caretW = vertical ? Math.max((stripRect ? stripRect.width : 120) - 12, 1) : 3
+        const caretH = vertical ? 3 : Math.min(stripRect ? stripRect.height - 6 : 30, 30)
+        // Guard against a malformed header snapshot (mid-CDK-sort transforms /
+        // clones) producing an off-screen caret: clamp into the viewport.
+        markerX = Math.min(Math.max(markerX, 0), window.innerWidth)
+        markerY = Math.min(Math.max(markerY, 0), window.innerHeight)
+        const marker = this.ensureWsInsertionMarker()
+        marker.style.width = `${caretW}px`
+        marker.style.height = `${caretH}px`
+        marker.style.left = `${markerX}px`
+        marker.style.top = `${markerY}px`
     }
 
-    /**
-     * Cross-window workspace drag (source side): capture the token while the
-     * sessions are alive, arm the PTY-keepalive, request a ghost thumbnail and
-     * start the main-process drag protocol. The outcome is handled by
-     * `endWorkspaceCrossWindowDrag`.
-     */
-    async startWorkspaceCrossWindowDrag (tab: WorkspaceComponent, ifActive?: () => boolean): Promise<void> {
-        // Drag card first, synchronously: the main process caches it until the
-        // (slower, async) token serialization finishes and the drag starts.
-        this.hostApp.windowDragCard({ title: tab.customTitle || tab.title, color: null })
-        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
-        if (!token) {
-            return
+    private ensureWsInsertionMarker (): HTMLDivElement {
+        if (!this.wsInsertionMarker) {
+            const el = document.createElement('div')
+            el.style.cssText = 'position:fixed;z-index:2147483646;pointer-events:none;transform:translate(-50%,-50%);' +
+                'border-radius:2px;background:var(--theme-primary,#0078d4);' +
+                'box-shadow:0 0 8px color-mix(in srgb, var(--theme-primary,#0078d4) 65%, transparent)'
+            document.body.appendChild(el)
+            this.wsInsertionMarker = el
         }
-        // The user may have dragged back into the window while we serialized —
-        // don't start a stale protocol in that case.
-        if (ifActive && !ifActive()) {
-            this.hostApp.windowDragCancel()
-            return
-        }
-        const transferToken = JSON.parse(JSON.stringify(token))
-        for (const s of tab.getAllTabs()) {
-            const session = (s as any).session
-            if (session?.keepPTYAlive !== undefined) {
-                session.keepPTYAlive = true
-            }
-        }
-        this.hostApp.windowDragStart('workspace', transferToken)
+        return this.wsInsertionMarker
+    }
+
+    private hideWsInsertionMarker (): void {
+        this.wsInsertionMarker?.remove()
+        this.wsInsertionMarker = null
+    }
+
+    /** @hidden dismiss the CDK tab-reorder divider. */
+    hideTabReorderHint (): void {
+        this.hideWsInsertionMarker()
     }
 
     /**
@@ -627,63 +665,149 @@ export class AppService {
     }
 
     /**
-     * Cross-window workspace drag (source side): pointer released — the main
-     * process commits the drop to the window under the cursor. Once its
-     * renderer rebuilt the workspace it signals `drag-committed`, at which
-     * point we drop our copy. A cancelled drop (landed outside every window)
-     * opens the workspace in a brand-new window — the old drag-out behaviour.
+     * Source side of a native workspace-tab drag: set an active-drag origin for
+     * this window and register the drag id. The (async) recovery token is
+     * serialized and pushed out-of-band once ready, so the target window can
+     * rebuild the workspace even though the DataTransfer only carries the id.
      */
-    endWorkspaceCrossWindowDrag (tab: WorkspaceComponent): void {
-        let done = false
-        const commitSub = this.hostApp.windowDragCommitted$.subscribe(() => {
-            if (done) { return }
-            done = true
-            commitSub.unsubscribe()
-            cancelSub.unsubscribe()
-            // Destroy (not just detach): the workspace's sessions carry the
-            // keep-alive flag and survive via the target window's re-attach;
-            // leaving this tab alive would leak it focused with live sessions.
-            void tab.destroy()
+    async beginWorkspaceNativeDrag (tab: WorkspaceComponent, dragId: string): Promise<void> {
+        // Neutralize the title-bar app-region:drag areas for the gesture, or
+        // Chromium would swallow dragover/drop over them and report the drag as
+        // having left the window (see app/src/global.scss .ws-workspace-drag).
+        document.body.classList.add('ws-workspace-drag')
+        // The sessions must survive our copy being torn down mid-gesture (a
+        // cross-window restore re-attaches them by PTY id from the token).
+        for (const s of tab.getAllTabs()) {
+            const session = (s as any).session
+            if (session && typeof session.keepPTYAlive === 'boolean') {
+                session.keepPTYAlive = true
+            }
+        }
+        this.hostApp.nativeDragStart(dragId, null)
+        this.registerOwnDrag(dragId)
+        if (this.workspaceNativeDrag?.committedSub) {
+            this.workspaceNativeDrag.committedSub.unsubscribe()
+        }
+        const committedSub = this.hostApp.nativeDragCommitted$.subscribe(committedId => {
+            const drag = this.workspaceNativeDrag
+            if (!drag || drag.dragId !== committedId || drag.settled) {
+                return
+            }
+            drag.settled = true
+            drag.committedSub.unsubscribe()
+            if (drag.acceptTimer) {
+                window.clearTimeout(drag.acceptTimer)
+            }
+            this.workspaceNativeDrag = null
+            this.hostApp.nativeDragEnd(drag.dragId)
+            // Another window rebuilt our workspace from the token: drop this
+            // copy. The sessions carry keepPTYAlive and are re-attached there.
+            void drag.tab.destroy()
             this.maybeCloseWindowWhenEmpty()
         })
-        const cancelSub = this.hostApp.windowDragCancelled$.subscribe(() => {
-            if (done) { return }
-            done = true
-            commitSub.unsubscribe()
-            cancelSub.unsubscribe()
-            // Dropped on nothing → open it in a brand-new window (kept alive).
-            this.moveWorkspaceToWindow(tab)
-        })
-        this.hostApp.windowDragEnd()
+        this.workspaceNativeDrag = { dragId, tab, committedSub, settled: false, acceptTimer: null }
+        try {
+            const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+            if (token) {
+                this.hostApp.nativeDragStateUpdate(dragId, JSON.parse(JSON.stringify(token)))
+            }
+        } catch (err) {
+            console.error('[app] workspace drag state serialization failed:', err)
+        }
     }
 
     /**
-     * Source side: the drag was aborted because the pointer re-entered this
-     * window — cancel the protocol, restore the PTY keep-alives and let the
-     * native CDK reorder resume.
+     * Source side: the workspace drag ended. VSCode semantics: the decision
+     * rests ENTIRELY on whether any Tabby window was hovered at release
+     * ([[isWorkspaceDraggedOver]]) — never on the dropEffect, which a foreign
+     * drop target (another app swallowing the release, e.g. an editor
+     * accepting with dropEffect 'move') reports as a success just the same.
+     * Hovered → the destination rebuilds the workspace and acks
+     * ([[nativeDragCommitted$]] drops this copy). Not hovered → detach into
+     * a new window at the release point (desktop, foreign app, Esc cancel).
      */
-    cancelWorkspaceCrossWindowDrag (tab: WorkspaceComponent): void {
-        for (const s of tab.getAllTabs()) {
+    endWorkspaceNativeDrag (tab: WorkspaceComponent, _dropEffect: string|undefined): void {
+        document.body.classList.remove('ws-workspace-drag')
+        this.hideWsInsertionMarker()
+        const sourceHeader = document.querySelector('tab-header.ws-dragging')
+        const drag = this.workspaceNativeDrag
+        // No pending drag: the drop was already settled locally (same-window
+        // reorder in `handleWorkspaceDrop`) or committed (cross-window restore
+        // destroyed this copy). The hidden header comes back unless the tab is
+        // already gone. Never fall through to a second action.
+        if (!drag) {
+            sourceHeader?.classList.remove('ws-dragging')
+            return
+        }
+        if (drag.tab !== tab) {
+            sourceHeader?.classList.remove('ws-dragging')
+            return
+        }
+        if (isWorkspaceDraggedOver()) {
+            if (_dropEffect !== 'move') {
+                // Hovered THIS window but the drop was rejected (released over
+                // the body outside the strip): nothing is coming — settle
+                // right away instead of waiting on an ack that will never
+                // arrive. The tab stays exactly where it was.
+                this.settleWorkspaceDrag(drag)
+                document.querySelector('tab-header.ws-dragging')?.classList.remove('ws-dragging')
+                return
+            }
+            // A Tabby window was under the cursor when the button went up. The
+            // destination rebuilds the workspace asynchronously and then acks;
+            // keep the commit listener AND the main-process registry entry
+            // alive until that ack arrives, otherwise a slow restore would end
+            // up with the workspace duplicated (target made its copy while the
+            // source already released everything). The header stays hidden
+            // meanwhile (commit destroys it); if the ack never arrives, bring
+            // it back.
+            drag.acceptTimer = window.setTimeout(() => {
+                document.querySelector('tab-header.ws-dragging')?.classList.remove('ws-dragging')
+                drag.settled = true
+                drag.committedSub.unsubscribe()
+                this.workspaceNativeDrag = null
+                this.hostApp.nativeDragEnd(drag.dragId)
+            }, 5000)
+            return
+        }
+        // Released over NO Tabby window: detach into a new window at the
+        // release point (unless the user turned drag-to-open-window off —
+        // vscode `workbench.editor.dragToOpenWindow` parity). No host able to
+        // report the cursor (web build) or a vanishing tab keeps the
+        // workspace here instead.
+        this.settleWorkspaceDrag(drag)
+        const point = this.hostApp.getCursorScreenPoint()
+        if (this.config.store.workspace?.dragToOpenWindow !== false && point && this.tabs.includes(drag.tab)) {
+            void this.moveWorkspaceToWindow(drag.tab, { x: point.x - 48, y: point.y - 20 })
+        } else {
+            document.querySelector('tab-header.ws-dragging')?.classList.remove('ws-dragging')
+        }
+    }
+
+    /** Teardown shared by every local resolution of a source workspace drag:
+     * marks it settled, releases the main-process registration and the commit
+     * listener, and lets the sessions resume normal (non-keep-alive) teardown. */
+    private settleWorkspaceDrag (drag: { dragId: string, tab: WorkspaceComponent, committedSub: Subscription, settled: boolean, acceptTimer: number|null }): void {
+        drag.settled = true
+        drag.committedSub.unsubscribe()
+        if (drag.acceptTimer) {
+            window.clearTimeout(drag.acceptTimer)
+        }
+        this.workspaceNativeDrag = null
+        this.hostApp.nativeDragEnd(drag.dragId)
+        for (const s of drag.tab.getAllTabs()) {
             const session = (s as any).session
             if (session && typeof session.keepPTYAlive === 'boolean') {
                 session.keepPTYAlive = false
             }
         }
-        this.hostApp.windowDragCancel()
     }
 
-    /**
-     * Moves a workspace out of this window into another (existing or new)
-     * window. Serializes the workspace (PTY ids included), detaches its
-     * sessions without killing the underlying PTYs, then asks the host to open
-     * it in the target window which re-attaches the live pty.
-     */
     async moveWorkspaceToWindow (tab: WorkspaceComponent, screenPoint?: { x: number, y: number }): Promise<void> {
         const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
         if (!token) {
             return
         }
-        // IPC cannot clone arbitrary objects — send a plain JSON copy.
         const transferToken = JSON.parse(JSON.stringify(token))
         for (const s of tab.getAllTabs()) {
             const session = (s as any).session
@@ -691,9 +815,6 @@ export class AppService {
                 session.keepPTYAlive = true
             }
         }
-        // Destroy our copy: the sessions detach (keep-alive) and the target
-        // window re-attaches them from the token; a live leftover tab here
-        // would stay focused and keep reacting to window hotkeys.
         void tab.destroy()
         this.maybeCloseWindowWhenEmpty()
         this.hostApp.newWindow({
@@ -701,6 +822,193 @@ export class AppService {
             x: screenPoint?.x,
             y: screenPoint?.y,
         })
+    }
+
+    /**
+     * Receiving/display side of native workspace-tab drags. EVERY window
+     * accepts the drop anywhere in its bounds (a rejected dragover would
+     * poison dragend with a stale dropEffect): the same window reorders when
+     * the release lands on its strip and keeps the workspace in place when it
+     * lands on the body; another window rebuilds the workspace from the
+     * out-of-band recovery token wherever the release landed. A release over
+     * NO window at all detaches into a new one (see endWorkspaceNativeDrag).
+     * A workspace is never merged INTO another workspace.
+     */
+    private setupWorkspaceNativeDrop (): void {
+        window.addEventListener('dragover', event => {
+            const dt = event.dataTransfer
+            if (!dt) {
+                return
+            }
+            if (!dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+                return
+            }
+            // Accept EVERYWHERE (vscode editor-area parity): a rejected
+            // dragover would leave dragend reporting a STALE dropEffect from
+            // the last accepted hover, breaking the detach decision. The
+            // insertion caret previews strip landings only.
+            event.preventDefault()
+            dt.dropEffect = 'move'
+            if (this.isPointOverTabStrip(event.clientX, event.clientY)) {
+                this.showWsInsertionMarker(event.clientX, event.clientY)
+            } else {
+                this.hideWsInsertionMarker()
+            }
+        })
+
+        window.addEventListener('drop', event => {
+            const dt = event.dataTransfer
+            if (!dt) {
+                return
+            }
+            if (!dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+                return
+            }
+            this.clearDragPreview()
+            let payload: WorkspaceDragPayload|null = null
+            try {
+                payload = JSON.parse(dt.getData(TABBY_WORKSPACE_DRAG_MIME))
+            } catch {
+                // fallthrough: not one of our workspace drags
+            }
+            if (!payload) {
+                return
+            }
+            event.preventDefault()
+            // Same-window release outside the strip: NOT a reorder — vscode
+            // keeps the editor in place when dropped over its own area. The
+            // drop IS accepted (so dragend stays consistent) and the workspace
+            // settles untouched, right away — no ack will ever come.
+            if (this.workspaceNativeDrag && this.workspaceNativeDrag.dragId === payload.dragId &&
+                !this.isPointOverTabStrip(event.clientX, event.clientY)) {
+                this.settleWorkspaceDrag(this.workspaceNativeDrag)
+                document.querySelector('tab-header.ws-dragging')?.classList.remove('ws-dragging')
+                return
+            }
+            void this.handleWorkspaceDrop(payload, event.clientX, event.clientY)
+        })
+
+        window.addEventListener('dragleave', event => {
+            const dt = event.dataTransfer
+            if (!dt || !dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+                return
+            }
+            // An interior element transition fires dragleave too, but the next
+            // dragover immediately redraws the marker; leaving the document
+            // keeps it hidden.
+            if (!event.relatedTarget || (event.relatedTarget as Node).ownerDocument !== document) {
+                this.hideWsInsertionMarker()
+            }
+        })
+    }
+
+    /**
+     * Resolves a workspace drop in this window: the pointer's position over the
+     * tab bar decides the insertion index (per-header half). Same-window drops
+     * just reorder the existing tab; cross-window drops rebuild the workspace
+     * from the out-of-band recovery token and acknowledge the drag so the
+     * source drops its copy.
+     */
+    private async handleWorkspaceDrop (payload: WorkspaceDragPayload, x: number, y: number): Promise<void> {
+        const drag = this.workspaceNativeDrag
+        const index = this.workspaceDropIndex(x, y)
+        if (drag && drag.dragId === payload.dragId) {
+            // Returned to its own window: the workspace never left — just
+            // reorder it locally and keep it here. `workspaceDropIndex` counts
+            // the dragged (collapsed) header, i.e. the index is into the array
+            // WITH the tab still in place; moveTabToIndex removes first, so a
+            // forward move must shed one slot or the tab lands one position
+            // PAST the highlighted insertion caret.
+            this.workspaceNativeDrag = null
+            drag.committedSub.unsubscribe()
+            this.hostApp.nativeDragEnd(drag.dragId)
+            for (const s of drag.tab.getAllTabs()) {
+                const session = (s as any).session
+                if (session && typeof session.keepPTYAlive === 'boolean') {
+                    session.keepPTYAlive = false
+                }
+            }
+            const currentIndex = this.tabs.indexOf(drag.tab)
+            const targetIndex = index > currentIndex ? index - 1 : index
+            this.moveTabToIndex(drag.tab, targetIndex)
+            this.selectTab(drag.tab)
+            return
+        }
+        if (this.selfDragIds.includes(payload.dragId)) {
+            // A drop of one of OUR OWN earlier drags arriving late (the real
+            // drop was missed and already resolved above or by the rejected
+            // path): recreating it here would duplicate the workspace inside
+            // the source window. Ignore.
+            this.clearDragPreview()
+            return
+        }
+        // Cross-window: rebuild the workspace from the out-of-band token. The
+        // token is serialized asynchronously on the source side, so it may not
+        // be published yet when a fast drop arrives — retry briefly before
+        // giving up.
+        let token = this.hostApp.nativeDragState(payload.dragId)
+        if (!token) {
+            for (let attempt = 0; attempt < 15 && !token; attempt++) {
+                await new Promise(r => setTimeout(r, 100))
+                token = this.hostApp.nativeDragState(payload.dragId)
+            }
+        }
+        if (!token) {
+            return
+        }
+        try {
+            const params = await this.tabRecovery.recoverTab(token)
+            if (!params) {
+                return
+            }
+            const tab = this.tabsService.create(params as NewTabParameters<any>)
+            this.addTabRaw(tab, index)
+            this.selectTab(tab)
+            this.hostApp.nativeDragAccepted(payload.dragId)
+            // VSCode parity: a cross-window drop RAISES the receiving window —
+            // otherwise a drop that fell through an overlaying app silently
+            // lands in a window behind it and looks lost.
+            this.hostWindow.bringToFront()
+        } catch (err) {
+            console.error('[app] workspace drop restore failed:', err)
+        }
+    }
+
+    /** Whether the point sits inside this window's tab strip (with a small
+      * vertical tolerance for the window edge the bar hugs). */
+    private isPointOverTabStrip (x: number, y: number): boolean {
+        const strip = document.querySelector('.tab-bar') as HTMLElement|null
+        if (!strip) {
+            return false
+        }
+        const r = strip.getBoundingClientRect()
+        return x >= r.left && x <= r.right && y >= r.top - 2 && y <= r.bottom + 2
+    }
+
+    /**
+     * Tab-bar insertion index under a client point. Each header's leading half
+     * inserts before it; elsewhere append. Left/right tab bars split vertically.
+     */
+    private workspaceDropIndex (x: number, y: number): number {
+        // Only count headers that are actually in the tab strip — a stray
+        // `tab-header` clone (an interrupted drag) can linger in the DOM and
+        // must not shift the indices.
+        const headers = document.querySelectorAll('.tab-bar tab-header')
+        if (headers.length !== this.tabs.length) {
+            return this.tabs.length
+        }
+        const vertical = this.config.store.appearance.tabsLocation === 'left' || this.config.store.appearance.tabsLocation === 'right'
+        for (let i = 0; i < headers.length; i++) {
+            const rect = (headers[i] as HTMLElement).getBoundingClientRect()
+            if (vertical) {
+                if (y < rect.top + rect.height / 2) {
+                    return i
+                }
+            } else if (x < rect.left + rect.width / 2) {
+                return i
+            }
+        }
+        return this.tabs.length
     }
 
     async closeTab (tab: BaseTabComponent, checkCanClose?: boolean, ignorePinned = false): Promise<void> {

@@ -217,6 +217,17 @@ export class CommonOptionsContextMenu extends TabContextMenuItemProvider {
                 ...isSession
                     ? []
                     : [{
+                        id: 'context:open-workspace-in-new-window',
+                        label: this.translate.instant('Open in new window'),
+                        commandLabel: this.translate.instant('Open workspace in new window'),
+                        // Moving the only workspace to a new window would just
+                        // close and re-open this one — disable it there.
+                        enabled: this.app.tabs.length > 1,
+                        click: () => {
+                            void this.app.moveWorkspaceToWindow(tab as WorkspaceComponent)
+                        },
+                    },
+                    {
                         id: 'context:focus-all-sessions',
                         label: this.translate.instant('Focus all sessions'),
                         type: 'checkbox',

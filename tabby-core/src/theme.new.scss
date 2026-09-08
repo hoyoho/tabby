@@ -305,7 +305,11 @@ hotkey-input-modal {
 }
 
 .btn {
-    // optical fix: icon/label ink alignment looks best with the label nudged down
+    // optical fix: icon/label ink alignment looks best with the label nudged
+    // down (commit baa02733). Covers every button with a raw font icon;
+    // icons rendered via <profile-icon> are corrected through the --pi-*
+    // tokens instead — see profileIcon.component.scss for the full
+    // ink-alignment map.
     i + * {
         margin-left: 5px;
         position: relative;

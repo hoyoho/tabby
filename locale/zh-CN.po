@@ -2816,3 +2816,12 @@ msgstr "终端"
 
 msgid "Menu"
 msgstr "菜单"
+
+
+msgid "Open in new window"
+msgstr "新窗口中打开"
+
+
+msgid "Open workspace in new window"
+msgstr "在新窗口中打开工作区"
+

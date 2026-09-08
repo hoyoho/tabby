@@ -2754,3 +2754,9 @@ msgstr "Shell"
 
 msgid "Menu"
 msgstr "Menu"
+
+msgid "Open in new window"
+msgstr "Otevřít v novém okně"
+
+msgid "Open workspace in new window"
+msgstr "Otevřít pracovní prostor v novém okně"

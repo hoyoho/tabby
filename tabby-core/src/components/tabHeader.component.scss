@@ -29,6 +29,26 @@ $tabs-height: 38px;
       height: $tabs-height;
     }
 
+    // Neighbour reflow glides instead of teleporting (the transforms are
+    // applied by TabHeaderComponent's manual in-bar sortable), while the
+    // sliding placeholder clone must track the pointer frame-by-frame with no
+    // easing of its own.
+    transition: transform 0.15s ease;
+
+    &.cdk-drag-placeholder {
+        transition: none;
+
+        // The dragged (non-workspace) tab slides as an OPAQUE chip above the
+        // whole bar: headers are transparent and all position:relative, so
+        // unpainted the dragged tab would render beneath later siblings and
+        // its text would bleed through over the neighbours it passes.
+        z-index: 30;
+        background: var(--theme-bg-more-2, var(--body-bg));
+        color: var(--theme-fg);
+        border-radius: 8px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+
     .index {
         flex: none;
         font-weight: bold;
@@ -44,8 +64,29 @@ $tabs-height: 38px;
     }
 
     profile-icon {
+        // Center on the row axis AND give it a definite height (the img
+        // icon's percentage sizing only resolves against a definite box).
+        // 1rem: the PNG's ink (monitor + stand, ~71% of canvas) then matches
+        // the title's ink band — at 1.25rem the stand poked visibly below
+        // the text, at 1em it read as undersized.
+        align-self: center;
+        height: 1rem;
         font-size: 13px;
-        margin: 1px 4px 0 0;
+        margin: 0 4px;
+
+        // The PNG is bottom-tailed (thin monitor stand below the screen
+        // block) and reads as sunk against the title ink even when
+        // geometrically centered (canvas-measured optimum -0.5px, optical
+        // -1px, same treatment as the profile-tree glyphs).
+        ::ng-deep img {
+            transform: translateY(-1px);
+        }
+
+        // Inline svg icons (e.g. the settings gear): flex centering still
+        // leaves the glyph 0.5px low vs the title ink — user-visible.
+        ::ng-deep svg {
+            transform: translateY(-0.5px);
+        }
     }
 
     .pin-indicator {
@@ -117,10 +158,6 @@ $tabs-height: 38px;
         opacity: 1;
     }
 
-    &.drag-region {
-        -webkit-app-region: drag;
-    }
-
     &.fully-draggable {
         cursor: -webkit-grab;
     }
@@ -168,11 +205,27 @@ $tabs-height: 38px;
         left: 0;
         right: 0;
     }
+}
 
-    &.cross-window-drop-target {
-        outline: 2px solid var(--color-blue);
-        outline-offset: -2px;
-        border-radius: 8px;
-        background: color-mix(in srgb, var(--color-blue) 18%, transparent);
-    }
+// Drag visuals:
+//  - regular tabs (CDK): the root element is moved to <body> and replaced by a
+//    full visible clone in the strip (drag-drop.mjs toggleVisibility +
+//    placeholder) — that clone is the sliding empty slot, keep it visible; the
+//    floating preview card was removed entirely (empty preview template).
+//  - workspace: the parked original header itself (.ws-dragging set after the
+//    drag session is established — hiding inside dragstart aborts the native
+//    drag) collapses its slot. !important is required: the @animateTab :enter
+//    animation leaves an inline width on the header, and stylesheet rules lose
+//    to inline styles unless flagged.
+// min-width:0 + overflow:hidden are required — a flex item's default
+// min-width:auto would floor the slot at the header's intrinsic width.
+:host(.ws-dragging) {
+    flex: 0 0 0px !important;
+    min-width: 0 !important;
+    width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-width: 0 !important;
+    overflow: hidden;
+    visibility: hidden;
 }

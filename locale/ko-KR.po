@@ -2754,3 +2754,9 @@ msgstr "셸"
 
 msgid "Menu"
 msgstr "메뉴"
+
+msgid "Open in new window"
+msgstr "새 창에서 열기"
+
+msgid "Open workspace in new window"
+msgstr "새 창에서 워크스페이스 열기"

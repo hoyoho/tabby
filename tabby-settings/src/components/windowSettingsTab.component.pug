@@ -192,16 +192,6 @@ h3.mt-4(translate) Workspaces
             name='tabsLocation',
             [(ngModel)]='config.store.appearance.tabsLocation',
             (ngModelChange)='saveConfiguration()',
-            id='tabsLocationBottom',
-            [value]='"bottom"'
-        )
-        label.btn.btn-secondary(for='tabsLocationBottom')
-            span(translate) Bottom
-        input.btn-check(
-            type='radio',
-            name='tabsLocation',
-            [(ngModel)]='config.store.appearance.tabsLocation',
-            (ngModelChange)='saveConfiguration()',
             id='tabsLocationLeft',
             [value]='"left"'
         )

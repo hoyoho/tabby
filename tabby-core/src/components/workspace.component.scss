@@ -88,6 +88,16 @@
     }
 }
 
+// During a native session (pane-tab) drag the splitter gutters must not
+// intercept dragover: their 7px bands sit exactly on the pane seams (including
+// over the header rows) and Chromium reports those slivers as no-drop while
+// the pane beneath is highlighted as the target — a contradictory cursor. The
+// resize gesture is mousedown-driven and impossible mid-drag (the OS owns the
+// pointer), so letting the seams fall through to the panes is safe.
+::ng-deep body.ws-pane-drag split-tab-spanner {
+    pointer-events: none;
+}
+
 ::ng-deep .no-animations split-tab > .child {
     transition: none;
 }

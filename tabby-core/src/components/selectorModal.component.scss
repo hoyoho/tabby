@@ -42,4 +42,16 @@ input {
 profile-icon {
     width: 14px;
     height: 14px;
+    // fa-fw box (1.25em) at the inherited 14px row font is 17.5px wide and
+    // overflows the 14px host; 11px keeps the glyph box inside.
+    font-size: 11px;
+    // Row text ink center sits ~1px above the geometric row center (CJK
+    // ascent bias); lift every icon kind, then give font glyphs the
+    // remaining -0.5px so both kinds center on the text ink (canvas-
+    // measured: glyph ink center 102.3 vs text 100.8).
+    transform: translateY(-1px);
+
+    ::ng-deep i.icon {
+        transform: translateY(-0.5px);
+    }
 }

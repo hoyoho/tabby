@@ -2754,3 +2754,9 @@ msgstr "Оболочка"
 
 msgid "Menu"
 msgstr "Меню"
+
+msgid "Open in new window"
+msgstr "Открыть в новом окне"
+
+msgid "Open workspace in new window"
+msgstr "Открыть рабочую область в новом окне"

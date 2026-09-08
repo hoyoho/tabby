@@ -36,6 +36,7 @@ profileDefaults:
 workspace:
   recoverTabs: true
   newSessionOpensInNewWorkspace: false
+  dragToOpenWindow: true
 session:
   appendToPaneByDefault: true
 enableWelcomeTab: true

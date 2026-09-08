@@ -2754,3 +2754,9 @@ msgstr "Dop"
 
 msgid "Menu"
 msgstr "Kieslys"
+
+msgid "Open in new window"
+msgstr "Maak in nuwe venster oop"
+
+msgid "Open workspace in new window"
+msgstr "Maak werkspasie in nuwe venster oop"

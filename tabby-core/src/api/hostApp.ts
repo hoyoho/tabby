@@ -11,16 +11,6 @@ export enum Platform {
 }
 
 /**
- * Payload of a cross-window drag entering/committing this window.
- */
-export interface WindowDragEvent {
-    kind: 'workspace'|'session'
-    token?: RecoveryToken
-    x?: number
-    y?: number
-}
-
-/**
  * Provides interaction with the main process
  */
 export abstract class HostAppService {
@@ -32,45 +22,15 @@ export abstract class HostAppService {
     protected recoveryTokenOpen = new Subject<RecoveryToken>()
     protected logger: Logger
 
-    protected windowDragEnter = new Subject<WindowDragEvent>()
-    protected windowDragMove = new Subject<{ x: number, y: number }>()
-    protected windowDragLeave = new Subject<void>()
-    protected windowDragCommit = new Subject<{ kind: 'workspace'|'session', token: RecoveryToken }>()
-    protected windowDragCommitted = new Subject<void>()
-    protected windowDragCancelled = new Subject<void>()
+    protected nativeDragCommitted = new Subject<string>()
 
     /**
-     * Fired when a cross-window drag enters this window's area, with the
-     * dragged tab's recovery token.
+     * Fired in the source window of a native (HTML5/system DnD) session drag
+     * once the receiving window successfully restored the dragged session (its
+     * `nativeDragAccepted` round-tripped through the main process). Carries the
+     * drag id; the source drops its local copy on receipt.
      */
-    get windowDragEnter$ (): Observable<WindowDragEvent> { return this.windowDragEnter }
-
-    /**
-     * Fired repeatedly while a drag hovers this window.
-     */
-    get windowDragMove$ (): Observable<{ x: number, y: number }> { return this.windowDragMove }
-
-    /**
-     * Fired when a drag leaves this window's area.
-     */
-    get windowDragLeave$ (): Observable<void> { return this.windowDragLeave }
-
-    /**
-     * Fired when a drag is dropped onto this window — restore the token.
-     */
-    get windowDragCommit$ (): Observable<{ kind: 'workspace'|'session', token: RecoveryToken }> { return this.windowDragCommit }
-
-    /**
-     * Fired in the source window once the target window restored the dragged
-     * tab — safe to drop the local copy now.
-     */
-    get windowDragCommitted$ (): Observable<void> { return this.windowDragCommitted }
-
-    /**
-     * Fired in the source window when the drag ended on nothing (drop outside
-     * every window) — revert to the pre-drag state.
-     */
-    get windowDragCancelled$ (): Observable<void> { return this.windowDragCancelled }
+    get nativeDragCommitted$ (): Observable<string> { return this.nativeDragCommitted }
 
     /**
      * Fired when Preferences is selected in the macOS menu
@@ -105,35 +65,49 @@ export abstract class HostAppService {
     abstract newWindow (payload?: any): void
 
     /**
-     * Starts a cross-window drag (source side): the main process will track
-     * the cursor and route enter/move/leave/commit events to other windows.
-     * @param kind  what is being dragged ('session' or 'workspace')
-     * @param token  recovery token captured at drag start
+     * Source side: register a native (HTML5/system DnD) session drag with the
+     * main process so a drop in another window can resolve back to this one.
+     * @param dragId  opaque id set into the drag payload at dragstart
+     * @param savedState  serialized screen state, kept OUT of the DataTransfer
+     *                    payload (custom-DnD blobs are sized/raced by the
+     *                    compositor) and fetched by the drop target by id
      */
-    abstract windowDragStart (kind: 'session'|'workspace', token: RecoveryToken): void
+    abstract nativeDragStart (dragId: string, savedState: any): void
 
     /**
-     * Source side: the pointer was released. The main process commits the
-     * drag to the window currently under the cursor.
+     * Source side: the native drag is over without a committed cross-window
+     * drop (cancelled, or settled locally) — release the registration.
      */
-    abstract windowDragEnd (): void
+    abstract nativeDragEnd (dragId: string): void
 
     /**
-     * Source side: abort the drag (e.g. the pointer re-entered this window) —
-     * drop the ghost and any pending state without committing.
+     * Receiving side: fetch the dragged session's serialized screen state that
+     * the source registered with [[nativeDragStart]]. Returns null when the
+     * source already released the drag (cross-window restore is degraded to a
+     * fresh screen then, never a broken session).
      */
-    abstract windowDragCancel (): void
+    abstract nativeDragState (dragId: string): any
 
     /**
-     * Receiving side: the dragged tab was successfully restored.
+     * Source side: update the state registered with [[nativeDragStart]] — used
+     * by workspace drags, whose recovery token serializes asynchronously after
+     * the drag has started.
      */
-    abstract windowDragAccepted (): void
+    abstract nativeDragStateUpdate (dragId: string, state: any): void
 
     /**
-     * Source side: send the ghost-window drag card (title + color) shown while
-     * the tab leaves the window, following the cursor.
+     * Receiving side: the dragged session was successfully restored — tell the
+     * main process to notify the source window (`nativeDragCommitted$`).
      */
-    abstract windowDragCard (card: { title: string, color?: string|null }): void
+    abstract nativeDragAccepted (dragId: string): void
+
+    /**
+     * Current cursor position in screen coordinates (DIP), sampled when
+     * called. Used to place a detached workspace's new window at the release
+     * point; null when the host cannot report it (web build — the caller
+     * keeps the workspace in place instead).
+     */
+    abstract getCursorScreenPoint (): { x: number, y: number }|null
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     emitReady (): void { }
