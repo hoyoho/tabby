@@ -1,0 +1,17 @@
+.terminal-toolbar-bar
+    button.btn.btn-sm.btn-link.border-0(
+        *ngFor='let button of buttons',
+        [attr.title]='button.title',
+        placement='top',
+        (click)='run(button, $event)'
+    )
+        span([fastHtmlBind]='button.icon')
+        span.ms-1 {{button.label}}
+
+    button.pin-toolbar-button.btn.btn-sm.btn-link.border-0(
+        (click)='togglePin()',
+        [attr.title]='pinned ? "Unpin toolbar \u2014 reveal by hovering bottom" : "Pin toolbar"'
+    )
+        i.fas.fa-thumbtack
+        span.ms-1(*ngIf='pinned', translate) Unpin
+        span.ms-1(*ngIf='!pinned', translate) Pin

@@ -1657,6 +1657,9 @@ msgstr "로컬 X11 소켓의 경로 혹은 주소"
 msgid "Pin"
 msgstr "고정"
 
+msgid "Unpin"
+msgstr "고정 해제"
+
 
 msgid "Pin or unpin workspace"
 msgstr "워크스페이스 고정/고정 해제"

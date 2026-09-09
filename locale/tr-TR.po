@@ -1658,6 +1658,9 @@ msgstr "Yerel X11 soketinin yolu veya adresi"
 msgid "Pin"
 msgstr "Sabitle"
 
+msgid "Unpin"
+msgstr "Sabitlemeyi kaldır"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Çalışma alanını sabitle veya ayır"

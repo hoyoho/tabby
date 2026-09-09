@@ -1657,6 +1657,9 @@ msgstr "Caminho ou endereço do soquete X11 local"
 msgid "Pin"
 msgstr "Pin"
 
+msgid "Unpin"
+msgstr "Liberar guia"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Fixar ou desafixar workspace"

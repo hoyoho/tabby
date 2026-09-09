@@ -1657,6 +1657,9 @@ msgstr "Pfad oder Adresse des lokalen X11-Sockets"
 msgid "Pin"
 msgstr "Anheften"
 
+msgid "Unpin"
+msgstr "Lösen"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Arbeitsbereich anheften/loslösen"

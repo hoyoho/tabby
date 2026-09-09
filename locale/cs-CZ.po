@@ -1657,6 +1657,9 @@ msgstr "Cesta nebo adresa lokálního X11 soketu"
 msgid "Pin"
 msgstr "Připnout"
 
+msgid "Unpin"
+msgstr "Odepnout"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Připnout nebo odepnout pracovní prostor"

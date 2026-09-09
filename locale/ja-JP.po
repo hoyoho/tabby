@@ -1657,6 +1657,9 @@ msgstr "ローカル上のX11ソケットのパスまたはアドレス"
 msgid "Pin"
 msgstr "ピン留めする"
 
+msgid "Unpin"
+msgstr "ピン留めを外す"
+
 
 msgid "Pin or unpin workspace"
 msgstr "ワークスペースのピン留めを切り替え"

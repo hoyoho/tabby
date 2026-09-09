@@ -1657,6 +1657,9 @@ msgstr "Ścieżka lub adres lokalnego gniazda X11"
 msgid "Pin"
 msgstr "Pin"
 
+msgid "Unpin"
+msgstr "Odepnij"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Przypnij lub odepnij obszar roboczy"

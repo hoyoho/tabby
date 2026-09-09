@@ -1657,6 +1657,9 @@ msgstr "Staza ili adresa lokalne X11 utičnice"
 msgid "Pin"
 msgstr "Prikvači"
 
+msgid "Unpin"
+msgstr "Otkvači"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Prikvači ili otkvači radni prostor"

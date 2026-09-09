@@ -1657,6 +1657,9 @@ msgstr "Pad of adres van die plaaslike X11-sok"
 msgid "Pin"
 msgstr "Speld vas"
 
+msgid "Unpin"
+msgstr "Ontspeld"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Speld werkspasie vas of los"

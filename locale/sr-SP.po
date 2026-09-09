@@ -1657,6 +1657,9 @@ msgstr "Putanja ili adresa lokalnog X11 soketa"
 msgid "Pin"
 msgstr "Закачи"
 
+msgid "Unpin"
+msgstr "Откачи"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Zakači ili otkači radni prostor"

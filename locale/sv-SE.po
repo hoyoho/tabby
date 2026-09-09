@@ -1657,6 +1657,9 @@ msgstr "Sökväg eller adress till det lokala X11-uttaget"
 msgid "Pin"
 msgstr "Fäst"
 
+msgid "Unpin"
+msgstr "Lossa"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Fäst eller lossa arbetsyta"

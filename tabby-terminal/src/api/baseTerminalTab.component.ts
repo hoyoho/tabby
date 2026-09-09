@@ -1,6 +1,6 @@
 import { Observable, Subject, first, auditTime, debounce, interval } from 'rxjs'
 import { Spinner } from 'cli-spinner'
-import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, Input, ElementRef, InjectFlags, Component } from '@angular/core'
+import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, HostListener, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
 import { AppService, ConfigService, SessionTab, WorkspaceComponent, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
 
@@ -83,6 +83,59 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     /** @hidden */
     frontendIsReady = false
+
+    /** @hidden */
+    @HostBinding('class.toolbar-revealed') revealToolbar = false
+
+    /** @hidden */
+    @HostBinding('class.toolbar-pinned') pinToolbar = (window.localStorage.pinTerminalToolbar ?? 'true') === 'true'
+
+    /** @hidden */
+    private toolbarRevealTimeout?: any
+
+    /** @hidden */
+    showToolbar (): void {
+        this.revealToolbar = true
+        this.clearToolbarRevealTimeout()
+    }
+
+    /** @hidden */
+    @HostListener('mousemove', ['$event']) onToolbarZoneMove ($event: MouseEvent): void {
+        const rect = this.element.nativeElement.getBoundingClientRect()
+        if (rect.bottom - $event.clientY < 60) {
+            this.showToolbar()
+        } else {
+            this.hideToolbar()
+        }
+    }
+
+    /** @hidden */
+    @HostListener('mouseleave') hideToolbar (): void {
+        if (this.pinToolbar) { return }
+        this.clearToolbarRevealTimeout()
+        this.toolbarRevealTimeout = setTimeout(() => {
+            this.revealToolbar = false
+            this.toolbarRevealTimeout = undefined
+        }, 700)
+    }
+
+    /** @hidden */
+    togglePinToolbar (): void {
+        this.pinToolbar = !this.pinToolbar
+        window.localStorage.pinTerminalToolbar = this.pinToolbar
+        if (this.pinToolbar) {
+            this.revealToolbar = true
+            this.clearToolbarRevealTimeout()
+        }
+    }
+
+    /** @hidden */
+    private clearToolbarRevealTimeout (): void {
+        if (this.toolbarRevealTimeout) {
+            clearTimeout(this.toolbarRevealTimeout)
+            this.toolbarRevealTimeout = undefined
+        }
+    }
 
     frontendReady = new Subject<void>()
     size: ResizeEvent

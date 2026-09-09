@@ -1,4 +1,8 @@
 .content(#content, [style.opacity]='frontendIsReady ? 1 : 0')
+terminal-toolbar(
+    [tab]='this',
+    [class.loading]='!frontendIsReady',
+)
 search-panel(
     *ngIf='showSearchPanel && hasFocus && frontend',
     @toolbarSlide,

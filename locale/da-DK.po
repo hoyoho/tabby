@@ -1657,6 +1657,9 @@ msgstr "Sti eller adresse på den lokale X11-socket"
 msgid "Pin"
 msgstr "Fastgør"
 
+msgid "Unpin"
+msgstr "Frigør"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Fastgør eller frigør arbejdsområde"

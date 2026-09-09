@@ -1657,6 +1657,9 @@ msgstr "Ruta o dirección del socket local X11"
 msgid "Pin"
 msgstr "Fijar"
 
+msgid "Unpin"
+msgstr "Quitar fijado"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Fijar o quitar el espacio de trabajo"

@@ -1657,6 +1657,9 @@ msgstr "Chemin ou adresse du socket X11 local"
 msgid "Pin"
 msgstr "Épingler"
 
+msgid "Unpin"
+msgstr "Désépingler"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Épingler ou détacher l'espace de travail"

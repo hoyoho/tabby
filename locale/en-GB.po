@@ -1657,6 +1657,9 @@ msgstr ""
 msgid "Pin"
 msgstr ""
 
+msgid "Unpin"
+msgstr "Unpin"
+
 
 msgid "Pin or unpin workspace"
 msgstr ""

@@ -1657,6 +1657,9 @@ msgstr "Путь или адрес локального сокета X11"
 msgid "Pin"
 msgstr "Закрепить"
 
+msgid "Unpin"
+msgstr "Открепить"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Закрепить или открепить рабочую область"

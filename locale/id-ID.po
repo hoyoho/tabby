@@ -1657,6 +1657,9 @@ msgstr "Jalur atau alamat soket X11 lokal"
 msgid "Pin"
 msgstr "Pin"
 
+msgid "Unpin"
+msgstr "Lepas Sematan"
+
 
 msgid "Pin or unpin workspace"
 msgstr "Sematkan atau lepas sematan ruang kerja"

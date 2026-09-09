@@ -1785,6 +1785,9 @@ msgstr ""
 msgid "Pin"
 msgstr ""
 
+msgid "Unpin"
+msgstr ""
+
 #: tabby-core/src/hotkeys.ts:59
 msgid "Pin or unpin workspace"
 msgstr ""

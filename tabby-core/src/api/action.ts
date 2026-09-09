@@ -13,6 +13,12 @@ export enum ActionSurface {
     TabContext = 'tab-context',
     StartPage = 'start-page',
     /**
+     * In-terminal toolbar (bottom bar of every terminal tab). Official
+     * plugins and the TerminalDecorator DOM-injection family attach their
+     * buttons to this bar; ActionProvider contributions surface here too.
+     */
+    TerminalToolbar = 'terminal-toolbar',
+    /**
      * Fuzzy-search command palette (the "Commands" selector). Any action
      * targeting this surface becomes an entry there.
      */
@@ -35,6 +41,12 @@ export interface Action {
     sublabel?: string
     /** Raw SVG icon code (toolbar / selector) */
     icon?: string
+    /**
+     * Native DOM `title` attribute. Rendered by toolbar surfaces and used by
+     * DOM-scanning plugins (e.g. SFTP+ hiding the native SFTP button via
+     * `button[title="SFTP" i]`). Keep distinct from [[label]].
+     */
+    title?: string
     weight?: number
     surfaces: ActionSurface[]
     run: (ctx: ActionContext) => void|Promise<void>
