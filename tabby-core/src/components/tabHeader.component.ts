@@ -139,8 +139,14 @@ export class TabHeaderComponent extends BaseComponent {
         this.dragPlaceholder.style.transform = horizontal
             ? `translate3d(${slide}px,0,0)`
             : `translate3d(0,${slide}px,0)`
-        // Target slot = how many resting sibling centres the pointer passed.
-        const target = this.dragSiblingCenters.filter(c => c < p).length
+        // Swap slot is decided by the dragged tab's own leading edge — the
+        // edge facing the direction of travel — crossing a neighbour's
+        // mid-line. Not the pointer: the pointer sits near the clone's centre
+        // (slide assumes a centre grab), so its crossing looked to land on a
+        // left or right edge depending on travel direction.
+        const position = this.dragPlaceholderBase + slide
+        const leadingEdge = slide > 0 ? position + this.dragPlaceholderSize : position
+        const target = this.dragSiblingCenters.filter(c => c < leadingEdge).length
         if (target === this.dragTargetIndex) {
             return
         }
