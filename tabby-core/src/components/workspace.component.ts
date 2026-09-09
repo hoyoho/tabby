@@ -14,8 +14,8 @@ import { actionsToMenuItems } from '../api/adapters'
 import { ActionRegistry } from '../services/action.service'
 
 import { SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, SplitSpannerInfo, SplitTabPaneHeaderData, findPaneForTab, findParentContainer, collectPanes, sideDirectionOf, addPaneInto, cleanNode, PanePlacement, layoutTree } from './workspace.layout'
-export { SplitOrientation, SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, PANE_MIN_SIZE, minSizeOf, SplitSpannerInfo, SplitTabPaneHeaderData } from './workspace.layout'
-import { PaneDragController, PaneDragHost, DragHintState, NativeDragPayload, TABBY_DRAG_MIME, PaneHit } from './workspace.dragDrop'
+export { SplitOrientation, SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, minSizeOf, SplitSpannerInfo, SplitTabPaneHeaderData } from './workspace.layout'
+import { PaneDragController, PaneDragHost, DragHintState, NativeDragPayload, TABBY_DRAG_MIME, PaneHit, dragLeftDocument } from './workspace.dragDrop'
 import { PaneNavigation, PaneNavigationHost } from './workspace.navigation'
 import { HostAppService } from '../api/hostApp'
 import { HostWindowService } from '../api/hostWindow'
@@ -67,8 +67,6 @@ import { SessionTab } from '../api/session'
     styleUrls: ['./workspace.component.scss'],
 })
 export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, OnDestroy, PaneDragHost, PaneNavigationHost {
-    static DIRECTIONS: SplitDirection[] = ['t', 'r', 'b', 'l']
-
     /**
      * Default workspace icon rendered in the tab bar. Png is inlined as a data
      * URL by webpack and injected as an <img>, which profile-icon renders.
@@ -186,11 +184,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return ref?.rootNodes[0] as HTMLElement|undefined
     }
 
-    /** @hidden PaneDragHost */
-    emitTabAdopted (tab: SessionTab): void {
-        this.tabAdopted.next(tab)
-    }
-
     /** Drag overlay hint (demo-style preview) */
     _dragHintVisible = false
     _dragHintX = 0
@@ -199,25 +192,13 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     _dragHintH = 0
 
     private tabAdded = new Subject<BaseTabComponent>()
-    private tabAdopted = new Subject<BaseTabComponent>()
     private tabRemoved = new Subject<BaseTabComponent>()
-    private splitAdjusted = new Subject<SplitSpannerInfo>()
     private focusChanged = new Subject<BaseTabComponent>()
     private initialized = new Subject<void>()
 
     get tabAdded$ (): Observable<BaseTabComponent> { return this.tabAdded }
 
-    /**
-     * Fired when an existing top-level tab is dragged into this tab
-     */
-    get tabAdopted$ (): Observable<BaseTabComponent> { return this.tabAdopted }
-
     get tabRemoved$ (): Observable<BaseTabComponent> { return this.tabRemoved }
-
-    /**
-     * Fired when split ratio is changed for a given spanner
-     */
-    get splitAdjusted$ (): Observable<SplitSpannerInfo> { return this.splitAdjusted }
 
     /**
      * Fired when a different sub-tab gains focus
@@ -262,8 +243,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             // — dragleave fires on every crossed element with a relatedTarget
             // that still belongs to this document — so only clear when the
             // relatedTarget lives elsewhere (or is null).
-            const related = event.relatedTarget
-            if (related && (related as Node).ownerDocument === document) {
+            if (!dragLeftDocument(event)) {
                 return
             }
             this.paneDrag.clearHint()
@@ -485,7 +465,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.resizeObserver = null
         this.tabAdded.complete()
         this.tabRemoved.complete()
-        this.splitAdjusted.complete()
         this.focusChanged.complete()
         super.ngOnDestroy()
     }
@@ -846,11 +825,15 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
     }
 
-    /** @hidden PaneDragHost */
+    /** Sets keepPTYAlive on every session in this workspace (cross-window gestures). */
+    keepAllSessionsAlive (alive: boolean): void {
+        for (const s of this.getAllTabs()) {
+            this.keepSessionAlive(s, alive)
+        }
+    }
+
     /** @hidden PaneDragHost */
     async acceptProfileIntoWorkspace (payload: NativeDragPayload, x: number, y: number): Promise<boolean> {
-        console.log('[pane-drag] acceptProfileIntoWorkspace (RECOVERY path): dragId=' + payload.dragId +
-            ' restoreFromPTYID=' + (payload.profile?.options?.restoreFromPTYID ?? 'null'))
         const params = await this.tabRecovery.recoverTab({
             type: 'app:local-tab',
             profile: payload.profile,
@@ -880,11 +863,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return true
     }
 
-    /** @returns the number of panes (leaf cells) this workspace contains */
-    getPaneCount (): number {
-        return collectPanes(this.root).length
-    }
-
     /**
      * Adds a session to the currently focused pane (merges it as an extra
      * sub-tab). Used when opening a new connection in an existing workspace.
@@ -899,15 +877,24 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
                 return
             }
             this.adoptTab(tab)
-            pane.tabs.push(tab)
-            pane.activeTab = tab
-            await this.attachTabView(tab)
-            this.focus(tab)
+            await this.insertTabIntoPane(tab, pane)
             this.layout()
             this.updateTitle()
             return
         }
         await this.addTabAt(tab, null, 'r')
+    }
+
+    /**
+     * Inserts an already-adopted session into `pane` as its active sub-tab,
+     * attaches its view (no-op when the tab merely moved within this
+     * workspace) and focuses it.
+     */
+    private async insertTabIntoPane (tab: SessionTab, pane: Pane): Promise<void> {
+        pane.tabs.push(tab)
+        pane.activeTab = tab
+        await this.attachTabView(tab)
+        this.focus(tab)
     }
 
     /**
@@ -925,10 +912,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
                 return
             }
             this.adoptTab(tab)
-            pane.tabs.push(tab)
-            pane.activeTab = tab
-            await this.attachTabView(tab)
-            this.focus(tab)
+            await this.insertTabIntoPane(tab, pane)
             this.layout()
             this.updateTitle()
             return
@@ -952,9 +936,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             return null
         }
         this.adoptTab(dup)
-        pane.tabs.push(dup)
-        pane.activeTab = dup
-        await this.attachTabView(dup)
+        await this.insertTabIntoPane(dup, pane)
         this.onAfterTabAdded(dup)
         this.recoveryStateChangedHint.next()
         return dup
@@ -1134,9 +1116,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /** @hidden */
-    onSpannerAdjusted (spanner: SplitSpannerInfo): void {
+    onSpannerAdjusted (_spanner: SplitSpannerInfo): void {
         this.layout()
-        this.splitAdjusted.next(spanner)
     }
 
     /** @hidden */
@@ -1211,9 +1192,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden PaneDragHost */
     async moveSessionToWorkspace (tab: SessionTab, target: WorkspaceComponent): Promise<void> {
-        console.log('[pane-drag] moveSessionToWorkspace: tab=' + (tab.customTitle || tab.title) +
-            ' targetIsEmpty=' + (target.getAllTabs().length === 0) +
-            ' guards: self=' + (target === this) + ' parentMismatch=' + (tab.parent !== this))
         if (target === this || tab.parent !== this) {
             return
         }
@@ -1344,8 +1322,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     private adoptTab (tab: SessionTab): void {
-        console.log('[pane-drag] adoptTab: tab=' + (tab.customTitle || tab.title) +
-            ' prevParent=' + (tab.parent instanceof WorkspaceComponent ? 'ws' : String(tab.parent)))
         if (tab.parent instanceof WorkspaceComponent) { tab.parent.removeTab(tab) }
         tab.removeFromContainer()
         tab.pinned = false // sessions never participate in pinning
@@ -1365,7 +1341,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
         if (this.viewRefs.has(tab)) {
             // already attached; do not double-insert the same host view
-            console.log('[pane-drag] attachTabView: ALREADY ATTACHED, skipped')
             return
         }
         // Every session that gets its view attached here belongs to this

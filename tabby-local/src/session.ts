@@ -121,7 +121,7 @@ export class Session extends BaseSession {
                 cwd = undefined
             }
 
-            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], {
+            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...(options.args ?? [])], {
                 name: 'xterm-256color',
                 cols: options.width ?? 80,
                 rows: options.height ?? 30,
@@ -204,14 +204,7 @@ export class Session extends BaseSession {
             // Detach without killing the live PTY: drop our listeners/subjects
             // so the shell keeps running in the main process for the new window.
             this.pty?.unsubscribeAll()
-            this.open = false
-            this.middleware.close()
-            this.closed.next()
-            this.destroyed.next()
-            this.closed.complete()
-            this.destroyed.complete()
-            this.output.complete()
-            this.binaryOutput.complete()
+            this.releaseRendererState()
             this.pty = null
             return
         }

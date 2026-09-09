@@ -169,8 +169,10 @@ export class SFTPPanelComponent {
         if (item.isDirectory) {
             await this.navigate(item.fullPath)
         } else if (item.isSymlink) {
-            const target = path.resolve(this.path, await this.sftp.readlink(item.fullPath))
-            const stat = await this.sftp.stat(target)
+            const stat = await this.resolveSymlinkTarget(item)
+            if (!stat) {
+                return
+            }
             if (stat.isDirectory) {
                 await this.navigate(item.fullPath)
             } else {
@@ -181,6 +183,18 @@ export class SFTPPanelComponent {
         }
     }
 
+    /** Follows a symlink; notifies and returns null when the link is dangling
+      * or its target vanished between listing and resolution. */
+    private async resolveSymlinkTarget (item: SFTPFile): Promise<{ mode: number, size: number, isDirectory: boolean }|null> {
+        try {
+            const target = path.resolve(this.path, await this.sftp.readlink(item.fullPath))
+            return await this.sftp.stat(target)
+        } catch {
+            this.notifications.error(this.translate.instant('The target of the link {name} does not exist', { name: item.name }))
+            return null
+        }
+    }
+
     async downloadItem (item: SFTPFile): Promise<void> {
         if (item.isDirectory) {
             await this.downloadFolder(item)
@@ -188,8 +202,10 @@ export class SFTPPanelComponent {
         }
 
         if (item.isSymlink) {
-            const target = path.resolve(this.path, await this.sftp.readlink(item.fullPath))
-            const stat = await this.sftp.stat(target)
+            const stat = await this.resolveSymlinkTarget(item)
+            if (!stat) {
+                return
+            }
             if (stat.isDirectory) {
                 await this.downloadFolder(item)
                 return

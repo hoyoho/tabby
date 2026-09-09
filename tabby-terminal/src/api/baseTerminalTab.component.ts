@@ -222,7 +222,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                         this.frontend.clearSelection()
                         this.notifications.notice(this.translate.instant('Copied'))
                     } else {
-                        this.forEachFocusedTerminalPane(tab => tab.sendInput('\x03'))
+                        this.sendInput('\x03')
                     }
                     break
                 case 'copy':
@@ -231,59 +231,49 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                     this.notifications.notice(this.translate.instant('Copied'))
                     break
                 case 'paste':
-                    this.forEachFocusedTerminalPane(tab => tab.paste())
+                    this.paste()
                     break
                 case 'select-all':
                     this.frontend?.selectAll()
                     break
                 case 'clear':
-                    this.forEachFocusedTerminalPane(tab => tab.frontend?.clear())
+                    this.frontend?.clear()
                     break
                 case 'zoom-in':
-                    this.forEachFocusedTerminalPane(tab => tab.zoomIn())
+                    this.zoomIn()
                     break
                 case 'zoom-out':
-                    this.forEachFocusedTerminalPane(tab => tab.zoomOut())
+                    this.zoomOut()
                     break
                 case 'reset-zoom':
-                    this.forEachFocusedTerminalPane(tab => tab.resetZoom())
+                    this.resetZoom()
                     break
                 case 'previous-word':
-                    this.forEachFocusedTerminalPane(tab => {
-                        tab.sendInput({
-                            [Platform.Windows]: '\x1b[1;5D',
-                            [Platform.macOS]: '\x1bb',
-                            [Platform.Linux]: '\x1bb',
-                        }[this.hostApp.platform])
-                    })
+                    this.sendInput({
+                        [Platform.Windows]: '\x1b[1;5D',
+                        [Platform.macOS]: '\x1bb',
+                        [Platform.Linux]: '\x1bb',
+                    }[this.hostApp.platform])
                     break
                 case 'next-word':
-                    this.forEachFocusedTerminalPane(tab => {
-                        tab.sendInput({
-                            [Platform.Windows]: '\x1b[1;5C',
-                            [Platform.macOS]: '\x1bf',
-                            [Platform.Linux]: '\x1bf',
-                        }[this.hostApp.platform])
-                    })
+                    this.sendInput({
+                        [Platform.Windows]: '\x1b[1;5C',
+                        [Platform.macOS]: '\x1bf',
+                        [Platform.Linux]: '\x1bf',
+                    }[this.hostApp.platform])
                     break
                 case 'delete-line':
-                    this.forEachFocusedTerminalPane(tab => {
-                        tab.sendInput('\x1bw')
-                    })
+                    this.sendInput('\x1bw')
                     break
                 case 'delete-previous-word':
-                    this.forEachFocusedTerminalPane(tab => {
-                        tab.sendInput('\u0017')
-                    })
+                    this.sendInput('\u0017')
                     break
                 case 'delete-next-word':
-                    this.forEachFocusedTerminalPane(tab => {
-                        tab.sendInput({
-                            [Platform.Windows]: '\x1bd\x1b[3;5~',
-                            [Platform.macOS]: '\x1bd',
-                            [Platform.Linux]: '\x1bd',
-                        }[this.hostApp.platform])
-                    })
+                    this.sendInput({
+                        [Platform.Windows]: '\x1bd\x1b[3;5~',
+                        [Platform.macOS]: '\x1bd',
+                        [Platform.Linux]: '\x1bd',
+                    }[this.hostApp.platform])
                     break
                 case 'copy-current-path':
                     this.copyCurrentPath()
@@ -930,11 +920,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                 })
             }
         }
-    }
-
-    protected forEachFocusedTerminalPane (cb: (tab: BaseTerminalTabComponent<any>) => void): void {
-        // Broadcast (Focus all…) was removed — apply to this terminal only.
-        cb(this)
     }
 
     /**

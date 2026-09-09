@@ -1,6 +1,5 @@
-import { IpcRendererEvent, ipcRenderer } from 'electron'
 import stripAnsi from 'strip-ansi'
-import { LogService, NotificationsService, TranslateService } from 'tabby-core'
+import { IPCConnectionProxy, LogService, NotificationsService, TranslateService } from 'tabby-core'
 import { Subject, Observable } from 'rxjs'
 import { Injector } from '@angular/core'
 import { BaseSession, ConnectableTerminalProfile, InputProcessingOptions, InputProcessor, LoginScriptsOptions, SessionMiddleware, StreamProcessingOptions, TerminalStreamProcessor, UTF8SplitterMiddleware } from 'tabby-terminal'
@@ -62,115 +61,11 @@ export interface SerialOpenOptions {
  * only forwards IPC events, mirroring how local PTYs are accessed via
  * `ElectronPTYProxy`.
  */
-export class SerialPortProxy {
-    private id: string|null = null
-    private handlers = new Map<SerialPortEvent, Set<(...args: any[]) => void>>()
-    private wiredChannels = new Set<string>()
-
-    getID (): string|null {
-        return this.id
-    }
-
-    on (event: SerialPortEvent, handler: (...args: any[]) => void): void {
-        if (!this.handlers.has(event)) {
-            this.handlers.set(event, new Set())
-        }
-        this.handlers.get(event)!.add(handler)
-    }
-
-    /**
-     * Claims an existing main-process connection (cross-window transfer).
-     * Returns false if the connection is gone — caller falls back to a fresh
-     * open.
-     */
-    async tryRestore (id: string): Promise<boolean> {
-        const ok: boolean = ipcRenderer.sendSync('serial:attach', id)
-        if (!ok) {
-            return false
-        }
-        this.id = id
-        this.wire()
-        return true
-    }
+export class SerialPortProxy extends IPCConnectionProxy<SerialPortEvent> {
+    protected readonly protocol = 'serial'
 
     async connect (options: SerialOpenOptions): Promise<void> {
-        const id: string = ipcRenderer.sendSync('serial:spawn', options)
-        this.id = id
-        this.wire()
-        await new Promise<void>((resolve, reject) => {
-            const openHandler = () => {
-                cleanup()
-                resolve()
-            }
-            const errorHandler = (_e: IpcRendererEvent, message: string) => {
-                cleanup()
-                reject(new Error(message))
-            }
-            ipcRenderer.on(`serial:${id}:open`, openHandler)
-            ipcRenderer.on(`serial:${id}:error`, errorHandler)
-            const cleanup = () => {
-                ipcRenderer.off(`serial:${id}:open`, openHandler)
-                ipcRenderer.off(`serial:${id}:error`, errorHandler)
-            }
-        })
-    }
-
-    write (data: Buffer): void {
-        if (this.id) {
-            ipcRenderer.send('serial:write', this.id, data)
-        }
-    }
-
-    update (options: { baudRate: number }): void {
-        if (this.id) {
-            ipcRenderer.send('serial:update', this.id, options)
-        }
-    }
-
-    /** Releases the port without closing it (cross-window transfer). */
-    detach (): void {
-        if (this.id) {
-            ipcRenderer.send('serial:detach', this.id)
-        }
-        this.unsubscribeAll()
-        this.id = null
-    }
-
-    destroy (): void {
-        if (this.id) {
-            ipcRenderer.send('serial:kill', this.id)
-        }
-        this.unsubscribeAll()
-        this.id = null
-    }
-
-    unsubscribeAll (): void {
-        for (const channel of this.wiredChannels) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ipcRenderer.removeAllListeners(channel as any)
-        }
-        this.wiredChannels.clear()
-    }
-
-    private wire (): void {
-        if (!this.id) {
-            return
-        }
-        for (const [event, handlers] of this.handlers) {
-            const channel = `serial:${this.id}:${event}`
-            if (this.wiredChannels.has(channel)) {
-                continue
-            }
-            this.wiredChannels.add(channel)
-            const listener = (_e: IpcRendererEvent, ...args: any[]) => {
-                for (const handler of [...handlers]) {
-                    handler(...args)
-                }
-            }
-            // Keep a stable reference so removeAllListeners below only ever
-            // touches channels this proxy owns.
-            ipcRenderer.on(channel, listener)
-        }
+        await this.spawnAndAwaitOpen(options)
     }
 }
 
@@ -278,14 +173,7 @@ export class SerialSession extends BaseSession {
             // Detach without closing the live main-process port so the target
             // window of a cross-window drag can re-attach it by id.
             this.serial?.detach()
-            this.open = false
-            this.middleware.close()
-            this.closed.next()
-            this.destroyed.next()
-            this.closed.complete()
-            this.destroyed.complete()
-            this.output.complete()
-            this.binaryOutput.complete()
+            this.releaseRendererState()
             this.serial = null
             return
         }
@@ -296,7 +184,7 @@ export class SerialSession extends BaseSession {
         this.serial = null
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     resize (_, __) {
         this.streamProcessor.resize()
     }

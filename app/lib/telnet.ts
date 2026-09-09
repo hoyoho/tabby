@@ -2,14 +2,7 @@ import * as net from 'net'
 import { v4 as uuidv4 } from 'uuid'
 import { ipcMain } from 'electron'
 import { Application } from './app'
-
-/**
- * How long a connection with zero attached renderers survives. Covers the
- * cross-window drag race: the source window detaches (keepPTYAlive) before
- * the target window attaches, and a dropped/failed transfer must not leak
- * an open socket forever.
- */
-const GRACE_PERIOD_MS = 10000
+import { HostedConnection, registerHostedConnectionEndpoints, dropWindowClaims, destroyAllConnections } from './hostedConnection'
 
 /** Chunk size and in-flight IPC window for renderer backpressure. */
 const DATA_CHUNK = 1024 * 100
@@ -72,76 +65,34 @@ class TelnetDataQueue {
  * ever sees this through IPC events (`telnet:<id>:*`), mirroring how local
  * PTYs are hosted in `pty.ts`.
  */
-class TelnetConnection {
+class TelnetConnection extends HostedConnection {
     private socket: net.Socket
-    queue = new TelnetDataQueue(data => this.emit('data', data))
-    closed = false
-    private graceTimer: NodeJS.Timeout|null = null
-    attachers = new Set<number>()
+    queue = new TelnetDataQueue(data => this.broadcast('data', data))
 
-    constructor (private id: string, private app: Application, host: string, port: number) {
+    constructor (id: string, app: Application, host: string, port: number) {
+        super(id, app)
         this.socket = net.connect(port, host)
-        this.socket.on('connect', () => this.emit('open'))
+        this.socket.on('connect', () => this.broadcast('open'))
         this.socket.on('data', data => this.queue.push(data))
-        this.socket.on('error', err => this.emit('error', err.message))
+        this.socket.on('error', err => this.broadcast('error', err.message))
         this.socket.on('close', () => {
             this.closed = true
-            this.emit('close')
-            setImmediate(() => this.cleanup?.())
+            this.broadcast('close')
+            this.notifyClosed()
         })
     }
 
-    write (data: Buffer): void {
-        if (this.closed) {
-            return
-        }
-        try {
-            this.socket.write(data)
-        } catch { /* socket may have just died */ }
+    protected readonly protocol = 'telnet'
+
+    protected doWrite (data: Buffer): void {
+        this.socket.write(data)
     }
 
-    cancelGrace (): void {
-        if (this.graceTimer) {
-            clearTimeout(this.graceTimer)
-            this.graceTimer = null
-        }
-    }
-
-    /** Starts the abandoned-connection countdown (no-op if attachers remain). */
-    armGrace (): void {
-        if (this.graceTimer || this.closed || this.attachers.size) {
-            return
-        }
-        this.graceTimer = setTimeout(() => {
-            this.graceTimer = null
-            if (!this.attachers.size && !this.closed) {
-                this.destroy()
-            }
-        }, GRACE_PERIOD_MS)
-        this.graceTimer.unref?.()
-    }
-
-    destroy (): void {
-        if (this.closed) {
-            return
-        }
-        this.closed = true
-        this.cancelGrace()
+    protected doDestroy (): void {
         this.queue.stop()
         try {
             this.socket.destroy()
         } catch { /* ignore */ }
-    }
-
-    private emit (event: string, ...args: any[]): void {
-        this.app.broadcast(`telnet:${this.id}:${event}`, ...args)
-    }
-
-    private cleanup: (() => void)|null = null
-
-    /** Lets the owning manager drop its registry entry once the socket is done. */
-    bindCleanup (fn: () => void): void {
-        this.cleanup = fn
     }
 }
 
@@ -158,33 +109,7 @@ export class TelnetManager {
             this.connections[id] = conn
         })
 
-        ipcMain.on('telnet:attach', (event, id) => {
-            const conn = this.connections[id]
-            if (conn && !conn.closed) {
-                conn.attachers.add(event.sender.id)
-                conn.cancelGrace()
-                event.returnValue = true
-            } else {
-                event.returnValue = false
-            }
-        })
-
-        ipcMain.on('telnet:detach', (event, id) => {
-            const conn = this.connections[id]
-            if (!conn) {
-                return
-            }
-            conn.attachers.delete(event.sender.id)
-            conn.armGrace()
-        })
-
-        ipcMain.on('telnet:kill', (_event, id) => {
-            this.connections[id]?.destroy()
-        })
-
-        ipcMain.on('telnet:write', (_event, id, data) => {
-            this.connections[id]?.write(Buffer.from(data))
-        })
+        registerHostedConnectionEndpoints('telnet', this.connections)
 
         ipcMain.on('telnet:ack', (_event, id, length) => {
             this.connections[id]?.queue.ack(length)
@@ -193,19 +118,10 @@ export class TelnetManager {
 
     /** Drops one window's claims; abandoned connections die after the grace period. */
     windowClosed (webContentsId: number): void {
-        for (const conn of Object.values(this.connections)) {
-            if (!conn) {
-                continue
-            }
-            if (conn.attachers.delete(webContentsId)) {
-                conn.armGrace()
-            }
-        }
+        dropWindowClaims(this.connections, webContentsId)
     }
 
     destroyAll (): void {
-        for (const conn of Object.values(this.connections)) {
-            conn?.destroy()
-        }
+        destroyAllConnections(this.connections)
     }
 }

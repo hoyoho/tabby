@@ -84,6 +84,22 @@ export abstract class BaseSession {
         this.binaryOutput.complete()
     }
 
+    /**
+     * Releases renderer-side session state without killing the underlying
+     * main-process session — the cross-window transfer path (`keepPTYAlive`):
+     * the target window re-attaches the session by id.
+     */
+    protected releaseRendererState (): void {
+        this.open = false
+        this.middleware.close()
+        this.closed.next()
+        this.destroyed.next()
+        this.closed.complete()
+        this.destroyed.complete()
+        this.output.complete()
+        this.binaryOutput.complete()
+    }
+
     abstract start (options: unknown): Promise<void>
     abstract resize (columns: number, rows: number): void
     abstract write (data: Buffer): void

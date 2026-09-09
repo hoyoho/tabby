@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+import { createHash } from 'crypto'
 import { Component, ViewChild } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { firstBy } from 'thenby'
@@ -129,6 +130,37 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
         }
 
         this.loginScriptsSettings?.save()
+        void this.purgeCredentialsForOtherModes()
+    }
+
+    /** The saved auth mode decides which stored credentials may survive:
+      * switching modes wipes the ones the new mode cannot use, so switching
+      * back later can never silently re-authenticate with stale secrets. */
+    private async purgeCredentialsForOtherModes (): Promise<void> {
+        const auth = this.profile.options.auth
+        if (auth && auth !== 'password') {
+            try {
+                await this.passwordStorage.deletePassword(this.profile)
+                this.hasSavedPassword = false
+            } catch (e) {
+                console.error('Could not purge the stored password after an auth mode change', e)
+            }
+        }
+        if (auth && auth !== 'publicKey') {
+            for (const ref of this.profile.options.privateKeys ?? []) {
+                try {
+                    const contents = await this.fileProviders.retrieveFile(ref)
+                    if (!contents) {
+                        continue
+                    }
+                    // Same digest the auth layer keys passphrases by.
+                    const keyHash = createHash('sha512').update(Buffer.from(contents)).digest('hex')
+                    await this.passwordStorage.deletePrivateKeyPassword(keyHash)
+                } catch (e) {
+                    console.error('Could not purge a stored key passphrase after an auth mode change', e)
+                }
+            }
+        }
     }
 
     onForwardAdded (fw: ForwardedPortConfig) {

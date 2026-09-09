@@ -66,10 +66,6 @@ export class Window {
     get visible$ (): Observable<boolean> { return this.visible }
     get closed$ (): Observable<void> { return this.closed }
 
-    get isAlwaysOnTop (): boolean {
-        return !!(this.window && !this.window.isDestroyed() && this.window.isAlwaysOnTop())
-    }
-
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor (private application: Application, private configStore: any, options?: WindowOptions) {
         options = options ?? {}
@@ -274,10 +270,6 @@ export class Window {
 
     isDestroyed (): boolean {
         return !this.window || this.window.isDestroyed()
-    }
-
-    get bounds (): Rectangle {
-        return this.window?.getBounds() ?? { x: 0, y: 0, width: 0, height: 0 }
     }
 
     isFocused (): boolean {

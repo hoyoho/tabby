@@ -315,8 +315,6 @@ export class PTYManager {
     }
 
     private removePty (id: string): void {
-        if (this.ptys[id]) {
-            delete this.ptys[id]
-        }
+        delete this.ptys[id]
     }
 }

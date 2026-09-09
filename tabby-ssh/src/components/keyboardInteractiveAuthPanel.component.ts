@@ -1,8 +1,7 @@
-import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core'
+import { Component, Input, Output, EventEmitter, ViewChild, ElementRef, HostListener, ChangeDetectionStrategy } from '@angular/core'
 import { PlatformService } from 'tabby-core'
 import { KeyboardInteractivePrompt } from '../session/ssh'
 import { SSHProfile } from '../api'
-import { PasswordStorageService } from '../services/passwordStorage.service'
 
 const PROMPT_URL_REGEX = /https?:\/\/[^\s<>"']+/g
 const TRAILING_PROMPT_URL_PUNCTUATION = /[),.;:!?]+$/
@@ -18,30 +17,18 @@ interface PromptPart {
     styleUrls: ['./keyboardInteractiveAuthPanel.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class KeyboardInteractiveAuthComponent implements OnInit {
+export class KeyboardInteractiveAuthComponent {
     @Input() profile: SSHProfile
     @Input() prompt: KeyboardInteractivePrompt
     @Input() step = 0
     @Output() done = new EventEmitter()
+    @Output() cancelled = new EventEmitter()
     @ViewChild('input') input: ElementRef
+    private settled = false
 
     constructor (
-        private passwordStorage: PasswordStorageService,
         private platform: PlatformService,
-        private cdr: ChangeDetectorRef,
     ) {}
-
-    async ngOnInit (): Promise<void> {
-        const savedPassword = await this.passwordStorage.loadPassword(this.profile)
-        if (savedPassword) {
-            for (let i = 0; i < this.prompt.prompts.length; i++) {
-                if (this.prompt.isAPasswordPrompt(i) && !this.prompt.responses[i]) {
-                    this.prompt.responses[i] = savedPassword
-                }
-            }
-            this.cdr.markForCheck()
-        }
-    }
 
     isPassword (): boolean {
         return this.prompt.isAPasswordPrompt(this.step)
@@ -106,12 +93,24 @@ export class KeyboardInteractiveAuthComponent implements OnInit {
 
     next (): void {
         if (this.step === this.prompt.prompts.length - 1) {
+            this.settled = true
             this.prompt.respond()
             this.done.emit()
             return
         }
         this.step++
         this.input.nativeElement.focus()
+    }
+
+    /** ESC cancels the whole k-i exchange — the answers are discarded. */
+    @HostListener('document:keydown.escape')
+    cancel (): void {
+        if (this.settled) {
+            return
+        }
+        this.settled = true
+        this.prompt.reject()
+        this.cancelled.emit()
     }
 
     private isPromptUrl (url: string): boolean {

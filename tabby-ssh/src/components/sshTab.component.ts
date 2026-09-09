@@ -2,7 +2,7 @@ import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
 import { Component, Injector, HostListener, Input } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
-import { Platform, ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
+import { ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
 import { SSHService } from '../services/ssh.service'
 import { KeyboardInteractivePrompt, SSHSession } from '../session/ssh'
@@ -22,12 +22,14 @@ import { SSHMultiplexerService } from '../services/sshMultiplexer.service'
     animations: BaseTerminalTabComponent.animations,
 })
 export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> {
-    Platform = Platform
     sshSession: SSHSession|null = null
     session: SSHShellSession|null = null
     sftpPanelVisible = false
     sftpPath = '/'
     activeKIPrompt: KeyboardInteractivePrompt|null = null
+    /** Set when a FRESH connect failed — its auth UX was already shown, the
+      * multiplex retry must not reconnect and prompt the user all over. */
+    private noRetryOnFailure = false
 
     /** Set by the recovery provider when re-attaching a live connection. */
     @Input() restoreConnectionId?: string|null
@@ -142,6 +144,12 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
 
             try {
                 await session.start({ jumpConnectionId: jumpSession?.getID() ?? null })
+            } catch (e) {
+                // The user just went through the whole connect/auth UX on this
+                // fresh connection (prompts, cancels, failures) — mark it so
+                // the outer multiplex retry does not run it all again.
+                this.noRetryOnFailure = true
+                throw e
             } finally {
                 this.stopSpinner()
             }
@@ -181,11 +189,19 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
 
     async initializeSession (): Promise<void> {
         await super.initializeSession()
+        this.noRetryOnFailure = false
         try {
             await this.initializeSessionMaybeMultiplex(true)
-        } catch {
+        } catch (e) {
             this.restoreConnectionId = null
             this.restoreChannelId = null
+            if (this.noRetryOnFailure) {
+                // A fresh connection already failed with full auth UX —
+                // retrying would just reconnect and prompt all over again.
+                console.error('SSH session initialization failed', e)
+                this.write(colors.black.bgRed(' X ') + ' ' + colors.red(e.message) + '\r\n')
+                return
+            }
             try {
                 await this.initializeSessionMaybeMultiplex(false)
             } catch (e) {
@@ -199,7 +215,12 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
         return {
             ...(await super.getRecoveryToken(options)),
-            sshConnectionId: options?.includeState && this.sshSession?.getID() || null,
+            // The live connection id travels with EVERY token (not just state
+            // transfers): a duplicate/clone then attaches to the already-
+            // authenticated connection even after the profile's auth mode was
+            // switched — no re-prompt while the old connection lives. When it
+            // is gone, attach fails and the new mode authenticates fresh.
+            sshConnectionId: this.sshSession?.getID() ?? null,
             shellChannelId: options?.includeState && this.session?.getID() || null,
         }
     }

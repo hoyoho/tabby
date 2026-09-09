@@ -82,13 +82,8 @@ export interface PromptPayload {
     value?: string|null
 }
 
-export interface PromptSpec {
-    prompt: string
-    echo?: boolean
-}
-
 type AuthMethod = {
-    type: 'none'|'prompt-password'|'hostbased'
+    type: 'none'|'prompt-password'
 } | {
     type: 'keyboard-interactive',
     savedPassword?: string
@@ -115,7 +110,6 @@ type AuthMethod = {
 function sshAuthTypeForMethod (m: AuthMethod): string {
     switch (m.type) {
         case 'none': return 'none'
-        case 'hostbased': return 'hostbased'
         case 'prompt-password': return 'password'
         case 'saved-password': return 'password'
         case 'keyboard-interactive': return 'keyboard-interactive'
@@ -192,13 +186,11 @@ class ChannelDataQueue {
 }
 
 interface ChannelEntry {
-    id: string
     channel: russh.Channel
     queue: ChannelDataQueue
 }
 
 interface SFTPEntry {
-    id: string
     sftp: russh.SFTP
     handles: Map<string, russh.SFTPFile>
 }
@@ -318,6 +310,10 @@ class SSHConnection {
     private savedPassword?: string
     private graceTimer: NodeJS.Timeout|null = null
     private destroying = false
+    /** Set when the user dismissed an auth prompt — the connect failure is a cancellation, not a rejection. */
+    private userCancelledAuthentication = false
+    /** Set when the server itself rejected the stored credential via direct password auth — only then may it be discarded. */
+    private storedPasswordRejected = false
     private mainSftp: russh.SFTP|null = null
     private mainSftpOpening: Promise<russh.SFTP>|null = null
 
@@ -520,8 +516,14 @@ class SSHConnection {
             try {
                 this.client.disconnect()
             } catch { /* ignore */ }
-            await this.request('delete-password', { username: this.authUsername })
-            throw new Error('Authentication rejected')
+            // Discard the stored credential only when the server itself
+            // rejected it via direct password auth. A failed keyboard-
+            // interactive exchange (e.g. wrong OTP) says nothing about the
+            // password, and a user cancellation even less so.
+            if (this.storedPasswordRejected) {
+                await this.request('delete-password', { username: this.authUsername })
+            }
+            throw new Error(this.userCancelledAuthentication ? 'Authentication cancelled' : 'Authentication rejected')
         }
 
         // Auth success
@@ -547,17 +549,8 @@ class SSHConnection {
                 methods.splice(insertIndex, 0, { type: 'saved-password', password: storedPassword })
             }
         }
-        if (!auth || auth === 'keyboardInteractive') {
-            const existingSaved = methods.find(m => m.type === 'keyboard-interactive' && m.savedPassword === storedPassword)
-            if (!existingSaved) {
-                const updatable = methods.find(m => m.type === 'keyboard-interactive' && m.savedPassword === undefined)
-                if (updatable && updatable.type === 'keyboard-interactive') {
-                    updatable.savedPassword = storedPassword
-                } else {
-                    methods.push({ type: 'keyboard-interactive', savedPassword: storedPassword })
-                }
-            }
-        }
+        // Keyboard-interactive deliberately never touches the stored
+        // credential: every KI round must be typed in fresh.
     }
 
     // eslint-disable-next-line max-statements
@@ -630,12 +623,12 @@ class SSHConnection {
         }
         if (!options.auth || options.auth === 'keyboardInteractive') {
             methods.push({ type: 'keyboard-interactive' })
+        }
+        // One shared prompt fallback for both password and keyboard-
+        // interactive modes (auth = null admits both — push it only once).
+        if (!options.auth || options.auth === 'keyboardInteractive' || options.auth === 'password') {
             methods.push({ type: 'prompt-password' })
         }
-        if (!options.auth || options.auth === 'password') {
-            methods.push({ type: 'prompt-password' })
-        }
-        methods.push({ type: 'hostbased' })
         return methods
     }
 
@@ -735,6 +728,9 @@ class SSHConnection {
 
         let remainingMethods = [...allAuthMethods]
         let methodsLeft = noneResult.remainingMethods
+        // Whether the keyboard-interactive exchange actually ran: the plain
+        // password fallback is only for servers that never offered k-i.
+        let kiAttempted = false
 
         function maybeSetRemainingMethods (r: russh.AuthFailure) {
             if (r.remainingMethods.length) {
@@ -743,10 +739,15 @@ class SSHConnection {
         }
 
         while (true) {
+            // A user cancellation is terminal — never fall through to the
+            // remaining methods (e.g. the prompt fallback) after an ESC.
+            if (this.userCancelledAuthentication || this.closed) {
+                return null
+            }
             const m = methodsLeft
             const method = remainingMethods.find(x => m.length === 0 || m.includes(sshAuthTypeForMethod(x)))
 
-            if (!method || this.closed) {
+            if (!method) {
                 return null
             }
 
@@ -758,9 +759,18 @@ class SSHConnection {
                 if (result instanceof russh.AuthenticatedSSHClient) {
                     return result
                 }
+                // Direct password auth with the stored credential — a failure
+                // here is the server definitively rejecting it.
+                this.storedPasswordRejected = true
                 maybeSetRemainingMethods(result)
             }
             if (method.type === 'prompt-password') {
+                if (this.options.auth === 'keyboardInteractive' && kiAttempted) {
+                    // Explicit KI mode: the server offered k-i and the user
+                    // already went through it — don't bounce them into the
+                    // plain-password fallback afterwards.
+                    continue
+                }
                 const prefilledPassword = await this.request('load-password', { username: this.authUsername })
                 const promptResult = await this.request('prompt', {
                     msgid: 'Password for {user}@{host}',
@@ -771,9 +781,10 @@ class SSHConnection {
                     password: true,
                     // In keyboard-interactive mode this prompt is only a
                     // fallback when the server doesn't offer k-i; don't offer
-                    // to remember the password there.
+                    // to remember the password there, and never pre-fill it —
+                    // KI always starts from a blank input.
                     showRememberCheckbox: this.options.auth !== 'keyboardInteractive',
-                    value: prefilledPassword,
+                    value: this.options.auth === 'keyboardInteractive' ? null : prefilledPassword,
                 } as PromptPayload)
                 if (promptResult) {
                     if (promptResult.remember) {
@@ -785,6 +796,9 @@ class SSHConnection {
                     }
                     maybeSetRemainingMethods(result)
                 } else {
+                    // The modal was dismissed (ESC / backdrop) — that is a
+                    // cancellation, not a server rejection.
+                    this.userCancelledAuthentication = true
                     continue
                 }
             }
@@ -804,8 +818,10 @@ class SSHConnection {
                 }
             }
             if (method.type === 'keyboard-interactive') {
+                kiAttempted = true
                 let state: russh.AuthenticatedSSHClient|russh.KeyboardInteractiveAuthenticationState =
                     await (client as russh.SSHClient).startKeyboardInteractiveAuthentication(this.authUsername!)
+                let kiRounds = 0
 
                 while (true) {
                     if (state.state === 'failure') {
@@ -819,15 +835,16 @@ class SSHConnection {
                     // OpenSSH can send a k-i request without prompts
                     // just respond ok to it
                     if (prompts.length > 0) {
-                        // Pre-fill password prompts with the saved password.
-                        const prefill: Array<string|null> = prompts.map(() => null)
-                        if (method.savedPassword) {
-                            for (let i = 0; i < prompts.length; i++) {
-                                if (prompts[i].prompt.toLowerCase().includes('password') && !prompts[i].echo) {
-                                    prefill[i] = method.savedPassword
-                                }
-                            }
+                        // The user gets 3 in-place attempts; wrong answers make
+                        // the server re-prompt, ESC cancels the whole exchange.
+                        kiRounds++
+                        if (kiRounds > 3) {
+                            this.emitServiceMessage('Too many keyboard-interactive attempts')
+                            break
                         }
+                        // Keyboard-interactive never reuses cached credentials:
+                        // every answer is typed in fresh by the user.
+                        const prefill: Array<string|null> = prompts.map(() => null)
 
                         try {
                             responses = await this.request('keyboard-interactive', {
@@ -836,7 +853,10 @@ class SSHConnection {
                                 prompts: prompts.map(p => ({ prompt: p.prompt, echo: p.echo })),
                                 prefill,
                             })
-                        } catch {
+                        } catch (e) {
+                            if (e instanceof Error && e.message === 'Keyboard-interactive auth rejected') {
+                                this.userCancelledAuthentication = true
+                            }
                             break // this loop
                         }
                     }
@@ -1136,7 +1156,6 @@ class SSHConnection {
 
         const chId = uuidv4().toString()
         const entry: ChannelEntry = {
-            id: chId,
             channel: ch,
             queue: new ChannelDataQueue(data => this.emit(`ch:${chId}:data`, data)),
         }
@@ -1197,7 +1216,7 @@ class SSHConnection {
             throw new Error('SFTP session closed right after opening')
         }
         const id = uuidv4().toString()
-        const entry: SFTPEntry = { id, sftp: this.mainSftp, handles: new Map() }
+        const entry: SFTPEntry = { sftp: this.mainSftp, handles: new Map() }
         this.sftps.set(id, entry)
         return id
     }

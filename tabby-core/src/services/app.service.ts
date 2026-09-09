@@ -17,7 +17,7 @@ import { ConfigService } from './config.service'
 import { TabRecoveryService } from './tabRecovery.service'
 import { TabsService, NewTabParameters } from './tabs.service'
 import { SelectorService } from './selector.service'
-import { TABBY_DRAG_MIME, TABBY_WORKSPACE_DRAG_MIME, NativeDragPayload, WorkspaceDragPayload, isWorkspaceDraggedOver, setupWorkspaceDraggedOverTracking } from '../components/workspace.dragDrop'
+import { TABBY_DRAG_MIME, TABBY_WORKSPACE_DRAG_MIME, NativeDragPayload, WorkspaceDragPayload, isWorkspaceDraggedOver, setupWorkspaceDraggedOverTracking, dragLeftDocument } from '../components/workspace.dragDrop'
 
 class CompletionObserver {
     get done$ (): Observable<void> { return this.done }
@@ -677,12 +677,7 @@ export class AppService {
         document.body.classList.add('ws-workspace-drag')
         // The sessions must survive our copy being torn down mid-gesture (a
         // cross-window restore re-attaches them by PTY id from the token).
-        for (const s of tab.getAllTabs()) {
-            const session = (s as any).session
-            if (session && typeof session.keepPTYAlive === 'boolean') {
-                session.keepPTYAlive = true
-            }
-        }
+        tab.keepAllSessionsAlive(true)
         this.hostApp.nativeDragStart(dragId, null)
         this.registerOwnDrag(dragId)
         if (this.workspaceNativeDrag?.committedSub) {
@@ -795,12 +790,7 @@ export class AppService {
         }
         this.workspaceNativeDrag = null
         this.hostApp.nativeDragEnd(drag.dragId)
-        for (const s of drag.tab.getAllTabs()) {
-            const session = (s as any).session
-            if (session && typeof session.keepPTYAlive === 'boolean') {
-                session.keepPTYAlive = false
-            }
-        }
+        drag.tab.keepAllSessionsAlive(false)
     }
 
     async moveWorkspaceToWindow (tab: WorkspaceComponent, screenPoint?: { x: number, y: number }): Promise<void> {
@@ -809,12 +799,7 @@ export class AppService {
             return
         }
         const transferToken = JSON.parse(JSON.stringify(token))
-        for (const s of tab.getAllTabs()) {
-            const session = (s as any).session
-            if (session?.keepPTYAlive !== undefined) {
-                session.keepPTYAlive = true
-            }
-        }
+        tab.keepAllSessionsAlive(true)
         void tab.destroy()
         this.maybeCloseWindowWhenEmpty()
         this.hostApp.newWindow({
@@ -896,7 +881,7 @@ export class AppService {
             // An interior element transition fires dragleave too, but the next
             // dragover immediately redraws the marker; leaving the document
             // keeps it hidden.
-            if (!event.relatedTarget || (event.relatedTarget as Node).ownerDocument !== document) {
+            if (dragLeftDocument(event)) {
                 this.hideWsInsertionMarker()
             }
         })
@@ -919,15 +904,7 @@ export class AppService {
             // WITH the tab still in place; moveTabToIndex removes first, so a
             // forward move must shed one slot or the tab lands one position
             // PAST the highlighted insertion caret.
-            this.workspaceNativeDrag = null
-            drag.committedSub.unsubscribe()
-            this.hostApp.nativeDragEnd(drag.dragId)
-            for (const s of drag.tab.getAllTabs()) {
-                const session = (s as any).session
-                if (session && typeof session.keepPTYAlive === 'boolean') {
-                    session.keepPTYAlive = false
-                }
-            }
+            this.settleWorkspaceDrag(drag)
             const currentIndex = this.tabs.indexOf(drag.tab)
             const targetIndex = index > currentIndex ? index - 1 : index
             this.moveTabToIndex(drag.tab, targetIndex)

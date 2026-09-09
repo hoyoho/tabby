@@ -13,7 +13,7 @@ import { PlatformService } from '../api/platform'
 import { ActionSurface } from '../api/action'
 import { actionsToMenuItems } from '../api/adapters'
 import { ActionRegistry } from '../services/action.service'
-import { TABBY_WORKSPACE_DRAG_MIME, createDragImageClone, removeDragImageClones } from './workspace.dragDrop'
+import { TABBY_WORKSPACE_DRAG_MIME, createDragImageClone, removeDragImageClones, generateDragId } from './workspace.dragDrop'
 
 /** @hidden */
 @Component({
@@ -223,7 +223,7 @@ export class TabHeaderComponent extends BaseComponent {
         if (!(tab instanceof WorkspaceComponent)) { return }
         const dt = event.dataTransfer
         if (!dt) { return }
-        const dragId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+        const dragId = generateDragId()
         dt.setData(TABBY_WORKSPACE_DRAG_MIME, JSON.stringify({ dragId }))
         dt.effectAllowed = 'move'
         // The drag image must be a DOM-attached element — a detached canvas is

@@ -1,7 +1,7 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector, Input } from '@angular/core'
-import { Platform, GetRecoveryTokenOptions } from 'tabby-core'
+import { Component, Input } from '@angular/core'
+import { GetRecoveryTokenOptions } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
 import { TelnetProfile, TelnetSession } from '../session'
 
@@ -9,23 +9,15 @@ import { TelnetProfile, TelnetSession } from '../session'
 /** @hidden */
 @Component({
     selector: 'telnet-tab',
-    template: `${BaseTerminalTabComponent.template} ${require('./telnetTab.component.pug')}`,
+    template: BaseTerminalTabComponent.template,
     styleUrls: ['./telnetTab.component.scss', ...BaseTerminalTabComponent.styles],
     animations: BaseTerminalTabComponent.animations,
 })
 export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetProfile> {
-    Platform = Platform
     session: TelnetSession|null = null
 
     /** Set by the recovery provider when re-attaching a live telnet connection. */
     @Input() restoreSocketId?: string|null
-
-    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-    constructor (
-        injector: Injector,
-    ) {
-        super(injector)
-    }
 
     ngOnInit (): void {
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, hotkey => {

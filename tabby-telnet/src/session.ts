@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unsafe-enum-comparison */
-import { IpcRendererEvent, ipcRenderer } from 'electron'
+import { ipcRenderer } from 'electron'
 import colors from 'ansi-colors'
 import stripAnsi from 'strip-ansi'
 import { Injector } from '@angular/core'
-import { LogService, TranslateService } from 'tabby-core'
+import { IPCConnectionProxy, LogService, TranslateService } from 'tabby-core'
 import { BaseSession, ConnectableTerminalProfile, InputProcessingOptions, InputProcessor, LoginScriptsOptions, SessionMiddleware, StreamProcessingOptions, TerminalStreamProcessor } from 'tabby-terminal'
 import { Subject, Observable } from 'rxjs'
 
@@ -67,113 +67,18 @@ type TelnetSocketEvent = 'open'|'data'|'close'|'error'
  * The connection survives window closes/drag transfers as long as it is not
  * explicitly killed.
  */
-export class TelnetSocketProxy {
-    private id: string|null = null
-    private handlers = new Map<TelnetSocketEvent, Set<(...args: any[]) => void>>()
-    private wiredChannels = new Set<string>()
-
-    getID (): string|null {
-        return this.id
-    }
-
-    on (event: TelnetSocketEvent, handler: (...args: any[]) => void): void {
-        if (!this.handlers.has(event)) {
-            this.handlers.set(event, new Set())
-        }
-        this.handlers.get(event)!.add(handler)
-    }
-
-    /**
-     * Claims an existing main-process connection (cross-window transfer).
-     * Returns false if the connection is gone — caller falls back to a fresh
-     * connect.
-     */
-    async tryRestore (id: string): Promise<boolean> {
-        const ok: boolean = ipcRenderer.sendSync('telnet:attach', id)
-        if (!ok) {
-            return false
-        }
-        this.id = id
-        this.wire()
-        return true
-    }
+export class TelnetSocketProxy extends IPCConnectionProxy<TelnetSocketEvent> {
+    protected readonly protocol = 'telnet'
 
     async connect (port: number, host: string): Promise<void> {
-        const id: string = ipcRenderer.sendSync('telnet:spawn', host, port)
-        this.id = id
-        this.wire()
-        await new Promise<void>((resolve, reject) => {
-            const openHandler = () => {
-                cleanup()
-                resolve()
-            }
-            const errorHandler = (_e: IpcRendererEvent, message: string) => {
-                cleanup()
-                reject(new Error(message))
-            }
-            ipcRenderer.on(`telnet:${id}:open`, openHandler)
-            ipcRenderer.on(`telnet:${id}:error`, errorHandler)
-            const cleanup = () => {
-                ipcRenderer.off(`telnet:${id}:open`, openHandler)
-                ipcRenderer.off(`telnet:${id}:error`, errorHandler)
-            }
-        })
+        await this.spawnAndAwaitOpen(host, port)
     }
 
-    write (data: Buffer): void {
-        if (this.id) {
-            ipcRenderer.send('telnet:write', this.id, data)
-        }
-    }
-
-    /** Releases the connection without killing it (cross-window transfer). */
-    detach (): void {
-        if (this.id) {
-            ipcRenderer.send('telnet:detach', this.id)
-        }
-        this.unsubscribeAll()
-        this.id = null
-    }
-
-    destroy (): void {
-        if (this.id) {
-            ipcRenderer.send('telnet:kill', this.id)
-        }
-        this.unsubscribeAll()
-        this.id = null
-    }
-
-    unsubscribeAll (): void {
-        for (const channel of this.wiredChannels) {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            ipcRenderer.removeAllListeners(channel as any)
-        }
-        this.wiredChannels.clear()
-    }
-
-    private wire (): void {
-        if (!this.id) {
-            return
-        }
-        for (const [event, handlers] of this.handlers) {
-            const channel = `telnet:${this.id}:${event}`
-            if (this.wiredChannels.has(channel)) {
-                continue
-            }
-            this.wiredChannels.add(channel)
-            const listener = (_e: IpcRendererEvent, ...args: any[]) => {
-                for (const handler of [...handlers]) {
-                    handler(...args)
-                }
-                // Flow control: acknowledge received data so the main-process
-                // TelnetDataQueue keeps draining its in-flight window.
-                if (event === 'data' && Buffer.isBuffer(args[0])) {
-                    ipcRenderer.send('telnet:ack', this.id, args[0].length)
-                }
-            }
-            // Keep a stable reference so removeAllListeners below only ever
-            // touches channels this proxy owns.
-            ipcRenderer.on(channel, listener)
+    protected afterEvent (event: TelnetSocketEvent, args: any[]): void {
+        // Flow control: acknowledge received data so the main-process
+        // TelnetDataQueue keeps draining its in-flight window.
+        if (event === 'data' && Buffer.isBuffer(args[0])) {
+            ipcRenderer.send('telnet:ack', this.id, args[0].length)
         }
     }
 }
@@ -382,7 +287,6 @@ export class TelnetSession extends BaseSession {
         return data
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
     resize (w: number, h: number): void {
         if (w && h) {
             this.lastWidth = w
@@ -425,14 +329,7 @@ export class TelnetSession extends BaseSession {
             // Detach without killing the live main-process connection so the
             // target window of a cross-window drag can re-attach it by id.
             this.socket?.detach()
-            this.open = false
-            this.middleware.close()
-            this.closed.next()
-            this.destroyed.next()
-            this.closed.complete()
-            this.destroyed.complete()
-            this.output.complete()
-            this.binaryOutput.complete()
+            this.releaseRendererState()
             this.socket = null
             return
         }

@@ -32,8 +32,6 @@ interface SFTPEntryMetadata {
 }
 
 export class SFTPFileHandle {
-    position = 0
-
     constructor (
         private connId: string,
         private sftpId: string,

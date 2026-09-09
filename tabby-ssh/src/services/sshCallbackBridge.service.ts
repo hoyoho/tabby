@@ -158,7 +158,21 @@ export class SSHCallbackBridgeService {
             }
         })
         session.emitKeyboardInteractivePrompt(prompt)
-        return await prompt.promise
+        // If the tab goes away while the user is still on the prompt, settle
+        // the promise so the awaiting handler (and the main-process auth loop
+        // behind it) is not left dangling. Skipped when keepPTYAlive is set —
+        // that is a cross-window TRANSFER: the pending callback must survive so
+        // the target window can re-prompt and finish the auth there.
+        const destroySub = session.willDestroy$.subscribe(() => {
+            if (!session.keepPTYAlive) {
+                prompt.reject()
+            }
+        })
+        try {
+            return await prompt.promise
+        } finally {
+            destroySub.unsubscribe()
+        }
     }
 
     private async handleHostKey (payload: {

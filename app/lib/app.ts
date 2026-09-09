@@ -1,4 +1,4 @@
-import { app, ipcMain, Menu, Tray, shell, screen, globalShortcut, MenuItemConstructorOptions, WebContents } from 'electron'
+import { app, ipcMain, Menu, Tray, shell, screen, globalShortcut, MenuItemConstructorOptions } from 'electron'
 import promiseIpc from 'electron-promise-ipc'
 import * as remote from '@electron/remote/main'
 import { spawnSync } from 'child_process'
@@ -216,23 +216,6 @@ export class Application {
         for (const window of this.windows) {
             window.send(event, ...args)
         }
-    }
-
-    broadcastExcept (event: string, except: WebContents, ...args: any[]): void {
-        for (const window of this.windows) {
-            if (window.webContents.id !== except.id) {
-                window.send(event, ...args)
-            }
-        }
-    }
-
-    async send (event: string, ...args: any[]): Promise<void> {
-        if (!this.hasWindows()) {
-            // Do NOT auto-create a window here: a stray IPC after the last
-            // window closed must not silently spawn a fresh "instance".
-            return
-        }
-        this.windows.find(w => !w.isDestroyed())?.send(event, ...args)
     }
 
     enableTray (): void {

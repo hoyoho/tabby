@@ -190,22 +190,6 @@ export function cleanNode (node: SplitContainer): TabView|null {
 }
 
 /**
- * Given a drop target (a [[Pane]] or a session), return the session right next
- * to which a new pane should be inserted — never the dragged session itself.
- */
-export function resolveRelativeTab (ref: TabView|SessionTab|undefined, dragged: SessionTab): SessionTab|null {
-    if (ref instanceof SplitContainer) {
-        return ref.getAllTabs()[0] ?? null
-    }
-    if (ref instanceof Pane) {
-        const first = ref.tabs[0]
-        return first === dragged ? ref.tabs[1] ?? null : first
-    }
-    const t = ref!
-    return t === dragged ? null : t
-}
-
-/**
  * A leaf pane. Unlike upstream (where each leaf is exactly one tab), a pane may
  * host several sub-tabs (sessions) like tabs in a browser window. Sessions only
  * ever live inside a workspace's panes — never at the top level.
@@ -228,10 +212,6 @@ export class Pane {
      */
     get tab (): SessionTab|null {
         return this.tabs.length > 0 ? this.activeTab ?? this.tabs[0] : null
-    }
-
-    getAllTabs (): SessionTab[] {
-        return this.tabs
     }
 }
 
@@ -365,17 +345,6 @@ export class SplitContainer {
             }
         }
         this.ratios.fill(1 / this.ratios.length)
-    }
-
-    /**
-     * Gets the left/top side offset for the given element index (between 0 and 1)
-     */
-    getOffsetRatio (index: number): number {
-        let s = 0
-        for (let i = 0; i < index; i++) {
-            s += this.ratios[i]
-        }
-        return s
     }
 
     async serialize (tabsRecovery: TabRecoveryService, options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {

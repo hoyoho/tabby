@@ -192,14 +192,7 @@ export class SSHShellSession extends BaseSession {
         if (this.keepPTYAlive) {
             // The tab is transferring to another window: release renderer
             // state only, the main-process connection/channels stay alive.
-            this.open = false
-            this.middleware.close()
-            this.closed.next()
-            this.destroyed.next()
-            this.closed.complete()
-            this.destroyed.complete()
-            this.output.complete()
-            this.binaryOutput.complete()
+            this.releaseRendererState()
             this.shell?.unwire()
             this.shell = undefined
             this.ssh?.releaseForTransfer()

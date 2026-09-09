@@ -30,6 +30,17 @@ export interface PaneHit {
     rect: { left: number, top: number, width: number, height: number }
 }
 
+/** True when a dragleave really left the document — inter-element
+  * transitions fire dragleave too, and must not end the gesture. */
+export function dragLeftDocument (event: DragEvent): boolean {
+    return !event.relatedTarget || (event.relatedTarget as Node).ownerDocument !== document
+}
+
+/** Unique id tagging a native drag gesture (renderer-local correlation only). */
+export function generateDragId (): string {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+}
+
 /**
  * The narrow slice of [[WorkspaceComponent]] a drag gesture needs. Keeps the
  * gesture logic free of DOM/viewRefs so it can live outside the component.
@@ -45,7 +56,6 @@ export interface PaneDragHost {
     /** The canonical display title (custom name → profile name → dynamic). */
     sessionDisplayTitle: (tab: SessionTab) => string
     cleanRoot: () => void
-    emitTabAdopted: (tab: SessionTab) => void
     /**
      * Moves a session into/next to a pane, draining its source pane and
      * re-laying out. Single implementation shared by this gesture and the
@@ -149,7 +159,7 @@ export function setupWorkspaceDraggedOverTracking (): void {
     // Only leaving the DOCUMENT clears the flag — inter-element transitions
     // fire dragleave too, and the next dragover immediately re-sets it.
     window.addEventListener('dragleave', event => {
-        if (!event.relatedTarget || (event.relatedTarget as Node).ownerDocument !== document) {
+        if (dragLeftDocument(event)) {
             setDraggedOver(false, true)
         }
     }, true)
@@ -259,14 +269,6 @@ interface NativeDragState {
  */
 export class PaneDragController {
     private state: NativeDragState|null = null
-    // TEMP diagnostics: distinguish which workspace's controller logs.
-    private static NEXT_ID = 0
-    readonly id = ++PaneDragController.NEXT_ID
-
-    private log (...args: any[]): void {
-        // eslint-disable-next-line no-console
-        console.log(`[pane-drag #${this.id}]`, ...args)
-    }
 
     /**
      * The drop zone decided by the LAST dragover — the same decision that drew
@@ -396,7 +398,6 @@ export class PaneDragController {
             return
         }
         this.host.dropTabInto(tab, { pane: target.pane, side: target.side })
-        this.host.emitTabAdopted(tab)
     }
 
     /**
@@ -405,14 +406,13 @@ export class PaneDragController {
      * register the drag id so a drop in another window resolves back here.
      */
     beginNativeDrag (event: DragEvent, tab: SessionTab): void {
-        this.log('begin: tab=' + (tab.customTitle || tab.title))
         if (event.button !== 0) {
             return
         }
         if (this.state) {
             this.cancelState()
         }
-        const dragId = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+        const dragId = generateDragId()
         const profile = {
             ...(tab.getProfile() ?? {}),
             options: {
@@ -537,35 +537,24 @@ export class PaneDragController {
      * drags to the active workspace's [[PaneDragHost.acceptProfileIntoWorkspace]]).
      */
     resolveOwnDrop (event: DragEvent): void {
-        this.log('resolveOwnDrop')
         event.preventDefault()
         // A drop of any kind finalizes the preview — clear it first so NO drop
         // path can leave a stale highlight.
         const zone = this.lastZone
-        this.lastZone = null
-        this.host.setDragHint(null)
-        this.gutterPassthrough(false)
+        this.resetDropPreview()
         if (!this.state) {
             return
         }
-        this.log('resolveOwnDrop: zone=' + JSON.stringify(zone?.type === 'workspace'
-            ? { type: 'workspace' }
-            : zone?.type === 'pane'
-                ? { type: 'pane', side: zone.side, isSelfPane: zone.pane === this.host.getPaneOf(this.state.tab) }
-                : null))
         // Land on the zone that was highlighted (the last dragover decision) —
         // nothing is recomputed here, so the drop is always exactly what the
         // user saw.
         if (zone?.type === 'workspace' && zone.workspace !== (this.state.tab.parent as any)) {
-            this.log('resolveOwnDrop: -> moveSessionToWorkspace')
             void this.host.moveSessionToWorkspace(this.state.tab, zone.workspace)
         } else if (zone?.type === 'pane' && zone.pane) {
-            this.log('resolveOwnDrop: -> commitDrag side=' + zone.side)
             this.commitDrag(this.state.tab, { pane: zone.pane, side: zone.side })
         } else {
             // No live highlight at the drop point — treat as cancelled,
             // keep the tab where it was.
-            this.log('resolveOwnDrop: -> cancel (no zone)')
             this.cancelState()
             return
         }
@@ -583,9 +572,7 @@ export class PaneDragController {
         // clear it unconditionally (dropped on desktop, another app, or
         // settled locally). Leaving it stale would show a phantom drop zone.
         removeDragImageClones()
-        this.lastZone = null
-        this.host.setDragHint(null)
-        this.gutterPassthrough(false)
+        this.resetDropPreview()
         if (!this.state) { return }
         const state = this.state
         const commit = event.dataTransfer?.dropEffect === 'move'
@@ -607,7 +594,6 @@ export class PaneDragController {
 
     /** Dragged away and the target restored it — drop the local copy. */
     private finishCommitted (): void {
-        this.log('finishCommitted (target acked)')
         const state = this.state
         if (!state) { return }
         state.committed = true
@@ -628,12 +614,10 @@ export class PaneDragController {
 
     /** Safe teardown that keeps the session alive in this window. */
     private cancelState (): void {
-        this.log('cancelState')
         const state = this.state
         if (!state) { return }
         this.state = null
-        this.host.setDragHint(null)
-        this.gutterPassthrough(false)
+        this.resetDropPreview()
         state.committedSub.unsubscribe()
         if (state.fallbackTimer) {
             clearTimeout(state.fallbackTimer)
@@ -645,7 +629,6 @@ export class PaneDragController {
 
     /** Local (same-window) drop: commit and settle without destroying. */
     private completeLocally (): void {
-        this.log('completeLocally (settled locally)')
         const state = this.state
         if (!state) { return }
         state.committed = true
@@ -658,9 +641,7 @@ export class PaneDragController {
     /** @hidden teardown (e.g. component destroyed mid-gesture) */
     abort (): void {
         this.cancelState()
-        this.lastZone = null
-        this.host.setDragHint(null)
-        this.gutterPassthrough(false)
+        this.resetDropPreview()
     }
 
     /**
@@ -669,6 +650,11 @@ export class PaneDragController {
      * source window and stays live; a later dragover re-arms the hint.
      */
     clearHint (): void {
+        this.resetDropPreview()
+    }
+
+    /** Clears the drop-zone preview: highlight geometry + gutter interception. */
+    private resetDropPreview (): void {
         this.lastZone = null
         this.host.setDragHint(null)
         this.gutterPassthrough(false)

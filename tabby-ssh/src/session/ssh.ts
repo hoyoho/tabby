@@ -187,17 +187,8 @@ export class SSHSession {
         this.forwardedPorts = this.profile.options.forwardedPorts.map(fw => Object.assign(new ForwardedPort(), fw))
     }
 
-    /** Spawns a fresh connection when this facade has none yet. */
-    hasConnection (): boolean {
-        return !!this.connId && !this.destroyHandled
-    }
-
     getID (): string|null {
         return this.connId
-    }
-
-    emitServiceMessage (msg: string): void {
-        this.serviceMessage.next(msg)
     }
 
     /** Bridge entry: surface a main-process keyboard-interactive round. */

@@ -14,5 +14,6 @@ keyboard-interactive-auth-panel.bg-dark(
     [prompt]='activeKIPrompt',
     [profile]='profile',
     (click)='$event.stopPropagation()',
-    (done)='activeKIPrompt = null; frontend?.focus()'
+    (done)='activeKIPrompt = null; frontend?.focus()',
+    (cancelled)='activeKIPrompt = null; frontend?.focus()'
 )
