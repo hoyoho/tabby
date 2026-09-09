@@ -1,48 +1,26 @@
 // profile-icon — shared icon renderer.
 //
-// ── Ink alignment map (repo-wide) ─────────────────────────────────────
-// Every optical correction below compensates one root cause: CSS aligns
-// BOXES, never INK — and the assets disagree about where ink sits in its
-// box (FA font glyphs sit low in their em box; CJK label ink rides high
-// above the baseline; raster/svg assets vary per file).
-//
-// 1. Anywhere rendering <profile-icon> → set the tokens below per context:
-//      tabHeader.component.scss     --pi-img-lift: -1px   (workspace.png stand)
-//                                   --pi-svg-lift: -0.5px
-//      profileTree.component.scss   --pi-lift: -0.5px, --pi-glyph-lift: -1px
-//      selectorModal.component.scss --pi-lift: -1px,   --pi-glyph-lift: -0.5px
-// 2. Buttons with a raw font icon (`i.fas` + label, no profile-icon) →
-//      theme.new.scss  `.btn i + * { top: 1.5px }` — the LABEL is nudged
-//      down instead (one rule covers every button; commit baa02733).
-//
-// Recalibration when fonts/theme change: attach to the app inspector,
-// measure both ink bands with canvas TextMetrics (actualBoundingBox-
-// Ascent/Descent against the baseline position in each line box) and
-// adjust the context's token by the ink-center delta.
-//
-// Vertical alignment architecture:
-// - The host is a flex centerer: children end up geometrically centered in
-//   whatever box the context sizes (tab header 1rem, tree 15px, selector
-//   14px).
-// - Ink cannot be addressed by CSS, so contexts pass optical corrections in
-//   through custom properties (all default 0 = pure geometric centering):
-//     --pi-lift        whole icon (compensates the row's CJK ascent bias)
-//     --pi-glyph-lift  font glyphs only (FA ink sits low in its em box)
-//     --pi-img-lift    img icons only (per-asset ink layout, e.g. the
-//                      workspace monitor's bottom stand)
-//     --pi-svg-lift    inline svg icons only
+// Alignment strategy:
+// The host is a flex centerer with line-height:1. Boxes are geometrically
+// centered; the FA glyph's ink (which sits low in its em box) is lifted by
+// the repo-wide --icon-ink-lift token so it rides on the label's optical
+// mid-axis. em-relative → scales with font-size on every platform.
 
 :host {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    max-width: 1.25rem;
-    transform: translateY(var(--pi-lift, 0px));
+    max-width: 1.25em;
+    line-height: 1;
+    transform: translateY(calc(-1 * var(--icon-ink-lift, 0.08em)));
 }
 
-// HTML-string icons (inline <img> / <svg>): definite height so the child's
-// percentage sizing resolves, and flex centering so baseline layout can't
-// sink the glyph (an inline svg on a 1.5 line box sat 1.8px low).
+// Font glyphs: i.icon IS the glyph element
+:host ::ng-deep i.icon {
+    line-height: 1;
+}
+
+// HTML-string icons (inline <img> / <svg>)
 :host ::ng-deep div.icon {
     display: flex;
     align-items: center;
@@ -50,22 +28,13 @@
     height: 100%;
 }
 
-// Font glyphs: i.icon IS the glyph element — never re-lay it out, only lift.
-:host ::ng-deep i.icon {
-    transform: translateY(var(--pi-glyph-lift, 0px));
-}
-
 :host ::ng-deep img {
-    // block: an inline img sits on the text baseline and drags a descender
-    // gap below it, shoving the glyph off the row's center axis.
     display: block;
     max-width: 100%;
     max-height: 100%;
-    transform: translateY(var(--pi-img-lift, 0px));
 }
 
 :host ::ng-deep svg {
     width: 100%;
     height: 100%;
-    transform: translateY(var(--pi-svg-lift, 0px));
 }

@@ -68,10 +68,9 @@ import { SessionTab } from '../api/session'
 })
 export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, OnDestroy, PaneDragHost, PaneNavigationHost {
     /**
-     * Default workspace icon rendered in the tab bar. Png is inlined as a data
-     * URL by webpack and injected as an <img>, which profile-icon renders.
+     * Default workspace icon rendered in the tab bar.
      */
-    static readonly workspaceIcon = '<img src="' + require('../icons/workspace.png') + '">'
+    static readonly workspaceIcon = 'fas fa-layer-group'
 
     /** @hidden */
     private _workspaceIcon: string|null = null

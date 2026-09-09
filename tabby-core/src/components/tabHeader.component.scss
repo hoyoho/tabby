@@ -60,33 +60,14 @@ $tabs-height: 38px;
         text-align: center;
         transition: 0.25s all;
         align-self: center;
-        margin-top: 1px;
     }
 
     profile-icon {
-        // Center on the row axis AND give it a definite height (the img
-        // icon's percentage sizing only resolves against a definite box).
-        // 1rem: the PNG's ink (monitor + stand, ~71% of canvas) then matches
-        // the title's ink band — at 1.25rem the stand poked visibly below
-        // the text, at 1em it read as undersized.
+        // Share the label's font-size so the icon row and text row are
+        // structurally identical; the glyph ink skew is handled centrally by
+        // --icon-ink-lift inside the component.
         align-self: center;
-        height: 1rem;
-        font-size: 13px;
         margin: 0 4px;
-
-        // The PNG is bottom-tailed (thin monitor stand below the screen
-        // block) and reads as sunk against the title ink even when
-        // geometrically centered (canvas-measured optimum -0.5px, optical
-        // -1px, same treatment as the profile-tree glyphs).
-        ::ng-deep img {
-            transform: translateY(-1px);
-        }
-
-        // Inline svg icons (e.g. the settings gear): flex centering still
-        // leaves the glyph 0.5px low vs the title ink — user-visible.
-        ::ng-deep svg {
-            transform: translateY(-0.5px);
-        }
     }
 
     .pin-indicator {
@@ -94,13 +75,12 @@ $tabs-height: 38px;
         align-items: center;
         flex: none;
         font-size: 12px;
-        margin: 1px 6px 0 0;
+        margin: 0 6px 0 0;
         opacity: 0.8;
     }
 
     .name {
         flex: auto;
-        margin-top: 1px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;

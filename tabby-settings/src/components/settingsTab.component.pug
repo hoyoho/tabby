@@ -1,7 +1,7 @@
 .content
     ul.nav-pills(ngbNav, #nav='ngbNav', [activeId]='activeTab', orientation='vertical')
         li(ngbNavItem='application')
-            a(ngbNavLink, draggable='false')
+            a.d-flex.align-items-center(ngbNavLink, draggable='false')
                 i.fas.fa-fw.fa-window-maximize.me-2
                 span(translate) Application
             ng-template(ngbNavContent)

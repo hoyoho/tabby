@@ -1,6 +1,16 @@
 $font-family-sans-serif: "Source Sans Pro";
 $font-size-base: 0.875rem;
 
+// ── Icon/ink optical alignment (repo-wide) ────────────────────────────
+// CSS aligns boxes, never ink. FA glyphs sit low in their em box while text
+// ink (Latin/CJK) rides high above the baseline, so a flex-centered glyph
+// reads "below" a neighbouring label. One token drives every subsequent
+// correction; it is em-relative, so it scales with font-size on every
+// platform. Override per-context by setting it on the nearest container.
+:root {
+    --icon-ink-lift: 0.08em;
+}
+
 app-root {
     background: transparent;
 
@@ -305,20 +315,43 @@ hotkey-input-modal {
 }
 
 .btn {
-    // optical fix: icon/label ink alignment looks best with the label nudged
-    // down (commit baa02733). Covers every button with a raw font icon;
-    // icons rendered via <profile-icon> are corrected through the --pi-*
-    // tokens instead — see profileIcon.component.scss for the full
-    // ink-alignment map.
+    // Every icon+label button — including bootstrap btn-check groups rendered
+    // as <label.btn> (global.scss only covers a/button) — shares one flex
+    // alignment model. Glyph-vs-text ink skew is then corrected uniformly via
+    // --icon-ink-lift.
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+
     i + * {
         margin-left: 5px;
-        position: relative;
-        top: 1.5px;
     }
 
     &.btn-lg i + * {
         margin-left: 10px;
     }
+
+    & > i.fas,
+    & > i.far,
+    & > i.fab {
+        transform: translateY(calc(-1 * var(--icon-ink-lift, 0.08em)));
+    }
+}
+
+// Any flex-centered FA row (buttons, menu items, nav links, cards):
+// uniformly lift the glyph ink so it sits on the label's optical mid-axis.
+.dropdown-item > i.fas,
+.dropdown-item > i.far,
+.dropdown-item > i.fab,
+.list-group-item > i.fas,
+.list-group-item > i.far,
+.list-group-item > i.fab,
+.nav-link > i.fas,
+.nav-link > i.far,
+.nav-link > i.fab,
+.collapse-item > i.fa {
+    transform: translateY(calc(-1 * var(--icon-ink-lift, 0.08em)));
 }
 
 .input-group-addon + .form-control {

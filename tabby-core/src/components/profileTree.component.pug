@@ -24,8 +24,7 @@
                             (contextmenu)='profileContextMenu(profile, $event)',
                             href='#'
                         )
-                            .fw-20
-                                profile-icon.ms-1([icon]='profile.icon', [color]='profile.color')
+                            profile-icon([icon]='profile.icon', [color]='profile.color')
                             span.me-2.me-auto.no-wrap {{ profile.name }}
                             .actions
                                 .action((click)='launchProfile(profile)')
@@ -45,12 +44,10 @@
                         (contextmenu)='groupContextMenu(group, $event)',
                         href='#'
                     )
-                        .fw-20
-                            i.fa.fa-fw.fa-chevron-right.me-1.text-muted(*ngIf='group.collapsed')
-                            i.fa.fa-fw.fa-chevron-down.me-1.text-muted(*ngIf='!group.collapsed')
-                        .fw-20
-                            profile-icon.me-1([icon]='group.icon ?? "far fa-folder"', [color]='group.color')
-                        span.me-2.no-wrap {{ group.name || ("Ungrouped"|translate) }}
+                            i.fa.fa-fw.fa-chevron-right.text-muted(*ngIf='group.collapsed')
+                            i.fa.fa-fw.fa-chevron-down.text-muted(*ngIf='!group.collapsed')
+                            profile-icon([icon]='group.icon ?? "far fa-folder"', [color]='group.color')
+                            span.me-2.no-wrap {{ group.name || ("Ungrouped"|translate) }}
 
                     ng-container(*ngIf='!group.collapsed')
                         ng-container(*ngFor='let profile of group.profiles')
@@ -64,12 +61,11 @@
                                 (contextmenu)='profileContextMenu(profile, $event)',
                                 href='#'
                             )
-                                .fw-20
-                                    profile-icon.me-1([icon]='profile.icon', [color]='profile.color')
-                                span.me-2.me-auto.no-wrap {{ profile.name }}
-                                .actions
-                                    .action((click)='launchProfile(profile)')
-                                        i.fa.fa-fw.fa-play
+                                    profile-icon([icon]='profile.icon', [color]='profile.color')
+                                    span.me-2.me-auto.no-wrap {{ profile.name }}
+                                    .actions
+                                        .action((click)='launchProfile(profile)')
+                                            i.fa.fa-fw.fa-play
 
                         ng-container(*ngFor='let child of group.children')
                             ng-container(*ngTemplateOutlet='recursiveGroup; context: {$implicit: child, depth: depth + 1}')
