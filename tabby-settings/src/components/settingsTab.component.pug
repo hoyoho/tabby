@@ -102,7 +102,7 @@
                                 | {{proxyTestResult}}
                             .proxy-test-result.text-danger(*ngIf='proxyTestResult && !proxyTestOk')
                                 | {{proxyTestResult}}
-                        button.btn.btn-secondary([disabled]='testingProxy', (click)='testProxyConnection()')
+                        button.btn.btn-secondary.proxy-test-button([disabled]='testingProxy', (click)='testProxyConnection()')
                             i.fas.fa-plug.me-1
                             span(translate) Test
 
