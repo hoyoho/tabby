@@ -1070,7 +1070,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
         // The session leaves this workspace: drop its broadcast mark before it
         // lands anywhere else (another workspace may not be in focus-all mode).
-        tab.setBroadcastFocus(false)
+        if (tab instanceof SessionTab) { tab.setBroadcastFocus(false) }
         pane.tabs = pane.tabs.filter(x => x !== tab)
         tab.removeFromContainer()
         tab.parent = null
