@@ -10,6 +10,7 @@ import { SSHPortForwardingModalComponent } from './sshPortForwardingModal.compon
 import { SSHProfile } from '../api'
 import { SSHShellSession } from '../session/shell'
 import { SSHMultiplexerService } from '../services/sshMultiplexer.service'
+import { SSHCallbackBridgeService } from '../services/sshCallbackBridge.service'
 
 /** @hidden */
 @Component({
@@ -41,6 +42,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         private ngbModal: NgbModal,
         private profilesService: ProfilesService,
         private sshMultiplexer: SSHMultiplexerService,
+        private sshCallbackBridge: SSHCallbackBridgeService,
     ) {
         super(injector)
         this.sessionChanged$.subscribe(() => {
@@ -83,10 +85,17 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         let jumpSession: SSHSession|null = null
 
         if (restoreConnectionId) {
-            // Prefer a live transferred connection over the multiplexer.
-            session = new SSHSession(injector, profile)
-            if (!await session.attach(restoreConnectionId)) {
-                session = null
+            // Prefer a live transferred connection over the multiplexer. If
+            // this renderer already owns a facade for it (clone/recovery in the
+            // same window), reuse that instance: sharing one refCount is what
+            // keeps closing a single shell from killing the connection — and
+            // with it every other shell still attached to it.
+            session = this.sshCallbackBridge.findSession(restoreConnectionId)
+            if (!session) {
+                session = new SSHSession(injector, profile)
+                if (!await session.attach(restoreConnectionId)) {
+                    session = null
+                }
             }
         }
 

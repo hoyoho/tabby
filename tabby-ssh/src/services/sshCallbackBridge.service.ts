@@ -46,6 +46,18 @@ export class SSHCallbackBridgeService {
         this.sessions.delete(connId)
     }
 
+    /**
+     * Live facade for a main-process connection already owned by this
+     * renderer, if any. Callers reusing a connection (clone/recovery in the
+     * same window) must share this instance instead of building a second
+     * facade: each facade carries its own refCount, so an independent clone
+     * would tear the shared connection down on close and kill every shell.
+     */
+    findSession (connId: string): SSHSession|null {
+        const session = this.sessions.get(connId)
+        return session?.open ? session : null
+    }
+
     private async respond (connId: string, cbId: string, result: any): Promise<void> {
         ipcRenderer.send('ssh:cb-response', connId, cbId, { ok: true, result })
     }
