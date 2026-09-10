@@ -2763,3 +2763,48 @@ msgstr "Otevřít v novém okně"
 
 msgid "Open workspace in new window"
 msgstr "Otevřít pracovní prostor v novém okně"
+
+msgid "Leave empty if not required"
+msgstr "Pokud není požadováno, nechte prázdné"
+
+msgid "Manual proxy"
+msgstr "Ruční proxy"
+
+msgid "Network proxy"
+msgstr "Síťový proxy"
+
+msgid "Test network connectivity"
+msgstr "Otestovat síťové připojení"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Adresa a port proxy (podporuje předpony http://, https:// nebo socks5://)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Proxy pro vlastní provoz aplikace, např. správu pluginů a kontroly aktualizací"
+
+msgid "Proxy mode"
+msgstr "Režim proxy"
+
+msgid "Proxy server"
+msgstr "Proxy server"
+
+msgid "System proxy"
+msgstr "Systémový proxy"
+
+msgid "Direct connection"
+msgstr "Přímé připojení"
+
+msgid "Test"
+msgstr "Test"
+
+msgid "Network OK"
+msgstr "Síť je v pořádku"
+
+msgid "Network failed"
+msgstr "Selhání sítě"
+
+msgid "Proxy server address is required"
+msgstr "Adresa proxy serveru je povinná"
+
+msgid "Test connection"
+msgstr "Test připojení"

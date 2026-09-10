@@ -5,7 +5,7 @@ import * as os from 'os'
 import promiseIpc, { RendererProcessType } from 'electron-promise-ipc'
 import { execFile } from 'mz/child_process'
 import { Injectable, NgZone } from '@angular/core'
-import { PlatformService, ClipboardContent, Platform, MenuItemOptions, MessageBoxOptions, MessageBoxResult, DirectoryUpload, FileUpload, FileDownload, DirectoryDownload, FileUploadOptions, wrapPromise, TranslateService, FileTransfer, PlatformTheme } from 'tabby-core'
+import { PlatformService, ClipboardContent, Platform, MenuItemOptions, MessageBoxOptions, MessageBoxResult, DirectoryUpload, FileUpload, FileDownload, DirectoryDownload, FileUploadOptions, ProxyTestResult, wrapPromise, TranslateService, FileTransfer, PlatformTheme } from 'tabby-core'
 import { ElectronService } from '../services/electron.service'
 import { ElectronHostWindow } from './hostWindow.service'
 import { ShellIntegrationService } from './shellIntegration.service'
@@ -90,6 +90,10 @@ export class ElectronPlatformService extends PlatformService {
 
     async uninstallPlugin (name: string): Promise<void> {
         await (promiseIpc as RendererProcessType).send('plugin-manager:uninstall', name)
+    }
+
+    async testProxyConnection (): Promise<ProxyTestResult> {
+        return (promiseIpc as RendererProcessType).send('proxy:test') as Promise<ProxyTestResult>
     }
 
     async isProcessRunning (name: string): Promise<boolean> {

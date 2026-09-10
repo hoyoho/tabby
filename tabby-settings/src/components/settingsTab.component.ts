@@ -39,6 +39,9 @@ export class SettingsTabComponent extends TopLevelTab {
     isShellIntegrationInstalled = false
     showConfigDefaults = false
     allLanguages = LocaleService.allLanguages
+    testingProxy = false
+    proxyTestOk = false
+    proxyTestResult = ''
     @HostBinding('class.pad-window-controls') padWindowControls = false
     @ViewChild('nav', { static: true }) nav: NgbNav
 
@@ -51,7 +54,7 @@ export class SettingsTabComponent extends TopLevelTab {
         public locale: LocaleService,
         private app: AppService,
         @Inject(SettingsTabProvider) public settingsProviders: SettingsTabProvider[],
-        translate: TranslateService,
+        private translate: TranslateService,
         injector: Injector,
     ) {
         super(injector)
@@ -108,6 +111,31 @@ export class SettingsTabComponent extends TopLevelTab {
             await this.platform.uninstallShellIntegration()
         }
         this.isShellIntegrationInstalled = await this.platform.isShellIntegrationInstalled()
+    }
+
+    /**
+     * Probe the plugin registry from the main process through the same
+     * proxy agent stack plugin installs use — this validates the actual
+     * credentials instead of relying on Chromium's auth cache.
+     */
+    async testProxyConnection (): Promise<void> {
+        this.testingProxy = true
+        this.proxyTestResult = ''
+        try {
+            await this.config.save()
+            const result = await this.platform.testProxyConnection()
+            this.proxyTestOk = result.ok
+            this.proxyTestResult = result.ok
+                ? this.translate.instant(_('Network OK'))
+                : result.error === 'EMPTY_PROXY'
+                    ? this.translate.instant(_('Proxy server address is required'))
+                    : this.translate.instant(_('Network failed'))
+        } catch (err) {
+            this.proxyTestOk = false
+            this.proxyTestResult = this.translate.instant(_('Network failed'))
+        } finally {
+            this.testingProxy = false
+        }
     }
 
     ngOnDestroy () {

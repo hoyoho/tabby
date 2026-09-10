@@ -39,6 +39,11 @@ workspace:
   dragToOpenWindow: true
 session:
   appendToPaneByDefault: true
+proxy:
+  mode: system
+  host: ''
+  username: ''
+  password: ''
 enableWelcomeTab: true
 electronFlags:
   - ['force_discrete_gpu', '0']

@@ -2763,3 +2763,48 @@ msgstr ""
 
 msgid "Open workspace in new window"
 msgstr ""
+
+msgid "Leave empty if not required"
+msgstr ""
+
+msgid "Manual proxy"
+msgstr ""
+
+msgid "Network proxy"
+msgstr ""
+
+msgid "Test network connectivity"
+msgstr ""
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr ""
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr ""
+
+msgid "Proxy mode"
+msgstr ""
+
+msgid "Proxy server"
+msgstr ""
+
+msgid "System proxy"
+msgstr ""
+
+msgid "Direct connection"
+msgstr ""
+
+msgid "Test"
+msgstr ""
+
+msgid "Network OK"
+msgstr ""
+
+msgid "Network failed"
+msgstr ""
+
+msgid "Proxy server address is required"
+msgstr ""
+
+msgid "Test connection"
+msgstr ""

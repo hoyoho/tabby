@@ -139,6 +139,13 @@ export class DirectoryUpload {
 
 export type PlatformTheme = 'light'|'dark'
 
+export interface ProxyTestResult {
+    ok: boolean
+    ms: number
+    status?: number
+    error?: string
+}
+
 export abstract class PlatformService {
     supportsWindowControls = false
 
@@ -225,6 +232,10 @@ export abstract class PlatformService {
     }
 
     async uninstallPlugin (name: string): Promise<void> {
+        throw new Error('Not implemented')
+    }
+
+    async testProxyConnection (): Promise<ProxyTestResult> {
         throw new Error('Not implemented')
     }
 

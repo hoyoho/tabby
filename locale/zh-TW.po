@@ -2764,3 +2764,48 @@ msgstr "新視窗中開啟"
 
 msgid "Open workspace in new window"
 msgstr "在新視窗中開啟工作區"
+
+msgid "Leave empty if not required"
+msgstr "不需要時請留空"
+
+msgid "Manual proxy"
+msgstr "手動代理"
+
+msgid "Network proxy"
+msgstr "網路代理"
+
+msgid "Test network connectivity"
+msgstr "測試網路連通性"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "代理伺服器位址和連接埠（支援 http://、https:// 或 socks5:// 前綴）"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "應用程式自身流量的代理，例如外掛程式管理和更新檢查"
+
+msgid "Proxy mode"
+msgstr "代理模式"
+
+msgid "Proxy server"
+msgstr "代理伺服器"
+
+msgid "System proxy"
+msgstr "系統代理"
+
+msgid "Direct connection"
+msgstr "直接連線"
+
+msgid "Test"
+msgstr "測試"
+
+msgid "Network OK"
+msgstr "網路正常"
+
+msgid "Network failed"
+msgstr "網路異常"
+
+msgid "Proxy server address is required"
+msgstr "請填寫代理伺服器位址"
+
+msgid "Test connection"
+msgstr "測試連線"

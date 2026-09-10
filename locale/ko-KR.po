@@ -2763,3 +2763,48 @@ msgstr "새 창에서 열기"
 
 msgid "Open workspace in new window"
 msgstr "새 창에서 워크스페이스 열기"
+
+msgid "Leave empty if not required"
+msgstr "필요하지 않으면 비워 두세요"
+
+msgid "Manual proxy"
+msgstr "수동 프록시"
+
+msgid "Network proxy"
+msgstr "네트워크 프록시"
+
+msgid "Test network connectivity"
+msgstr "네트워크 연결을 확인합니다"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "프록시 주소 및 포트 (http://, https:// 또는 socks5:// 접두사 지원)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "앱 자체 트래픽용 프록시(예: 플러그인 관리 및 업데이트 확인)"
+
+msgid "Proxy mode"
+msgstr "프록시 모드"
+
+msgid "Proxy server"
+msgstr "프록시 서버"
+
+msgid "System proxy"
+msgstr "시스템 프록시"
+
+msgid "Direct connection"
+msgstr "직접 연결"
+
+msgid "Test"
+msgstr "테스트"
+
+msgid "Network OK"
+msgstr "네트워크 정상"
+
+msgid "Network failed"
+msgstr "네트워크 오류"
+
+msgid "Proxy server address is required"
+msgstr "프록시 서버 주소가 필요합니다"
+
+msgid "Test connection"
+msgstr "연결 테스트"

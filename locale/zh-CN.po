@@ -2828,3 +2828,48 @@ msgstr "新窗口中打开"
 msgid "Open workspace in new window"
 msgstr "在新窗口中打开工作区"
 
+
+msgid "Leave empty if not required"
+msgstr "不需要时请留空"
+
+msgid "Manual proxy"
+msgstr "手动代理"
+
+msgid "Network proxy"
+msgstr "网络代理"
+
+msgid "Test network connectivity"
+msgstr "测试网络连通性"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "代理地址和端口 (支持http://、https://或socks5://前缀)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "应用自身流量的代理，例如插件管理和更新检查"
+
+msgid "Proxy mode"
+msgstr "代理模式"
+
+msgid "Proxy server"
+msgstr "代理服务器"
+
+msgid "System proxy"
+msgstr "系统代理"
+
+msgid "Direct connection"
+msgstr "直接连接"
+
+msgid "Test"
+msgstr "测试"
+
+msgid "Network OK"
+msgstr "网络正常"
+
+msgid "Network failed"
+msgstr "网络异常"
+
+msgid "Proxy server address is required"
+msgstr "请填写代理服务器地址"
+
+msgid "Test connection"
+msgstr "测试连接"

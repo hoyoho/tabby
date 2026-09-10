@@ -2763,3 +2763,48 @@ msgstr "In neuem Fenster öffnen"
 
 msgid "Open workspace in new window"
 msgstr "Arbeitsbereich in neuem Fenster öffnen"
+
+msgid "Leave empty if not required"
+msgstr "Leer lassen, falls nicht erforderlich"
+
+msgid "Manual proxy"
+msgstr "Manueller Proxy"
+
+msgid "Network proxy"
+msgstr "Netzwerk-Proxy"
+
+msgid "Test network connectivity"
+msgstr "Netzwerkkonnektivität testen"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Adresse und Port des Proxys (unterstützt http://, https:// oder socks5:// Präfixe)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Proxy für den eigenen Datenverkehr der App, z. B. Plugin-Verwaltung und Update-Prüfungen"
+
+msgid "Proxy mode"
+msgstr "Proxy-Modus"
+
+msgid "Proxy server"
+msgstr "Proxy-Server"
+
+msgid "System proxy"
+msgstr "System-Proxy"
+
+msgid "Direct connection"
+msgstr "Direkte Verbindung"
+
+msgid "Test"
+msgstr "Testen"
+
+msgid "Network OK"
+msgstr "Netzwerk OK"
+
+msgid "Network failed"
+msgstr "Netzwerkfehler"
+
+msgid "Proxy server address is required"
+msgstr "Adresse des Proxyservers erforderlich"
+
+msgid "Test connection"
+msgstr "Verbindung testen"

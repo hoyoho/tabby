@@ -2763,3 +2763,48 @@ msgstr "Відкрити у новому вікні"
 
 msgid "Open workspace in new window"
 msgstr "Відкрити робочу область у новому вікні"
+
+msgid "Leave empty if not required"
+msgstr "Залиште порожнім, якщо не потрібно"
+
+msgid "Manual proxy"
+msgstr "Ручний проксі"
+
+msgid "Network proxy"
+msgstr "Мережевий проксі"
+
+msgid "Test network connectivity"
+msgstr "Перевірити мережеве з'єднання"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Адреса та порт проксі (підтримуються префікси http://, https:// або socks5://)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Проксі для власного трафіку застосунку, напр. керування плагінами та перевірка оновлень"
+
+msgid "Proxy mode"
+msgstr "Режим проксі"
+
+msgid "Proxy server"
+msgstr "Проксі-сервер"
+
+msgid "System proxy"
+msgstr "Системний проксі"
+
+msgid "Direct connection"
+msgstr "Пряме підключення"
+
+msgid "Test"
+msgstr "Перевірити"
+
+msgid "Network OK"
+msgstr "Мережа справна"
+
+msgid "Network failed"
+msgstr "Помилка мережі"
+
+msgid "Proxy server address is required"
+msgstr "Адреса проксі-сервера обов'язкова"
+
+msgid "Test connection"
+msgstr "Перевірити з'єднання"

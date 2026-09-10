@@ -2763,3 +2763,48 @@ msgstr "Открыть в новом окне"
 
 msgid "Open workspace in new window"
 msgstr "Открыть рабочую область в новом окне"
+
+msgid "Leave empty if not required"
+msgstr "Оставьте пустым, если не требуется"
+
+msgid "Manual proxy"
+msgstr "Ручной прокси"
+
+msgid "Network proxy"
+msgstr "Сетевой прокси"
+
+msgid "Test network connectivity"
+msgstr "Проверить сетевое подключение"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Адрес и порт прокси (поддерживаются префиксы http://, https:// или socks5://)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Прокси для собственного трафика приложения, например, управление плагинами и проверка обновлений"
+
+msgid "Proxy mode"
+msgstr "Режим прокси"
+
+msgid "Proxy server"
+msgstr "Прокси-сервер"
+
+msgid "System proxy"
+msgstr "Системный прокси"
+
+msgid "Direct connection"
+msgstr "Прямое подключение"
+
+msgid "Test"
+msgstr "Проверить"
+
+msgid "Network OK"
+msgstr "Сеть в порядке"
+
+msgid "Network failed"
+msgstr "Сетевая ошибка"
+
+msgid "Proxy server address is required"
+msgstr "Требуется адрес прокси-сервера"
+
+msgid "Test connection"
+msgstr "Проверить подключение"

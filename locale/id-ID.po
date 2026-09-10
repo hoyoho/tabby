@@ -2763,3 +2763,48 @@ msgstr "Buka di jendela baru"
 
 msgid "Open workspace in new window"
 msgstr "Buka ruang kerja di jendela baru"
+
+msgid "Leave empty if not required"
+msgstr "Biarkan kosong jika tidak diperlukan"
+
+msgid "Manual proxy"
+msgstr "Proxy manual"
+
+msgid "Network proxy"
+msgstr "Proxy jaringan"
+
+msgid "Test network connectivity"
+msgstr "Uji konektivitas jaringan"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Alamat dan port proxy (mendukung awalan http://, https:// atau socks5://)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Proxy untuk lalu lintas aplikasi sendiri, mis. manajemen plugin dan pengecekan pembaruan"
+
+msgid "Proxy mode"
+msgstr "Mode proxy"
+
+msgid "Proxy server"
+msgstr "Server proxy"
+
+msgid "System proxy"
+msgstr "Proxy sistem"
+
+msgid "Direct connection"
+msgstr "Koneksi langsung"
+
+msgid "Test"
+msgstr "Uji"
+
+msgid "Network OK"
+msgstr "Jaringan OK"
+
+msgid "Network failed"
+msgstr "Jaringan gagal"
+
+msgid "Proxy server address is required"
+msgstr "Alamat server proxy wajib diisi"
+
+msgid "Test connection"
+msgstr "Uji koneksi"

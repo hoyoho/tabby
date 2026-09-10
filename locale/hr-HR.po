@@ -2763,3 +2763,48 @@ msgstr "Otvori u novom prozoru"
 
 msgid "Open workspace in new window"
 msgstr "Otvori radni prostor u novom prozoru"
+
+msgid "Leave empty if not required"
+msgstr "Ostavite prazno ako nije potrebno"
+
+msgid "Manual proxy"
+msgstr "Ručni proxy"
+
+msgid "Network proxy"
+msgstr "Mrežni proxy"
+
+msgid "Test network connectivity"
+msgstr "Ispitaj mrežnu povezanost"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Adresa i port proxyja (podržava prefikse http://, https:// ili socks5://)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Proxy za vlastiti promet aplikacije, npr. upravljanje dodatcima i provjere ažuriranja"
+
+msgid "Proxy mode"
+msgstr "Način proxyja"
+
+msgid "Proxy server"
+msgstr "Proxy poslužitelj"
+
+msgid "System proxy"
+msgstr "Sistemski proxy"
+
+msgid "Direct connection"
+msgstr "Izravna veza"
+
+msgid "Test"
+msgstr "Testiraj"
+
+msgid "Network OK"
+msgstr "Mreža je ispravna"
+
+msgid "Network failed"
+msgstr "Greška mreže"
+
+msgid "Proxy server address is required"
+msgstr "Adresa proxy poslužitelja je obavezna"
+
+msgid "Test connection"
+msgstr "Testiraj vezu"

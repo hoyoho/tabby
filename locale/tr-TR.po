@@ -2764,3 +2764,48 @@ msgstr "Yeni pencerede aç"
 
 msgid "Open workspace in new window"
 msgstr "Çalışma alanını yeni pencerede aç"
+
+msgid "Leave empty if not required"
+msgstr "Gerekli değilse boş bırakın"
+
+msgid "Manual proxy"
+msgstr "Manuel proxy"
+
+msgid "Network proxy"
+msgstr "Ağ proxy'si"
+
+msgid "Test network connectivity"
+msgstr "Ağ bağlantısını test et"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Proxy adresi ve bağlantı noktası (http://, https:// veya socks5:// öneklerini destekler)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Uygulamanın kendi trafiği için proxy, ör. eklenti yönetimi ve güncelleme kontrolleri"
+
+msgid "Proxy mode"
+msgstr "Proxy modu"
+
+msgid "Proxy server"
+msgstr "Proxy sunucusu"
+
+msgid "System proxy"
+msgstr "Sistem proxy"
+
+msgid "Direct connection"
+msgstr "Doğrudan bağlantı"
+
+msgid "Test"
+msgstr "Test et"
+
+msgid "Network OK"
+msgstr "Ağ OK"
+
+msgid "Network failed"
+msgstr "Ağ hatası"
+
+msgid "Proxy server address is required"
+msgstr "Proxy sunucu adresi gereklidir"
+
+msgid "Test connection"
+msgstr "Bağlantıyı test et"

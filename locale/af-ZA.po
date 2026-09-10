@@ -2763,3 +2763,48 @@ msgstr "Maak in nuwe venster oop"
 
 msgid "Open workspace in new window"
 msgstr "Maak werkspasie in nuwe venster oop"
+
+msgid "Leave empty if not required"
+msgstr "Los leeg as dit nie vereis word nie"
+
+msgid "Manual proxy"
+msgstr "Handmatige proksi"
+
+msgid "Network proxy"
+msgstr "Netwerk-proxy"
+
+msgid "Test network connectivity"
+msgstr "Toets netwerkverbinding"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "Proksi-adres en -poort (ondersteun http://, https:// of socks5:// voorvoegsels)"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "Proxy vir die toepassing se eie verkeer, bv. plugin-bestuur en opdateringkontroles"
+
+msgid "Proxy mode"
+msgstr "Proxy-modus"
+
+msgid "Proxy server"
+msgstr "Proksi-bediener"
+
+msgid "System proxy"
+msgstr "Stelsel-proxy"
+
+msgid "Direct connection"
+msgstr "Direkte verbinding"
+
+msgid "Test"
+msgstr "Toets"
+
+msgid "Network OK"
+msgstr "Netwerk OK"
+
+msgid "Network failed"
+msgstr "Netwerk misluk"
+
+msgid "Proxy server address is required"
+msgstr "Proksi-adres is nodig"
+
+msgid "Test connection"
+msgstr "Toets verbinding"

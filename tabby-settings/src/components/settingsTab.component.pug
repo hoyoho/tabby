@@ -70,6 +70,42 @@
                             i.fas.fa-bug
                             span(translate) Open DevTools
 
+                    h3(translate) Network proxy
+                    .form-line
+                        .header
+                            .title(translate) Proxy mode
+                            .description(translate) Proxy for the app's own traffic, e.g. plugin management and update checks
+                        select.form-control([(ngModel)]='config.store.proxy.mode', (ngModelChange)='saveConfiguration()')
+                            option([value]='"system"', translate) System proxy
+                            option([value]='"direct"', translate) Direct connection
+                            option([value]='"manual"', translate) Manual proxy
+                    .form-line(*ngIf='config.store.proxy.mode === "manual"')
+                        .header
+                            .title(translate) Proxy server
+                            .description(translate) Proxy address and port (supports http://, https:// or socks5:// prefixes)
+                        input.form-control(type='text', placeholder='http://127.0.0.1:8080', [(ngModel)]='config.store.proxy.host', (ngModelChange)='saveConfiguration()')
+                    .form-line(*ngIf='config.store.proxy.mode === "manual"')
+                        .header
+                            .title(translate) Username
+                            .description(translate) Leave empty if not required
+                        input.form-control(type='text', autocomplete='off', [placeholder]='"Username"|translate', [(ngModel)]='config.store.proxy.username', (ngModelChange)='saveConfiguration()')
+                    .form-line(*ngIf='config.store.proxy.mode === "manual"')
+                        .header
+                            .title(translate) Password
+                            .description(translate) Leave empty if not required
+                        input.form-control(type='password', autocomplete='new-password', [placeholder]='"Password"|translate', [(ngModel)]='config.store.proxy.password', (ngModelChange)='saveConfiguration()')
+                    .form-line(*ngIf='config.store.proxy.mode === "manual"')
+                        .header
+                            .title(translate) Test connection
+                            .description(translate) Test network connectivity
+                            .proxy-test-result.text-success(*ngIf='proxyTestResult && proxyTestOk')
+                                | {{proxyTestResult}}
+                            .proxy-test-result.text-danger(*ngIf='proxyTestResult && !proxyTestOk')
+                                | {{proxyTestResult}}
+                        button.btn.btn-secondary([disabled]='testingProxy', (click)='testProxyConnection()')
+                            i.fas.fa-plug.me-1
+                            span(translate) Test
+
                     h3(translate) Accessibility
                     .form-line
                         .header

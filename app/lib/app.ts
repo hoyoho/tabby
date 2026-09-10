@@ -8,6 +8,7 @@ import * as fs from 'fs'
 import { Subject, throttleTime } from 'rxjs'
 
 import { saveConfig, loadConfig } from './config'
+import { applyProxy, registerProxyAuthHandler, testProxyConnection } from './proxy'
 import { Window, WindowOptions } from './window'
 import { pluginManager } from './pluginManager'
 import { PTYManager } from './pty'
@@ -38,6 +39,7 @@ export class Application {
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor (private configStore: any) {
         remote.initialize()
+        registerProxyAuthHandler()
         this.useBuiltinGraphics()
         this.ptyManager.init(this)
         this.telnetManager.init(this)
@@ -47,6 +49,7 @@ export class Application {
         ipcMain.handle('app:save-config', async (event, config) => {
             await saveConfig(config)
             this.configStore = loadConfig()
+            await applyProxy(this.configStore)
             for (const window of this.windows) {
                 window.applyConfigChange(this.configStore, event.sender)
             }
@@ -72,6 +75,10 @@ export class Application {
 
         ;(promiseIpc as any).on('plugin-manager:uninstall', (name) => {
             return pluginManager.uninstall(this.userPluginsPath, name)
+        })
+
+        ;(promiseIpc as any).on('proxy:test', () => {
+            return testProxyConnection(loadConfig())
         })
 
         ;(promiseIpc as any).on('get-default-mac-shell', async () => {
@@ -126,6 +133,7 @@ export class Application {
     }
 
     init (): void {
+        void applyProxy(this.configStore)
         screen.on('display-metrics-changed', () => this.broadcast('host:display-metrics-changed'))
         screen.on('display-added', () => this.broadcast('host:displays-changed'))
         screen.on('display-removed', () => this.broadcast('host:displays-changed'))

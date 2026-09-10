@@ -2763,3 +2763,48 @@ msgstr "新しいウィンドウで開く"
 
 msgid "Open workspace in new window"
 msgstr "ワークスペースを新しいウィンドウで開く"
+
+msgid "Leave empty if not required"
+msgstr "不要な場合は空のままにしてください"
+
+msgid "Manual proxy"
+msgstr "手動プロキシ"
+
+msgid "Network proxy"
+msgstr "ネットワークプロキシ"
+
+msgid "Test network connectivity"
+msgstr "ネットワーク接続を確認します"
+
+msgid "Proxy address and port (supports http://, https:// or socks5:// prefixes)"
+msgstr "プロキシのアドレスとポート（http://、https:// または socks5:// のプレフィックスに対応）"
+
+msgid "Proxy for the app's own traffic, e.g. plugin management and update checks"
+msgstr "アプリ自身のトラフィック用プロキシ（例：プラグイン管理や更新チェック）"
+
+msgid "Proxy mode"
+msgstr "プロキシモード"
+
+msgid "Proxy server"
+msgstr "プロキシサーバー"
+
+msgid "System proxy"
+msgstr "システムプロキシ"
+
+msgid "Direct connection"
+msgstr "直接接続"
+
+msgid "Test"
+msgstr "テスト"
+
+msgid "Network OK"
+msgstr "ネットワーク正常"
+
+msgid "Network failed"
+msgstr "ネットワークエラー"
+
+msgid "Proxy server address is required"
+msgstr "プロキシサーバーのアドレスが必要です"
+
+msgid "Test connection"
+msgstr "接続をテスト"
