@@ -1163,6 +1163,10 @@ msgid "Invalid syntax"
 msgstr "无效的语法"
 
 
+msgid "Isolated"
+msgstr "隔离"
+
+
 msgid "Jump host"
 msgstr "跳板机"
 
@@ -2098,6 +2102,10 @@ msgid "Serial connection"
 msgstr "串口连接"
 
 
+msgid "Session isolation"
+msgstr "会话隔离"
+
+
 msgid "Set master passphrase"
 msgstr "设置主密码"
 
@@ -2124,6 +2132,14 @@ msgstr "设置 SSH agent 的命名 pipe 路径"
 
 msgid "Settings"
 msgstr "设置"
+
+
+msgid "Shared"
+msgstr "共享"
+
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "终端运行模式，共享模式更节省内存，反之更稳定。"
 
 
 msgid "Shell does not support current path detection"

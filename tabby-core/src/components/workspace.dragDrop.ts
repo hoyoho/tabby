@@ -241,6 +241,13 @@ export interface NativeDragPayload {
     profile: any
     /** xterm serialized screen state, so the receiving window restores content. */
     savedState: any
+    /** Live tab title / naming state, carried so the restored tab renders the
+     *  session title immediately instead of the profile name until the shell's
+     *  next prompt re-emits its OSC title (mirrors restart recovery tokens). */
+    tabTitle?: string|null
+    tabCustomTitle?: string|null
+    disableDynamicTitle?: boolean|null
+    tabIcon?: string|null
 }
 
 /** Tiny workspace-drag payload (the recovery token travels out-of-band). */
@@ -498,7 +505,15 @@ export class PaneDragController {
         // Register it with the main process instead; the drop target fetches it
         // by drag id ([[PaneDragHost.getNativeDragState]]).
         const savedState = (tab as any).frontend?.saveState?.() ?? null
-        const payload: NativeDragPayload = { dragId, profile, savedState: null }
+        const payload: NativeDragPayload = {
+            dragId,
+            profile,
+            savedState: null,
+            tabTitle: tab.title,
+            tabCustomTitle: tab.customTitle,
+            disableDynamicTitle: tab.disableDynamicTitle,
+            tabIcon: tab.icon,
+        }
         event.dataTransfer!.setData(TABBY_DRAG_MIME, JSON.stringify(payload))
         event.dataTransfer!.effectAllowed = 'move'
 

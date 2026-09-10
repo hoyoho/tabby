@@ -1,6 +1,6 @@
 import * as fs from 'mz/fs'
 import * as fsSync from 'fs'
-import { Injector } from '@angular/core'
+import { Injector, NgZone } from '@angular/core'
 import { HostAppService, ConfigService, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, Platform, BootstrapData, BOOTSTRAP_DATA, LogService } from 'tabby-core'
 import { BaseSession } from 'tabby-terminal'
 import { SessionOptions, ChildProcess, PTYInterface, PTYProxy } from './api'
@@ -34,6 +34,7 @@ export class Session extends BaseSession {
     private hostApp: HostAppService
     private bootstrapData: BootstrapData
     private ptyInterface: PTYInterface
+    private zone: NgZone
 
     /**
      * When set, destroy() tears down this session's listeners/state but keeps
@@ -52,6 +53,7 @@ export class Session extends BaseSession {
         this.hostApp = injector.get(HostAppService)
         this.ptyInterface = injector.get(PTYInterface)
         this.bootstrapData = injector.get(BOOTSTRAP_DATA)
+        this.zone = injector.get(NgZone)
     }
 
     async start (options: SessionOptions): Promise<void> {
@@ -137,8 +139,16 @@ export class Session extends BaseSession {
 
         this.pty = pty
 
-        pty.getTruePID().then(async () => {
-            this.initialCWD = await this.getWorkingDirectory()
+        // The true-PID probe runs in the Electron proxy's own forked zone, but
+        // THIS `.then()` is registered from inside the Angular zone — a native
+        // getWorkingDirectoryFromPID probe can block up to 3s and would hold
+        // change detection hostage (whole window unclickable right after a
+        // cross-window drop restores this session). Resolve CWD outside the zone.
+        const runningPty = pty
+        this.zone.runOutsideAngular(() => {
+            runningPty.getTruePID().then(async () => {
+                this.initialCWD = await this.getWorkingDirectory()
+            })
         })
 
         this.open = true
@@ -215,6 +225,14 @@ export class Session extends BaseSession {
         if (this.hostApp.platform === Platform.Windows && this.open && !this.ptyClosed) {
             const pty = this.pty
             try {
+                // Ctrl+C first: a foreground process (sleep, vim, a server)
+                // never reads the shell's stdin, so a bare `exit` just sits in
+                // the line buffer until the 2s grace expires into a forced
+                // ConPTY kill with the child still alive — exactly the teardown
+                // that can crash the process. Interrupting the foreground job
+                // lets the shell actually reach `exit`, so ConPTY closes with
+                // no live child and the forced kill is skipped.
+                pty?.write(Buffer.from('\x03'))
                 pty?.write(Buffer.from('\r\nexit\r\n'))
             } catch { /* ignore */ }
             if (pty) {

@@ -1247,6 +1247,10 @@ msgstr ""
 msgid "Invalid syntax"
 msgstr ""
 
+#: tabby-local/src/components/shellSettingsTab.component.pug
+msgid "Isolated"
+msgstr ""
+
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:16
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:43
 msgid "Jump host"
@@ -2224,6 +2228,10 @@ msgstr ""
 msgid "Serial connection"
 msgstr ""
 
+#: tabby-local/src/components/shellSettingsTab.component.pug
+msgid "Session isolation"
+msgstr ""
+
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:154
 msgid "Session persistence"
 msgstr ""
@@ -2255,6 +2263,14 @@ msgstr ""
 
 #: tabby-settings/src/components/settingsTab.component.ts:55
 msgid "Settings"
+msgstr ""
+
+#: tabby-local/src/components/shellSettingsTab.component.pug
+msgid "Shared"
+msgstr ""
+
+#: tabby-local/src/components/shellSettingsTab.component.pug
+msgid "Shared mode saves memory; per-session mode is more stable."
 msgstr ""
 
 #: tabby-local/src/settings.ts:16

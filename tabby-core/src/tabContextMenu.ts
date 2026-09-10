@@ -313,7 +313,15 @@ export class TaskCompletionContextMenu extends TabContextMenuItemProvider {
         if (tab instanceof WorkspaceComponent || !tab.parent) {
             return []
         }
-        const process = await tab.getCurrentProcess()
+        // The "Current process" label is decorative; the probe behind it walks
+        // the process tree after an up-to-2s true-PID resolution, and this
+        // provider is awaited serially by the action registry — a slow probe
+        // would hold the whole context menu hostage. Bound the wait and drop
+        // the process entries when it cannot answer in time.
+        const process = await Promise.race([
+            tab.getCurrentProcess(),
+            new Promise<null>(resolve => setTimeout(() => resolve(null), 300)),
+        ])
         const items: MenuItemOptions[] = []
 
         const extTab: (BaseTabComponent & { __completionNotificationEnabled?: boolean, __outputNotificationSubscription?: Subscription|null }) = tab

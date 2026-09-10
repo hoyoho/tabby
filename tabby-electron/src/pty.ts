@@ -1,4 +1,5 @@
 import * as psNode from 'ps-node'
+import { Injectable, NgZone } from '@angular/core'
 import { ipcRenderer } from 'electron'
 import { ChildProcess, PTYInterface, PTYProxy } from 'tabby-local'
 import { getWorkingDirectoryFromPID } from 'native-process-working-directory'
@@ -13,15 +14,47 @@ try {
     var windowsProcessTree = require('@tabby-gang/windows-process-tree')  // eslint-disable-line @typescript-eslint/no-var-requires, no-var
 } catch { }
 
+/**
+ * Resolves with `fallback` if `promise` does not settle within `ms`.
+ *
+ * The pid/process-tree/working-directory probes below talk to optional native
+ * modules that can simply never call back (invalid pid, module not built,
+ * process in a weird state). Left unbounded, one of those hangs would keep a
+ * pending await alive in the Angular zone and freeze that window's change
+ * detection — so every probe is bounded here.
+ */
+function withTimeout<T> (promise: Promise<T>, ms: number, fallback: T): Promise<T> {
+    return new Promise<T>(resolve => {
+        const timer = setTimeout(() => resolve(fallback), ms)
+        promise.then(
+            value => {
+                clearTimeout(timer)
+                resolve(value)
+            },
+            () => {
+                clearTimeout(timer)
+                resolve(fallback)
+            },
+        )
+    })
+}
+
+@Injectable()
 export class ElectronPTYInterface extends PTYInterface {
+    constructor (private zone: NgZone) {
+        super()
+    }
+
     async spawn (...options: any[]): Promise<PTYProxy> {
         const id = ipcRenderer.sendSync('pty:spawn', ...options)
-        return new ElectronPTYProxy(id)
+        return new ElectronPTYProxy(id, this.zone)
     }
 
     async restore (id: string): Promise<ElectronPTYProxy|null> {
-        if (ipcRenderer.sendSync('pty:exists', id)) {
-            return new ElectronPTYProxy(id)
+        // Claims ownership of a live PTY (cross-window transfer). The generic
+        // `pty:attach` endpoint mirrors serial/telnet.
+        if (ipcRenderer.sendSync('pty:attach', id)) {
+            return new ElectronPTYProxy(id, this.zone)
         }
         return null
     }
@@ -34,16 +67,22 @@ export class ElectronPTYProxy extends PTYProxy {
 
     constructor (
         private id: string,
+        private zone: NgZone,
     ) {
         super()
-        this.truePID = new Promise(async (resolve) => {
+        // Resolve the "true" shell pid in the background — deliberately OUTSIDE
+        // the Angular zone: it is UI-irrelevant bookkeeping, and if a native
+        // probe ever hangs it must not freeze this window's change detection.
+        this.truePID = this.zone.runOutsideAngular(() => new Promise(async (resolve) => {
             let pid = await this.getPID()
             try {
                 await new Promise(r => setTimeout(r, 2000))
 
                 // Retrieve any possible single children now that shell has fully started
                 let processes = await this.getChildProcessesInternal(pid)
-                while (pid && processes.length === 1) {
+                // Bounded walk (a malformed/cyclic tree must not spin forever).
+                let guard = 0
+                while (pid && processes.length === 1 && guard++ < 64) {
                     if (!processes[0].pid) {
                         break
                     }
@@ -53,7 +92,7 @@ export class ElectronPTYProxy extends PTYProxy {
             } finally {
                 resolve(pid)
             }
-        })
+        }))
         this.truePID = this.truePID.catch(() => this.getPID())
     }
 
@@ -66,7 +105,10 @@ export class ElectronPTYProxy extends PTYProxy {
     }
 
     async getPID (): Promise<number> {
-        return ipcRenderer.sendSync('pty:get-pid', this.id)
+        // The pid is only known once the PTY host has spawned the process, so
+        // this must be async (a sync IPC would race the host). Bounded so a
+        // host that never reports cannot hang the caller.
+        return withTimeout(ipcRenderer.invoke('pty:get-pid', this.id), 5000, 0)
     }
 
     subscribe (event: string, handler: (..._: any[]) => void): void {
@@ -110,12 +152,14 @@ export class ElectronPTYProxy extends PTYProxy {
             return []
         }
         if (process.platform === 'darwin') {
-            const processes = await macOSNativeProcessList.getProcessList()
-            return processes.filter(x => x.ppid === truePID).map(p => ({
-                pid: p.pid,
-                ppid: p.ppid,
-                command: p.name,
-            }))
+            return withTimeout((async () => {
+                const processes = await macOSNativeProcessList.getProcessList()
+                return processes.filter(x => x.ppid === truePID).map(p => ({
+                    pid: p.pid,
+                    ppid: p.ppid,
+                    command: p.name,
+                }))
+            })(), 3000, [])
         }
         if (process.platform === 'win32') {
             // windows-process-tree is an optional native dep; when it is not
@@ -124,7 +168,7 @@ export class ElectronPTYProxy extends PTYProxy {
             if (!windowsProcessTree) {
                 return []
             }
-            return new Promise<ChildProcess[]>(resolve => {
+            return withTimeout(new Promise<ChildProcess[]>(resolve => {
                 windowsProcessTree.getProcessTree(truePID, tree => {
                     resolve(tree ? tree.children.map(child => ({
                         pid: child.pid,
@@ -132,9 +176,9 @@ export class ElectronPTYProxy extends PTYProxy {
                         command: child.name,
                     })) : [])
                 })
-            })
+            }), 3000, [])
         }
-        return new Promise<ChildProcess[]>((resolve, reject) => {
+        return withTimeout(new Promise<ChildProcess[]>((resolve, reject) => {
             psNode.lookup({ ppid: truePID }, (err, processes) => {
                 if (err) {
                     reject(err)
@@ -142,11 +186,15 @@ export class ElectronPTYProxy extends PTYProxy {
                 }
                 resolve(processes as ChildProcess[])
             })
-        })
+        }), 3000, [])
     }
 
     async getWorkingDirectory (): Promise<string|null> {
-        return getWorkingDirectoryFromPID(await this.getTruePID())
+        const pid = await this.getTruePID()
+        if (!pid) {
+            return null
+        }
+        return withTimeout(Promise.resolve(getWorkingDirectoryFromPID(pid)), 3000, null)
     }
 
 }

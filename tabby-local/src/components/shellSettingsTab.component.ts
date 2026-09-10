@@ -26,7 +26,7 @@ export class ShellSettingsTabProvider extends SettingsTabProvider {
     id = 'terminal-shell'
     icon = 'list-ul'
     /** Translation key, rendered through the translate pipe/directive */
-    title = 'Shell'
+    title = 'Local'
     section = 'profiles-advanced'
     weight = 20
     private hostApp = inject(HostAppService)

@@ -1,320 +1,327 @@
-import * as nodePTY from 'node-pty'
+import { ipcMain, utilityProcess, UtilityProcess } from 'electron'
+import * as path from 'path'
 import { v4 as uuidv4 } from 'uuid'
-import { ipcMain } from 'electron'
 import { Application } from './app'
-import { UTF8Splitter } from './utfSplitter'
-import { Subject, debounceTime } from 'rxjs'
+import { HostedConnection, registerHostedConnectionEndpoints, dropWindowClaims, destroyAllConnections } from './hostedConnection'
+import { PTYHostCommand, PTYHostEvent } from './ptyProtocol'
+
+/** Watchdog cadence: probe the host, and how long to wait for its answer. */
+const PING_INTERVAL_MS = 2000
+const PONG_TIMEOUT_MS = 5000
 
 /**
- * How long a PTY with no owning window survives. Covers the cross-window
- * drag race: the source window detaches (keepPTYAlive) before the target
- * window attaches, and a dropped/failed transfer must not leak a live
- * shell (and its ConPTY/conhost) forever.
+ * One PTY host utility process. node-pty lives here, so a native ConPTY
+ * teardown crash or a hung native call cannot take down the app — the main
+ * process only loses the sessions this host owned and can start a fresh one.
+ *
+ * The host is deliberately NOT tied to a window: it is owned by the main
+ * process and addressed by PTY id, which keeps cross-window transfers working
+ * (the PTY never moves; only the attached window changes).
  */
-const GRACE_PERIOD_MS = 10000
+class PTYHost {
+    activeCount = 0
 
-class PTYDataQueue {
-    private buffers: Buffer[] = []
-    private delta = 0
-    private maxChunk = 1024 * 100
-    private maxDelta = this.maxChunk * 5
-    private flowPaused = false
-    private decoder = new UTF8Splitter()
-    private output$ = new Subject<Buffer>()
-    private sub: import('rxjs').Subscription|null = null
-    private stopped = false
+    private process: UtilityProcess
+    private ready = false
+    private killed = false
+    private pending: PTYHostCommand[] = []
+    private pingTimer: ReturnType<typeof setInterval>|null = null
+    private pongTimer: ReturnType<typeof setTimeout>|null = null
 
-    constructor (private pty: nodePTY.IPty, private onData: (data: Buffer) => void) {
-        this.sub = this.output$.pipe(debounceTime(500)).subscribe(() => {
-            const remainder = this.decoder.flush()
-            if (remainder.length) {
-                this.onData(remainder)
+    constructor (private manager: PTYManager) {
+        this.process = utilityProcess.fork(path.join(__dirname, 'ptyHost.js'), [], { serviceName: 'tabby-pty-host' })
+        this.process.on('spawn', () => {
+            this.ready = true
+            const pending = this.pending
+            this.pending = []
+            for (const command of pending) {
+                this.process.postMessage(command)
             }
+            this.armPing()
+        })
+        this.process.on('message', (message: PTYHostEvent) => {
+            if (message.t === 'pong') {
+                this.armPongTimeout()
+                return
+            }
+            this.manager.onHostMessage(this, message)
+        })
+        this.process.on('exit', () => {
+            this.disposeTimers()
+            this.manager.onHostExit(this)
         })
     }
 
-    push (data: Buffer) {
-        if (this.stopped) {
+    send (command: PTYHostCommand): void {
+        if (this.killed) {
             return
         }
-        this.buffers.push(data)
-        this.maybeEmit()
+        if (this.ready) {
+            this.process.postMessage(command)
+        } else {
+            this.pending.push(command)
+        }
     }
 
-    ack (length: number) {
-        if (this.stopped) {
+    acquire (): void {
+        this.activeCount++
+    }
+
+    release (): void {
+        this.activeCount--
+    }
+
+    /** Kill the process; the `exit` handler does the pool/connection cleanup. */
+    terminate (): void {
+        if (this.killed) {
             return
         }
-        this.delta -= length
-        this.maybeEmit()
+        this.killed = true
+        this.disposeTimers()
+        try {
+            this.process.kill()
+        } catch { /* already gone */ }
     }
 
-    /**
-     * Tears the queue down before the PTY is killed: no more pump reads (pauses
-     * are dropped), no more produces/flushes against a closing ConPTY, and no
-     * late debounce delivery after teardown.
-     */
-    stop () {
-        this.stopped = true
-        this.buffers = []
-        this.sub?.unsubscribe()
-        this.sub = null
+    private armPing (): void {
+        this.pingTimer = setInterval(() => {
+            this.send({ t: 'ping' })
+            this.armPongTimeout()
+        }, PING_INTERVAL_MS)
+        this.armPongTimeout()
     }
 
-    private maybeEmit () {
-        if (this.delta <= this.maxDelta && this.flowPaused) {
-            this.resume()
-            return
+    private armPongTimeout (): void {
+        if (this.pongTimer) {
+            clearTimeout(this.pongTimer)
         }
-        if (this.buffers.length > 0) {
-            if (this.delta > this.maxDelta && !this.flowPaused) {
-                this.pause()
-                return
-            }
+        this.pongTimer = setTimeout(() => {
+            // The host stopped answering: it is hung. Killing it turns "all local
+            // terminals stall forever" into "they close and the host restarts".
+            this.manager.onHostHung(this)
+        }, PONG_TIMEOUT_MS)
+    }
 
-            const buffersToSend = []
-            let totalLength = 0
-            while (totalLength < this.maxChunk && this.buffers.length) {
-                totalLength += this.buffers[0].length
-                buffersToSend.push(this.buffers.shift())
-            }
-
-            if (buffersToSend.length === 0) {
-                return
-            }
-
-            let toSend = Buffer.concat(buffersToSend)
-            if (toSend.length > this.maxChunk) {
-                this.buffers.unshift(toSend.slice(this.maxChunk))
-                toSend = toSend.slice(0, this.maxChunk)
-            }
-            this.emitData(toSend)
-            this.delta += toSend.length
-
-            if (this.buffers.length) {
-                setImmediate(() => this.maybeEmit())
-            }
+    private disposeTimers (): void {
+        if (this.pingTimer) {
+            clearInterval(this.pingTimer)
+            this.pingTimer = null
         }
-    }
-
-    private emitData (data: Buffer) {
-        const validChunk = this.decoder.write(data)
-        this.onData(validChunk)
-        this.output$.next(validChunk)
-    }
-
-    private pause () {
-        this.pty.pause()
-        this.flowPaused = true
-    }
-
-    private resume () {
-        this.pty.resume()
-        this.flowPaused = false
-        this.maybeEmit()
+        if (this.pongTimer) {
+            clearTimeout(this.pongTimer)
+            this.pongTimer = null
+        }
     }
 }
 
-export class PTY {
-    private pty: nodePTY.IPty
-    private outputQueue: PTYDataQueue
-    exited = false
-    private killing = false
-    private graceTimer: NodeJS.Timeout|null = null
+/**
+ * Main-process bookkeeping for one local PTY, mirroring the other hosted
+ * connections (SSH/serial/telnet): window attachers, the abandonment grace
+ * timer and teardown. The node-pty handle itself lives in the owning
+ * [[PTYHost]].
+ */
+class PTYConnection extends HostedConnection {
+    protected readonly protocol = 'pty'
 
-    /**
-     * WebContents id of the window currently owning this PTY. Local PTYs are
-     * single-attacher: ownership moves during a cross-window drag.
-     */
-    attacher: number|null = null
+    private pid = 0
+    private pidWaiters: ((pid: number) => void)[] = []
+    private cleaned = false
 
-    constructor (private id: string, private app: Application, ...args: any[]) {
-        this.pty = (nodePTY as any).spawn(...args)
-        for (const key of ['close', 'exit']) {
-            (this.pty as any).on(key, (...eventArgs) => this.emit(key, ...eventArgs))
-        }
-
-        this.outputQueue = new PTYDataQueue(this.pty, data => {
-            setImmediate(() => this.emit('data', data))
-        })
-
-        this.pty.onData(data => this.outputQueue.push(Buffer.from(data)))
-        this.pty.onExit(() => {
-            this.exited = true
-        })
+    constructor (id: string, app: Application, public host: PTYHost) {
+        super(id, app)
     }
 
-    getPID (): number {
-        return this.pty.pid
+    /** Resolves once the host has reported the pid (0 if it never will). */
+    waitForPID (): Promise<number> {
+        if (this.pid) {
+            return Promise.resolve(this.pid)
+        }
+        return new Promise(resolve => this.pidWaiters.push(resolve))
+    }
+
+    setPID (pid: number): void {
+        this.settlePID(pid)
     }
 
     resize (columns: number, rows: number): void {
-        if (this.exited || this.killing) {
-            return
-        }
-        if (!(this.pty as any)._writable) {
-            return
-        }
-        try {
-            this.pty.resize(columns, rows)
-        } catch {
-            // The pty may have exited between the flag check and the call
-        }
-    }
-
-    write (buffer: Buffer): void {
-        if (this.exited || this.killing) {
-            return
-        }
-        if (!(this.pty as any)._writable) {
-            return
-        }
-        try {
-            this.pty.write(buffer as any)
-        } catch {
-            // pty may have just exited
-        }
+        this.host.send({ t: 'resize', id: this.id, cols: columns, rows })
     }
 
     ackData (length: number): void {
-        this.outputQueue.ack(length)
+        this.host.send({ t: 'ack', id: this.id, length })
     }
 
-    /** Claims ownership for a window and cancels any pending abandonment kill. */
-    attach (webContentsId: number): void {
-        this.attacher = webContentsId
+    protected doWrite (data: Buffer): void {
+        this.host.send({ t: 'write', id: this.id, data })
+    }
+
+    protected doDestroy (): void {
+        this.host.send({ t: 'kill', id: this.id })
+    }
+
+    /** A node-pty event from the host; exit/close finalise the connection. */
+    onHostEvent (event: string, args: any[]): void {
+        this.broadcast(event, ...args)
+        if ((event === 'exit' || event === 'close') && !this.cleaned) {
+            this.cleaned = true
+            this.cancelGrace()
+            this.notifyClosed()
+        }
+    }
+
+    /** The owning host crashed or hung: this PTY is gone for good. */
+    onHostGone (): void {
+        this.closed = true
         this.cancelGrace()
-    }
-
-    /** Drops ownership and starts the abandoned-connection countdown. */
-    detach (): void {
-        this.attacher = null
-        this.armGrace()
-    }
-
-    cancelGrace (): void {
-        if (this.graceTimer) {
-            clearTimeout(this.graceTimer)
-            this.graceTimer = null
+        this.settlePID(0)
+        this.broadcast('exit', { exitCode: -1 })
+        this.broadcast('close')
+        if (!this.cleaned) {
+            this.cleaned = true
+            this.notifyClosed()
         }
     }
 
-    /** Starts the abandoned-PTY countdown (no-op if a window still owns it). */
-    armGrace (): void {
-        if (this.graceTimer || this.exited || this.killing || this.attacher !== null) {
-            return
+    private settlePID (pid: number): void {
+        this.pid = pid
+        const waiters = this.pidWaiters
+        this.pidWaiters = []
+        for (const resolve of waiters) {
+            resolve(pid)
         }
-        this.graceTimer = setTimeout(() => {
-            this.graceTimer = null
-            if (this.attacher === null && !this.exited && !this.killing) {
-                this.kill()
-            }
-        }, GRACE_PERIOD_MS)
-    }
-
-    /**
-     * Tears the PTY down in a way that minimises the native ConPTY close/monitor
-     * race: stop the output pump first, mark the PTY as killing so no late
-     * write/resize can touch the half-closed native handle, then ask node-pty
-     * to kill. If the child already exited (or another kill beat us here), this
-     * is a no-op.
-     */
-    kill (signal?: string): void {
-        if (this.exited || this.killing) {
-            return
-        }
-        this.killing = true
-        this.outputQueue.stop()
-        try {
-            this.pty.kill(signal)
-        } catch {
-            // The ConPTY may already be closing on its exit worker — nothing to
-            // do on our side, the native layer owns the handle now.
-        }
-    }
-
-    private emit (event: string, ...args: any[]) {
-        this.app.broadcast(`pty:${this.id}:${event}`, ...args)
-        if (event === 'exit' || event === 'close') {
-            setImmediate(() => this.cleanup?.())
-        }
-    }
-
-    private cleanup: (() => void)|null = null
-
-    /** Lets the owning manager drop its registry entry once the pty is done. */
-    bindCleanup (fn: () => void): void {
-        this.cleanup = fn
     }
 }
 
+/**
+ * Owns the PTY host process pool and proxies renderer IPC to it. The main
+ * process never touches node-pty directly, so a native crash while tearing a
+ * session down only kills the owning host — the app survives and the affected
+ * tabs are closed via the usual `exit`/`close` events.
+ *
+ * `terminal.ptyHostMode` selects the pool shape: `'shared'` keeps one host for
+ * every local session (lowest memory), `'per-session'` gives each its own
+ * (a crash/hang is contained to that session). Defaults to per-session on
+ * Windows, where the native teardown is the fragile one.
+ */
 export class PTYManager {
-    private ptys: Record<string, PTY|undefined> = {}
-    private killChain = Promise.resolve()
+    private connections: Record<string, PTYConnection|undefined> = {}
+    private hosts = new Set<PTYHost>()
+    private sharedHost: PTYHost|null = null
+    private app!: Application
 
     init (app: Application): void {
+        this.app = app
+
         ipcMain.on('pty:spawn', (event, ...options) => {
             const id = uuidv4().toString()
             event.returnValue = id
-            const pty = new PTY(id, app, ...options)
-            pty.bindCleanup(() => this.removePty(id))
-            pty.attach(event.sender.id)
-            this.ptys[id] = pty
+            const host = this.assignHost()
+            const conn = new PTYConnection(id, app, host)
+            conn.bindCleanup(() => {
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete this.connections[id]
+                host.release()
+                this.maybeReap(host)
+            })
+            conn.attachers.add(event.sender.id)
+            this.connections[id] = conn
+            host.acquire()
+            host.send({ t: 'spawn', id, args: options })
         })
 
-        ipcMain.on('pty:exists', (event, id) => {
-            const pty = this.ptys[id]
-            const alive = !!pty && !pty.exited
-            if (alive) {
-                // Restore path: the new window claims ownership, cancelling any
-                // abandonment countdown started by the source window's detach.
-                pty.attach(event.sender.id)
-            }
-            event.returnValue = alive
-        })
+        // pty:attach / pty:detach / pty:kill / pty:write — the shared hosted-
+        // connection endpoints, exactly like SSH/serial/telnet.
+        registerHostedConnectionEndpoints('pty', this.connections)
 
-        ipcMain.on('pty:detach', (_event, id) => {
-            const pty = this.ptys[id]
-            if (pty && !pty.exited) {
-                pty.detach()
-            }
-        })
-
-        ipcMain.on('pty:get-pid', (event, id) => {
-            event.returnValue = this.ptys[id]?.getPID()
-        })
+        ipcMain.handle('pty:get-pid', (_event, id) => this.connections[id]?.waitForPID() ?? 0)
 
         ipcMain.on('pty:resize', (_event, id, columns, rows) => {
-            this.ptys[id]?.resize(columns, rows)
-        })
-
-        ipcMain.on('pty:write', (_event, id, data) => {
-            this.ptys[id]?.write(Buffer.from(data))
-        })
-
-        ipcMain.on('pty:kill', (_event, id, signal) => {
-            // Serialize native ConPTY teardown so a burst of workspace-closes
-            // (each session sends pty:kill) never overlap inside node-pty.
-            this.killChain = this.killChain.then(() => {
-                this.ptys[id]?.kill(signal)
-            })
+            this.connections[id]?.resize(columns, rows)
         })
 
         ipcMain.on('pty:ack-data', (_event, id, length) => {
-            this.ptys[id]?.ackData(length)
+            this.connections[id]?.ackData(length)
         })
     }
 
-    /** The window closed: its kept-alive PTYs start the abandonment countdown. */
+    /** Drops one window's claims; abandoned connections die after the grace period. */
     windowClosed (webContentsId: number): void {
-        for (const pty of Object.values(this.ptys)) {
-            if (pty && !pty.exited && pty.attacher === webContentsId) {
-                pty.detach()
+        dropWindowClaims(this.connections, webContentsId)
+    }
+
+    destroyAll (): void {
+        destroyAllConnections(this.connections)
+        for (const host of this.hosts) {
+            host.terminate()
+        }
+        this.hosts.clear()
+        this.sharedHost = null
+    }
+
+    /** @hidden host callback: route one event to its connection. */
+    onHostMessage (_host: PTYHost, message: PTYHostEvent): void {
+        if (message.t === 'pong') {
+            return
+        }
+        const conn = this.connections[message.id]
+        switch (message.t) {
+            case 'spawned':
+                conn?.setPID(message.pid)
+                break
+            case 'error':
+                conn?.onHostGone()
+                break
+            case 'event':
+                conn?.onHostEvent(message.event, message.args)
+                break
+        }
+    }
+
+    /** @hidden host callback: every PTY it owned is gone. */
+    onHostExit (host: PTYHost): void {
+        if (!this.hosts.delete(host)) {
+            return
+        }
+        if (this.sharedHost === host) {
+            this.sharedHost = null
+        }
+        for (const conn of Object.values(this.connections)) {
+            if (conn && conn.host === host) {
+                conn.onHostGone()
             }
         }
     }
 
-    private removePty (id: string): void {
-        delete this.ptys[id]
+    /** @hidden host callback: hung (watchdog timeout) — kill and let exit clean up. */
+    onHostHung (host: PTYHost): void {
+        host.terminate()
+    }
+
+    private assignHost (): PTYHost {
+        if (this.mode === 'per-session') {
+            const host = new PTYHost(this)
+            this.hosts.add(host)
+            return host
+        }
+        if (!this.sharedHost) {
+            this.sharedHost = new PTYHost(this)
+            this.hosts.add(this.sharedHost)
+        }
+        return this.sharedHost
+    }
+
+    private maybeReap (host: PTYHost): void {
+        // Per-session hosts are never reused: drop them as soon as they idle.
+        if (this.mode === 'per-session' && host.activeCount === 0) {
+            host.terminate()
+        }
+    }
+
+    private get mode (): 'shared'|'per-session' {
+        const configured = this.app.configStore?.terminal?.ptyHostMode
+        if (configured === 'shared' || configured === 'per-session') {
+            return configured
+        }
+        return process.platform === 'win32' ? 'per-session' : 'shared'
     }
 }

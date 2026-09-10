@@ -1,5 +1,5 @@
 import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
-import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, ChangeDetectorRef, NgZone } from '@angular/core'
+import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
 import { TabRecoveryProvider, RecoveryToken } from '../api/tabRecovery'
@@ -59,10 +59,7 @@ import { SessionTab } from '../api/session'
                 (dragend)='onPaneTabDragEnd($event, paneTab)'
             ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span>
         </div>
-        <div class='pane-drop-hint'
-            [class.visible]='_dragHintVisible'
-            [ngStyle]='{left: _dragHintX + "px", top: _dragHintY + "px", width: _dragHintW + "px", height: _dragHintH + "px"}'
-        ></div>
+        <div #dropHint class='pane-drop-hint'></div>
     `,
     styleUrls: ['./workspace.component.scss'],
 })
@@ -164,6 +161,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return this.app.activeTab === this
     }
 
+    /** @hidden Drag overlay element — driven imperatively during a drag. */
+    @ViewChild('dropHint') private dropHint?: ElementRef<HTMLElement>
+
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
         const visible = hint?.visible ?? false
@@ -173,8 +173,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const h = hint?.h ?? 0
         if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h) {
             // Hint unchanged — during a stationary drag Chromium keeps re-firing
-            // dragover (~350ms), so skipping the view update here avoids a
-            // whole-tree change detection on every one of those ticks.
+            // dragover (~350ms), so skipping the update avoids redundant work.
             return
         }
         this._dragHintVisible = visible
@@ -182,12 +181,20 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this._dragHintY = y
         this._dragHintW = w
         this._dragHintH = h
-        if (NgZone.isInAngularZone()) {
-            this.cdr.markForCheck()
-        } else {
-            // dragover listeners run outside the zone — refresh this
-            // component's view explicitly so the overlay follows the cursor.
-            this.cdr.detectChanges()
+
+        // Drive the overlay directly on the DOM. The drag listeners run OUTSIDE
+        // the Angular zone, and ANY zone.run() from a drag handler — even a
+        // one-shot markForCheck — wedges the whole window's change detection
+        // for the rest of the session (clicks/keyboard stop updating).
+        // The overlay is purely visual (#dropHint has no Angular bindings),
+        // so touch it imperatively and skip change detection entirely.
+        const element = this.dropHint?.nativeElement
+        if (element) {
+            element.classList.toggle('visible', visible)
+            element.style.left = `${x}px`
+            element.style.top = `${y}px`
+            element.style.width = `${w}px`
+            element.style.height = `${h}px`
         }
     }
 
@@ -240,7 +247,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         private hostApp: HostAppService,
         private hostWindow: HostWindowService,
         private zone: NgZone,
-        private cdr: ChangeDetectorRef,
     ) {
         super(injector)
         this.root = new SplitContainer()
@@ -879,6 +885,14 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         if (!params) {
             return false
         }
+        // Restore the source tab's live naming state so the receiving tab does
+        // not fall back to the profile name (or lose the dynamic-title toggle)
+        // until the shell emits its next OSC title.
+        params.inputs = params.inputs ?? {}
+        params.inputs.title = payload.tabTitle ?? ''
+        params.inputs.customTitle = payload.tabCustomTitle ?? ''
+        params.inputs.disableDynamicTitle = payload.disableDynamicTitle ?? false
+        params.inputs.icon = payload.tabIcon ?? null
         const session = this.tabsService.create(params as NewTabParameters<any>)
         this.app.selectTab(this)
 

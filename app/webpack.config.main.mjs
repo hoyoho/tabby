@@ -9,6 +9,9 @@ const config = {
     target: 'electron-main',
     entry: {
         main: path.resolve(__dirname, 'lib/index.ts'),
+        // node-pty lives here (see lib/ptyHost.ts): an Electron utilityProcess
+        // so a native ConPTY teardown crash cannot take the app down.
+        ptyHost: path.resolve(__dirname, 'lib/ptyHost.ts'),
     },
     mode: process.env.TABBY_DEV ? 'development' : 'production',
     context: __dirname,

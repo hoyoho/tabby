@@ -37,7 +37,7 @@ export class Application {
     getWindows (): Window[] { return this.windows }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    constructor (private configStore: any) {
+    constructor (public configStore: any) {
         remote.initialize()
         registerProxyAuthHandler()
         this.useBuiltinGraphics()
@@ -123,6 +123,7 @@ export class Application {
             this.telnetManager.destroyAll()
             this.sshManager.destroyAll()
             this.serialManager.destroyAll()
+            this.ptyManager.destroyAll()
         })
 
         app.on('window-all-closed', () => {
