@@ -285,6 +285,78 @@ export class PaneDragController {
         workspace: WorkspaceComponent
     } | null = null
 
+    /**
+     * Drag-over watchdog. Chromium re-fires `dragover` every ~350ms while the
+     * native drag hovers a document — but `dragleave` may silently never fire
+     * when the pointer exits through the window frame / OS chrome to another
+     * window or app, which used to leave a stale highlight behind. Instead of
+     * trusting that (quirk) event, every acknowledged `dragover` re-arms this
+     * timer; once it expires un-poked, the cursor has demonstrably left the
+     * window and the hint is cleared.
+     *
+     * The margin is deliberately > 3x the ~350ms re-fire: under the very CPU
+     * saturation this gesture used to cause, a delayed re-fire must not be
+     * mistaken for "left the window" (that would flicker the highlight off and
+     * back). A slightly longer-lived stale hint is far cheaper than flicker.
+     */
+    private heartbeatTimer: ReturnType<typeof setTimeout>|null = null
+
+    /** Re-arm the drag-over watchdog (native drag present in this window). */
+    private pokeDragHeartbeat (): void {
+        if (this.heartbeatTimer) {
+            clearTimeout(this.heartbeatTimer)
+        }
+        this.heartbeatTimer = setTimeout(() => {
+            this.heartbeatTimer = null
+            // No dragover reached this window for the whole interval — clear
+            // whatever stale drop-zone preview is left.
+            this.clearHint()
+        }, 1200)
+    }
+
+    private clearHeartbeat (): void {
+        if (this.heartbeatTimer) {
+            clearTimeout(this.heartbeatTimer)
+            this.heartbeatTimer = null
+        }
+    }
+
+    /**
+     * Source-side backstop for a gesture that ends WITHOUT a usable `dragend`
+     * (ESC/abort, a swallowed release, Wayland quirks). Without it the drag
+     * state — and the session's `keepPTYAlive` flag — would linger: a later
+     * close of that tab would then detach instead of killing the connection.
+     *
+     * Only fires while the drag never reached a clean terminal state
+     * (`committed`/`fallbackTimer` are set by `endNativeDrag`); a drag that
+     * merely crossed into another window is left to the commit round-trip.
+     */
+    private dragEndFallback = (event?: Event): void => {
+        const state = this.state
+        if (!state || state.committed || state.fallbackTimer) {
+            return
+        }
+        if (event?.type === 'keydown' && (event as KeyboardEvent).key !== 'Escape') {
+            return
+        }
+        this.cancelState()
+    }
+
+    private installDragEndFallback (): void {
+        window.addEventListener('mousedown', this.dragEndFallback, true)
+        window.addEventListener('keydown', this.dragEndFallback, true)
+    }
+
+    private removeDragEndFallback (): void {
+        window.removeEventListener('mousedown', this.dragEndFallback, true)
+        window.removeEventListener('keydown', this.dragEndFallback, true)
+    }
+
+    /** Last client point whose hit-test ran, so stationary re-fires are free. */
+    private lastDragX = Number.NaN
+    private lastDragY = Number.NaN
+    private lastDragAccept = false
+
     constructor (private host: PaneDragHost) {}
 
     /** Let the pane-seam splitter gutters fall through to the panes while a
@@ -473,6 +545,7 @@ export class PaneDragController {
             committedSub,
             fallbackTimer: null,
         }
+        this.installDragEndFallback()
         this.host.beginNativeDrag(dragId, savedState)
     }
 
@@ -490,6 +563,7 @@ export class PaneDragController {
         if (!this.host.isActiveWorkspace) {
             return
         }
+        this.pokeDragHeartbeat()
         this.acceptDragEvent(event)
     }
 
@@ -507,6 +581,7 @@ export class PaneDragController {
         if (!this.host.isActiveWorkspace) {
             return
         }
+        this.pokeDragHeartbeat()
         this.acceptDragEvent(event)
     }
 
@@ -514,7 +589,22 @@ export class PaneDragController {
         if (!event.dataTransfer) {
             return
         }
-        if (!this.updateDragHint(event.clientX, event.clientY)) {
+        // Chromium re-fires `dragover` at the SAME coordinates every ~350ms
+        // while the pointer sits still; re-running the hit-test (and, outside a
+        // pane, the `tab-header` rect scan) for each is pure waste. Reuse the
+        // previous decision — the cursor must still be accepted synchronously,
+        // so preventDefault cannot be deferred to a frame callback.
+        if (event.clientX === this.lastDragX && event.clientY === this.lastDragY) {
+            if (this.lastDragAccept) {
+                event.preventDefault()
+                event.dataTransfer.dropEffect = 'move'
+            }
+            return
+        }
+        this.lastDragX = event.clientX
+        this.lastDragY = event.clientY
+        const accept = this.lastDragAccept = this.updateDragHint(event.clientX, event.clientY)
+        if (!accept) {
             return
         }
         event.preventDefault()
@@ -607,6 +697,7 @@ export class PaneDragController {
         // its keep-alive flag survives to the session's destroy().
         const tab = state.tab
         this.state = null
+        this.removeDragEndFallback()
         this.host.keepSessionAlive(tab, true)
         void tab.destroy()
         this.host.cleanRoot()
@@ -617,6 +708,7 @@ export class PaneDragController {
         const state = this.state
         if (!state) { return }
         this.state = null
+        this.removeDragEndFallback()
         this.resetDropPreview()
         state.committedSub.unsubscribe()
         if (state.fallbackTimer) {
@@ -634,6 +726,7 @@ export class PaneDragController {
         state.committed = true
         state.committedSub.unsubscribe()
         this.state = null
+        this.removeDragEndFallback()
         this.host.endNativeDrag(state.dragId)
     }
 
@@ -641,6 +734,7 @@ export class PaneDragController {
     /** @hidden teardown (e.g. component destroyed mid-gesture) */
     abort (): void {
         this.cancelState()
+        this.removeDragEndFallback()
         this.resetDropPreview()
     }
 
@@ -655,6 +749,12 @@ export class PaneDragController {
 
     /** Clears the drop-zone preview: highlight geometry + gutter interception. */
     private resetDropPreview (): void {
+        this.clearHeartbeat()
+        // A new gesture may re-enter at the exact point this one ended on;
+        // forget the cached hit-test so it is recomputed rather than reused.
+        this.lastDragX = Number.NaN
+        this.lastDragY = Number.NaN
+        this.lastDragAccept = false
         this.lastZone = null
         this.host.setDragHint(null)
         this.gutterPassthrough(false)

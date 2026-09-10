@@ -1,5 +1,5 @@
 import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
-import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector } from '@angular/core'
+import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, ChangeDetectorRef, NgZone } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
 import { TabRecoveryProvider, RecoveryToken } from '../api/tabRecovery'
@@ -157,6 +157,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     private dragOverListener: ((event: DragEvent) => void)|null = null
     private dragEnterListener: ((event: DragEvent) => void)|null = null
     private dragLeaveListener: ((event: DragEvent) => void)|null = null
+    private blurListener: (() => void)|null = null
 
     /** @hidden PaneDragHost — only the active top-level workspace is a drop target. */
     get isActiveWorkspace (): boolean {
@@ -165,11 +166,29 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
-        this._dragHintVisible = hint?.visible ?? false
-        this._dragHintX = hint?.x ?? 0
-        this._dragHintY = hint?.y ?? 0
-        this._dragHintW = hint?.w ?? 0
-        this._dragHintH = hint?.h ?? 0
+        const visible = hint?.visible ?? false
+        const x = hint?.x ?? 0
+        const y = hint?.y ?? 0
+        const w = hint?.w ?? 0
+        const h = hint?.h ?? 0
+        if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h) {
+            // Hint unchanged — during a stationary drag Chromium keeps re-firing
+            // dragover (~350ms), so skipping the view update here avoids a
+            // whole-tree change detection on every one of those ticks.
+            return
+        }
+        this._dragHintVisible = visible
+        this._dragHintX = x
+        this._dragHintY = y
+        this._dragHintW = w
+        this._dragHintH = h
+        if (NgZone.isInAngularZone()) {
+            this.cdr.markForCheck()
+        } else {
+            // dragover listeners run outside the zone — refresh this
+            // component's view explicitly so the overlay follows the cursor.
+            this.cdr.detectChanges()
+        }
     }
 
     /** @hidden PaneNavigationHost */
@@ -220,6 +239,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         private injector: Injector,
         private hostApp: HostAppService,
         private hostWindow: HostWindowService,
+        private zone: NgZone,
+        private cdr: ChangeDetectorRef,
     ) {
         super(injector)
         this.root = new SplitContainer()
@@ -253,9 +274,22 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // the active one — several mounted workspaces each listening on the
         // document cannot disambiguate a drop whose active tab changes
         // mid-handling.
-        document.addEventListener('dragover', this.dragOverListener)
-        document.addEventListener('dragenter', this.dragEnterListener)
-        document.addEventListener('dragleave', this.dragLeaveListener)
+        // The drag surface is DOM-only (no model bindings), so drive it
+        // outside the Angular zone: every dragover/dragenter would otherwise
+        // schedule a whole-app change detection pass, which is exactly the
+        // drag-time CPU spike reported against the old implementation. View
+        // updates are done explicitly in setDragHint (scoped detectChanges)
+        // only when the highlight actually changes.
+        this.zone.runOutsideAngular(() => {
+            document.addEventListener('dragover', this.dragOverListener!)
+            document.addEventListener('dragenter', this.dragEnterListener!)
+            document.addEventListener('dragleave', this.dragLeaveListener!)
+        })
+        // Last line of defence for a stale preview: native-drag aware or not,
+        // losing window focus can sidestep dragleave entirely (e.g. the OS
+        // steals the pointer mid-gesture) — drop the highlight right away.
+        this.blurListener = () => this.paneDrag.clearHint()
+        window.addEventListener('blur', this.blurListener)
 
         // app.service imports this component and this component imported
         // AppService in the constructor signature → a circular module graph
@@ -458,6 +492,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         if (this.dragLeaveListener) {
             document.removeEventListener('dragleave', this.dragLeaveListener)
             this.dragLeaveListener = null
+        }
+        if (this.blurListener) {
+            window.removeEventListener('blur', this.blurListener)
+            this.blurListener = null
         }
         this.paneDrag.abort()
         this.resizeObserver?.disconnect()
