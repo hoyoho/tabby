@@ -8,6 +8,8 @@
         span([fastHtmlBind]='button.icon')
         span.ms-1 {{button.label}}
 
+    ng-content
+
     button.pin-toolbar-button.btn.btn-sm.btn-link.border-0(
         (click)='togglePin()',
         [attr.title]='pinned ? "Unpin toolbar \u2014 reveal by hovering bottom" : "Pin toolbar"'

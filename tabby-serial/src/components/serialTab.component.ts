@@ -14,6 +14,7 @@ import { SerialSession, SerialProfile } from '../api'
     animations: BaseTerminalTabComponent.animations,
 })
 export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialProfile> {
+    enableToolbar = false
     session: SerialSession|null = null
 
     /** Set by the recovery provider when re-attaching a live serial port. */

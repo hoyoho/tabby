@@ -1,4 +1,4 @@
-import { Component, NgZone, Input, ElementRef, HostBinding } from '@angular/core'
+import { Component, NgZone, Input, HostBinding } from '@angular/core'
 import { Action, ActionContext, ActionRegistry, ActionSurface } from 'tabby-core'
 import { BaseTerminalTabComponent } from '../api/baseTerminalTab.component'
 
@@ -15,11 +15,7 @@ export class TerminalToolbarComponent {
 
     @HostBinding('class.empty')
     get isEmpty (): boolean {
-        if (this.buttons.length > 0) {
-            return false
-        }
-        const host = this.element.nativeElement as HTMLElement
-        return host.querySelectorAll('button:not(.pin-toolbar-button)').length === 0
+        return this.buttons.length === 0 || this.tab?.enableToolbar === false
     }
 
     get pinned (): boolean {
@@ -29,7 +25,6 @@ export class TerminalToolbarComponent {
     constructor (
         private actions: ActionRegistry,
         private zone: NgZone,
-        private element: ElementRef,
     ) { }
 
     ngOnChanges (): void {

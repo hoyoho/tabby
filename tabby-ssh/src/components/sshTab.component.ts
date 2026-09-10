@@ -23,6 +23,7 @@ import { SSHCallbackBridgeService } from '../services/sshCallbackBridge.service'
     animations: BaseTerminalTabComponent.animations,
 })
 export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> {
+    enableToolbar = true
     sshSession: SSHSession|null = null
     session: SSHShellSession|null = null
     sftpPanelVisible = false

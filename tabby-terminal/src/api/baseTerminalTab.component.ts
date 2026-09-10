@@ -88,6 +88,9 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
     @HostBinding('class.toolbar-revealed') revealToolbar = false
 
     /** @hidden */
+    @HostBinding('class.toolbar-enabled') enableToolbar = false
+
+    /** @hidden */
     @HostBinding('class.toolbar-pinned') pinToolbar = (window.localStorage.pinTerminalToolbar ?? 'true') === 'true'
 
     /** @hidden */
