@@ -4,7 +4,6 @@ import { ConfigProvider, Platform } from 'tabby-core'
 export class TerminalConfigProvider extends ConfigProvider {
     defaults = {
         terminal: {
-            autoOpen: true,
             useConPTY: true,
             /**
              * Local PTY host process model:

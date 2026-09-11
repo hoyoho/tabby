@@ -1,7 +1,7 @@
 import * as path from 'path'
 import * as fs from 'mz/fs'
 import { Injectable } from '@angular/core'
-import { CLIHandler, CLIEvent, AppService, ConfigService, HostWindowService, ProfilesService, NotificationsService, PlatformService, TranslateService, PartialProfile } from 'tabby-core'
+import { CLIHandler, CLIEvent, HostWindowService, ProfilesService, NotificationsService, PlatformService, TranslateService, PartialProfile } from 'tabby-core'
 import { TerminalService } from './services/terminal.service'
 import { LocalProfile } from './api'
 import { LocalProfilesService } from './profiles'
@@ -154,41 +154,6 @@ export class OpenPathCLIHandler extends CLIHandler {
             }
         }
 
-        return false
-    }
-}
-
-@Injectable()
-export class AutoOpenTabCLIHandler extends CLIHandler {
-    firstMatchOnly = true
-    priority = -1000
-
-    constructor (
-        private app: AppService,
-        private config: ConfigService,
-        private terminal: TerminalService,
-    ) {
-        super()
-    }
-
-    async handle (event: CLIEvent): Promise<boolean> {
-        if (!event.secondInstance && this.config.store.terminal.autoOpen) {
-            // Mark that the UI has booted at least once. This flag is
-            // independent of the "restore tabs" setting, so disabling recovery
-            // (which stops tabsRecovery from being written) can't make the app
-            // look like a first run forever.
-            const firstRun = typeof window.localStorage.tabbyLaunched !== 'string'
-            window.localStorage.tabbyLaunched = 'true'
-            this.app.ready$.subscribe(() => {
-                if (this.app.tabs.length === 0) {
-                    // Auto-open the default profile only on a genuine first run.
-                    if (firstRun) {
-                        this.terminal.openTab().catch(err => console.error('[auto-open] openTab failed', err))
-                    }
-                }
-            })
-            return true
-        }
         return false
     }
 }

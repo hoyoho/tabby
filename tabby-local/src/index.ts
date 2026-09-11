@@ -22,7 +22,7 @@ import { TerminalConfigProvider } from './config'
 import { LocalTerminalHotkeyProvider } from './hotkeys'
 import { NewTabContextMenu } from './tabContextMenu'
 
-import { AutoOpenTabCLIHandler, OpenPathCLIHandler, TerminalCLIHandler } from './cli'
+import { OpenPathCLIHandler, TerminalCLIHandler } from './cli'
 import { LocalProfilesService } from './profiles'
 
 /** @hidden */
@@ -48,7 +48,6 @@ import { LocalProfilesService } from './profiles'
 
         { provide: CLIHandler, useClass: TerminalCLIHandler, multi: true },
         { provide: CLIHandler, useClass: OpenPathCLIHandler, multi: true },
-        { provide: CLIHandler, useClass: AutoOpenTabCLIHandler, multi: true },
     ],
     declarations: [
         TerminalTabComponent,
