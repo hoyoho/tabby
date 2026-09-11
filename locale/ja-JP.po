@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "アクセシビリティ"
 
 
-msgid "Acrylic background"
-msgstr "アクリル風ウィンドウ"
-
-
 msgid "Add"
 msgstr "追加"
 
@@ -79,10 +75,6 @@ msgstr "追加..."
 
 msgid "Additional space between lines"
 msgstr "行と行の間隔を広げます"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "インターフェース背面の暗い幕の濃さを調整します"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "自動"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "起動時に新しい端末を自動で開く"
-
-
 msgid "Automatic"
 msgstr "自動"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "変更を自動的にアップロードし、一分ごとに更新を確認します。"
-
-
 msgid "Available"
 msgstr "利用可能"
-
-
-msgid "Background image"
-msgstr "背景画像"
-
-
-msgid "Background image brightness"
-msgstr "背景画像の明るさ"
-
-
-msgid "Background type"
-msgstr "透過の種類"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "青色"
 
 
-msgid "Blur"
-msgstr "ぼかし"
-
-
 msgid "Bold font weight"
 msgstr "太字フォントの太さ"
 
@@ -231,10 +199,6 @@ msgstr "下部"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "ブラケットペースト (シェルが対応している必要があります)"
-
-
-msgid "Browse…"
-msgstr "参照…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "配色"
 
 
-msgid "Color schemes"
-msgstr "配色"
-
-
 msgid "Colors"
 msgstr "配色"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "圧縮"
 
 
-msgid "Config deleted"
-msgstr "設定が消去されました"
-
-
-msgid "Config downloaded"
-msgstr "設定をダウンロードしました"
-
-
 msgid "Config file"
 msgstr "設定ファイル"
-
-
-msgid "Config sync"
-msgstr "設定の同期"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "設定の同期には Tabby Web サービスのインスタンスが必要です。"
-
-
-msgid "Config uploaded"
-msgstr "設定をアップロードしました"
-
-
-msgid "Configs"
-msgstr "設定"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "接続"
 
 msgid "Connection closed"
 msgstr "接続が切断されました"
-
-
-msgid "Connection failed: {error}"
-msgstr "接続に失敗しました: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "書式付きコピー"
 
 msgid "Could not decrypt config"
 msgstr "設定を復号できませんでした"
-
-
-msgid "Could not read the private key"
-msgstr "秘密鍵を読み取れませんでした"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "グループを削除"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "リモート上の設定を消去しますか？"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "グループのプロファイルとサブグループを削除しますか？"
 
@@ -660,10 +584,6 @@ msgstr "現在のタブを切断する (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "{host} から切断しますか？"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "端末ウィンドウの背面に画像を表示します"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "複数行の貼り付けに対応していない端末向けに、貼り付けたテキストを 1 行にまとめます"
 
 
-msgid "Fluent"
-msgstr "Fluent"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Fluent背景はドラッグ中にラグを発生させることがあります"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "インストール"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Tabby Web版の設定画面から確認することができます"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "ぼかしの入った透過ウィンドウに変更します"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "リモート上の作業ディレクトリを自動検出する方法をご紹介します。"
 
 
-msgid "Learn more"
-msgstr "詳細情報"
-
-
 msgid "Left"
 msgstr "左側"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "読み込み中"
 
 
-msgid "Loading configs..."
-msgstr "設定を読み込み中..."
-
-
 msgid "Local"
 msgstr "ローカル"
 
@@ -1300,10 +1200,6 @@ msgstr "最大Keep-Alive"
 
 msgid "Minimum contrast ratio"
 msgstr "最小コントラスト比"
-
-
-msgid "Modified on {date}"
-msgstr "更新日 {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "名前"
 
 
-msgid "Name for the new config"
-msgstr "新しい設定の名前"
-
-
 msgid "Name for the new directory"
 msgstr "新しいディレクトリの名前"
 
@@ -1384,10 +1276,6 @@ msgstr "新規"
 
 msgid "New admin session"
 msgstr "新しい管理者セッション"
-
-
-msgid "New config on {platform}"
-msgstr "{platform} の新しい設定"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Discord で"
 
 
-msgid "Opacity"
-msgstr "不透明度"
-
-
 msgid "Open"
 msgstr "開く"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "X11ディスプレイを上書きする"
 
 
-msgid "Overwrite local and sync"
-msgstr "ローカルを上書きして同期"
-
-
-msgid "Overwrite remote and sync"
-msgstr "リモートを上書きして同期"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "リモート上の設定を上書きして、同期を開始しますか？"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "現在のローカル上の設定を上書きして、同期を開始しますか？"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "親グループ"
 
 msgid "Parity"
 msgstr "パリティ"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Vaultによって設定ファイルを暗号化した場合、設定の一部だけを同期から外すことはできません。"
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "ポートが閉じています"
 
 
-msgid "Port forwarding"
-msgstr "ポート転送"
-
-
 msgid "Port opened"
 msgstr "ポートが開いています"
 
@@ -1719,10 +1579,6 @@ msgstr "貼り付けたコマンドの偶発的な実行を防止することが
 
 msgid "Previous workspace"
 msgstr "前のワークスペース"
-
-
-msgid "Private key passphrase"
-msgstr "秘密鍵のパスフレーズ"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "プラグインを検索"
 
 
-msgid "Secret sync token"
-msgstr "シークレット同期トークン"
-
-
 msgid "Select"
 msgstr "選択"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "端末のフロントエンド実装を切り替える (実験的)"
 
 
-msgid "Sync"
-msgstr "同期"
-
-
-msgid "Sync automatically"
-msgstr "自動同期"
-
-
-msgid "Sync host"
-msgstr "同期サーバー"
-
-
-msgid "Sync hotkeys"
-msgstr "ホットキーの同期"
-
-
-msgid "Sync Vault"
-msgstr "Vaultの同期"
-
-
-msgid "Sync window settings"
-msgstr "ウィンドウ設定の同期"
-
-
 msgid "Tab activity"
 msgstr "タブのアクティビティ"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "{version} にアップグレード"
 
 
-msgid "Upload"
-msgstr "アップロード"
-
-
-msgid "Upload as a new config"
-msgstr "新しい設定としてアップロード"
-
-
 msgid "Upload files"
 msgstr "ファイルをアップロード"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "ユーザー名"
 
 
-msgid "Username for {host}"
-msgstr "{host} のユーザー名"
-
-
 msgid "Using CONNECT method"
 msgstr "CONNECTメソッドを使用します"
-
-
-msgid "Using saved password"
-msgstr "保存済みのパスワードを使用します"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "バージョン"
 
 msgid "Version: {version}"
 msgstr "バージョン: {version}"
-
-
-msgid "Vibrancy"
-msgstr "磨りガラス"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "送信"
 
 
-msgid "Shell"
-msgstr "シェル"
-
 msgid "Menu"
 msgstr "メニュー"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "接続をテスト"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name}（管理者として）"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "ここで Tabby を開く"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "パスを Tabby に貼り付け"
+
+msgid "Add local plugin"
+msgstr "ローカルプラグインを追加"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Current value"
+msgstr "現在の値"
+
+msgid "Cursor"
+msgstr "カーソル"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "プラグインによって提供されるグローバルスタイル（読み取り専用）"
+
+msgid "Isolated"
+msgstr "分離"
+
+msgid "Select plugin folder"
+msgstr "プラグインフォルダを選択"
+
+msgid "Session isolation"
+msgstr "セッションの分離"
+
+msgid "Sessions"
+msgstr "セッション"
+
+msgid "Shared"
+msgstr "共有"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "共有モードはメモリを節約し、セッションごとのモードはより安定しています。"
+
+msgid "Show CSS variables reference"
+msgstr "CSS変数リファレンスを表示"
+
+msgid "Styles"
+msgstr "スタイル"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Tabby の CSS 変数の現在の実行時値。カスタム CSS フィールドで再利用できます"
+
+msgid "The target of the link {name} does not exist"
+msgstr "リンク {name} のターゲットが存在しません"
+
+msgid "Variable"
+msgstr "変数"
+
+msgid "Window style"
+msgstr "ウィンドウスタイル"
+
+msgid "Defined by"
+msgstr "定義元"

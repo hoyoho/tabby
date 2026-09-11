@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Toeganklikheid"
 
 
-msgid "Acrylic background"
-msgstr "Akriel agtergrond"
-
-
 msgid "Add"
 msgstr "Voeg by"
 
@@ -79,10 +75,6 @@ msgstr "Voeg by..."
 
 msgid "Additional space between lines"
 msgstr "Bykomende spasie tussen lyne"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Pas die donker laag agter die koppelvlak aan"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Outo"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Maak 'n terminaal outomaties oop wanneer die toep begin"
-
-
 msgid "Automatic"
 msgstr "Outomaties"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Laai veranderinge outomaties op en kyk elke minuut vir opdaterings"
-
-
 msgid "Available"
 msgstr "Beskikbaar"
-
-
-msgid "Background image"
-msgstr "Agtergrondbeeld"
-
-
-msgid "Background image brightness"
-msgstr "Helderheid van die agtergrondbeeld"
-
-
-msgid "Background type"
-msgstr "Agtergrond tipe"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Blou"
 
 
-msgid "Blur"
-msgstr "Vervaag"
-
-
 msgid "Bold font weight"
 msgstr "Vet lettertipe gewig"
 
@@ -231,10 +199,6 @@ msgstr "Onderkant"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Plak tussen hakies (vereis dop ondersteuning)"
-
-
-msgid "Browse…"
-msgstr "Blaai…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Kleur skema"
 
 
-msgid "Color schemes"
-msgstr "Kleurskemas"
-
-
 msgid "Colors"
 msgstr "Kleure"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Kompressie"
 
 
-msgid "Config deleted"
-msgstr "Opstelling geskrap"
-
-
-msgid "Config downloaded"
-msgstr "Opstelling afgelaai"
-
-
 msgid "Config file"
 msgstr "Opstelling lêer"
-
-
-msgid "Config sync"
-msgstr "Opstelling sinchronisering"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Opstellingsinkronisering vereis 'n instansie van die Tabby Web-diens."
-
-
-msgid "Config uploaded"
-msgstr "Opstelling opgelaai"
-
-
-msgid "Configs"
-msgstr "Opstellings"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Koppel"
 
 msgid "Connection closed"
 msgstr "Verbinding gesluit"
-
-
-msgid "Connection failed: {error}"
-msgstr "Koppel het misluk: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Kopieer met formatering"
 
 msgid "Could not decrypt config"
 msgstr "Kon nie opstelling dekripteer nie"
-
-
-msgid "Could not read the private key"
-msgstr "Kon nie die privaat sleutel lees nie"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Verwyder groep"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Verwyder die konfigurasie aan die afgeleë kant?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Verwyder die groep se profiele en subgroepe?"
 
@@ -660,10 +584,6 @@ msgstr "Ontkoppel huidige oortjie (Serieel/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Ontkoppel van {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Vertoon 'n beeld agter die terminaalvenster"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Maak geplakte teks een reël vir terminale wat nie veelreël-plak ondersteun nie"
 
 
-msgid "Fluent"
-msgstr "Vloeiend"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Vloeiende agtergrond veroorsaak soms sleep vertraging"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Kry"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Kry dit uit die Tabby Web-instellingsvenster"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Gee die venster 'n vaag deursigtige agtergrond"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Leer hoe om Tabby toe te laat om afgeleë dop se werkgids op te spoor."
 
 
-msgid "Learn more"
-msgstr "Kom meer te wete"
-
-
 msgid "Left"
 msgstr "Links"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Laai tans"
 
 
-msgid "Loading configs..."
-msgstr "Laai tans opstellings..."
-
-
 msgid "Local"
 msgstr "Plaaslike"
 
@@ -1300,10 +1200,6 @@ msgstr "Maks. hou-lewendig tel"
 
 msgid "Minimum contrast ratio"
 msgstr "Minimum kontrasverhouding"
-
-
-msgid "Modified on {date}"
-msgstr "Gewysig op {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Naam"
 
 
-msgid "Name for the new config"
-msgstr "Naam vir die nuwe opstelling"
-
-
 msgid "Name for the new directory"
 msgstr "Naam vir die nuwe gids"
 
@@ -1384,10 +1276,6 @@ msgstr "Nuwe"
 
 msgid "New admin session"
 msgstr "Nuwe administrateursessie"
-
-
-msgid "New config on {platform}"
-msgstr "Nuwe opstelling op {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Op Discord"
 
 
-msgid "Opacity"
-msgstr "Ondeursigtigheid"
-
-
 msgid "Open"
 msgstr "Maak oop"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Oorskryf X11-vertoning"
 
 
-msgid "Overwrite local and sync"
-msgstr "Oorskryf plaaslik en sinkroniseer"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Oorskryf afgeleë en sinkroniseer"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Oorskryf die opstelling aan die afgeleë kant en begin sinkroniseer?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Oorskryf die plaaslike opstelling en begin sinkroniseer?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Ouer groep"
 
 msgid "Parity"
 msgstr "Pariteit"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Gedeeltelike opstelling-sinkronisering is nie moontlik wanneer die opstelling via Vault geënkripteer is nie."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Poort gesluit"
 
 
-msgid "Port forwarding"
-msgstr "Poortaanstuur"
-
-
 msgid "Port opened"
 msgstr "Port oopgemaak"
 
@@ -1719,10 +1579,6 @@ msgstr "Voorkom toevallige uitvoering van geplakte bevele"
 
 msgid "Previous workspace"
 msgstr "Vorige werkspasie"
-
-
-msgid "Private key passphrase"
-msgstr "Wagfrase vir private sleutel"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Soek deur inproppe"
 
 
-msgid "Secret sync token"
-msgstr "Geheime sinchronisasie-kenteken"
-
-
 msgid "Select"
 msgstr "Kies"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Wissel die terminaal voorkant implementering (eksperimenteel)"
 
 
-msgid "Sync"
-msgstr "Sinkroniseer"
-
-
-msgid "Sync automatically"
-msgstr "Sinkroniseer outomaties"
-
-
-msgid "Sync host"
-msgstr "Sinkroniseer gasheer"
-
-
-msgid "Sync hotkeys"
-msgstr "Sinkroniseer sneltoetse"
-
-
-msgid "Sync Vault"
-msgstr "Sinkroniseer Kluis"
-
-
-msgid "Sync window settings"
-msgstr "Sinkroniseer vensterinstellings"
-
-
 msgid "Tab activity"
 msgstr "Oortjie-aktiwiteit"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Gradeer op na {version}"
 
 
-msgid "Upload"
-msgstr "Laai op"
-
-
-msgid "Upload as a new config"
-msgstr "Laai op as 'n nuwe opstelling"
-
-
 msgid "Upload files"
 msgstr "Laai lêers op"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Gebruikersnaam"
 
 
-msgid "Username for {host}"
-msgstr "Gebruikersnaam vir {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Gebruik CONNECT metode"
-
-
-msgid "Using saved password"
-msgstr "Gebruik gestoorde wagwoord"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Weergawe"
 
 msgid "Version: {version}"
 msgstr "Weergawe: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Kleurhelderheid"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Stuur"
 
 
-msgid "Shell"
-msgstr "Dop"
-
 msgid "Menu"
 msgstr "Kieslys"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Toets verbinding"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (as administrateur)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Maak Tabby hier oop"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Plak pad in Tabby"
+
+msgid "Add local plugin"
+msgstr "Voeg plaaslike inprop by"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfigurasie"
+
+msgid "Current value"
+msgstr "Huidige waarde"
+
+msgid "Cursor"
+msgstr "Wyser"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Globale style wat deur inproppe bygedra is (lees-alleen)"
+
+msgid "Isolated"
+msgstr "Geïsoleer"
+
+msgid "Select plugin folder"
+msgstr "Kies inpropgids"
+
+msgid "Session isolation"
+msgstr "Sessie-isolasie"
+
+msgid "Sessions"
+msgstr "Sessies"
+
+msgid "Shared"
+msgstr "Gedeel"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Gedeelde modus bespaar geheue; per-sessie-modus is meer stabiel."
+
+msgid "Show CSS variables reference"
+msgstr "Wys CSS-veranderlikeverwysing"
+
+msgid "Styles"
+msgstr "Style"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Die huidige looptydwaardes van die Tabby CSS-veranderlikes, wat in die veld vir pasgemaakte CSS gebruik kan word"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Die teiken van die skakel {name} bestaan nie"
+
+msgid "Variable"
+msgstr "Veranderlike"
+
+msgid "Window style"
+msgstr "Vensterstyl"
+
+msgid "Defined by"
+msgstr "Gedefinieer deur"

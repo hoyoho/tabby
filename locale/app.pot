@@ -46,6 +46,11 @@ msgstr ""
 msgid "Add a private key"
 msgstr ""
 
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:5
+#: tabby-plugin-manager/src/components/pluginsSettingsTab.component.ts:16
+msgid "Add local plugin"
+msgstr ""
+
 #: locale/tmp-html/tabby-settings/src/components/multiHotkeyInput.component.html:8
 msgid "Add..."
 msgstr ""
@@ -135,7 +140,7 @@ msgstr ""
 msgid "Authentication method"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:71
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:74
 msgid "Author"
 msgstr ""
 
@@ -153,7 +158,7 @@ msgstr ""
 msgid "Automatic"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:10
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:13
 msgid "Available"
 msgstr ""
 
@@ -196,7 +201,7 @@ msgstr ""
 msgid "Bracketed paste (requires shell support)"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:48
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:51
 #: tabby-core/src/services/profiles.service.ts:502
 msgid "Built-in"
 msgstr ""
@@ -521,6 +526,7 @@ msgstr ""
 msgid "Cursor shape"
 msgstr ""
 
+#: locale/tmp-html/tabby-settings/src/components/globalAppearanceSettingsTab.component.html:50
 #: locale/tmp-html/tabby-terminal/src/components/colorSchemeSettingsForMode.component.html:46
 msgid "Custom"
 msgstr ""
@@ -567,6 +573,10 @@ msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/editProfileModal.component.html:6
 msgid "Defaults for {type}"
+msgstr ""
+
+#: locale/tmp-html/tabby-settings/src/components/globalAppearanceSettingsTab.component.html:43
+msgid "Defined by"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/profilesSettingsTab.component.html:38
@@ -649,7 +659,7 @@ msgstr ""
 msgid "Direct connection"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:54
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:57
 msgid "Disable"
 msgstr ""
 
@@ -665,7 +675,7 @@ msgstr ""
 msgid "Disable fluent background while dragging"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:48
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:51
 msgid "Disabled"
 msgstr ""
 
@@ -787,7 +797,7 @@ msgstr ""
 msgid "Edit locally"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:55
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:58
 msgid "Enable"
 msgstr ""
 
@@ -832,7 +842,7 @@ msgstr ""
 msgid "Erase the Vault"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:6
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:9
 msgid "Error in {plugin}:"
 msgstr ""
 
@@ -1030,7 +1040,7 @@ msgstr ""
 msgid "Generate extended 256-color palette from your base 16 colors"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:24
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:27
 msgid "Get"
 msgstr ""
 
@@ -1124,7 +1134,7 @@ msgstr ""
 msgid "Home directory"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:25
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:28
 msgid "Homepage"
 msgstr ""
 
@@ -1193,7 +1203,7 @@ msgstr ""
 msgid "Input newlines"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:37
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:40
 msgid "Installed"
 msgstr ""
 
@@ -1593,7 +1603,7 @@ msgstr ""
 msgid "Off"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:72
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:75
 msgid "Official"
 msgstr ""
 
@@ -1764,7 +1774,7 @@ msgstr ""
 msgid "Plugins"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:4
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:6
 msgid "Plugins folder"
 msgstr ""
 
@@ -2176,7 +2186,7 @@ msgstr ""
 msgid "Search hotkeys"
 msgstr ""
 
-#: tabby-plugin-manager/src/components/pluginsSettingsTab.component.ts:14
+#: tabby-plugin-manager/src/components/pluginsSettingsTab.component.ts:15
 msgid "Search plugins"
 msgstr ""
 
@@ -2209,6 +2219,11 @@ msgstr ""
 
 #: tabby-core/src/services/fileProviders.service.ts:47
 msgid "Select file storage"
+msgstr ""
+
+#: tabby-plugin-manager/src/components/pluginsSettingsTab.component.ts:17
+#: tabby-plugin-manager/src/components/pluginsSettingsTab.component.ts:92
+msgid "Select plugin folder"
 msgstr ""
 
 #: tabby-core/src/services/profiles.service.ts:399
@@ -2530,6 +2545,7 @@ msgid "The vault must be unlocked to load your configuration."
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/globalAppearanceSettingsTab.component.html:5
+#: locale/tmp-html/tabby-settings/src/components/globalAppearanceSettingsTab.component.html:50
 msgid "Theme"
 msgstr ""
 
@@ -2588,7 +2604,7 @@ msgstr ""
 msgid "Ungrouped"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:56
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:59
 msgid "Uninstall"
 msgstr ""
 
@@ -2617,7 +2633,7 @@ msgstr ""
 msgid "Up"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:50
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:53
 msgid "Upgrade to {version}"
 msgstr ""
 
@@ -2694,7 +2710,7 @@ msgstr ""
 msgid "Verify host keys when connecting"
 msgstr ""
 
-#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:70
+#: locale/tmp-html/tabby-plugin-manager/src/components/pluginsSettingsTab.component.html:73
 msgid "Version"
 msgstr ""
 

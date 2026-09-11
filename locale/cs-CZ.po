@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Přístupnost"
 
 
-msgid "Acrylic background"
-msgstr "Akrylové pozadí"
-
-
 msgid "Add"
 msgstr "Přidat"
 
@@ -79,10 +75,6 @@ msgstr "Přidat..."
 
 msgid "Additional space between lines"
 msgstr "Dodatečný prostor mezi řádky"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Upravit tmavou vrstvu za rozhraním"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Automaticky"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Automatické otevření terminálu při spuštění aplikace"
-
-
 msgid "Automatic"
 msgstr "Automatický"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Automaticky nahrávat změny a kontrolovat aktualizace každou minutu"
-
-
 msgid "Available"
 msgstr "K dispozici"
-
-
-msgid "Background image"
-msgstr "Obrázek na pozadí"
-
-
-msgid "Background image brightness"
-msgstr "Jas obrázku na pozadí"
-
-
-msgid "Background type"
-msgstr "Typ pozadí"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Modrá"
 
 
-msgid "Blur"
-msgstr "Rozostření"
-
-
 msgid "Bold font weight"
 msgstr "Síla tučného písma"
 
@@ -231,10 +199,6 @@ msgstr "Dolní"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Vložení bez odřádkování (vyžaduje podporu shellu)"
-
-
-msgid "Browse…"
-msgstr "Procházet…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Barevné schéma"
 
 
-msgid "Color schemes"
-msgstr "Barevná schémata"
-
-
 msgid "Colors"
 msgstr "Barvy"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Komprese"
 
 
-msgid "Config deleted"
-msgstr "Konfigurace odstraněna"
-
-
-msgid "Config downloaded"
-msgstr "Konfigurace stažena"
-
-
 msgid "Config file"
 msgstr "Konfigurační soubor"
-
-
-msgid "Config sync"
-msgstr "Synchronizace konfigurace"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Synchronizace konfigurace vyžaduje instanci služby Tabby Web."
-
-
-msgid "Config uploaded"
-msgstr "Konfigurace nahrána"
-
-
-msgid "Configs"
-msgstr "Konfigurace"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Připojení"
 
 msgid "Connection closed"
 msgstr "Spojení ukončeno"
-
-
-msgid "Connection failed: {error}"
-msgstr "Připojení selhalo: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Kopírovat s formátováním"
 
 msgid "Could not decrypt config"
 msgstr "Zprávu se nepodařilo dešifrovat"
-
-
-msgid "Could not read the private key"
-msgstr "Nelze přečíst soukromý klíč"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Smazat skupinu"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Odstranění konfigurace na dálku?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Smazat profily skupiny a podskupiny?"
 
@@ -660,10 +584,6 @@ msgstr "Odpojit aktuální kartu (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Odpojit od {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Zobrazit obrázek za oknem terminálu"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Srovnat vložený text do jednoho řádku pro terminály, které nepodporují vkládání více řádků"
 
 
-msgid "Fluent"
-msgstr "Fluent"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Plynulé pozadí někdy způsobuje lagy při přetažení"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Získat"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Dostupný v nastavení webové aplikace Tabby"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Dá oknu rozostřené průhledné pozadí"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Zjistěte, jak povolit Tabby detekovat pracovní adresář vzdáleného shellu."
 
 
-msgid "Learn more"
-msgstr "Zjistit více"
-
-
 msgid "Left"
 msgstr "Vlevo"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Načítání"
 
 
-msgid "Loading configs..."
-msgstr "Načítání konfigurací..."
-
-
 msgid "Local"
 msgstr "Místní"
 
@@ -1300,10 +1200,6 @@ msgstr "Maximální počet zachycení"
 
 msgid "Minimum contrast ratio"
 msgstr "Minimální poměr kontrastu"
-
-
-msgid "Modified on {date}"
-msgstr "Upraveno dne {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Jméno"
 
 
-msgid "Name for the new config"
-msgstr "Název nové konfigurace"
-
-
 msgid "Name for the new directory"
 msgstr "Název nového adresáře"
 
@@ -1384,10 +1276,6 @@ msgstr "Nový"
 
 msgid "New admin session"
 msgstr "Nová relace správce"
-
-
-msgid "New config on {platform}"
-msgstr "Nové nastavení na {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Na Discordu"
 
 
-msgid "Opacity"
-msgstr "Průhlednost"
-
-
 msgid "Open"
 msgstr "Otevřít"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Přepsat zobrazení X11"
 
 
-msgid "Overwrite local and sync"
-msgstr "Přepsat místní konfiguraci a synchronizovat"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Přepsat vzdálenou konfiguraci a synchronizovat"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Přepsat konfiguraci na vzdálené straně a začít synchronizovat?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Přepsat místní konfiguraci a začít synchronizovat?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Nadřazená skupina"
 
 msgid "Parity"
 msgstr "Parita"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Částečná konfigurace není možná, pokud je konfigurace šifrována přes trezor."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Port uzavřen"
 
 
-msgid "Port forwarding"
-msgstr "Přesměrování portů"
-
-
 msgid "Port opened"
 msgstr "Port otevřen"
 
@@ -1719,10 +1579,6 @@ msgstr "Brání nechtěnému spuštění vložených příkazů"
 
 msgid "Previous workspace"
 msgstr "Předchozí pracovní prostor"
-
-
-msgid "Private key passphrase"
-msgstr "Heslo soukromého klíče"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Hledat pluginy"
 
 
-msgid "Secret sync token"
-msgstr "Synchronizační token"
-
-
 msgid "Select"
 msgstr "Vybrat"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Přepíná implementaci terminálu (experimentální)"
 
 
-msgid "Sync"
-msgstr "Synchronizace"
-
-
-msgid "Sync automatically"
-msgstr "Synchronizovat automaticky"
-
-
-msgid "Sync host"
-msgstr "Hostitel synchronizace"
-
-
-msgid "Sync hotkeys"
-msgstr "Synchronizovat klávesové zkratky"
-
-
-msgid "Sync Vault"
-msgstr "Synchronizovat trezor"
-
-
-msgid "Sync window settings"
-msgstr "Synchronizovat nastavení okna"
-
-
 msgid "Tab activity"
 msgstr "Aktivita záložek"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Aktualizace na {verzi}"
 
 
-msgid "Upload"
-msgstr "Nahrát"
-
-
-msgid "Upload as a new config"
-msgstr "Nahrát jako novou konfiguraci"
-
-
 msgid "Upload files"
 msgstr "Nahrát soubory"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Uživatelské jméno"
 
 
-msgid "Username for {host}"
-msgstr "Uživatelské jméno pro {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Použití metody CONNECT"
-
-
-msgid "Using saved password"
-msgstr "Používá se uložené heslo"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Verze"
 
 msgid "Version: {version}"
 msgstr "Verze: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Vibrace"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Odeslat"
 
 
-msgid "Shell"
-msgstr "Shell"
-
 msgid "Menu"
 msgstr "Menu"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Test připojení"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (jako správce)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Otevřít Tabby zde"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Vložit cestu do Tabby"
+
+msgid "Add local plugin"
+msgstr "Přidat místní plugin"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfigurace"
+
+msgid "Current value"
+msgstr "Aktuální hodnota"
+
+msgid "Cursor"
+msgstr "Kurzor"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Globální styly přidané pluginy (pouze pro čtení)"
+
+msgid "Isolated"
+msgstr "Izolovaný"
+
+msgid "Select plugin folder"
+msgstr "Vybrat složku pluginu"
+
+msgid "Session isolation"
+msgstr "Izolace relací"
+
+msgid "Sessions"
+msgstr "Relace"
+
+msgid "Shared"
+msgstr "Sdílený"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Sdílený režim šetří paměť; režim na relaci je stabilnější."
+
+msgid "Show CSS variables reference"
+msgstr "Zobrazit přehled proměnných CSS"
+
+msgid "Styles"
+msgstr "Styly"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Aktuální hodnoty za běhu proměnných CSS aplikace Tabby, které lze použít v poli Vlastní CSS"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Cíl odkazu {name} neexistuje"
+
+msgid "Variable"
+msgstr "Proměnná"
+
+msgid "Window style"
+msgstr "Styl okna"
+
+msgid "Defined by"
+msgstr "Definováno"

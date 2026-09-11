@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Bedienungshilfen"
 
 
-msgid "Acrylic background"
-msgstr "Acryl-Hintergrund"
-
-
 msgid "Add"
 msgstr "Hinzufügen"
 
@@ -79,10 +75,6 @@ msgstr "Hinzufügen..."
 
 msgid "Additional space between lines"
 msgstr "Zusätzlicher Abstand zwischen den Zeilen"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Die dunkle Abdunklung hinter der Oberfläche anpassen"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Automatisch"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Ein Terminal beim Anwendungs-Start automatisch öffnen"
-
-
 msgid "Automatic"
 msgstr "Automatisch"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Änderungen automatisch hochladen und jede Minute nach Updates suchen"
-
-
 msgid "Available"
 msgstr "Verfügbar"
-
-
-msgid "Background image"
-msgstr "Hintergrundbild"
-
-
-msgid "Background image brightness"
-msgstr "Helligkeit des Hintergrundbildes"
-
-
-msgid "Background type"
-msgstr "Hintergrundtyp"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Blau"
 
 
-msgid "Blur"
-msgstr "Unschärfeeffekt"
-
-
 msgid "Bold font weight"
 msgstr "Strichstärke Fettschrift"
 
@@ -231,10 +199,6 @@ msgstr "Unten"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Sicheres einfügen (erfordert Shellunterstützung)"
-
-
-msgid "Browse…"
-msgstr "Durchsuchen…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Farbschema"
 
 
-msgid "Color schemes"
-msgstr "Farbschema"
-
-
 msgid "Colors"
 msgstr "Farben"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Komprimierung"
 
 
-msgid "Config deleted"
-msgstr "Konfiguration gelöscht"
-
-
-msgid "Config downloaded"
-msgstr "Konfigurationsdatei heruntergeladen"
-
-
 msgid "Config file"
 msgstr "Konfigurationsdatei"
-
-
-msgid "Config sync"
-msgstr "Konfiguration synchronisieren"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Config-Sync benötigt eine Instanz des Tabby Web-Dienstes."
-
-
-msgid "Config uploaded"
-msgstr "Konfiguration hochgeladen"
-
-
-msgid "Configs"
-msgstr "Konfigurationen"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Verbindung"
 
 msgid "Connection closed"
 msgstr "Verbindung geschlossen"
-
-
-msgid "Connection failed: {error}"
-msgstr "Verbindung fehlgeschlagen: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Mit Formatierung kopieren"
 
 msgid "Could not decrypt config"
 msgstr "Konfiguration konnte nicht entschlüsselt werden"
-
-
-msgid "Could not read the private key"
-msgstr "Der private Schlüssel konnte nicht gelesen werden"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Gruppe löschen"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Die Konfiguration auf der entfernten Seite löschen?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Profile und Untergruppen der Gruppe löschen?"
 
@@ -660,10 +584,6 @@ msgstr "Aktuelle Tab Verbindung trennen (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Von {host} trennen?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Ein Bild hinter dem Terminalfenster anzeigen"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Eingefügten Text zu einer Zeile zusammenfassen für Terminals, die mehrzeiliges Einfügen nicht unterstützen"
 
 
-msgid "Fluent"
-msgstr "Fluent"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Der transparente Hintergrund führt manchmal zum Stottern"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Herunterladen"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Holen Sie es sich aus dem Einstellungen-Fenster der Tabby-Web-App"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Gibt dem Fenster einen verschwommenen transparenten Hintergrund"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Erfahren Sie, wie Sie Tabby das Arbeitsverzeichnis von Remote Sitzung erkennen lassen können."
 
 
-msgid "Learn more"
-msgstr "Mehr erfahren"
-
-
 msgid "Left"
 msgstr "Links"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Wird geladen"
 
 
-msgid "Loading configs..."
-msgstr "Lade Konfigurationen..."
-
-
 msgid "Local"
 msgstr "Lokal"
 
@@ -1300,10 +1200,6 @@ msgstr "Maximale Anzahl der Aktivitätsintervallen"
 
 msgid "Minimum contrast ratio"
 msgstr "Minimales Kontrastverhältnis"
-
-
-msgid "Modified on {date}"
-msgstr "Geändert am {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Name"
 
 
-msgid "Name for the new config"
-msgstr "Name für die neue Konfiguration"
-
-
 msgid "Name for the new directory"
 msgstr "Name des neuen Verzeichnis"
 
@@ -1384,10 +1276,6 @@ msgstr "Neu"
 
 msgid "New admin session"
 msgstr "Neue Admin-Sitzung"
-
-
-msgid "New config on {platform}"
-msgstr "Neue Konfiguration auf {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Auf Discord"
 
 
-msgid "Opacity"
-msgstr "Transparenz"
-
-
 msgid "Open"
 msgstr "Öffnen"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "X11-Display überschreiben"
 
 
-msgid "Overwrite local and sync"
-msgstr "Lokal überschreiben und synchronisieren"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Remote überschreiben und synchronisieren"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Die Remote Konfiguration überschreiben und mit der Synchronisierung beginnen?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Die lokale Konfiguration überschreiben und mit der Synchronisierung beginnen?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Übergeordnete Gruppe"
 
 msgid "Parity"
 msgstr "Parität"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Teilweise Konfigurations-Synchronisation ist nicht möglich, wenn die Konfiguration verschlüsselt ist."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Port geschlossen"
 
 
-msgid "Port forwarding"
-msgstr "Portweiterleitung"
-
-
 msgid "Port opened"
 msgstr "Port geöffnet"
 
@@ -1719,10 +1579,6 @@ msgstr "Verhindert versehentliche Ausführung von eingefügten Befehlen"
 
 msgid "Previous workspace"
 msgstr "Vorheriger Arbeitsbereich"
-
-
-msgid "Private key passphrase"
-msgstr "Passphrase des privaten Schlüssels"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Plugins durchsuchen"
 
 
-msgid "Secret sync token"
-msgstr "Geheimes Sync-Token"
-
-
 msgid "Select"
 msgstr "Auswählen"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Umschaltung der Frontend-Implementierung (experimentell)"
 
 
-msgid "Sync"
-msgstr "Synchronisierung"
-
-
-msgid "Sync automatically"
-msgstr "Automatisch synchronisieren"
-
-
-msgid "Sync host"
-msgstr "Synchronisiere Host"
-
-
-msgid "Sync hotkeys"
-msgstr "Tastenkombination synchronisieren"
-
-
-msgid "Sync Vault"
-msgstr "Tresor synchronisieren"
-
-
-msgid "Sync window settings"
-msgstr "Fenster Einstellungen synchronisieren"
-
-
 msgid "Tab activity"
 msgstr "Tab Aktivität"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Aktualisieren auf Version {version}"
 
 
-msgid "Upload"
-msgstr "Hochladen"
-
-
-msgid "Upload as a new config"
-msgstr "Als neue Konfiguration hochladen"
-
-
 msgid "Upload files"
 msgstr "Dateien hochladen"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Benutzername"
 
 
-msgid "Username for {host}"
-msgstr "Benutzername für {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Mit der CONNECT-Methode"
-
-
-msgid "Using saved password"
-msgstr "Gespeichertes Passwort wird verwendet"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Version"
 
 msgid "Version: {version}"
 msgstr "Version: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Vibrancy"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Senden"
 
 
-msgid "Shell"
-msgstr "Shell"
-
 msgid "Menu"
 msgstr "Menü"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Verbindung testen"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (als Administrator)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Tabby hier öffnen"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Pfad in Tabby einfügen"
+
+msgid "Add local plugin"
+msgstr "Lokale Erweiterung hinzufügen"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Current value"
+msgstr "Aktueller Wert"
+
+msgid "Cursor"
+msgstr "Cursor"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Globale Stile, bereitgestellt von Erweiterungen (schreibgeschützt)"
+
+msgid "Isolated"
+msgstr "Isoliert"
+
+msgid "Select plugin folder"
+msgstr "Erweiterungsordner auswählen"
+
+msgid "Session isolation"
+msgstr "Sitzungsisolierung"
+
+msgid "Sessions"
+msgstr "Sitzungen"
+
+msgid "Shared"
+msgstr "Gemeinsam"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Der gemeinsame Modus spart Speicher; der Modus pro Sitzung ist stabiler."
+
+msgid "Show CSS variables reference"
+msgstr "CSS-Variablen-Referenz anzeigen"
+
+msgid "Styles"
+msgstr "Stile"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Die aktuellen Laufzeitwerte der Tabby-CSS-Variablen, die im Feld „Benutzerdefiniertes CSS“ wiederverwendet werden können"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Das Ziel des Links {name} existiert nicht"
+
+msgid "Variable"
+msgstr "Variable"
+
+msgid "Window style"
+msgstr "Fensterstil"
+
+msgid "Defined by"
+msgstr "Definiert durch"

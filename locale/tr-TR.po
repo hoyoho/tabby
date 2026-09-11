@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Erişilebilirlik"
 
 
-msgid "Acrylic background"
-msgstr "Saydam arkaplan"
-
-
 msgid "Add"
 msgstr "Ekle"
 
@@ -79,10 +75,6 @@ msgstr "Ekle..."
 
 msgid "Additional space between lines"
 msgstr "Satırlar arasındaki ek boşluk"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Arayüzün arkasındaki koyu perdeyi ayarla"
 
 
 msgid "Advanced"
@@ -166,32 +158,12 @@ msgid "Auto"
 msgstr "Otomatik"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Uygulama başlangıcında bir terminali otomatik aç"
-
-
 msgid "Automatic"
 msgstr "Otomatik"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Değişiklikleri otomatik olarak yükleyin ve güncellemeleri her dakika kontrol edin"
-
-
 msgid "Available"
 msgstr "Mevcut"
-
-
-msgid "Background image"
-msgstr "Arka plan resmi"
-
-
-msgid "Background image brightness"
-msgstr "Arka plan resmi parlaklığı"
-
-
-msgid "Background type"
-msgstr "Arkaplan Türü"
 
 
 msgid "BACKSPACE"
@@ -218,10 +190,6 @@ msgid "Blue"
 msgstr "Mavi"
 
 
-msgid "Blur"
-msgstr "Bulanık"
-
-
 msgid "Bold font weight"
 msgstr "Kalın harf genişliği"
 
@@ -232,10 +200,6 @@ msgstr "Alt"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Köşe Parantezli yapıştırma(kabuk desteği gerektirir)"
-
-
-msgid "Browse…"
-msgstr "Gözat…"
 
 
 msgid "Built-in"
@@ -343,10 +307,6 @@ msgid "Color scheme"
 msgstr "Renk düzeni"
 
 
-msgid "Color schemes"
-msgstr "Renk şemaları"
-
-
 msgid "Colors"
 msgstr "Renkler"
 
@@ -375,32 +335,8 @@ msgid "Compression"
 msgstr "Sıkıştırma"
 
 
-msgid "Config deleted"
-msgstr "Yapılandırma silindi"
-
-
-msgid "Config downloaded"
-msgstr "Yapılandırma indirildi"
-
-
 msgid "Config file"
 msgstr "Yapılandırma dosyası"
-
-
-msgid "Config sync"
-msgstr "Yapılandırma senkronize"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Yapılandırma eşitleme için bir Tabby Web servisi örneği gerekir."
-
-
-msgid "Config uploaded"
-msgstr "Yapılandırma yüklendi"
-
-
-msgid "Configs"
-msgstr "Yapılandırmalar"
 
 
 msgid "Connect through a proxy server"
@@ -433,10 +369,6 @@ msgstr "Bağlantı"
 
 msgid "Connection closed"
 msgstr "Bağlantı kapatıldı"
-
-
-msgid "Connection failed: {error}"
-msgstr "Bağlantı başarısız: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -493,10 +425,6 @@ msgstr "Biçimlendirme ile kopyalayın"
 
 msgid "Could not decrypt config"
 msgstr "Yapılandırma dosyasının şifresi çözülemedi"
-
-
-msgid "Could not read the private key"
-msgstr "Özel anahtar okunamadı"
 
 
 msgid "Create"
@@ -603,10 +531,6 @@ msgid "Delete group"
 msgstr "Grubu sil"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Sunucudaki yapılandırma silinsin mi?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Grubun profilleri ve alt grupları silinsin mi?"
 
@@ -661,10 +585,6 @@ msgstr "Geçerli sekmenin bağlantısını kes (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "{host} bağlantısı kesilsin mi?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Terminal penceresinin arkasında bir resim görüntüle"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -879,10 +799,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Çok satırlı yapıştırmayı desteklemeyen terminaller için yapıştırılan metni tek satıra düzleştir"
 
 
-msgid "Fluent"
-msgstr "Fluent"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Akışkan arkaplan bazen kasmalara sebep olabilir"
 
@@ -995,16 +911,8 @@ msgid "Get"
 msgstr "Yükle"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Tabby Web ayarları penceresinden alın"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Pencereye bulanık şeffaf bir arka plan verir"
 
 
 msgid "Go up"
@@ -1223,10 +1131,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Tabby'nin uzak kabuğun çalışma dizinini algılamasına nasıl izin verileceğini öğrenin."
 
 
-msgid "Learn more"
-msgstr "Daha fazla bilgi edinin"
-
-
 msgid "Left"
 msgstr "Sol"
 
@@ -1263,10 +1167,6 @@ msgid "Loading"
 msgstr "Yükleniyor"
 
 
-msgid "Loading configs..."
-msgstr "Ayarlar Yükleniyor..."
-
-
 msgid "Local"
 msgstr "Yerel"
 
@@ -1301,10 +1201,6 @@ msgstr "Maksimum Canlı Tutma Sayısı"
 
 msgid "Minimum contrast ratio"
 msgstr "Minimum kontrast oranı"
-
-
-msgid "Modified on {date}"
-msgstr "Değiştirme tarihi {date}"
 
 
 msgid "Mouse"
@@ -1367,10 +1263,6 @@ msgid "Name"
 msgstr "İsim"
 
 
-msgid "Name for the new config"
-msgstr "Yeni yapılandırmanızın adı"
-
-
 msgid "Name for the new directory"
 msgstr "Yeni klasörün adı"
 
@@ -1385,10 +1277,6 @@ msgstr "Yeni"
 
 msgid "New admin session"
 msgstr "Yeni yönetici oturumu"
-
-
-msgid "New config on {platform}"
-msgstr "{platform} üzerinde yeni konfigürasyon"
 
 
 msgid "New group"
@@ -1503,10 +1391,6 @@ msgid "On Discord"
 msgstr "Discord'da"
 
 
-msgid "Opacity"
-msgstr "Saydamlık"
-
-
 msgid "Open"
 msgstr "Aç"
 
@@ -1567,22 +1451,6 @@ msgid "Override X11 display"
 msgstr "X11 görüntüsünü bastır"
 
 
-msgid "Overwrite local and sync"
-msgstr "Yerelin üzerine yaz ve senkronize et"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Uzak dosyanın üzerine yaz ve senkronize et"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Uzak taraftaki yapılandırmanın üzerine yazılsın ve senkronizasyon başlatılsın mı?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Yerel yapılandırmanın üzerine yazılsın ve senkronizasyon başlatılsın mı?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1601,10 +1469,6 @@ msgstr "Üst Grup"
 
 msgid "Parity"
 msgstr "Parite"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Yapılandırma Vault aracılığıyla şifrelendiğinde kısmi yapılandırma senkronizasyonu mümkün değildir."
 
 
 msgid "Pass-through"
@@ -1690,10 +1554,6 @@ msgid "Port closed"
 msgstr "Port kapandı"
 
 
-msgid "Port forwarding"
-msgstr "Port yönlendirme"
-
-
 msgid "Port opened"
 msgstr "Port açıldı"
 
@@ -1720,10 +1580,6 @@ msgstr "Yapıştırılan komutların yanlışlıkla çalıştırılmasını önl
 
 msgid "Previous workspace"
 msgstr "Önceki çalışma alanı"
-
-
-msgid "Private key passphrase"
-msgstr "Özel anahtar parola ifadesi"
 
 
 msgid "Private keys"
@@ -2050,10 +1906,6 @@ msgid "Search plugins"
 msgstr "Eklenti ara"
 
 
-msgid "Secret sync token"
-msgstr "Gizli senkronizasyon anahtarı"
-
-
 msgid "Select"
 msgstr "Seç"
 
@@ -2301,30 +2153,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Switchler Terminal Frontend implementasyonu (deneysel)"
 
 
-msgid "Sync"
-msgstr "Eşitle"
-
-
-msgid "Sync automatically"
-msgstr "Otomatik eşitle"
-
-
-msgid "Sync host"
-msgstr "Ana bilgisayarı senkronize et"
-
-
-msgid "Sync hotkeys"
-msgstr "Kısayolları Eşitle"
-
-
-msgid "Sync Vault"
-msgstr "Kasayı eşitle"
-
-
-msgid "Sync window settings"
-msgstr "Pencere ayarlarını eşitle"
-
-
 msgid "Tab activity"
 msgstr "Sekme aktivitesi"
 
@@ -2453,14 +2281,6 @@ msgid "Upgrade to {version}"
 msgstr "{version} sürümüne yükselt"
 
 
-msgid "Upload"
-msgstr "Yükle"
-
-
-msgid "Upload as a new config"
-msgstr "Yeni bir konfigürasyon olarak yükle"
-
-
 msgid "Upload files"
 msgstr "Dosyaları yükle"
 
@@ -2485,16 +2305,8 @@ msgid "Username"
 msgstr "Kullanıcı Adı"
 
 
-msgid "Username for {host}"
-msgstr "{host} için kullanıcı adı"
-
-
 msgid "Using CONNECT method"
 msgstr "CONNECT yöntemini kullanma"
-
-
-msgid "Using saved password"
-msgstr "Kayıtlı parola kullanılıyor"
 
 
 msgid "Vault"
@@ -2531,10 +2343,6 @@ msgstr "Sürüm"
 
 msgid "Version: {version}"
 msgstr "Sürüm: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Titreşim"
 
 
 msgid "Visual"
@@ -2757,9 +2565,6 @@ msgid "Send"
 msgstr "Gönder"
 
 
-msgid "Shell"
-msgstr "Kabuk"
-
 msgid "Menu"
 msgstr "Menü"
 
@@ -2815,10 +2620,70 @@ msgid "Test connection"
 msgstr "Bağlantıyı test et"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (yönetici olarak)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Tabby'yi burada aç"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Yolu Tabby'ye yapıştır"
+
+msgid "Add local plugin"
+msgstr "Yerel eklenti ekle"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+msgid "Current value"
+msgstr "Geçerli değer"
+
+msgid "Cursor"
+msgstr "İmleç"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Eklentilerin sağladığı genel stiller (salt okunur)"
+
+msgid "Isolated"
+msgstr "İzole"
+
+msgid "Select plugin folder"
+msgstr "Eklenti klasörünü seç"
+
+msgid "Session isolation"
+msgstr "Oturum izolasyonu"
+
+msgid "Sessions"
+msgstr "Oturumlar"
+
+msgid "Shared"
+msgstr "Paylaşılan"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Paylaşılan mod bellekten tasarruf sağlar; oturum başına mod daha kararlıdır."
+
+msgid "Show CSS variables reference"
+msgstr "CSS değişken referansını göster"
+
+msgid "Styles"
+msgstr "Stiller"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Özel CSS alanında yeniden kullanılabilen Tabby CSS değişkenlerinin güncel çalışma zamanı değerleri"
+
+msgid "The target of the link {name} does not exist"
+msgstr "{name} bağlantısının hedefi mevcut değil"
+
+msgid "Variable"
+msgstr "Değişken"
+
+msgid "Window style"
+msgstr "Pencere stili"
+
+msgid "Defined by"
+msgstr "Tanımlayan"

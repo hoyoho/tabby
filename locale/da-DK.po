@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Tilgængelighed"
 
 
-msgid "Acrylic background"
-msgstr "Akryl baggrund"
-
-
 msgid "Add"
 msgstr "Tilføj"
 
@@ -79,10 +75,6 @@ msgstr "Tilføj..."
 
 msgid "Additional space between lines"
 msgstr "Yderligere mellemrum mellem linjer"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Justér det mørke lag bag grænsefladen"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Auto"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Åbn automatisk en terminal ved appstart"
-
-
 msgid "Automatic"
 msgstr "Automatisk"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Upload automatisk ændringer og tjek for opdateringer hvert minut"
-
-
 msgid "Available"
 msgstr "Tilgængelig"
-
-
-msgid "Background image"
-msgstr "Baggrundsbillede"
-
-
-msgid "Background image brightness"
-msgstr "Lysstyrke for baggrundsbillede"
-
-
-msgid "Background type"
-msgstr "Baggrundstype"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Blå"
 
 
-msgid "Blur"
-msgstr "Sløring"
-
-
 msgid "Bold font weight"
 msgstr "Fed skriftvægt"
 
@@ -231,10 +199,6 @@ msgstr "Bunden"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Bracketed paste (kræver shell-understøttelse)"
-
-
-msgid "Browse…"
-msgstr "Gennemse…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Farvetema"
 
 
-msgid "Color schemes"
-msgstr "Farveskemaer"
-
-
 msgid "Colors"
 msgstr "Farver"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Komprimering"
 
 
-msgid "Config deleted"
-msgstr "Konfig slettet"
-
-
-msgid "Config downloaded"
-msgstr "Konfiguration downloadet"
-
-
 msgid "Config file"
 msgstr "Konfigurationsfil"
-
-
-msgid "Config sync"
-msgstr "Konfigurationssynkronisering"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Konfigurationssynkronisering kræver en instans af Tabby Web-tjenesten."
-
-
-msgid "Config uploaded"
-msgstr "Konfiguration uploadet"
-
-
-msgid "Configs"
-msgstr "Konfigurationer"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Forbindelse"
 
 msgid "Connection closed"
 msgstr "Forbindelsen er lukket"
-
-
-msgid "Connection failed: {error}"
-msgstr "Forbindelse fejlede: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Kopiér med formatering"
 
 msgid "Could not decrypt config"
 msgstr "Kunne ikke dekryptere konfiguration"
-
-
-msgid "Could not read the private key"
-msgstr "Kunne ikke læse den private nøgle"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Slet gruppe"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Slet konfigurationen på fjernsiden?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Slet gruppens profiler og undergrupper?"
 
@@ -660,10 +584,6 @@ msgstr "Afbryd den aktuelle fane (Seriel/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Afbryd forbindelsen til {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Vis et billede bag terminalvinduet"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Fladgør indsat tekst til én linje til terminaler, der ikke understøtter indsættelse af flere linjer"
 
 
-msgid "Fluent"
-msgstr "Flydende"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Flydende baggrund giver nogle gange forsinkelse ved træk"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Hent"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Hent den i Tabby Web-indstillingsvinduet"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Giver vinduet en sløret, gennemsigtig baggrund"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Lær, hvordan du tillader Tabby at registrere ekstern shell's arbejdsmappe."
 
 
-msgid "Learn more"
-msgstr "Få mere at vide"
-
-
 msgid "Left"
 msgstr "Venstre"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Indlæser"
 
 
-msgid "Loading configs..."
-msgstr "Indlæser konfigurationer..."
-
-
 msgid "Local"
 msgstr "Lokal"
 
@@ -1300,10 +1200,6 @@ msgstr "Maks Keep Alive antal"
 
 msgid "Minimum contrast ratio"
 msgstr "Mindste kontrastforhold"
-
-
-msgid "Modified on {date}"
-msgstr "Ændret den {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Navn"
 
 
-msgid "Name for the new config"
-msgstr "Navn på den nye konfiguration"
-
-
 msgid "Name for the new directory"
 msgstr "Navn på den nye mappe"
 
@@ -1384,10 +1276,6 @@ msgstr "Ny"
 
 msgid "New admin session"
 msgstr "Ny administratorsession"
-
-
-msgid "New config on {platform}"
-msgstr "Ny konfiguration på {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "På Discord"
 
 
-msgid "Opacity"
-msgstr "Gennemsigtighed"
-
-
 msgid "Open"
 msgstr "Åbn"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Tilsidesæt X11-visning"
 
 
-msgid "Overwrite local and sync"
-msgstr "Overskriv lokalt og synkronisér"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Overskriv ekstern og synkroniser"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Overskriv konfigurationen på den eksterne side og start synkronisering?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Overskriv den lokale konfiguration og start synkronisering?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Overordnet gruppe"
 
 msgid "Parity"
 msgstr "Paritet"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Delvis konfigurationssynkronisering er ikke muligt, når konfigurationen krypteres via Boksen."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Port lukket"
 
 
-msgid "Port forwarding"
-msgstr "Portvideresendelse"
-
-
 msgid "Port opened"
 msgstr "Port åbnet"
 
@@ -1719,10 +1579,6 @@ msgstr "Forhindrer utilsigtet udførelse af indsatte kommandoer"
 
 msgid "Previous workspace"
 msgstr "Forrige arbejdsområde"
-
-
-msgid "Private key passphrase"
-msgstr "Adgangskode til privat nøgle"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Søg i plugins"
 
 
-msgid "Secret sync token"
-msgstr "Hemmelig synkroniseringstoken"
-
-
 msgid "Select"
 msgstr "Vælg"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Skifter terminal frontend implementering (eksperimentel)"
 
 
-msgid "Sync"
-msgstr "Synkronisering"
-
-
-msgid "Sync automatically"
-msgstr "Synkroniser automatisk"
-
-
-msgid "Sync host"
-msgstr "Synkroniseringsvært"
-
-
-msgid "Sync hotkeys"
-msgstr "Synkroniser genvejstaster"
-
-
-msgid "Sync Vault"
-msgstr "Synkronisér Boksen"
-
-
-msgid "Sync window settings"
-msgstr "Synkroniser vinduesindstillinger"
-
-
 msgid "Tab activity"
 msgstr "Fane aktivitet"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Opgradér til {version}"
 
 
-msgid "Upload"
-msgstr "Upload"
-
-
-msgid "Upload as a new config"
-msgstr "Upload som ny konfiguration"
-
-
 msgid "Upload files"
 msgstr "Upload filer"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Brugernavn"
 
 
-msgid "Username for {host}"
-msgstr "Brugernavn til {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Bruger CONNECT-metoden"
-
-
-msgid "Using saved password"
-msgstr "Bruger gemt adgangskode"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Version"
 
 msgid "Version: {version}"
 msgstr "Version: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Vibrancy"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Send"
 
 
-msgid "Shell"
-msgstr "Shell"
-
 msgid "Menu"
 msgstr "Menu"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Test forbindelse"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (som administrator)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Åbn Tabby her"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Indsæt sti i Tabby"
+
+msgid "Add local plugin"
+msgstr "Tilføj lokal plugin"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Current value"
+msgstr "Aktuel værdi"
+
+msgid "Cursor"
+msgstr "Markør"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Globale stilarter bidraget af plugins (skrivebeskyttet)"
+
+msgid "Isolated"
+msgstr "Isoleret"
+
+msgid "Select plugin folder"
+msgstr "Vælg pluginmappe"
+
+msgid "Session isolation"
+msgstr "Sessionsisolering"
+
+msgid "Sessions"
+msgstr "Sessioner"
+
+msgid "Shared"
+msgstr "Delt"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Delt tilstand sparer hukommelse; per-session-tilstand er mere stabil."
+
+msgid "Show CSS variables reference"
+msgstr "Vis CSS-variabelreference"
+
+msgid "Styles"
+msgstr "Stilarter"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "De aktuelle kørselstidsværdier af Tabby CSS-variablerne, der kan genbruges i feltet Brugerdefineret CSS"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Målet for linket {name} findes ikke"
+
+msgid "Variable"
+msgstr "Variabel"
+
+msgid "Window style"
+msgstr "Vinduesstil"
+
+msgid "Defined by"
+msgstr "Defineret af"

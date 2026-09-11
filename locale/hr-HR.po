@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Pristupačnost"
 
 
-msgid "Acrylic background"
-msgstr "Pozadina u boji akrila"
-
-
 msgid "Add"
 msgstr "Dodaj"
 
@@ -79,10 +75,6 @@ msgstr "Dodaj …"
 
 msgid "Additional space between lines"
 msgstr "Dodatni razmak između redaka"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Prilagodi tamni sloj iza sučelja"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Automatski"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Automatski otvori terminal tijekom pokretanja programa"
-
-
 msgid "Automatic"
 msgstr "Automatski"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Automatski prenesi promjene i traži nove verzije svake minute"
-
-
 msgid "Available"
 msgstr "Dostupno"
-
-
-msgid "Background image"
-msgstr "Pozadinska slika"
-
-
-msgid "Background image brightness"
-msgstr "Svjetlina pozadinske slike"
-
-
-msgid "Background type"
-msgstr "Vrsta pozadine"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Plava"
 
 
-msgid "Blur"
-msgstr "Zamuti"
-
-
 msgid "Bold font weight"
 msgstr "Podebljani font"
 
@@ -231,10 +199,6 @@ msgstr "Dolje"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Umetanje sadržaja u uglatim zagradama (zahtijeva podršku školjke)"
-
-
-msgid "Browse…"
-msgstr "Pregledaj …"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Shema boja"
 
 
-msgid "Color schemes"
-msgstr "Sheme boja"
-
-
 msgid "Colors"
 msgstr "Boje"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Sažimanje"
 
 
-msgid "Config deleted"
-msgstr "Konfiguracija je izbrisana"
-
-
-msgid "Config downloaded"
-msgstr "Konfiguracija preuzeta"
-
-
 msgid "Config file"
 msgstr "Datoteka konfiguracije"
-
-
-msgid "Config sync"
-msgstr "Sinkronizacija konfiguracije"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Sinkronizacija konfiguracije zahtijeva instancu Tabby Web servisa."
-
-
-msgid "Config uploaded"
-msgstr "Konfiguracija prenesena"
-
-
-msgid "Configs"
-msgstr "Konfiguracije"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Veza"
 
 msgid "Connection closed"
 msgstr "Veza zatvorena"
-
-
-msgid "Connection failed: {error}"
-msgstr "Veza neuspjela: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Kopiraj s formatiranjem"
 
 msgid "Could not decrypt config"
 msgstr "Neuspjelo dešifriranje konfiguracije"
-
-
-msgid "Could not read the private key"
-msgstr "Nije moguće pročitati privatni ključ"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Izbriši grupu"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Izbrisati konfiguraciju na udaljenom uređaju?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Obrisati profile grupe i podgrupe?"
 
@@ -660,10 +584,6 @@ msgstr "Odspoji trenutačnu karticu (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Odspojiti se od računala {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Prikaži sliku iza prozora terminala"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Pretvori umetnuti tekst u jedan redak za terminale koji ne podržavaju višeredno umetanje"
 
 
-msgid "Fluent"
-msgstr "Transparentno"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Transparentna pozadina ponekad uzrokuje kašnjenje iscrtavanja prilikom povlačenja prozora"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Preuzmi"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Preuzmi iz prozora Tabby-web postavki"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Daje prozoru zamućenu prozirnu pozadinu"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Saznaj kako dopustiti Tabbyju da otkrije radnu mapu udaljene ljuske."
 
 
-msgid "Learn more"
-msgstr "Saznaj više"
-
-
 msgid "Left"
 msgstr "Lijevo"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Učitavanje"
 
 
-msgid "Loading configs..."
-msgstr "Učitavanje konfiguracija …"
-
-
 msgid "Local"
 msgstr "Lokalno"
 
@@ -1300,10 +1200,6 @@ msgstr "Maksimalni broj intervala održavanja"
 
 msgid "Minimum contrast ratio"
 msgstr "Najmanji omjer kontrasta"
-
-
-msgid "Modified on {date}"
-msgstr "Promijenjeno {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Ime"
 
 
-msgid "Name for the new config"
-msgstr "Ime nove konfiguracije"
-
-
 msgid "Name for the new directory"
 msgstr "Ime nove mape"
 
@@ -1384,10 +1276,6 @@ msgstr "Nova"
 
 msgid "New admin session"
 msgstr "Nova administratorska sesija"
-
-
-msgid "New config on {platform}"
-msgstr "Nova konfiguracija na {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Na Discordu"
 
 
-msgid "Opacity"
-msgstr "Neprozirnost"
-
-
 msgid "Open"
 msgstr "Otvori"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Prepiši X11 ekran"
 
 
-msgid "Overwrite local and sync"
-msgstr "Prepiši lokalnu konfiguraciju i sinkroniziraj"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Prepiši udaljenu konfiguraciju i sinkroniziraj"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Prepisati konfiguraciju na udaljenoj strani i započeti sinkronizaciju?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Prepisati lokalnu konfiguraciju i započeti sinkronizaciju?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Nadređena grupa"
 
 msgid "Parity"
 msgstr "Paritet"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Djelomično sinkroniziranje konfiguracije nije moguće kad je konfiguracija šifrirana putem trezora."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Priključak zatvoren"
 
 
-msgid "Port forwarding"
-msgstr "Prosljeđivanje priključaka"
-
-
 msgid "Port opened"
 msgstr "Priključak otvoren"
 
@@ -1719,10 +1579,6 @@ msgstr "Sprečava slučajno izvršavanje umetnutih naredbi"
 
 msgid "Previous workspace"
 msgstr "Prethodni radni prostor"
-
-
-msgid "Private key passphrase"
-msgstr "Lozinka privatnog ključa"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Pretraži dodatke"
 
 
-msgid "Secret sync token"
-msgstr "Tajni token za sinkronizaciju"
-
-
 msgid "Select"
 msgstr "Odaberi"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Zamjenjuje implementaciju sučelja terminala (eksperimentalno)"
 
 
-msgid "Sync"
-msgstr "Sinkronizraj"
-
-
-msgid "Sync automatically"
-msgstr "Sinkronizraj automatski"
-
-
-msgid "Sync host"
-msgstr "Sinkronizraj host računalo"
-
-
-msgid "Sync hotkeys"
-msgstr "Sinkronizraj tipkovne prečace"
-
-
-msgid "Sync Vault"
-msgstr "Sinkronizraj trezor"
-
-
-msgid "Sync window settings"
-msgstr "Sinkronizraj postavke prozora"
-
-
 msgid "Tab activity"
 msgstr "Aktivnost kartice"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Nadogradi na {version}"
 
 
-msgid "Upload"
-msgstr "Prenesi"
-
-
-msgid "Upload as a new config"
-msgstr "Prenesi kao novu konfiguraciju"
-
-
 msgid "Upload files"
 msgstr "Prenesi datoteke"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Korisničko ime"
 
 
-msgid "Username for {host}"
-msgstr "Korisničko ime za {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Koristi CONNECT metodu"
-
-
-msgid "Using saved password"
-msgstr "Koristi se spremljena lozinka"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Verzija"
 
 msgid "Version: {version}"
 msgstr "Verzija: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Svjetlost"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Pošalji"
 
 
-msgid "Shell"
-msgstr "Ljuska"
-
 msgid "Menu"
 msgstr "Izbornik"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Testiraj vezu"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (kao administrator)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Otvori Tabby ovdje"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Zalijepi putanju u Tabby"
+
+msgid "Add local plugin"
+msgstr "Dodaj lokalni dodatak"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfiguracija"
+
+msgid "Current value"
+msgstr "Trenutna vrijednost"
+
+msgid "Cursor"
+msgstr "Kursor"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Globalni stilovi dodani od dodataka (samo za čitanje)"
+
+msgid "Isolated"
+msgstr "Izolirano"
+
+msgid "Select plugin folder"
+msgstr "Odaberi mapu dodatka"
+
+msgid "Session isolation"
+msgstr "Izolacija sesije"
+
+msgid "Sessions"
+msgstr "Sesije"
+
+msgid "Shared"
+msgstr "Dijeljeno"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Dijeljeni način štedi memoriju; način po sesiji je stabilniji."
+
+msgid "Show CSS variables reference"
+msgstr "Prikaži referencu CSS varijabli"
+
+msgid "Styles"
+msgstr "Stilovi"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Trenutne vrijednosti izvođenja Tabby CSS varijabli, koje se mogu ponovno upotrijebiti u polju za prilagođeni CSS"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Odredište veze {name} ne postoji"
+
+msgid "Variable"
+msgstr "Varijabla"
+
+msgid "Window style"
+msgstr "Stil prozora"
+
+msgid "Defined by"
+msgstr "Definirano od"

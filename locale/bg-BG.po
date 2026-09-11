@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Достъпност"
 
 
-msgid "Acrylic background"
-msgstr "Акрилен фон"
-
-
 msgid "Add"
 msgstr "Добави"
 
@@ -79,10 +75,6 @@ msgstr "Добави..."
 
 msgid "Additional space between lines"
 msgstr "Допълнително разстояние между редовете"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Настройване на тъмния слой зад интерфейса"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Автоматично"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Автоматично отваряне на терминал при стартиране на приложението"
-
-
 msgid "Automatic"
 msgstr "Автоматично"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Автоматично качи промените и проверявай за актуализация всяка минута"
-
-
 msgid "Available"
 msgstr "Налични"
-
-
-msgid "Background image"
-msgstr "Фоново изображение"
-
-
-msgid "Background image brightness"
-msgstr "Яркост на фоновото изображение"
-
-
-msgid "Background type"
-msgstr "Тип на фона"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Синьо"
 
 
-msgid "Blur"
-msgstr "Замъгляване"
-
-
 msgid "Bold font weight"
 msgstr "Тежест на шрифта"
 
@@ -231,10 +199,6 @@ msgstr "Долу"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Bracketed paste (изисква shell подръжка)"
-
-
-msgid "Browse…"
-msgstr "Разглеждане…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Цветови схеми"
 
 
-msgid "Color schemes"
-msgstr "Цветова схема"
-
-
 msgid "Colors"
 msgstr "Цветове"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Компресия"
 
 
-msgid "Config deleted"
-msgstr "Конфигурацията е изтрита"
-
-
-msgid "Config downloaded"
-msgstr "Конфифурацията е свалена"
-
-
 msgid "Config file"
 msgstr "Конфигурационен файл"
-
-
-msgid "Config sync"
-msgstr "Синхронизация на конфигурация"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Синхронизацията на конфигурация изисква екземпляр на услугата Tabby Web."
-
-
-msgid "Config uploaded"
-msgstr "Конфигурацията е качена"
-
-
-msgid "Configs"
-msgstr "Конфигурации"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Свързване"
 
 msgid "Connection closed"
 msgstr "Връзката е прекъсната"
-
-
-msgid "Connection failed: {error}"
-msgstr "Свързването е неуспешно: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Копирай с форматиране"
 
 msgid "Could not decrypt config"
 msgstr "Конфигурацията не може да бъде декриптирана"
-
-
-msgid "Could not read the private key"
-msgstr "Частният ключ не може да бъде прочетен"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Изтриване на групата"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Изтриване конфигурацията на отсрещната страна?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Да изтриете профилите и подгрупите на групата?"
 
@@ -660,10 +584,6 @@ msgstr "Прекъсване на връзката с текущия tab (Serial
 
 msgid "Disconnect from {host}?"
 msgstr "Прекъсване на връзката с {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Показване на изображение зад прозореца на терминала"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Изравняване на поставения текст в един ред за терминали, които не поддържат поставяне на няколко реда"
 
 
-msgid "Fluent"
-msgstr "Плавен"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "В някои случаи плавният фон води до насичания при влачене"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Получи"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Вземете от прозореца за Web настройки на Tabby"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Придава на прозореца размазано прозрачен фон"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Научете как да разрешите на Tabby да разпознава отдалечената работна директория."
 
 
-msgid "Learn more"
-msgstr "Научете повече"
-
-
 msgid "Left"
 msgstr "Ляво"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Зареждане"
 
 
-msgid "Loading configs..."
-msgstr "Зареждане на конфигурации..."
-
-
 msgid "Local"
 msgstr "Локално"
 
@@ -1300,10 +1200,6 @@ msgstr "Максимамален брой проверки на свръзкат
 
 msgid "Minimum contrast ratio"
 msgstr "Минимално съотношение на контраста"
-
-
-msgid "Modified on {date}"
-msgstr "Модифицирано на {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Име"
 
 
-msgid "Name for the new config"
-msgstr "Име за новата конфигурация"
-
-
 msgid "Name for the new directory"
 msgstr "Име на новата директория"
 
@@ -1384,10 +1276,6 @@ msgstr "Нов"
 
 msgid "New admin session"
 msgstr "Нова администраторска сесия"
-
-
-msgid "New config on {platform}"
-msgstr "Нова конфигурация на {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "В Discord"
 
 
-msgid "Opacity"
-msgstr "Непрозрачност"
-
-
 msgid "Open"
 msgstr "Отвори"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Отмяна на X11 дисплей"
 
 
-msgid "Overwrite local and sync"
-msgstr "Презапиши локалната и синхронизирай"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Презапиши отдалечената и синхронизирай"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Презаписване на отдалечената конфигурация и стартиране на синхронизация?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Презаписване на лоцалната конфигурация и стартиране на синхронизация?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Родителска група"
 
 msgid "Parity"
 msgstr "Проверка на четност"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Частична синхронизация на конфигурацията не е възможна когато конфигурацията е криптирана в хранилището."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Портът е затворен"
 
 
-msgid "Port forwarding"
-msgstr "Пренасочване на портове"
-
-
 msgid "Port opened"
 msgstr "Портът е отворен"
 
@@ -1719,10 +1579,6 @@ msgstr "Предотврати инцидентно изпълнение на в
 
 msgid "Previous workspace"
 msgstr "Предишна работна област"
-
-
-msgid "Private key passphrase"
-msgstr "Парола на частния ключ"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Търси плъгини"
 
 
-msgid "Secret sync token"
-msgstr "Токен за синхронизация"
-
-
 msgid "Select"
 msgstr "Избери"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Превключва към \"frontend\" реализация на терминала (експериментално)"
 
 
-msgid "Sync"
-msgstr "Синхронизация"
-
-
-msgid "Sync automatically"
-msgstr "Автоматична синхронизация"
-
-
-msgid "Sync host"
-msgstr "Хост за синхронизация"
-
-
-msgid "Sync hotkeys"
-msgstr "Синхронизирай бързи клавиши"
-
-
-msgid "Sync Vault"
-msgstr "Синхронизирай хранилището"
-
-
-msgid "Sync window settings"
-msgstr "Синхтонизирай настройки за прозорец"
-
-
 msgid "Tab activity"
 msgstr "Активност на таба"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Обнови до {version}"
 
 
-msgid "Upload"
-msgstr "Качи"
-
-
-msgid "Upload as a new config"
-msgstr "Качи като нова конфигурация"
-
-
 msgid "Upload files"
 msgstr "Качване на файлове"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Потребителско име"
 
 
-msgid "Username for {host}"
-msgstr "Потребителско име за {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Използване на CONNECT метод"
-
-
-msgid "Using saved password"
-msgstr "Използване на запазена парола"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Версия"
 
 msgid "Version: {version}"
 msgstr "Версия: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Живи цветове"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Изпращане"
 
 
-msgid "Shell"
-msgstr "Shell"
-
 msgid "Menu"
 msgstr "Меню"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Тест на връзката"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (като администратор)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Отвори Tabby тук"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Постави пътя в Tabby"
+
+msgid "Add local plugin"
+msgstr "Добавяне на локален плъгин"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Конфигурация"
+
+msgid "Current value"
+msgstr "Текуща стойност"
+
+msgid "Cursor"
+msgstr "Курсор"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Глобални стилове, добавени от плъгини (само за четене)"
+
+msgid "Isolated"
+msgstr "Изолиран"
+
+msgid "Select plugin folder"
+msgstr "Изберете папка на плъгин"
+
+msgid "Session isolation"
+msgstr "Изолиране на сесията"
+
+msgid "Sessions"
+msgstr "Сесии"
+
+msgid "Shared"
+msgstr "Споделен"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Споделеният режим пести памет; режимът по сесии е по-стабилен."
+
+msgid "Show CSS variables reference"
+msgstr "Показване на справка за CSS променливи"
+
+msgid "Styles"
+msgstr "Стилове"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Текущите стойности на CSS променливите на Tabby по време на изпълнение, които могат да се използват в полето за персонализиран CSS"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Целта на връзката {name} не съществува"
+
+msgid "Variable"
+msgstr "Променлива"
+
+msgid "Window style"
+msgstr "Стил на прозореца"
+
+msgid "Defined by"
+msgstr "Дефинирано от"

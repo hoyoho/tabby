@@ -57,10 +57,6 @@ msgid "Accessibility"
 msgstr "Aksesbilitas"
 
 
-msgid "Acrylic background"
-msgstr "Latar belakang akrilik"
-
-
 msgid "Add"
 msgstr "Tambah"
 
@@ -79,10 +75,6 @@ msgstr "Tambah..."
 
 msgid "Additional space between lines"
 msgstr "Ruang tambahan antar baris"
-
-
-msgid "Adjust the dark scrim behind the interface"
-msgstr "Sesuaikan lapisan gelap di belakang antarmuka"
 
 
 msgid "Advanced"
@@ -165,32 +157,12 @@ msgid "Auto"
 msgstr "Otomatis"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "Otomatis buka terminal saat memulai aplikasi"
-
-
 msgid "Automatic"
 msgstr "Otomatis"
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr "Otomatis unggah perubahan dan cek pembaruan setiap menit"
-
-
 msgid "Available"
 msgstr "Tersedia"
-
-
-msgid "Background image"
-msgstr "Gambar latar belakang"
-
-
-msgid "Background image brightness"
-msgstr "Kecerahan gambar latar belakang"
-
-
-msgid "Background type"
-msgstr "Jenis latar belakang"
 
 
 msgid "BACKSPACE"
@@ -217,10 +189,6 @@ msgid "Blue"
 msgstr "Biru"
 
 
-msgid "Blur"
-msgstr "Buram"
-
-
 msgid "Bold font weight"
 msgstr "Ukuran ketebalan huruf"
 
@@ -231,10 +199,6 @@ msgstr "Bawah"
 
 msgid "Bracketed paste (requires shell support)"
 msgstr "Tempel tanda kurung (butuh dukungan shell)"
-
-
-msgid "Browse…"
-msgstr "Jelajahi…"
 
 
 msgid "Built-in"
@@ -342,10 +306,6 @@ msgid "Color scheme"
 msgstr "Skema warna"
 
 
-msgid "Color schemes"
-msgstr "Warna Skema"
-
-
 msgid "Colors"
 msgstr "Warna-warna"
 
@@ -374,32 +334,8 @@ msgid "Compression"
 msgstr "Kompresi"
 
 
-msgid "Config deleted"
-msgstr "Konfigurasi telah dihapus"
-
-
-msgid "Config downloaded"
-msgstr "Konfigurasi diunduh"
-
-
 msgid "Config file"
 msgstr "Berkas konfigurasi"
-
-
-msgid "Config sync"
-msgstr "Sinkronisasi konfigurasi"
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr "Sinkronisasi konfigurasi memerlukan instansi layanan Tabby Web."
-
-
-msgid "Config uploaded"
-msgstr "Konfigurasi diunggah"
-
-
-msgid "Configs"
-msgstr "Konfigurasi"
 
 
 msgid "Connect through a proxy server"
@@ -432,10 +368,6 @@ msgstr "Koneksi"
 
 msgid "Connection closed"
 msgstr "Koneksi tertutup"
-
-
-msgid "Connection failed: {error}"
-msgstr "Koneksi gagal: {error}"
 
 
 msgid "Connection name will be used instead"
@@ -492,10 +424,6 @@ msgstr "Salin dengan formatting"
 
 msgid "Could not decrypt config"
 msgstr "Tidak bisa mendekripsi konfigurasi"
-
-
-msgid "Could not read the private key"
-msgstr "Tidak bisa membaca kunci pribadi"
 
 
 msgid "Create"
@@ -602,10 +530,6 @@ msgid "Delete group"
 msgstr "Hapus grup"
 
 
-msgid "Delete the config on the remote side?"
-msgstr "Hapus konfigurasi di sisi jarak jauh?"
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr "Hapus profil grup dan subgrup?"
 
@@ -660,10 +584,6 @@ msgstr "Putuskan tab saat ini (Serial/Telnet/SSH)"
 
 msgid "Disconnect from {host}?"
 msgstr "Putuskan dari {host}?"
-
-
-msgid "Display an image behind the terminal window"
-msgstr "Tampilkan gambar di belakang jendela terminal"
 
 
 msgid "Display images via Sixel escape sequences"
@@ -878,10 +798,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Ratakan teks yang ditempel menjadi satu baris untuk terminal yang tidak mendukung tempel multibaris"
 
 
-msgid "Fluent"
-msgstr "Lancar"
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr "Latar belakang yang lancar terkadang menyebabkan kelambatan seret"
 
@@ -994,16 +910,8 @@ msgid "Get"
 msgstr "Dapatkan"
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr "Dapatkan dari jendela pengaturan Web Tabby"
-
-
 msgid "GitHub"
 msgstr "GitHub"
-
-
-msgid "Gives the window a blurred transparent background"
-msgstr "Beri jendela latar belakang transparan buram"
 
 
 msgid "Go up"
@@ -1222,10 +1130,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr "Pelajari cara mengizinkan Tabby mendeteksi direktori kerja shell jarak jauh."
 
 
-msgid "Learn more"
-msgstr "Pelajari lebih lanjut"
-
-
 msgid "Left"
 msgstr "Kiri"
 
@@ -1262,10 +1166,6 @@ msgid "Loading"
 msgstr "Memuat"
 
 
-msgid "Loading configs..."
-msgstr "Memuat konfigurasi..."
-
-
 msgid "Local"
 msgstr "Lokal"
 
@@ -1300,10 +1200,6 @@ msgstr "Jumlah Tetap Hidup Maksimum"
 
 msgid "Minimum contrast ratio"
 msgstr "Rasio kontras minimum"
-
-
-msgid "Modified on {date}"
-msgstr "Diubah pada {date}"
 
 
 msgid "Mouse"
@@ -1366,10 +1262,6 @@ msgid "Name"
 msgstr "Nama"
 
 
-msgid "Name for the new config"
-msgstr "Nama untuk konfigurasi baru"
-
-
 msgid "Name for the new directory"
 msgstr "Nama untuk direktori baru"
 
@@ -1384,10 +1276,6 @@ msgstr "Baru"
 
 msgid "New admin session"
 msgstr "Sesi admin baru"
-
-
-msgid "New config on {platform}"
-msgstr "Pengaturan baru di {platform}"
 
 
 msgid "New group"
@@ -1502,10 +1390,6 @@ msgid "On Discord"
 msgstr "Di Discord"
 
 
-msgid "Opacity"
-msgstr "Keburaman"
-
-
 msgid "Open"
 msgstr "Buka"
 
@@ -1566,22 +1450,6 @@ msgid "Override X11 display"
 msgstr "Ganti tampilan X11"
 
 
-msgid "Overwrite local and sync"
-msgstr "Timpa lokal dan sinkronkan"
-
-
-msgid "Overwrite remote and sync"
-msgstr "Timpa jarak jauh dan sinkronkan"
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr "Timpa konfigurasi di sisi jarak jauh dan mulai menyinkronkan?"
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr "Timpa konfigurasi lokal dan mulai menyinkronkan?"
-
-
 msgid "Pageant"
 msgstr "Pageant"
 
@@ -1600,10 +1468,6 @@ msgstr "Grup Induk"
 
 msgid "Parity"
 msgstr "Keseimbangan"
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
-msgstr "Sinkronisasi konfigurasi parsial tidak dimungkinkan saat konfigurasi dienkripsi melalui Vault."
 
 
 msgid "Pass-through"
@@ -1689,10 +1553,6 @@ msgid "Port closed"
 msgstr "Port tertutup"
 
 
-msgid "Port forwarding"
-msgstr "Penerusan port"
-
-
 msgid "Port opened"
 msgstr "Port dibuka"
 
@@ -1719,10 +1579,6 @@ msgstr "Mencegah eksekusi tidak sengaja dari perintah yang ditempel"
 
 msgid "Previous workspace"
 msgstr "Ruang kerja sebelumnya"
-
-
-msgid "Private key passphrase"
-msgstr "Frasa sandi kunci pribadi"
 
 
 msgid "Private keys"
@@ -2049,10 +1905,6 @@ msgid "Search plugins"
 msgstr "Cari pluggin"
 
 
-msgid "Secret sync token"
-msgstr "Token sinkronisasi rahasia"
-
-
 msgid "Select"
 msgstr "Pilih"
 
@@ -2300,30 +2152,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr "Gantikan terminal implementasi frontend (Experimetal)"
 
 
-msgid "Sync"
-msgstr "Sinkronisasi"
-
-
-msgid "Sync automatically"
-msgstr "Sinkron dengan Otomatis"
-
-
-msgid "Sync host"
-msgstr "Sinkron Host"
-
-
-msgid "Sync hotkeys"
-msgstr "Sinkron Hotkeys"
-
-
-msgid "Sync Vault"
-msgstr "Sinkron Brankas"
-
-
-msgid "Sync window settings"
-msgstr "Sinkron Penganturan Jendela"
-
-
 msgid "Tab activity"
 msgstr "Aktifitas tab"
 
@@ -2452,14 +2280,6 @@ msgid "Upgrade to {version}"
 msgstr "Pemutahiran ke {version}"
 
 
-msgid "Upload"
-msgstr "Unggah"
-
-
-msgid "Upload as a new config"
-msgstr "Unggah sebagai pengaturan baru"
-
-
 msgid "Upload files"
 msgstr "Unggah berkas"
 
@@ -2484,16 +2304,8 @@ msgid "Username"
 msgstr "Nama pengguna"
 
 
-msgid "Username for {host}"
-msgstr "Nama pengguna untuk {host}"
-
-
 msgid "Using CONNECT method"
 msgstr "Menggunakan metode CONNECT"
-
-
-msgid "Using saved password"
-msgstr "Menggunakan kata sandi tersimpan"
 
 
 msgid "Vault"
@@ -2530,10 +2342,6 @@ msgstr "Versi"
 
 msgid "Version: {version}"
 msgstr "Versi: {version}"
-
-
-msgid "Vibrancy"
-msgstr "Vibransi"
 
 
 msgid "Visual"
@@ -2756,9 +2564,6 @@ msgid "Send"
 msgstr "Kirim"
 
 
-msgid "Shell"
-msgstr "Shell"
-
 msgid "Menu"
 msgstr "Menu"
 
@@ -2814,10 +2619,70 @@ msgid "Test connection"
 msgstr "Uji koneksi"
 
 msgid "{name} (as admin)"
-msgstr ""
+msgstr "{name} (sebagai administrator)"
 
 msgid "Open Tabby here"
-msgstr ""
+msgstr "Buka Tabby di sini"
 
 msgid "Paste path into Tabby"
-msgstr ""
+msgstr "Tempel jalur ke Tabby"
+
+msgid "Add local plugin"
+msgstr "Tambah plugin lokal"
+
+msgid "CSS"
+msgstr "CSS"
+
+msgid "Configuration"
+msgstr "Konfigurasi"
+
+msgid "Current value"
+msgstr "Nilai saat ini"
+
+msgid "Cursor"
+msgstr "Kursor"
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "Gaya global yang disumbangkan oleh plugin (hanya baca)"
+
+msgid "Isolated"
+msgstr "Terisolasi"
+
+msgid "Select plugin folder"
+msgstr "Pilih folder plugin"
+
+msgid "Session isolation"
+msgstr "Isolasi sesi"
+
+msgid "Sessions"
+msgstr "Sesi"
+
+msgid "Shared"
+msgstr "Berbagi"
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr "Mode berbagi menghemat memori; mode per sesi lebih stabil."
+
+msgid "Show CSS variables reference"
+msgstr "Tampilkan referensi variabel CSS"
+
+msgid "Styles"
+msgstr "Gaya"
+
+msgid "Telnet"
+msgstr "Telnet"
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Nilai waktu proses saat ini dari variabel CSS Tabby, yang dapat digunakan kembali di kolom CSS khusus"
+
+msgid "The target of the link {name} does not exist"
+msgstr "Target tautan {name} tidak ada"
+
+msgid "Variable"
+msgstr "Variabel"
+
+msgid "Window style"
+msgstr "Gaya jendela"
+
+msgid "Defined by"
+msgstr "Ditentukan oleh"

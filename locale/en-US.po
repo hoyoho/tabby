@@ -42,10 +42,6 @@ msgid "Accessibility"
 msgstr ""
 
 
-msgid "Acrylic background"
-msgstr ""
-
-
 msgid "Add"
 msgstr ""
 
@@ -63,10 +59,6 @@ msgstr ""
 
 
 msgid "Additional space between lines"
-msgstr ""
-
-
-msgid "Adjust the dark scrim behind the interface"
 msgstr ""
 
 
@@ -150,31 +142,11 @@ msgid "Auto"
 msgstr ""
 
 
-msgid "Auto-open a terminal on app start"
-msgstr ""
-
-
 msgid "Automatic"
 msgstr ""
 
 
-msgid "Automatically upload changes and check for updates every minute"
-msgstr ""
-
-
 msgid "Available"
-msgstr ""
-
-
-msgid "Background image"
-msgstr ""
-
-
-msgid "Background image brightness"
-msgstr ""
-
-
-msgid "Background type"
 msgstr ""
 
 
@@ -202,10 +174,6 @@ msgid "Blue"
 msgstr ""
 
 
-msgid "Blur"
-msgstr ""
-
-
 msgid "Bold font weight"
 msgstr ""
 
@@ -215,10 +183,6 @@ msgstr ""
 
 
 msgid "Bracketed paste (requires shell support)"
-msgstr ""
-
-
-msgid "Browse…"
 msgstr ""
 
 
@@ -327,10 +291,6 @@ msgid "Color scheme"
 msgstr ""
 
 
-msgid "Color schemes"
-msgstr ""
-
-
 msgid "Colors"
 msgstr ""
 
@@ -359,31 +319,7 @@ msgid "Compression"
 msgstr ""
 
 
-msgid "Config deleted"
-msgstr ""
-
-
-msgid "Config downloaded"
-msgstr ""
-
-
 msgid "Config file"
-msgstr ""
-
-
-msgid "Config sync"
-msgstr ""
-
-
-msgid "Config sync requires an instance of the Tabby Web service."
-msgstr ""
-
-
-msgid "Config uploaded"
-msgstr ""
-
-
-msgid "Configs"
 msgstr ""
 
 
@@ -416,10 +352,6 @@ msgstr ""
 
 
 msgid "Connection closed"
-msgstr ""
-
-
-msgid "Connection failed: {error}"
 msgstr ""
 
 
@@ -476,10 +408,6 @@ msgstr ""
 
 
 msgid "Could not decrypt config"
-msgstr ""
-
-
-msgid "Could not read the private key"
 msgstr ""
 
 
@@ -587,10 +515,6 @@ msgid "Delete group"
 msgstr ""
 
 
-msgid "Delete the config on the remote side?"
-msgstr ""
-
-
 msgid "Delete the group's profiles and sub-groups?"
 msgstr ""
 
@@ -644,10 +568,6 @@ msgstr ""
 
 
 msgid "Disconnect from {host}?"
-msgstr ""
-
-
-msgid "Display an image behind the terminal window"
 msgstr ""
 
 
@@ -863,10 +783,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr ""
 
 
-msgid "Fluent"
-msgstr ""
-
-
 msgid "Fluent background sometimes causes drag lag"
 msgstr ""
 
@@ -979,15 +895,7 @@ msgid "Get"
 msgstr ""
 
 
-msgid "Get it from the Tabby Web settings window"
-msgstr ""
-
-
 msgid "GitHub"
-msgstr ""
-
-
-msgid "Gives the window a blurred transparent background"
 msgstr ""
 
 
@@ -1207,10 +1115,6 @@ msgid "Learn how to allow Tabby to detect remote shell's working directory."
 msgstr ""
 
 
-msgid "Learn more"
-msgstr ""
-
-
 msgid "Left"
 msgstr ""
 
@@ -1247,10 +1151,6 @@ msgid "Loading"
 msgstr ""
 
 
-msgid "Loading configs..."
-msgstr ""
-
-
 msgid "Local"
 msgstr ""
 
@@ -1284,10 +1184,6 @@ msgstr ""
 
 
 msgid "Minimum contrast ratio"
-msgstr ""
-
-
-msgid "Modified on {date}"
 msgstr ""
 
 
@@ -1351,10 +1247,6 @@ msgid "Name"
 msgstr ""
 
 
-msgid "Name for the new config"
-msgstr ""
-
-
 msgid "Name for the new directory"
 msgstr ""
 
@@ -1368,10 +1260,6 @@ msgstr ""
 
 
 msgid "New admin session"
-msgstr ""
-
-
-msgid "New config on {platform}"
 msgstr ""
 
 
@@ -1487,10 +1375,6 @@ msgid "On Discord"
 msgstr ""
 
 
-msgid "Opacity"
-msgstr ""
-
-
 msgid "Open"
 msgstr ""
 
@@ -1551,22 +1435,6 @@ msgid "Override X11 display"
 msgstr ""
 
 
-msgid "Overwrite local and sync"
-msgstr ""
-
-
-msgid "Overwrite remote and sync"
-msgstr ""
-
-
-msgid "Overwrite the config on the remote side and start syncing?"
-msgstr ""
-
-
-msgid "Overwrite the local config and start syncing?"
-msgstr ""
-
-
 msgid "Pageant"
 msgstr ""
 
@@ -1584,10 +1452,6 @@ msgstr ""
 
 
 msgid "Parity"
-msgstr ""
-
-
-msgid "Partial config sync is not possible when the config is encrypted via Vault."
 msgstr ""
 
 
@@ -1674,10 +1538,6 @@ msgid "Port closed"
 msgstr ""
 
 
-msgid "Port forwarding"
-msgstr ""
-
-
 msgid "Port opened"
 msgstr ""
 
@@ -1703,10 +1563,6 @@ msgstr ""
 
 
 msgid "Previous workspace"
-msgstr ""
-
-
-msgid "Private key passphrase"
 msgstr ""
 
 
@@ -2034,10 +1890,6 @@ msgid "Search plugins"
 msgstr ""
 
 
-msgid "Secret sync token"
-msgstr ""
-
-
 msgid "Select"
 msgstr ""
 
@@ -2286,30 +2138,6 @@ msgid "Switches terminal frontend implementation (experimental)"
 msgstr ""
 
 
-msgid "Sync"
-msgstr ""
-
-
-msgid "Sync automatically"
-msgstr ""
-
-
-msgid "Sync host"
-msgstr ""
-
-
-msgid "Sync hotkeys"
-msgstr ""
-
-
-msgid "Sync Vault"
-msgstr ""
-
-
-msgid "Sync window settings"
-msgstr ""
-
-
 msgid "Tab activity"
 msgstr ""
 
@@ -2442,14 +2270,6 @@ msgid "Upgrade to {version}"
 msgstr ""
 
 
-msgid "Upload"
-msgstr ""
-
-
-msgid "Upload as a new config"
-msgstr ""
-
-
 msgid "Upload files"
 msgstr ""
 
@@ -2474,15 +2294,7 @@ msgid "Username"
 msgstr ""
 
 
-msgid "Username for {host}"
-msgstr ""
-
-
 msgid "Using CONNECT method"
-msgstr ""
-
-
-msgid "Using saved password"
 msgstr ""
 
 
@@ -2519,10 +2331,6 @@ msgstr ""
 
 
 msgid "Version: {version}"
-msgstr ""
-
-
-msgid "Vibrancy"
 msgstr ""
 
 
@@ -2745,9 +2553,6 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-
-msgid "Shell"
-msgstr ""
 
 msgid "Menu"
 msgstr ""
