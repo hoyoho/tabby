@@ -3,6 +3,8 @@ import { TranslateService } from '@ngx-translate/core'
 import deepClone from 'clone-deep'
 import FuzzySearch from 'fuzzy-search'
 
+import { v4 as uuidv4 } from 'uuid'
+
 import { ConfigService } from '../services/config.service'
 import { ProfilesService } from '../services/profiles.service'
 import { AppService } from '../services/app.service'
@@ -279,7 +281,7 @@ export class ProfileTreeComponent extends BaseComponent {
             return
         }
         const fresh: PartialProfile<Profile> = deepClone(base)
-        delete (fresh as any).id
+        fresh.id = `${fresh.type}:custom::${uuidv4()}`
         fresh.name = ''
         fresh.isBuiltin = false
         fresh.isTemplate = false
@@ -302,7 +304,7 @@ export class ProfileTreeComponent extends BaseComponent {
 
     async duplicateProfile (profile: PartialProfile<Profile>): Promise<void> {
         const dup: PartialProfile<Profile> = deepClone(profile)
-        delete (dup as any).id
+        dup.id = `${dup.type}:custom::${uuidv4()}`
         dup.name = this.translate.instant('{name} copy', { name: profile.name })
         dup.isBuiltin = false
         dup.isTemplate = false

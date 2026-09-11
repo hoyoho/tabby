@@ -6,52 +6,65 @@ import { SSHProfile } from '../api'
 export const VAULT_SECRET_TYPE_PASSWORD = 'ssh:password'
 export const VAULT_SECRET_TYPE_PASSPHRASE = 'ssh:key-passphrase'
 
+/** Account name used in keytar for per-profile passwords. The password is
+  * bound to the profile itself, so the username is not part of the key. */
+const PROFILE_PASSWORD_ACCOUNT = 'default'
+
 @Injectable({ providedIn: 'root' })
 export class PasswordStorageService {
     constructor (private vault: VaultService) { }
 
-    async savePassword (profile: SSHProfile, password: string, username?: string): Promise<void> {
-        const account = username ?? profile.options.user
+    /** Store the password for a profile. Profiles without an id (e.g. quick
+      * connect on the fly) have no dedicated storage and are ignored. */
+    async savePassword (profile: SSHProfile, password: string, _username?: string): Promise<void> {
         if (this.vault.isEnabled()) {
-            const key = this.getVaultKeyForConnection(profile, account)
+            const key = this.getVaultKeyForProfile(profile)
+            if (!key) {
+                return
+            }
             this.vault.addSecret({ type: VAULT_SECRET_TYPE_PASSWORD, key, value: password })
         } else {
-            if (!account) {
+            const key = this.getKeytarKeyForProfile(profile)
+            if (!key) {
                 return
             }
-            const key = this.getKeytarKeyForConnection(profile)
-            return keytar.setPassword(key, account, password)
+            return keytar.setPassword(key, PROFILE_PASSWORD_ACCOUNT, password)
         }
     }
 
-    async deletePassword (profile: SSHProfile, username?: string): Promise<void> {
-        const account = username ?? profile.options.user
+    async deletePassword (profile: SSHProfile, _username?: string): Promise<void> {
         if (this.vault.isEnabled()) {
-            const key = this.getVaultKeyForConnection(profile, account)
+            const key = this.getVaultKeyForProfile(profile)
+            if (!key) {
+                return
+            }
             this.vault.removeSecret(VAULT_SECRET_TYPE_PASSWORD, key)
         } else {
-            if (!account) {
+            const key = this.getKeytarKeyForProfile(profile)
+            if (!key) {
                 return
             }
-            const key = this.getKeytarKeyForConnection(profile)
-            await keytar.deletePassword(key, account)
+            await keytar.deletePassword(key, PROFILE_PASSWORD_ACCOUNT)
         }
     }
 
-    async loadPassword (profile: SSHProfile, username?: string): Promise<string|null> {
-        const account = username ?? profile.options.user
+    async loadPassword (profile: SSHProfile, _username?: string): Promise<string|null> {
         if (this.vault.isEnabled()) {
-            const key = this.getVaultKeyForConnection(profile, account)
-            return (await this.vault.getSecret(VAULT_SECRET_TYPE_PASSWORD, key))?.value ?? null
-        } else {
-            if (!account) {
+            const key = this.getVaultKeyForProfile(profile)
+            if (!key) {
                 return null
             }
-            const key = this.getKeytarKeyForConnection(profile)
+            const secret = await this.vault.getSecret(VAULT_SECRET_TYPE_PASSWORD, key)
+            return secret ? secret.value : null
+        } else {
+            const key = this.getKeytarKeyForProfile(profile)
+            if (!key) {
+                return null
+            }
             try {
-                return await keytar.getPassword(key, account)
+                return await keytar.getPassword(key, PROFILE_PASSWORD_ACCOUNT)
             } catch (e) {
-                console.warn(`Failed to load stored password for ${account}@${profile.options.host}:${profile.options.port ?? 22}`, e)
+                console.warn(`Failed to load stored password for profile ${profile.name}`, e)
                 return null
             }
         }
@@ -87,24 +100,16 @@ export class PasswordStorageService {
         }
     }
 
-    private getKeytarKeyForConnection (profile: SSHProfile): string {
-        let key = `ssh@${profile.options.host}`
-        if (profile.options.port) {
-            key = `ssh@${profile.options.host}:${profile.options.port}`
-        }
-        return key
+    private getKeytarKeyForProfile (profile: SSHProfile): string|null {
+        return profile.id ? `ssh-profile:${profile.id}` : null
     }
 
     private getKeytarKeyForPrivateKey (id: string): string {
         return `ssh-private-key:${id}`
     }
 
-    private getVaultKeyForConnection (profile: SSHProfile, username?: string) {
-        return {
-            user: username ?? profile.options.user,
-            host: profile.options.host,
-            port: profile.options.port,
-        }
+    private getVaultKeyForProfile (profile: SSHProfile) {
+        return profile.id ? { profileId: profile.id } : null
     }
 
     private getVaultKeyForPrivateKey (id: string) {

@@ -58,12 +58,22 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
             this.connectionMode = 'httpProxy'
         }
 
-        if (this.profile.options.user) {
-            try {
-                this.hasSavedPassword = !!await this.passwordStorage.loadPassword(this.profile)
-            } catch (e) {
-                console.error('Could not check for saved password', e)
-            }
+        await this.refreshPasswordState()
+    }
+
+    /** Re-checks whether a password is stored under the currently entered
+      * connection. Without a concrete host (e.g. a brand-new profile still at
+      * template defaults) this never shows the "Forget" state. */
+    async refreshPasswordState (): Promise<void> {
+        if (!this.profile.options.user || !this.profile.options.host) {
+            this.hasSavedPassword = false
+            return
+        }
+        try {
+            this.hasSavedPassword = !!await this.passwordStorage.loadPassword(this.profile)
+        } catch (e) {
+            console.error('Could not check for saved password', e)
+            this.hasSavedPassword = false
         }
     }
 

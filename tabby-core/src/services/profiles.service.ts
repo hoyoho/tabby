@@ -99,7 +99,7 @@ export class ProfilesService {
     * arg: genId (default: true) -> generate uuid in before pushing Profile into config
     */
     async newProfile (profile: PartialProfile<Profile>, options?: { genId?: boolean }): Promise<void> {
-        if (options?.genId ?? true) {
+        if ((options?.genId ?? true) && !profile.id) {
             profile.id = `${profile.type}:custom:${slugify(profile.name)}:${uuidv4()}`
         }
 

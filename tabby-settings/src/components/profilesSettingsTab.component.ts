@@ -1,5 +1,6 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import deepClone from 'clone-deep'
+import { v4 as uuidv4 } from 'uuid'
 import { Component, Inject } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ConfigService, HostAppService, Profile, SelectorService, ProfilesService, PlatformService, BaseComponent, PartialProfile, ProfileProvider, TranslateService, Platform, ProfileGroup, PartialProfileGroup, QuickConnectProfileProvider } from 'tabby-core'
@@ -101,7 +102,7 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
             }
         }
         const baseProfile: PartialProfile<Profile> = deepClone(base)
-        delete baseProfile.id
+        baseProfile.id = `${baseProfile.type}:custom::${uuidv4()}`
         if (base.isTemplate) {
             baseProfile.name = ''
         } else if (!base.isBuiltin) {
@@ -277,7 +278,7 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         const groups = await this.profilesService.getProfileGroups({ includeNonUserGroup: true, includeProfiles: true })
         // Drop the synthetic "Built-in" group (and its sub-groups); keep only
         // user groups and the un-grouped bucket.
-        .then(gs => gs.filter(g => g.id === 'default' || g.editable !== false))
+            .then(gs => gs.filter(g => g.id === 'default' || g.editable !== false))
         groups.sort((a, b) => a.name.localeCompare(b.name))
         groups.sort((a, b) => (a.id === 'built-in' || !a.editable ? 1 : 0) - (b.id === 'built-in' || !b.editable ? 1 : 0))
         groups.sort((a, b) => (a.id === 'default' ? 0 : 1) - (b.id === 'default' ? 0 : 1))
