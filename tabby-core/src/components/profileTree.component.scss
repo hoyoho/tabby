@@ -9,10 +9,6 @@
     // before the panel can be dragged shut.
     min-width: 0;
     overflow: hidden;
-
-    &:not(.resizing) {
-        transition: width 0.12s ease;
-    }
 }
 
 .p-2 {
@@ -25,6 +21,8 @@ input {
 }
 
 .profile-tree {
+    flex: 1 1 auto;
+    min-height: 0;
     max-height: 100%;
     overflow-y: scroll;
     scrollbar-width: none;
@@ -102,29 +100,70 @@ input {
     }
 }
 
-// VS Code-style sash: a full-height strip sitting between the tree and the
-// session area (in normal flow, so it never overlaps the session). Invisible
-// while idle, highlighted on hover and while dragging. Releasing a drag near
-// the left edge closes the panel entirely (re-enable from settings/hotkey).
-.sash {
-    position: relative;
-    z-index: 1;
+// Bottom connection-info panel: the clicked profile's details, or the focused
+// Session indicator: the focused session's name and user@host:port.
+.connection-info {
     flex: none;
-    width: 4px;
-    cursor: ew-resize;
-    background: transparent;
-    -webkit-app-region: no-drag;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-top: 1px solid var(--theme-secondary);
+    background-color: var(--theme-bg-more-2);
 
-    // The visible hover/drag highlight fills the sash
-    &::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: transparent;
+    .conn-dot {
+        flex: none;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: #999;
+
+        &.connected {
+            background-color: #5cb85c;
+        }
     }
 
-    &:hover::before,
-    :host(.resizing) &::before {
-        background-color: var(--theme-primary);
+    .conn-text {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        line-height: 1.15;
+    }
+
+    .conn-name {
+        font-size: 0.78rem;
+    }
+
+    .conn-addr {
+        font-size: 0.7rem;
+        opacity: 0.65;
+    }
+}
+
+// Profile preview: the clicked sidebar profile's details.
+.profile-preview {
+    flex: none;
+    padding: 6px 10px;
+    border-top: 1px solid var(--theme-secondary);
+    background-color: var(--theme-bg-more-2);
+
+    .preview-table {
+        width: 100%;
+        font-size: 0.72rem;
+        border-collapse: collapse;
+
+        td {
+            padding: 1px 0;
+            vertical-align: top;
+        }
+
+        .label {
+            width: 4.5rem;
+            opacity: 0.6;
+        }
+
+        .value {
+            word-break: break-all;
+        }
     }
 }

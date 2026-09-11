@@ -112,6 +112,23 @@ export class SSHProfilesService extends QuickConnectProfileProvider<SSHProfile> 
         this.passwordStorage.deletePassword(profile)
     }
 
+    /**
+     * The saved password is keyed by profile id in the vault, so a duplicate
+     * with a fresh id inherits nothing on its own — its settings would read
+     * "password not set" while the original still connects. Carry the secret
+     * over to the copy before its edit modal opens.
+     */
+    async duplicateProfile (source: SSHProfile, target: SSHProfile): Promise<void> {
+        try {
+            const password = await this.passwordStorage.loadPassword(source)
+            if (password) {
+                await this.passwordStorage.savePassword(target, password)
+            }
+        } catch (e) {
+            console.warn('Could not copy the stored SSH password', e)
+        }
+    }
+
     quickConnect (query: string): PartialProfile<SSHProfile> {
         let user: string|undefined = undefined
         let host = query

@@ -76,6 +76,15 @@ export abstract class ProfileProvider<P extends Profile> {
     abstract getDescription (profile: PartialProfile<P>): string
 
     deleteProfile (profile: P): void { }
+
+    /**
+     * Carry provider-specific state that lives outside the profile object —
+     * the vault, for SSH passwords — from an existing profile to its
+     * duplicate. Called by the profile tree right after the copy gets its new
+     * id and before the edit modal opens, so the copy's settings reflect what
+     * it actually inherits (a copied password reads as "saved", not "set").
+     */
+    duplicateProfile (source: P, target: P): void|Promise<void> { } // eslint-disable-line @typescript-eslint/no-unused-vars
 }
 
 export abstract class ConnectableProfileProvider<P extends ConnectableProfile> extends ProfileProvider<P> {}

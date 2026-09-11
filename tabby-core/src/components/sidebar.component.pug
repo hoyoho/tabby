@@ -1,0 +1,32 @@
+//- A plugin owns the whole sidebar: render its component and nothing else.
+ng-container(*ngIf='sidebarVisible && owner')
+    ng-container(*ngComponentOutlet='ownerType')
+
+//- Built-in platform: profile tree plus contributed panels and widgets.
+ng-container(*ngIf='baseVisible')
+    .sidebar-main.d-flex.flex-column
+        .sidebar-panel-switcher.d-flex.align-items-center(*ngIf='panels.length > 1')
+            a.sidebar-panel-tab(
+                *ngFor='let panel of panels; trackBy: trackPanel',
+                [class.active]='panel.id === activePanel?.id',
+                (click)='selectPanel(panel)',
+                [title]='panel.title',
+                href='#'
+            )
+                i.fas.fa-fw([ngClass]='panel.icon', *ngIf='panel.icon')
+                span.ms-1.no-wrap(*ngIf='panel.title') {{ panel.title }}
+
+        .sidebar-widgets(*ngIf='widgets.length')
+            ng-container(*ngFor='let widget of widgets; trackBy: trackContribution')
+                ng-container(*ngComponentOutlet='widget.getComponentType()')
+
+        .sidebar-panel-body
+            profile-tree(
+                *ngIf='activePanel?.id === "profiles"',
+                [class.mac-inset]='macInset'
+            )
+            ng-container(*ngFor='let panel of sidebar.panels; trackBy: trackContribution')
+                ng-container(*ngIf='panel.id === activePanel?.id')
+                    ng-container(*ngComponentOutlet='panel.getComponentType()')
+
+    .sash((mousedown)='startResize($event)')

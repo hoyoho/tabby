@@ -489,3 +489,9 @@ window-controls {
         fill: var(--theme-fg) !important;
     }
 }
+
+// Tooltips can carry multi-line content (e.g. a plugin's connection summary on
+// a profile row); `pre-line` keeps the newlines the contributor inserted.
+.tooltip-inner {
+    white-space: pre-line;
+}

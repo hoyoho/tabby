@@ -6,7 +6,7 @@
         (ngModelChange)='onFilterChange()'
     )
 
-    .profile-tree.h-100
+    .profile-tree
         .d-flex.flex-column.p-2.profile-tree-container
             ng-container(*ngFor='let group of rootGroups')
                 ng-container(*ngTemplateOutlet='recursiveGroup; context: {$implicit: group, depth: 0}')
@@ -15,6 +15,7 @@
                 ng-container(*ngIf='group.id === "default"')
                     ng-container(*ngFor='let profile of group.profiles')
                         a.tree-item(
+                            (click)='selectPreview(profile)',
                             (dblclick)='launchProfile(profile)',
                             [style.paddingLeft.px]='depth * 20',
                             draggable='true',
@@ -22,6 +23,8 @@
                             (dragover)='allowDrop($event)',
                             (drop)='onProfileDrop($event, group)',
                             (contextmenu)='profileContextMenu(profile, $event)',
+                            [ngbTooltip]='tooltipFor(profile, group)',
+                            [disableTooltip]='!tooltipFor(profile, group)',
                             href='#'
                         )
                             profile-icon([icon]='profile.icon', [color]='profile.color')
@@ -52,6 +55,7 @@
                     ng-container(*ngIf='!group.collapsed')
                         ng-container(*ngFor='let profile of group.profiles')
                             a.tree-item(
+                                (click)='selectPreview(profile)',
                                 (dblclick)='launchProfile(profile)',
                                 [style.paddingLeft.px]='(depth + 1) * 20',
                                 draggable='true',
@@ -59,6 +63,8 @@
                                 (dragover)='allowDrop($event)',
                                 (drop)='onProfileDrop($event, group)',
                                 (contextmenu)='profileContextMenu(profile, $event)',
+                                [ngbTooltip]='tooltipFor(profile, group)',
+                                [disableTooltip]='!tooltipFor(profile, group)',
                                 href='#'
                             )
                                     profile-icon([icon]='profile.icon', [color]='profile.color')
@@ -70,6 +76,30 @@
                         ng-container(*ngFor='let child of group.children')
                             ng-container(*ngTemplateOutlet='recursiveGroup; context: {$implicit: child, depth: depth + 1}')
 
-.sash(
-    (mousedown)='startResize($event)'
-)
+    //- Session indicator: focused session only, hidden as soon as focus leaves
+    //- an SSH tab. Suppressed while a profile preview is on screen.
+    .connection-info(*ngIf='connectionInfo && !previewInfo')
+        span.conn-dot([class.connected]='connectionInfo.connected')
+        .conn-text
+            span.conn-name.no-wrap {{ connectionInfo.name }}
+            span.conn-addr.no-wrap {{ connectionInfo.user }}@{{ connectionInfo.host }}:{{ connectionInfo.port }}
+
+    //- Profile preview: the sidebar profile last clicked, independent of the
+    //- session indicator above.
+    .profile-preview(*ngIf='previewInfo')
+        table.preview-table
+            tr
+                td.label(translate) Name
+                td.value {{ previewInfo.name }}
+            tr
+                td.label(translate) Protocol
+                td.value {{ previewInfo.protocol }}
+            tr(*ngIf='previewInfo.host')
+                td.label(translate) Host
+                td.value {{ previewInfo.host }}
+            tr(*ngIf='previewInfo.port')
+                td.label(translate) Port
+                td.value {{ previewInfo.port }}
+            tr(*ngIf='previewInfo.user')
+                td.label(translate) Username
+                td.value {{ previewInfo.user }}

@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, Input, ChangeDetectorRef, Inject, Optional } from '@angular/core'
+import { Component, Input, ChangeDetectorRef, Inject, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import deepClone from 'clone-deep'
 import FuzzySearch from 'fuzzy-search'
@@ -9,13 +9,24 @@ import { ConfigService } from '../services/config.service'
 import { ProfilesService } from '../services/profiles.service'
 import { AppService } from '../services/app.service'
 import { PlatformService } from '../api/platform'
-import { ProfileProvider, SelectorService, ProfileEditHost } from '../api/index'
+import { ProfileProvider, SelectorService, ProfileEditHost, ProfileTreeItemProvider, ProfileTreeItemContext, WorkspaceComponent } from '../api/index'
 import { PartialProfileGroup, ProfileGroup, PartialProfile, Profile } from '../index'
 import { BaseComponent } from './base.component'
 
 interface CollapsableProfileGroup extends ProfileGroup {
     collapsed: boolean
     children: PartialProfileGroup<CollapsableProfileGroup>[]
+}
+
+/** One row set of the sidebar's bottom preview panel. */
+interface ConnectionPanelInfo {
+    name: string
+    host: string
+    port: string
+    protocol: string
+    user: string
+    /** null when previewing a saved profile that is not a live session. */
+    connected: boolean|null
 }
 
 /** @hidden */
@@ -33,21 +44,6 @@ export class ProfileTreeComponent extends BaseComponent {
     private draggedProfile: PartialProfile<Profile>|null = null
     private draggedGroup: PartialProfileGroup<ProfileGroup>|null = null
 
-
-    panelMinWidth = 200
-    panelMaxWidth = 600
-    // Below this released width the panel closes entirely; between here and
-    // panelMinWidth it snaps back to panelMinWidth (avoids accidental close).
-    panelCollapseThreshold = 30
-    panelInternalWidth: number = parseInt(window.localStorage.profileTreeWidth ?? '300')
-    panelStartWidth = this.panelInternalWidth
-    panelIsResizing = false
-    panelStartX = 0
-
-    @HostBinding('class.resizing') get isResizing (): boolean {
-        return this.panelIsResizing
-    }
-
     constructor (
         private app: AppService,
         private platform: PlatformService,
@@ -57,6 +53,7 @@ export class ProfileTreeComponent extends BaseComponent {
         private selector: SelectorService,
         private cdr: ChangeDetectorRef,
         @Optional() @Inject(ProfileEditHost) private profileEditHost: ProfileEditHost|null,
+        @Optional() @Inject(ProfileTreeItemProvider) private itemProviders: ProfileTreeItemProvider[]|null,
     ) {
         super()
     }
@@ -313,11 +310,18 @@ export class ProfileTreeComponent extends BaseComponent {
         if (!provider) {
             return
         }
+        // Carry provider-side state (an SSH password lives in the vault, keyed
+        // by profile id) onto the copy before the edit modal opens, so the
+        // modal reflects what the copy actually inherits.
+        await provider.duplicateProfile(profile as unknown as Profile, dup as unknown as Profile)
         const result = await this.profileEditHost?.editProfile({
             partialProfile: dup,
             provider,
         }) ?? null
         if (!result) {
+            // The copy was never saved: drop the provider state just written
+            // for its id so a cancelled duplicate leaves nothing behind.
+            provider.deleteProfile(dup as unknown as Profile)
             return
         }
         result.type = provider.id
@@ -346,7 +350,9 @@ export class ProfileTreeComponent extends BaseComponent {
     }
 
     private async tabStateChanged (): Promise<void> {
-        // TODO: show active tab in the side panel with eye icon
+        // A session gaining focus takes the bottom panel back from a profile
+        // preview: the two never show at the same time.
+        this.previewProfile = null
     }
 
     onProfileDragStart (profile: PartialProfile<Profile>, event: DragEvent): void {
@@ -445,49 +451,87 @@ export class ProfileTreeComponent extends BaseComponent {
         }
     }
 
-    ////// RESIZING //////
-    startResize (event: MouseEvent): void {
-        this.panelIsResizing = true
-        this.panelStartX = event.clientX
-        this.panelStartWidth = this.panelWidth
-        event.preventDefault()
-    }
-
-    @HostListener('document:mousemove', ['$event'])
-    onMouseMove (event: MouseEvent): void {
-        if (!this.panelIsResizing) { return }
-        const delta = event.clientX - this.panelStartX
-        // The width tracks the mouse continuously (0..max); the close/min
-        // decision is deferred to mouseup so the handle never teleports under
-        // the cursor.
-        const width = Math.max(0, Math.min(this.panelMaxWidth, this.panelStartWidth + delta))
-        this.panelWidth = width
-        this.cdr.markForCheck()
-    }
-
-    @HostListener('document:mouseup')
-    stopResize (): boolean {
-        this.panelIsResizing = false
-        if (this.panelWidth < this.panelCollapseThreshold) {
-            // Released near the left edge: close the panel entirely, it can
-            // be re-enabled from the settings or the hotkey.
-            this.config.store.showProfileTree = false
-            this.config.save()
-        } else {
-            this.panelWidth = Math.min(this.panelMaxWidth, Math.max(this.panelMinWidth, this.panelWidth))
-            window.localStorage.profileTreeWidth = this.panelWidth
+    ////// ROW AUGMENTATION //////
+    private get treeItemProviders (): ProfileTreeItemProvider[] {
+        if (!this.itemProviders) {
+            return []
         }
-        this.cdr.markForCheck()
-        return true
+        return Array.isArray(this.itemProviders) ? this.itemProviders : [this.itemProviders]
     }
 
-    @HostBinding('style.width.px')
-    get panelWidth (): number {
-        return this.panelInternalWidth
+    /** Multi-line hover text for a profile row, contributed by plugins. */
+    tooltipFor (profile: PartialProfile<Profile>, group?: PartialProfileGroup<ProfileGroup>): string {
+        const ctx: ProfileTreeItemContext = { profile, group }
+        return this.treeItemProviders
+            .filter(provider => provider.isAvailable(ctx))
+            .sort((a, b) => a.order - b.order)
+            .flatMap(provider => provider.getTooltip(ctx))
+            .filter(line => !!line)
+            .join('\n')
     }
 
-    set panelWidth (value: number) {
-        this.panelInternalWidth = value
+    ////// CONNECTION INFO (bottom panel) //////
+    /** Profile clicked in the tree, previewed in the bottom panel. */
+    previewProfile: PartialProfile<Profile>|null = null
+
+    selectPreview (profile: PartialProfile<Profile>): void {
+        this.previewProfile = profile
+    }
+
+    private optionsOf (profile: unknown): { host?: string, user?: string, port?: number, type?: string } {
+        return (profile as { options?: { host?: string, user?: string, port?: number } })?.options ?? {}
+    }
+
+    get previewInfo (): ConnectionPanelInfo|null {
+        const profile = this.previewProfile
+        if (!profile) {
+            return null
+        }
+        const options = this.optionsOf(profile)
+        // Show the provider's translated name ("本地终端", "SSH"…) rather than
+        // the raw type id.
+        const provider = this.profilesService.providerForProfile(profile)
+        return {
+            name: profile.name ?? '',
+            host: options.host ?? '',
+            // No SSH-style default here: a profile that carries no port simply
+            // has no port row (local/serial profiles, say).
+            port: options.port != null ? String(options.port) : '',
+            protocol: provider ? this.translate.instant(provider.name) : (profile.type ?? ''),
+            user: options.user ?? '',
+            connected: null,
+        }
+    }
+
+    /**
+     * Connection details of the focused session, for the sidebar's bottom
+     * panel. Read off the profile the session tab carries; only shown when it
+     * actually names a host, so non-connection tabs leave the panel hidden.
+     */
+    get connectionInfo (): ConnectionPanelInfo|null {
+        const active = this.app.activeTab
+        const tab = active instanceof WorkspaceComponent ? active.getFocusedTab() : active
+        if (!tab) {
+            return null
+        }
+        const profile = (tab as unknown as {
+            profile?: { name?: string, type?: string, options?: { host?: string, user?: string, port?: number } }
+            session?: unknown
+        }).profile
+        const options = profile?.options ?? {}
+        if (!options.host) {
+            return null
+        }
+        return {
+            name: profile?.name || tab.title || '',
+            host: options.host,
+            user: options.user ?? '',
+            port: options.port != null ? String(options.port) : '22',
+            protocol: profile?.type ?? '',
+            // Core has no transport-level knowledge; a non-null session is the
+            // honest signal it can offer (Tabby nulls it when a session ends).
+            connected: !!(tab as unknown as { session?: unknown }).session,
+        }
     }
 
     ////// GROUP COLLAPSING //////
