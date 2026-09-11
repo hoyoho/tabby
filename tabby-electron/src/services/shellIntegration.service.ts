@@ -27,9 +27,10 @@ export class ShellIntegrationService {
 
     private openLocations = [
         'Software\\Classes\\Directory\\Background\\shell\\Tabby',
-        'SOFTWARE\\Classes\\Directory\\shell\\Tabby',
+        'Software\\Classes\\Directory\\shell\\Tabby',
     ]
     private pasteLocation = 'Software\\Classes\\*\\shell\\Tabby'
+    private folderPasteLocation = 'Software\\Classes\\Directory\\shell\\TabbyPaste'
 
     private localeRefreshBound = false
 
@@ -111,6 +112,7 @@ export class ShellIntegrationService {
                 await this.writeOpenMenu(location, exe, shells, adminAvailable)
             }
             await this.writePasteMenu(this.pasteLocation, exe)
+            await this.writePasteMenu(this.folderPasteLocation, exe)
 
             // Clean up leftovers from older versions
             if (wnr.getRegistryKey(wnr.HK.CU, 'Software\\Classes\\Directory\\Background\\shell\\Open Tabby here')) {
@@ -128,7 +130,7 @@ export class ShellIntegrationService {
                 await execFile('rm', ['-rf', path.join(this.automatorWorkflowsDestination, wf)])
             }
         } else if (this.hostApp.platform === Platform.Windows) {
-            for (const location of [...this.openLocations, this.pasteLocation]) {
+            for (const location of [...this.openLocations, this.pasteLocation, this.folderPasteLocation]) {
                 wnr.deleteRegistryKey(wnr.HK.CU, location)
             }
         }
@@ -147,7 +149,7 @@ export class ShellIntegrationService {
         wnr.setRegistryValue(wnr.HK.CU, location, '', wnr.REG.SZ, '')
         wnr.setRegistryValue(wnr.HK.CU, location, 'MUIVerb', wnr.REG.SZ, this.translate.instant('Open Tabby here'))
         wnr.setRegistryValue(wnr.HK.CU, location, 'Icon', wnr.REG.SZ, exe)
-        wnr.setRegistryValue(wnr.HK.CU, location, 'ExtendedSubCommandsKey', wnr.REG.SZ, location.replace(/^Software\\Classes\\/, ''))
+        wnr.setRegistryValue(wnr.HK.CU, location, 'ExtendedSubCommandsKey', wnr.REG.SZ, location.replace(/^Software\\Classes\\/i, ''))
 
         const entries: MenuEntry[] = []
         const seen = new Set<string>()
@@ -165,6 +167,12 @@ export class ShellIntegrationService {
         const baseEntries = [...entries]
         if (adminAvailable) {
             for (const e of baseEntries) {
+                // Elevating wsl.exe only raises the Windows-side permissions;
+                // the shell still runs as the distro's default (typically
+                // non-root) user, so a dedicated admin entry is misleading.
+                if (e.shellId === 'wsl') {
+                    continue
+                }
                 entries.push({
                     shellId: e.shellId,
                     label: this.translate.instant('{name} (as admin)', { name: e.label }),

@@ -28,6 +28,12 @@ export class NewTabContextMenu extends TabContextMenuItemProvider {
 
     private sessionItems (tab: BaseTabComponent): MenuItemOptions[] {
         if (tab instanceof TerminalTabComponent && this.uac?.isAvailable) {
+            // Elevating wsl.exe does not run the shell as root (the distro's
+            // default user is kept), so skip the entry for WSL sessions.
+            const exeName = (tab.profile?.options?.command?.split(/[\\/]/).pop() ?? '').toLowerCase()
+            if (exeName === 'wsl' || exeName === 'wsl.exe') {
+                return []
+            }
             return [{
                 label: this.translate.instant('Run as administrator'),
                 click: () => {
