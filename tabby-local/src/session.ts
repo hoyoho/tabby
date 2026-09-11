@@ -4,6 +4,7 @@ import { HostAppService, ConfigService, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBui
 import { BaseSession } from 'tabby-terminal'
 import { SessionOptions, ChildProcess, PTYInterface, PTYProxy } from './api'
 import { getEnvironment, substituteEnv } from './environment'
+import { resolveGuestCWD } from './wslPath'
 import { isDirectory, isDirectorySync } from './util'
 
 const windowsDirectoryRegex = /([a-zA-Z]:[^\:\[\]\?\"\<\>\|]+)/mi
@@ -87,7 +88,7 @@ export class Session extends BaseSession {
             }
 
             // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-            let cwd = options.cwd || process.env.HOME
+            let cwd = resolveGuestCWD(options.cwd, options.fsBase) || process.env.HOME
 
             if (!isDirectorySync(cwd)) {
                 console.warn('Ignoring invalid CWD:', cwd)
