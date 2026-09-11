@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "前の単語を削除"
 
 
+msgid "Delete group"
+msgstr "グループを削除"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "リモート上の設定を消去しますか？"
 
 
-msgid "Delete the group's profiles?"
-msgstr "グループのプロファイルを削除しますか？"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "グループのプロファイルとサブグループを削除しますか？"
 
 
 msgid "Delete this script?"

@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "Обриши претходну реч"
 
 
+msgid "Delete group"
+msgstr "Obriši grupu"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "Обрисати конфигурацију на удаљеном делу?"
 
 
-msgid "Delete the group's profiles?"
-msgstr "Обрисати профиле група?"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "Obrisati profile grupe i podgrupe?"
 
 
 msgid "Delete this script?"

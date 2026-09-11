@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "이전 단어 삭제"
 
 
+msgid "Delete group"
+msgstr "그룹 삭제"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "리모트 설정을 삭제하시겠습니까?"
 
 
-msgid "Delete the group's profiles?"
-msgstr "그룹의 프로필을 삭제하시겠습니까?"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "그룹의 프로필과 하위 그룹을 삭제할까요?"
 
 
 msgid "Delete this script?"

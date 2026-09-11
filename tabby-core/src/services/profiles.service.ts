@@ -567,22 +567,41 @@ export class ProfilesService {
     }
 
     /**
-    * Delete a ProfileGroup from config
+    * Delete a ProfileGroup from config.
+    *
+    * By default the group's contents stay in the global space: direct
+    * sub-groups are promoted back to the root (nested sub-groups keep their
+    * hierarchy) and profiles fall back to "Ungrouped". Passing
+    * `deleteContents: true` instead recursively removes the whole subtree —
+    * including descendant sub-groups and every profile inside them.
     */
-    async deleteProfileGroup (group: PartialProfileGroup<ProfileGroup>, options?: { deleteProfiles?: boolean }): Promise<void> {
-        // Promote direct children back to the root so nested layouts don't lose
-        // their sub-groups (and their profiles) when an intermediate group dies.
-        for (const child of this.config.store.groups.filter(g => g.parentGroupId === group.id)) {
-            delete child.parentGroupId
-        }
+    async deleteProfileGroup (group: PartialProfileGroup<ProfileGroup>, options?: { deleteContents?: boolean }): Promise<void> {
+        if (options?.deleteContents) {
+            const idsToDelete = new Set<string>([group.id])
+            let added = true
+            while (added) {
+                added = false
+                for (const g of this.config.store.groups) {
+                    if (!idsToDelete.has(g.id) && idsToDelete.has(g.parentGroupId)) {
+                        idsToDelete.add(g.id)
+                        added = true
+                    }
+                }
+            }
 
-        this.config.store.groups = this.config.store.groups.filter(g => g.id !== group.id)
-        if (options?.deleteProfiles) {
-            await this.bulkDeleteProfiles((p) => p.group === group.id)
+            this.config.store.groups = this.config.store.groups.filter(g => !idsToDelete.has(g.id))
+            await this.bulkDeleteProfiles((p) => p.group !== undefined && idsToDelete.has(p.group))
         } else {
+            // Promote direct children back to the root so nested layouts don't lose
+            // their sub-groups (and their profiles) when an intermediate group dies.
+            for (const child of this.config.store.groups.filter(g => g.parentGroupId === group.id)) {
+                delete child.parentGroupId
+            }
+
             for (const profile of this.config.store.profiles.filter(x => x.group === group.id)) {
                 delete profile.group
             }
+            this.config.store.groups = this.config.store.groups.filter(g => g.id !== group.id)
         }
     }
 

@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "Eliminar palabra anterior"
 
 
+msgid "Delete group"
+msgstr "Eliminar grupo"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "¿Eliminar la configuración del lado remoto?"
 
 
-msgid "Delete the group's profiles?"
-msgstr "¿Eliminar los perfiles del grupo?"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "¿Eliminar los perfiles y subgrupos del grupo?"
 
 
 msgid "Delete this script?"

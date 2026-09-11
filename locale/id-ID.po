@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "Hapus kata sebelumnya"
 
 
+msgid "Delete group"
+msgstr "Hapus grup"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "Hapus konfigurasi di sisi jarak jauh?"
 
 
-msgid "Delete the group's profiles?"
-msgstr "Hapus profil grup?"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "Hapus profil grup dan subgrup?"
 
 
 msgid "Delete this script?"

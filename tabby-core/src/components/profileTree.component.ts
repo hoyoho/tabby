@@ -150,6 +150,43 @@ export class ProfileTreeComponent extends BaseComponent {
         return this.editProfileGroup(group)
     }
 
+    async deleteProfileGroup (group: PartialProfileGroup<CollapsableProfileGroup>): Promise<void> {
+        if ((await this.platform.showMessageBox(
+            {
+                type: 'warning',
+                message: this.translate.instant('Delete "{name}"?', group),
+                buttons: [
+                    this.translate.instant('Delete'),
+                    this.translate.instant('Keep'),
+                ],
+                defaultId: 1,
+                cancelId: 1,
+            },
+        )).response === 0) {
+            // Same policy as Settings → Profiles: sub-group memberships keep
+            // their hierarchy (children are promoted to root upstream);
+            // direct profiles either move back to "Ungrouped" or die with it.
+            let deleteContents = false
+            if (((group.profiles?.length ?? 0) > 0 || (group.children?.length ?? 0) > 0) && (await this.platform.showMessageBox(
+                {
+                    type: 'warning',
+                    message: this.translate.instant('Delete the group\'s profiles and sub-groups?'),
+                    buttons: [
+                        this.translate.instant('Move to "Ungrouped"'),
+                        this.translate.instant('Delete'),
+                    ],
+                    defaultId: 0,
+                    cancelId: 0,
+                },
+            )).response !== 0) {
+                deleteContents = true
+            }
+
+            await this.profilesService.deleteProfileGroup(group, { deleteContents })
+            await this.config.save()
+        }
+    }
+
     async profileContextMenu (profile: PartialProfile<Profile>, event: MouseEvent): Promise<void> {
         event.preventDefault()
         event.stopPropagation()
@@ -194,6 +231,12 @@ export class ProfileTreeComponent extends BaseComponent {
                 type: 'normal',
                 label: this.translate.instant('Edit group'),
                 click: () => this.editProfileGroup(group),
+                enabled: group.editable,
+            },
+            {
+                type: 'normal',
+                label: this.translate.instant('Delete group'),
+                click: () => this.deleteProfileGroup(group),
                 enabled: group.editable,
             },
         ])

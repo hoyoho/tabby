@@ -599,12 +599,16 @@ msgid "Delete previous word"
 msgstr "Önceki sözlüğü sil"
 
 
+msgid "Delete group"
+msgstr "Grubu sil"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "Sunucudaki yapılandırma silinsin mi?"
 
 
-msgid "Delete the group's profiles?"
-msgstr "Grubun profillerini sil?"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "Grubun profilleri ve alt grupları silinsin mi?"
 
 
 msgid "Delete this script?"

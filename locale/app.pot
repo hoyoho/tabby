@@ -666,12 +666,16 @@ msgstr ""
 msgid "Delete previous word"
 msgstr ""
 
+#: tabby-core/src/components/profileTree.component.ts
+msgid "Delete group"
+msgstr ""
+
 #: tabby-settings/src/components/configSyncSettingsTab.component.ts:114
 msgid "Delete the config on the remote side?"
 msgstr ""
 
-#: tabby-settings/src/components/profilesSettingsTab.component.ts:253
-msgid "Delete the group's profiles?"
+#: tabby-settings/src/components/profilesSettingsTab.component.ts:259
+msgid "Delete the group's profiles and sub-groups?"
 msgstr ""
 
 #: tabby-terminal/src/components/loginScriptsSettings.component.ts:29

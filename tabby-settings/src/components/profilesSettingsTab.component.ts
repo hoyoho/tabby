@@ -238,7 +238,7 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
         return this.showProfileGroupEditModal(group)
     }
 
-    async deleteProfileGroup (group: PartialProfileGroup<ProfileGroup>): Promise<void> {
+    async deleteProfileGroup (group: PartialProfileGroup<ProfileGroup> & { children?: PartialProfileGroup<ProfileGroup>[] }): Promise<void> {
         if ((await this.platform.showMessageBox(
             {
                 type: 'warning',
@@ -251,11 +251,11 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
                 cancelId: 1,
             },
         )).response === 0) {
-            let deleteProfiles = false
-            if ((group.profiles?.length ?? 0) > 0 && (await this.platform.showMessageBox(
+            let deleteContents = false
+            if (((group.profiles?.length ?? 0) > 0 || (group.children?.length ?? 0) > 0) && (await this.platform.showMessageBox(
                 {
                     type: 'warning',
-                    message: this.translate.instant('Delete the group\'s profiles?'),
+                    message: this.translate.instant('Delete the group\'s profiles and sub-groups?'),
                     buttons: [
                         this.translate.instant('Move to "Ungrouped"'),
                         this.translate.instant('Delete'),
@@ -264,10 +264,10 @@ export class ProfilesSettingsTabComponent extends BaseComponent {
                     cancelId: 0,
                 },
             )).response !== 0) {
-                deleteProfiles = true
+                deleteContents = true
             }
 
-            await this.profilesService.deleteProfileGroup(group, { deleteProfiles })
+            await this.profilesService.deleteProfileGroup(group, { deleteContents })
             await this.config.save()
         }
     }

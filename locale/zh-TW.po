@@ -598,12 +598,16 @@ msgid "Delete previous word"
 msgstr "刪除上一個單字"
 
 
+msgid "Delete group"
+msgstr "刪除群組"
+
+
 msgid "Delete the config on the remote side?"
 msgstr "是否刪除遠端設定檔？"
 
 
-msgid "Delete the group's profiles?"
-msgstr "是否刪除群組内所有設定檔？"
+msgid "Delete the group's profiles and sub-groups?"
+msgstr "刪除此群組的設定檔和子群組？"
 
 
 msgid "Delete this script?"
