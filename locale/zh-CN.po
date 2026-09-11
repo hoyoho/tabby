@@ -527,6 +527,14 @@ msgid "Cursor shape"
 msgstr "光标形状"
 
 
+msgid "CSS"
+msgstr "CSS"
+
+
+msgid "Current value"
+msgstr "当前值"
+
+
 msgid "Custom"
 msgstr "自定义"
 
@@ -1009,6 +1017,10 @@ msgstr "GitHub"
 
 msgid "Gives the window a blurred transparent background"
 msgstr "使窗口具有模糊透明的背景"
+
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr "插件贡献的全局样式（只读）"
 
 
 msgid "Go up"
@@ -2162,6 +2174,10 @@ msgid "Show"
 msgstr "显示"
 
 
+msgid "Show CSS variables reference"
+msgstr "显示 CSS 变量参考"
+
+
 msgid "Show a confirmation box when pasting multiple lines"
 msgstr "当粘贴多行时，显示确认对话框"
 
@@ -2362,6 +2378,10 @@ msgid "Telnet"
 msgstr "Telnet"
 
 
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr "Tabby CSS 变量的当前运行值，可在自定义 CSS 中复用"
+
+
 msgid "Terminal"
 msgstr "终端"
 
@@ -2548,6 +2568,10 @@ msgstr "需要先设置保险库主密码，才能存储敏感信息"
 
 msgid "Verify host keys when connecting"
 msgstr "连接时校验主机密钥"
+
+
+msgid "Variable"
+msgstr "变量"
 
 
 msgid "Version"

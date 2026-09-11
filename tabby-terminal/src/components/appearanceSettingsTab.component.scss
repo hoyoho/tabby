@@ -8,6 +8,50 @@ textarea {
     min-height: 120px;
 }
 
+.plugin-css-preview {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--theme-fg-more-2);
+    background: var(--theme-bg-more-2);
+    border: 1px solid var(--bs-border-color);
+    border-radius: 4px;
+    padding: 8px 12px;
+    max-height: 240px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.css-variables-table {
+    font-family: 'Source Code Pro', monospace;
+    font-size: 12px;
+
+    td {
+        word-break: break-all;
+    }
+
+    td:first-child {
+        color: var(--theme-fg-more);
+    }
+
+    tbody {
+        display: block;
+        max-height: 320px;
+        overflow-y: auto;
+    }
+
+    thead, tbody tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    thead th:first-child, td:first-child {
+        width: 40%;
+    }
+}
+
 .font-size-input {
     width: 100px;
     flex: none;

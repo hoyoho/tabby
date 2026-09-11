@@ -171,11 +171,36 @@ h3.mb-3(translate) Appearance
         )
 
 
+    h3.mt-4(translate) CSS
+
     .form-line
         .header
             .title(translate) Custom CSS
 
-    textarea.form-control.mb-5(
+    textarea.form-control(
         [(ngModel)]='config.store.appearance.css',
         (ngModelChange)='saveConfiguration()',
     )
+
+    .form-line(*ngIf='pluginGlobalStyles')
+        .header
+            .title(translate) Global styles contributed by plugins (read-only)
+
+    pre.plugin-css-preview(*ngIf='pluginGlobalStyles') {{ pluginGlobalStyles }}
+
+    .form-line
+        .header
+            .title(translate) Show CSS variables reference
+            .description(translate) The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field
+
+        toggle([(ngModel)]='showCssVariableReference')
+
+    table.table.css-variables-table(*ngIf='showCssVariableReference')
+        thead
+            tr
+                th.text-muted(translate) Variable
+                th.text-muted(translate) Current value
+        tbody
+            tr(*ngFor='let variable of cssVariables')
+                td {{ variable.name }}
+                td {{ variable.value }}

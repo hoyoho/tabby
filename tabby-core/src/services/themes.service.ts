@@ -1,9 +1,10 @@
-﻿import { Inject, Injectable } from '@angular/core'
+﻿import { Inject, Injectable, Optional } from '@angular/core'
 import { Subject, Observable } from 'rxjs'
 import * as Color from 'color'
 import { pathToFileURL } from 'url'
 import { ConfigService } from '../services/config.service'
 import { TerminalColorScheme, Theme } from '../api/theme'
+import { GlobalStyleProvider } from '../api/globalStyleProvider'
 import { PlatformService, PlatformTheme } from '../api/platform'
 import { NewTheme } from '../theme'
 
@@ -21,6 +22,7 @@ export class ThemesService {
         private standardTheme: NewTheme,
         private platform: PlatformService,
         @Inject(Theme) private themes: Theme[],
+        @Optional() @Inject(GlobalStyleProvider) private globalStyleProviders: GlobalStyleProvider[],
     ) {
         this.rootElementStyleBackup = document.documentElement.style.cssText
         this.applyTheme(standardTheme)
@@ -280,6 +282,27 @@ export class ThemesService {
         return scheme ?? fallbackScheme
     }
 
+    /**
+     * CSS contributed by all registered [[GlobalStyleProvider]]s, ready to be
+     * concatenated before the user's own custom CSS.
+     */
+    getGlobalStyles (): string {
+        return (this.globalStyleProviders ?? []).map(provider => provider.provideStyles()).join('\n')
+    }
+
+    private applyCustomStyles (): void {
+        let element = document.querySelector<HTMLStyleElement>('style#custom-css')
+        if (!element) {
+            element = document.createElement('style')
+            element.setAttribute('id', 'custom-css')
+            document.querySelector('head')!.appendChild(element)
+        }
+        element.textContent = [
+            this.getGlobalStyles(),
+            this.getConfigStoreOrDefaults().appearance.css,
+        ].filter(Boolean).join('\n')
+    }
+
     applyTheme (theme: Theme): void {
         if (!this.styleElement) {
             this.styleElement = document.createElement('style')
@@ -287,7 +310,7 @@ export class ThemesService {
             document.querySelector('head')!.appendChild(this.styleElement)
         }
         this.styleElement.textContent = theme.css
-        document.querySelector('style#custom-css')!.innerHTML = this.getConfigStoreOrDefaults().appearance.css
+        this.applyCustomStyles()
         this.themeChanged.next(theme)
     }
 
