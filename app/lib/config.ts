@@ -5,21 +5,9 @@ import { writeFile } from 'atomically'
 
 
 export const configPath = path.join(process.env.TABBY_CONFIG_DIRECTORY!, 'config.yaml')
-const legacyConfigPath = path.join(process.env.TABBY_CONFIG_DIRECTORY!, '../terminus', 'config.yaml')
 
-
-export function migrateConfig (): void {
-    if (fs.existsSync(legacyConfigPath) && (
-        !fs.existsSync(configPath) ||
-        fs.statSync(configPath).mtime < fs.statSync(legacyConfigPath).mtime
-    )) {
-        fs.writeFileSync(configPath, fs.readFileSync(legacyConfigPath))
-    }
-}
 
 export function loadConfig (): any {
-    migrateConfig()
-
     if (fs.existsSync(configPath)) {
         return yaml.load(fs.readFileSync(configPath, 'utf8'))
     } else {
