@@ -448,7 +448,7 @@ export class Window {
             return { action: 'deny' }
         })
 
-        ipcMain.on('window-set-disable-vibrancy-while-dragging', (_event, value) => {
+        this.on('window-set-disable-vibrancy-while-dragging', (_event, value) => {
             this.disableVibrancyWhileDragging = value && this.configStore.hacks?.disableVibrancyWhileDragging
         })
 
