@@ -2,6 +2,18 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
+#: tabby-electron/src/services/shellIntegration.service.ts:130
+msgid "{name} (as admin)"
+msgstr ""
+
+#: tabby-electron/src/services/shellIntegration.service.ts:147
+msgid "Open Tabby here"
+msgstr ""
+
+#: tabby-electron/src/services/shellIntegration.service.ts:154
+msgid "Paste path into Tabby"
+msgstr ""
+
 #: tabby-core/src/components/profileTree.component.ts:268
 #: tabby-settings/src/components/profilesSettingsTab.component.ts:106
 #: tabby-settings/src/components/profilesSettingsTab.component.ts:116
