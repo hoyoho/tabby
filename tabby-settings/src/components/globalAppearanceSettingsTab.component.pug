@@ -47,11 +47,16 @@ pre.plugin-css-preview(*ngIf='pluginGlobalStyles') {{ pluginGlobalStyles }}
     toggle([(ngModel)]='showCssVariableReference')
 
 table.table.css-variables-table(*ngIf='showCssVariableReference')
-    thead
-        tr
-            th.text-muted(translate) Variable
-            th.text-muted(translate) Current value
-    tbody
-        tr(*ngFor='let variable of cssVariables')
-            td {{ variable.name }}
-            td {{ variable.value }}
+        thead
+            tr
+                th.text-muted(translate) Variable
+                th.text-muted(translate) Current value
+                th.text-muted(translate) Defined by
+        tbody
+            tr(*ngFor='let variable of cssVariables')
+                td {{ variable.name }}
+                td {{ variable.value }}
+                td
+                    span(*ngIf='variable.source === "theme"', translate) Theme
+                    span(*ngIf='variable.source === "custom"', translate) Custom
+                    span.text-monospace(*ngIf='variable.source !== "theme" && variable.source !== "custom"') {{ variable.source }}

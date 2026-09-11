@@ -259,14 +259,33 @@ export class ThemesService {
     }
 
     /**
+     * CSS contributed by all registered [[GlobalStyleProvider]]s, together with
+     * each provider's module name, so consumers can attribute individual rules
+     * or CSS variables to the module that emitted them.
+     */
+    getGlobalStyleChunks (): { module: string; css: string }[] {
+        const providers = this.globalStyleProviders == null ? [] : (Array.isArray(this.globalStyleProviders) ? this.globalStyleProviders : [this.globalStyleProviders])
+        return providers.map(provider => ({
+            module: provider.getStyleModuleName() || provider.constructor.name,
+            css: provider.provideStyles(),
+        }))
+    }
+
+    /**
      * CSS contributed by all registered [[GlobalStyleProvider]]s, ready to be
      * concatenated before the user's own custom CSS.
      */
     getGlobalStyles (): string {
-        return (this.globalStyleProviders ?? []).map(provider => provider.provideStyles()).join('\n')
+        return this.getGlobalStyleChunks().map(chunk => chunk.css).join('\n')
     }
 
-    private applyCustomStyles (): void {
+    /**
+     * Re-applies the CSS contributed by all registered [[GlobalStyleProvider]]s
+     * together with the user's custom CSS. Plugins that change their styles at
+     * runtime (e.g. animated backgrounds, previews) can call this to refresh
+     * without touching the DOM or writing to the config.
+     */
+    applyStyles (): void {
         let element = document.querySelector<HTMLStyleElement>('style#custom-css')
         if (!element) {
             element = document.createElement('style')
@@ -286,7 +305,7 @@ export class ThemesService {
             document.querySelector('head')!.appendChild(this.styleElement)
         }
         this.styleElement.textContent = theme.css
-        this.applyCustomStyles()
+        this.applyStyles()
         this.themeChanged.next(theme)
     }
 

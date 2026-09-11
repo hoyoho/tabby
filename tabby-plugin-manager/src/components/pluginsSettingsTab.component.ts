@@ -4,7 +4,8 @@ import { BehaviorSubject, Observable, debounceTime, distinctUntilChanged, first,
 import semverGt from 'semver/functions/gt'
 
 import { Component, HostBinding, Input } from '@angular/core'
-import { ConfigService, PlatformService, PluginInfo } from 'tabby-core'
+import { ConfigService, PlatformService, PluginInfo, TranslateService } from 'tabby-core'
+import { ElectronHostWindow, ElectronService } from 'tabby-electron'
 import { PluginManagerService } from '../services/pluginManager.service'
 
 enum BusyState { Installing = 'Installing', Uninstalling = 'Uninstalling' }
@@ -12,6 +13,8 @@ enum BusyState { Installing = 'Installing', Uninstalling = 'Uninstalling' }
 const FORCE_ENABLE = ['tabby-core', 'tabby-settings', 'tabby-electron', 'tabby-web', 'tabby-plugin-manager']
 
 _('Search plugins')
+_('Add local plugin')
+_('Select plugin folder')
 
 /** @hidden */
 @Component({
@@ -38,6 +41,9 @@ export class PluginsSettingsTabComponent {
     constructor (
         private config: ConfigService,
         private platform: PlatformService,
+        private translate: TranslateService,
+        private electron: ElectronService,
+        private hostWindow: ElectronHostWindow,
         public pluginManager: PluginManagerService,
     ) {
     }
@@ -79,6 +85,27 @@ export class PluginsSettingsTabComponent {
 
     openPluginsFolder (): void {
         this.platform.openPath(this.pluginManager.userPluginsPath)
+    }
+
+    async addLocalPlugin (): Promise<void> {
+        const dirNames = this.electron.dialog.showOpenDialogSync(this.hostWindow.getWindow(), {
+            title: this.translate.instant('Select plugin folder'),
+            properties: ['openDirectory', 'showHiddenFiles'],
+        })
+        if (!dirNames?.length) {
+            return
+        }
+        try {
+            const plugin = this.pluginManager.addLocalPlugin(dirNames[0])
+            this.erroredPlugin = ''
+            this.errorMessage = ''
+            console.info('Added local plugin', plugin.name)
+            this.config.requestRestart()
+        } catch (err) {
+            console.error('Error adding local plugin', err)
+            this.erroredPlugin = 'local plugin'
+            this.errorMessage = (err as Error).message
+        }
     }
 
     searchAvailable (query: string) {

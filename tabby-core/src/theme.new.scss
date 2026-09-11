@@ -84,10 +84,6 @@ tab-body {
 }
 
 split-tab {
-    background-image: linear-gradient(var(--app-workspace-scrim), var(--app-workspace-scrim)), var(--app-workspace-image);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: auto, cover;
     background-color: var(--body-bg);
 }
 

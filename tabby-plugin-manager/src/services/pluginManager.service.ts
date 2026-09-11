@@ -3,6 +3,8 @@ import { Observable, from, forkJoin, map, of } from 'rxjs'
 import { Injectable, Inject } from '@angular/core'
 import { Logger, LogService, PlatformService, BOOTSTRAP_DATA, BootstrapData, PluginInfo } from 'tabby-core'
 import { PLUGIN_BLACKLIST } from '../../../app/src/pluginBlacklist'
+import * as fs from 'fs'
+import * as path from 'path'
 
 const OFFICIAL_NPM_ACCOUNT = 'eugenepankov'
 
@@ -102,5 +104,57 @@ export class PluginManagerService {
             this.logger.error(err)
             throw err
         }
+    }
+
+    /**
+     * Copies a local plugin folder into the user plugins directory, so Tabby's
+     * plugin discovery picks it up on the next boot. The install is a
+     * standalone copy: the source folder can be moved or deleted afterwards
+     * without affecting the installed plugin.
+     *
+     * @throws when the folder is not a valid Tabby plugin
+     */
+    addLocalPlugin (pluginDir: string): PluginInfo {
+        const pkgPath = path.join(pluginDir, 'package.json')
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'))
+
+        const keywords: string[] = pkg.keywords ?? []
+        if (!keywords.some(k => k === 'tabby-plugin' || k === 'tabby-builtin-plugin' || k === 'terminus-plugin' || k === 'terminus-builtin-plugin')) {
+            throw new Error(`"${pkg.name ?? pluginDir}" is not a Tabby plugin: missing the "tabby-plugin" keyword in package.json`)
+        }
+
+        const prefix = (pkg.name as string).startsWith('tabby-') ? 'tabby-' : (pkg.name as string).startsWith('terminus-') ? 'terminus-' : null
+        if (!prefix) {
+            throw new Error(`Plugin package name must start with "tabby-" (got "${pkg.name}")`)
+        }
+
+        const targetPath = path.join(this.userPluginsPath, 'node_modules', pkg.name)
+        if (fs.existsSync(targetPath)) {
+            throw new Error(`Plugin "${pkg.name}" is already installed at ${targetPath}`)
+        }
+
+        fs.mkdirSync(path.dirname(targetPath), { recursive: true })
+        fs.cpSync(pluginDir, targetPath, {
+            recursive: true,
+            filter: (src) => {
+                const segments = src.split(path.sep)
+                return !segments.some(s => s === 'node_modules' || s === '.git')
+            },
+        })
+
+        const plugin: PluginInfo = {
+            name: pkg.name.substring(prefix.length),
+            packageName: pkg.name,
+            isBuiltin: false,
+            isLegacy: prefix === 'terminus-',
+            version: pkg.version,
+            description: pkg.description,
+            author: (typeof pkg.author === 'string' ? pkg.author : pkg.author?.name) ?? '',
+            path: targetPath,
+            info: pkg,
+        }
+        this.installedPlugins.push(plugin)
+        this.installedPlugins.sort((a, b) => a.name.localeCompare(b.name))
+        return plugin
     }
 }

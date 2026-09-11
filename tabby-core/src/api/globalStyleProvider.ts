@@ -6,6 +6,11 @@
  *
  * Scope your selectors: this stylesheet applies to the entire UI, not just
  * the terminal area.
+ *
+ * IMPORTANT: [[ThemesService]] instantiates every registered provider, so a
+ * provider's constructor must not depend on [[ThemesService]] (that would be
+ * a circular DI dependency). Inject it lazily, e.g. via `Injector.get()`, if
+ * you need to trigger style re-application.
  */
 export abstract class GlobalStyleProvider {
     /**
@@ -13,6 +18,15 @@ export abstract class GlobalStyleProvider {
      *         to contribute nothing.
      */
     provideStyles (): string {
+        return ''
+    }
+
+    /**
+     * Human-readable name of the module that provides these styles (e.g. the
+     * package name). Falls back to the provider's class name when unset.
+     * Used to attribute custom CSS variables in the settings UI.
+     */
+    getStyleModuleName (): string {
         return ''
     }
 }
