@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Protocol"
+msgstr "協定"
+
 msgid "Close all sessions in pane"
 msgstr "關閉窗格中的全部工作階段"
 
@@ -2011,8 +2014,8 @@ msgid "Show defaults"
 msgstr "顯示預設檔"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "顯示或隱藏設定檔側邊欄"
+msgid "Show or hide the sidebar"
+msgstr "顯示或隱藏側邊欄"
 
 
 msgid "Show profile icon on the workspace"
@@ -2023,8 +2026,11 @@ msgid "Show profile selector"
 msgstr "顯示設定選擇器"
 
 
-msgid "Show profile sidebar"
-msgstr "顯示設定檔側邊欄"
+msgid "Show sidebar"
+msgstr "顯示側邊欄"
+
+msgid "Sidebar"
+msgstr "側邊欄"
 
 
 msgid "Show recent profiles in selector"

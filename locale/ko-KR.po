@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "프로토콜"
+
 msgid "Close all sessions in pane"
 msgstr "항목의 모든 세션 닫기"
 
@@ -2017,11 +2020,14 @@ msgid "Show profile selector"
 msgstr "프로필 선택창 열기"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "프로필 사이드바 표시/숨기기"
+msgid "Show or hide the sidebar"
+msgstr "사이드바 표시/숨기기"
 
-msgid "Show profile sidebar"
-msgstr "프로필 사이드바 표시"
+msgid "Show sidebar"
+msgstr "사이드바 표시"
+
+msgid "Sidebar"
+msgstr "사이드바"
 
 
 msgid "Show recent profiles in selector"

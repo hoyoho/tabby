@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "Protokol"
+
 msgid "Close all sessions in pane"
 msgstr "Zavřít všechny relace v panelu"
 
@@ -2017,11 +2020,14 @@ msgid "Show profile selector"
 msgstr "Zobrazit výběr profilu"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "Zobrazit nebo skrýt postranní panel profilů"
+msgid "Show or hide the sidebar"
+msgstr "Zobrazit nebo skrýt postranní panel"
 
-msgid "Show profile sidebar"
-msgstr "Zobrazit postranní panel profilů"
+msgid "Show sidebar"
+msgstr "Zobrazit postranní panel"
+
+msgid "Sidebar"
+msgstr "Postranní panel"
 
 
 msgid "Show recent profiles in selector"

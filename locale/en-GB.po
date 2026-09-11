@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "Protocol"
+
 msgid "Close all sessions in pane"
 msgstr ""
 
@@ -2017,10 +2020,13 @@ msgid "Show profile selector"
 msgstr ""
 
 
-msgid "Show or hide the profile sidebar"
+msgid "Show or hide the sidebar"
 msgstr ""
 
-msgid "Show profile sidebar"
+msgid "Show sidebar"
+msgstr ""
+
+msgid "Sidebar"
 msgstr ""
 
 

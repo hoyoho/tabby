@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Protocol"
+msgstr "协议"
+
 msgid "{name} copy"
 msgstr "{name} 副本"
 
@@ -2048,8 +2051,8 @@ msgid "Show defaults"
 msgstr "显示默认值"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "显示或隐藏配置文件侧边栏"
+msgid "Show or hide the sidebar"
+msgstr "显示或隐藏侧边栏"
 
 
 msgid "Show profile icon on the workspace"
@@ -2060,8 +2063,8 @@ msgid "Show profile selector"
 msgstr "显示配置选择器"
 
 
-msgid "Show profile sidebar"
-msgstr "显示配置文件侧边栏"
+msgid "Show sidebar"
+msgstr "显示侧边栏"
 
 
 msgid "Show recent profiles in selector"
@@ -2568,8 +2571,8 @@ msgid "Command palette"
 msgstr "命令面板"
 
 
-msgid "Profile sidebar"
-msgstr "配置文件侧边栏"
+msgid "Sidebar"
+msgstr "侧边栏"
 
 
 msgid "About"

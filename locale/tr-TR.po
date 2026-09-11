@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Protocol"
+msgstr "Protokol"
+
 msgid "Close all sessions in pane"
 msgstr "Bölmedeki tüm oturumları kapat"
 
@@ -2018,11 +2021,14 @@ msgid "Show profile selector"
 msgstr "Profil seçiciyi göster"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "Profil kenar çubuğunu göster veya gizle"
+msgid "Show or hide the sidebar"
+msgstr "Kenar çubuğunu göster veya gizle"
 
-msgid "Show profile sidebar"
-msgstr "Profil kenar çubuğunu göster"
+msgid "Show sidebar"
+msgstr "Kenar çubuğunu göster"
+
+msgid "Sidebar"
+msgstr "Kenar çubuğu"
 
 
 msgid "Show recent profiles in selector"

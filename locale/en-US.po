@@ -1,6 +1,9 @@
 msgid "Close all sessions in pane"
 msgstr ""
 
+msgid "Protocol"
+msgstr "Protocol"
+
 msgid "Close sessions to the left"
 msgstr ""
 
@@ -1994,7 +1997,7 @@ msgid "Show defaults"
 msgstr ""
 
 
-msgid "Show or hide the profile sidebar"
+msgid "Show or hide the sidebar"
 msgstr ""
 
 
@@ -2006,7 +2009,10 @@ msgid "Show profile selector"
 msgstr ""
 
 
-msgid "Show profile sidebar"
+msgid "Show sidebar"
+msgstr ""
+
+msgid "Sidebar"
 msgstr ""
 
 

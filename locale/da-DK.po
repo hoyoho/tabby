@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "Protokol"
+
 msgid "Close all sessions in pane"
 msgstr "Luk alle sessioner i ruden"
 
@@ -2017,11 +2020,14 @@ msgid "Show profile selector"
 msgstr "Vis profilvælger"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "Vis eller skjul profilsidelinjen"
+msgid "Show or hide the sidebar"
+msgstr "Vis eller skjul sidelinjen"
 
-msgid "Show profile sidebar"
-msgstr "Vis profilsidelinje"
+msgid "Show sidebar"
+msgstr "Vis sidelinje"
+
+msgid "Sidebar"
+msgstr "Sidelinje"
 
 
 msgid "Show recent profiles in selector"

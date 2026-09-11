@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "Protokol"
+
 msgid "Close all sessions in pane"
 msgstr "Maak alle sessies in die paneel toe"
 
@@ -2017,11 +2020,14 @@ msgid "Show profile selector"
 msgstr "Wys profielkieser"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "Wys of verberg die profielsybalk"
+msgid "Show or hide the sidebar"
+msgstr "Wys of verberg die sybalk"
 
-msgid "Show profile sidebar"
-msgstr "Wys profielsybalk"
+msgid "Show sidebar"
+msgstr "Wys sybalk"
+
+msgid "Sidebar"
+msgstr "Sybalk"
 
 
 msgid "Show recent profiles in selector"

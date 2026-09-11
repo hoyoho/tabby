@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Protocol"
+msgstr "プロトコル"
+
 msgid "Close all sessions in pane"
 msgstr "ペイン内のすべてのセッションを閉じる"
 
@@ -2017,11 +2020,14 @@ msgid "Show profile selector"
 msgstr "プロファイルセレクターを表示"
 
 
-msgid "Show or hide the profile sidebar"
-msgstr "プロファイルのサイドバーの表示/非表示"
+msgid "Show or hide the sidebar"
+msgstr "サイドバーの表示/非表示"
 
-msgid "Show profile sidebar"
-msgstr "プロファイルのサイドバーを表示"
+msgid "Show sidebar"
+msgstr "サイドバーを表示"
+
+msgid "Sidebar"
+msgstr "サイドバー"
 
 
 msgid "Show recent profiles in selector"

@@ -1783,6 +1783,10 @@ msgstr ""
 msgid "Port"
 msgstr ""
 
+#: tabby-core/src/components/profileTree.component.pug
+msgid "Protocol"
+msgstr ""
+
 #: tabby-serial/src/api.ts:129
 msgid "Port closed"
 msgstr ""
@@ -2343,7 +2347,7 @@ msgid "Show defaults"
 msgstr ""
 
 #: tabby-core/src/hotkeys.ts:23
-msgid "Show or hide the profile sidebar"
+msgid "Show or hide the sidebar"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/windowSettingsTab.component.html:92
@@ -2355,7 +2359,11 @@ msgid "Show profile selector"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/windowSettingsTab.component.html:19
-msgid "Show profile sidebar"
+msgid "Show sidebar"
+msgstr ""
+
+#: tabby-core/src/menu.ts:106
+msgid "Sidebar"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/profilesSettingsTab.component.html:91
