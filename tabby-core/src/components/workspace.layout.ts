@@ -146,13 +146,18 @@ export function cleanNode (node: SplitContainer): TabView|null {
         ? node.ratios.slice()
         : beforeChildren.map(() => 1)
 
-    const kept: TabView[] = []
-    for (const child of beforeChildren) {
+    // Keep each surviving node together with its ORIGINAL index. A collapsed
+    // sub-container is hoisted into a bare pane (a different object than the
+    // original child), so an indexOf-based lookup would miss it, shift the
+    // ratio array and compress unrelated sibling panes after a close.
+    const kept: { node: TabView, oldIndex: number }[] = []
+    for (let d = 0; d < beforeChildren.length; d++) {
+        const child = beforeChildren[d]
         if (child instanceof SplitContainer) {
             const cleaned = cleanNode(child)
-            if (cleaned) { kept.push(cleaned) }
+            if (cleaned) { kept.push({ node: cleaned, oldIndex: d }) }
         } else if (child.tabs.length > 0) {
-            kept.push(child)
+            kept.push({ node: child, oldIndex: d })
         }
     }
 
@@ -161,12 +166,12 @@ export function cleanNode (node: SplitContainer): TabView|null {
     // Only one effective child left → hoist it up (its ratio weight is handled
     // by the parent).
     if (kept.length === 1) {
-        return kept[0]
+        return kept[0].node
     }
 
-    node.children = kept
+    node.children = kept.map(k => k.node)
 
-    const keptOldIdx = kept.map(k => beforeChildren.indexOf(k))
+    const keptOldIdx = kept.map(k => k.oldIndex)
     const changed = kept.length !== beforeLen
 
     if (changed) {
