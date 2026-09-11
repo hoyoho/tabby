@@ -14,7 +14,12 @@ import { parseTabbyURL, isTabbyURL } from './urlHandler'
 
 let DwmEnableBlurBehindWindow: any = null
 if (process.platform === 'win32') {
-    DwmEnableBlurBehindWindow = require('@tabby-gang/windows-blurbehind').DwmEnableBlurBehindWindow
+    try {
+        DwmEnableBlurBehindWindow = require('@tabby-gang/windows-blurbehind').DwmEnableBlurBehindWindow
+    } catch {
+        // Windows Application Control (Smart App Control / WDAC) can block the
+        // unsigned native module; degrade to no blur instead of crashing main.
+    }
 }
 
 export interface WindowOptions {
@@ -490,6 +495,7 @@ export class Window {
         })
 
         this.window.on('focus', () => {
+            this.application.markFocused(this)
             this.send('host:window-focused')
         })
 

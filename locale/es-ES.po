@@ -2808,3 +2808,12 @@ msgstr "La dirección del servidor proxy es obligatoria"
 
 msgid "Test connection"
 msgstr "Probar conexión"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

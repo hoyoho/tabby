@@ -2808,3 +2808,12 @@ msgstr "Адреса прокси сервера је обавезна"
 
 msgid "Test connection"
 msgstr "Тестирај везу"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

@@ -2808,3 +2808,12 @@ msgstr "Proksi-adres is nodig"
 
 msgid "Test connection"
 msgstr "Toets verbinding"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

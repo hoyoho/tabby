@@ -2798,3 +2798,12 @@ msgstr ""
 
 msgid "Test connection"
 msgstr ""
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

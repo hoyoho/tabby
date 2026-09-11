@@ -2809,3 +2809,12 @@ msgstr "Proxy sunucu adresi gereklidir"
 
 msgid "Test connection"
 msgstr "Bağlantıyı test et"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

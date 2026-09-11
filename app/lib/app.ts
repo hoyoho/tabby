@@ -29,12 +29,18 @@ export class Application {
     private sshManager = new SSHConnectionManager()
     private serialManager = new SerialManager()
     private windows: Window[] = []
+    /** Most recently focused window; second-instance CLI args are routed to it. */
+    private lastFocusedWindow: Window|null = null
     private cachedPlasmaVersion?: [number, number] | null
     private globalHotkey$ = new Subject<void>()
     private quitRequested = false
     userPluginsPath: string
 
     getWindows (): Window[] { return this.windows }
+
+    markFocused (window: Window): void {
+        this.lastFocusedWindow = window
+    }
 
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     constructor (public configStore: any) {
@@ -156,6 +162,9 @@ export class Application {
         const webContentsId = window.webContents.id
         window.closed$.subscribe(() => {
             this.windows = this.windows.filter(x => x !== window)
+            if (this.lastFocusedWindow === window) {
+                this.lastFocusedWindow = null
+            }
             this.telnetManager.windowClosed(webContentsId)
             this.sshManager.windowClosed(webContentsId)
             this.serialManager.windowClosed(webContentsId)
@@ -331,7 +340,11 @@ export class Application {
             await this.newWindow()
         }
         this.presentAllWindows()
-        this.windows[this.windows.length - 1].passCliArguments(argv, cwd, true)
+        // Route CLI commands (e.g. "paste <path>") to the most recently
+        // focused window, not the last one created, so the paste lands in the
+        // window the user is actually working in.
+        const target = this.lastFocusedWindow ?? this.windows[this.windows.length - 1]
+        target.passCliArguments(argv, cwd, true)
     }
 
     private useBuiltinGraphics (): void {

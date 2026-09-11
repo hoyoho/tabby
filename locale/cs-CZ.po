@@ -2808,3 +2808,12 @@ msgstr "Adresa proxy serveru je povinná"
 
 msgid "Test connection"
 msgstr "Test připojení"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

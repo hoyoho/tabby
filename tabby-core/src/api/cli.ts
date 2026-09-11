@@ -3,6 +3,8 @@ export interface CLIEvent {
         _: string[],
         // Commands are hardcoded for now
         directory?: string,
+        profile?: string,
+        admin?: boolean,
         command?: string[],
         profileName?: string,
         text?: string,

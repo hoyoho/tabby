@@ -31,6 +31,8 @@ export function createParserConfig (cwd: string): ParserConfig {
                 description: 'open a shell in a directory',
                 options: {
                     directory: { type: 'string', 'default': cwd },
+                    profile: { type: 'string', describe: 'local profile id or name to use' },
+                    admin: { type: 'boolean', describe: 'run the shell as administrator' },
                 },
             },
             {

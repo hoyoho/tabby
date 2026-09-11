@@ -2808,3 +2808,12 @@ msgstr "Alamat server proxy wajib diisi"
 
 msgid "Test connection"
 msgstr "Uji koneksi"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

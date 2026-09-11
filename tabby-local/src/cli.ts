@@ -1,8 +1,10 @@
 import * as path from 'path'
 import * as fs from 'mz/fs'
 import { Injectable } from '@angular/core'
-import { CLIHandler, CLIEvent, AppService, ConfigService, HostWindowService, ProfilesService, NotificationsService, PlatformService, TranslateService } from 'tabby-core'
+import { CLIHandler, CLIEvent, AppService, ConfigService, HostWindowService, ProfilesService, NotificationsService, PlatformService, TranslateService, PartialProfile } from 'tabby-core'
 import { TerminalService } from './services/terminal.service'
+import { LocalProfile } from './api'
+import { LocalProfilesService } from './profiles'
 
 @Injectable()
 export class TerminalCLIHandler extends CLIHandler {
@@ -12,6 +14,8 @@ export class TerminalCLIHandler extends CLIHandler {
     constructor (
         private hostWindow: HostWindowService,
         private terminal: TerminalService,
+        private profiles: ProfilesService,
+        private localProfiles: LocalProfilesService,
         private platform: PlatformService,
         private translate: TranslateService,
     ) {
@@ -22,7 +26,7 @@ export class TerminalCLIHandler extends CLIHandler {
         const op = event.argv._[0]
 
         if (op === 'open') {
-            this.handleOpenDirectory(path.resolve(event.cwd, event.argv.directory!))
+            this.handleOpenDirectory(path.resolve(event.cwd, event.argv.directory!), event.argv.profile, event.argv.admin)
         } else if (op === 'run') {
             await this.handleRunCommand(event.argv.command!)
         } else {
@@ -32,16 +36,38 @@ export class TerminalCLIHandler extends CLIHandler {
         return true
     }
 
-    private async handleOpenDirectory (directory: string) {
+    private async handleOpenDirectory (directory: string, profileName?: string, admin?: boolean) {
         if (directory.length > 1 && (directory.endsWith('/') || directory.endsWith('\\'))) {
             directory = directory.substring(0, directory.length - 1)
         }
-        if (await fs.exists(directory)) {
-            if ((await fs.stat(directory)).isDirectory()) {
-                this.terminal.openTab(undefined, directory)
-                this.hostWindow.bringToFront()
+        if (!await fs.exists(directory)) {
+            return
+        }
+        if (!(await fs.stat(directory)).isDirectory()) {
+            return
+        }
+
+        let profile: PartialProfile<LocalProfile>|null = null
+        if (profileName) {
+            profile = (await this.profiles.getProfiles()).find(x =>
+                x.id === profileName || x.id === `local:${profileName}` || x.name === profileName,
+            ) as PartialProfile<LocalProfile>|null ?? null
+            profile ??= await this.localProfiles.getLocalProfileByShellId(profileName)
+        }
+        if (!profile) {
+            profile = await this.terminal.getDefaultProfile()
+        }
+        if (admin) {
+            profile = {
+                ...profile,
+                options: {
+                    ...profile.options,
+                    runAsAdministrator: true,
+                },
             }
         }
+        this.terminal.openTab(profile, directory)
+        this.hostWindow.bringToFront()
     }
 
     private async handleRunCommand (command: string[]) {

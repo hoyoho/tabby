@@ -2809,3 +2809,12 @@ msgstr "請填寫代理伺服器位址"
 
 msgid "Test connection"
 msgstr "測試連線"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

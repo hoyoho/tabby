@@ -2808,3 +2808,12 @@ msgstr "プロキシサーバーのアドレスが必要です"
 
 msgid "Test connection"
 msgstr "接続をテスト"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

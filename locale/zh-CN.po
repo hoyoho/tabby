@@ -2889,3 +2889,12 @@ msgstr "请填写代理服务器地址"
 
 msgid "Test connection"
 msgstr "测试连接"
+
+msgid "{name} (as admin)"
+msgstr "{name}（管理员）"
+
+msgid "Open Tabby here"
+msgstr "在此处打开 Tabby"
+
+msgid "Paste path into Tabby"
+msgstr "粘贴路径到 Tabby"

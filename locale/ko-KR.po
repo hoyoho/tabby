@@ -2808,3 +2808,12 @@ msgstr "프록시 서버 주소가 필요합니다"
 
 msgid "Test connection"
 msgstr "연결 테스트"
+
+msgid "{name} (as admin)"
+msgstr ""
+
+msgid "Open Tabby here"
+msgstr ""
+
+msgid "Paste path into Tabby"
+msgstr ""

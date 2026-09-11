@@ -87,6 +87,22 @@ export class LocalProfilesService extends ProfileProvider<LocalProfile> {
         return shellLists.reduce((a, b) => a.concat(b), [])
     }
 
+    async getLocalProfileByShellId (shellId: string): Promise<PartialProfile<LocalProfile>|null> {
+        const shells = await this.getShells()
+        const shell = shells.find(x => x.id === shellId)
+        if (!shell) {
+            return null
+        }
+        return {
+            type: 'local',
+            id: `local:${shell.id}:menu`,
+            name: shell.name,
+            icon: shell.icon,
+            options: this.optionsFromShell(shell),
+            isBuiltin: true,
+        }
+    }
+
     optionsFromShell (shell: Shell): SessionOptions {
         return {
             ...this.configDefaults.options,
