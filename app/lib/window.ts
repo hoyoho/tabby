@@ -468,12 +468,12 @@ export class Window {
         this.window.on('move', onBoundsChange)
         this.window.on('resize', onBoundsChange)
 
-        ipcMain.on('window-set-traffic-light-position', (_event, x, y) => {
-            this.window.setWindowButtonPosition({ x, y })
+        this.on('window-set-traffic-light-position', (_event, x, y) => {
+            this.window?.setWindowButtonPosition({ x, y })
         })
 
-        ipcMain.on('window-set-opacity', (_event, opacity) => {
-            this.window.setOpacity(opacity)
+        this.on('window-set-opacity', (_event, opacity) => {
+            this.window?.setOpacity(opacity)
         })
 
         this.on('window-set-progress-bar', (_, value) => {
