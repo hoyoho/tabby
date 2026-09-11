@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { debounce } from 'utils-decorators/dist/esm/debounce/debounce'
-import { Component, HostBinding, Inject, Optional } from '@angular/core'
+import { Component, HostBinding, Optional } from '@angular/core'
 import {
     DockingService,
     ConfigService,
-    Theme,
     HostAppService,
     Platform,
     isWindowsBuild,
@@ -29,12 +28,9 @@ export class WindowSettingsTabComponent extends BaseComponent {
         public config: ConfigService,
         public hostApp: HostAppService,
         public platform: PlatformService,
-        @Inject(Theme) public themes: Theme[],
         @Optional() public docking?: DockingService,
     ) {
         super()
-
-        this.themes = config.enabledServices(this.themes)
 
         this.isFluentVibrancySupported = isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
     }
@@ -45,26 +41,5 @@ export class WindowSettingsTabComponent extends BaseComponent {
         if (requireRestart) {
             this.config.requestRestart()
         }
-    }
-
-    get backgroundImageName (): string|null {
-        const path = this.config.store.appearance.backgroundImage
-        if (!path) {
-            return null
-        }
-        return path.split(/[\\/]/).pop()
-    }
-
-    async selectBackgroundImage (): Promise<void> {
-        const path = await this.platform.pickImage()
-        if (path) {
-            this.config.store.appearance.backgroundImage = path
-            this.config.save()
-        }
-    }
-
-    clearBackgroundImage (): void {
-        this.config.store.appearance.backgroundImage = null
-        this.config.save()
     }
 }

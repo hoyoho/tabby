@@ -1,4 +1,4 @@
-h3.mb-3(translate) Appearance
+h3.mb-3(translate) Font
 .form-line
     .header
         .title(translate) Font
@@ -87,6 +87,43 @@ h3.mb-3(translate) Appearance
 
     .form-line
         .header
+            .title(translate) Minimum contrast ratio
+        input.form-control(
+            type='number',
+            min='1',
+            max='21',
+            step='0.5',
+            [(ngModel)]='config.store.terminal.minimumContrastRatio',
+            (ngModelChange)='config.save()'
+        )
+
+    .form-line
+        .header
+            .title(translate) Fallback font
+            .description(translate) A second font family used to display characters missing in the main font
+
+        input.form-control(
+            type='text',
+            [ngbTypeahead]='fontAutocomplete',
+            [(ngModel)]='config.store.terminal.fallbackFont',
+            (ngModelChange)='config.save()'
+        )
+
+    .form-line
+        .header
+            .title(translate) Line padding
+            .description(translate) Additional space between lines
+        input.form-control(
+            type='number',
+            [(ngModel)]='config.store.terminal.linePadding',
+            (ngModelChange)='config.save()',
+        )
+
+.mt-4
+    h3(translate) Cursor
+
+    .form-line
+        .header
             .title(translate) Cursor shape
 
         .btn-group(role='group')
@@ -136,71 +173,78 @@ h3.mb-3(translate) Appearance
             (ngModelChange)='config.save()',
         )
 
-    .form-line
+.mt-4
+    h3(translate) Color scheme
+
+    .form-line.mb-4
         .header
-            .title(translate) Minimum contrast ratio
-        input.form-control(
-            type='number',
-            min='1',
-            max='21',
-            step='0.5',
-            [(ngModel)]='config.store.terminal.minimumContrastRatio',
+            .title(translate) Switch color scheme
+
+        .btn-group(role='group')
+            input.btn-check(
+                type='radio',
+                name='colorSchemeMode',
+                [(ngModel)]='config.store.appearance.colorSchemeMode',
+                (ngModelChange)='config.save()',
+                id='colorSchemeModeAuto',
+                [value]='"auto"'
+            )
+            label.btn.btn-secondary(
+                for='colorSchemeModeAuto'
+            )
+                span(translate) From system
+            input.btn-check(
+                type='radio',
+                name='colorSchemeMode',
+                [(ngModel)]='config.store.appearance.colorSchemeMode',
+                (ngModelChange)='config.save()',
+                id='colorSchemeModeDark',
+                [value]='"dark"'
+            )
+            label.btn.btn-secondary(
+                for='colorSchemeModeDark'
+            )
+                span(translate) Always dark
+            input.btn-check(
+                type='radio',
+                name='colorSchemeMode',
+                [(ngModel)]='config.store.appearance.colorSchemeMode',
+                (ngModelChange)='config.save()',
+                id='colorSchemeModeLight',
+                [value]='"light"'
+            )
+            label.btn.btn-secondary(
+                for='colorSchemeModeLight'
+            )
+                span(translate) Always light
+
+    .form-line.mb-4
+        .header
+            .title(translate) Generate 256-color palette
+            .description(translate) Generate extended 256-color palette from your base 16 colors
+        toggle(
+            [(ngModel)]='config.store.terminal.paletteGenerate',
             (ngModelChange)='config.save()'
         )
 
-    .form-line
+    .form-line.mb-4
         .header
-            .title(translate) Fallback font
-            .description(translate) A second font family used to display characters missing in the main font
-
-        input.form-control(
-            type='text',
-            [ngbTypeahead]='fontAutocomplete',
-            [(ngModel)]='config.store.terminal.fallbackFont',
+            .title(translate) Harmonious palette
+            .description(translate) Whether to invert generated light theme colors. This helps give the 256-color palette more semantic meaning.
+        toggle(
+            [(ngModel)]='config.store.terminal.paletteHarmonious',
             (ngModelChange)='config.save()'
         )
 
-    .form-line
-        .header
-            .title(translate) Line padding
-            .description(translate) Additional space between lines
-        input.form-control(
-            type='number',
-            [(ngModel)]='config.store.terminal.linePadding',
-            (ngModelChange)='config.save()',
-        )
+    ul.nav-tabs(ngbNav, #nav='ngbNav', [activeId]='defaultTab')
+        li(ngbNavItem='dark')
+            a(ngbNavLink, translate) Dark mode
+            ng-template(ngbNavContent)
+                color-scheme-settings-for-mode(configKey='colorScheme')
 
+        li(ngbNavItem='light')
+            a(ngbNavLink, translate) Light mode
+            ng-template(ngbNavContent)
+                color-scheme-settings-for-mode(configKey='lightColorScheme')
 
-    h3.mt-4(translate) CSS
-
-    .form-line
-        .header
-            .title(translate) Custom CSS
-
-    textarea.form-control(
-        [(ngModel)]='config.store.appearance.css',
-        (ngModelChange)='saveConfiguration()',
-    )
-
-    .form-line(*ngIf='pluginGlobalStyles')
-        .header
-            .title(translate) Global styles contributed by plugins (read-only)
-
-    pre.plugin-css-preview(*ngIf='pluginGlobalStyles') {{ pluginGlobalStyles }}
-
-    .form-line
-        .header
-            .title(translate) Show CSS variables reference
-            .description(translate) The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field
-
-        toggle([(ngModel)]='showCssVariableReference')
-
-    table.table.css-variables-table(*ngIf='showCssVariableReference')
-        thead
-            tr
-                th.text-muted(translate) Variable
-                th.text-muted(translate) Current value
-        tbody
-            tr(*ngFor='let variable of cssVariables')
-                td {{ variable.name }}
-                td {{ variable.value }}
+    div([ngbNavOutlet]='nav')

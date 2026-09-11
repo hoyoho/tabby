@@ -153,8 +153,6 @@ msgid "Auto"
 msgstr "自动"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "在应用程序启动时自动打开一个终端窗口"
 
 
 msgid "Automatic"
@@ -548,7 +546,7 @@ msgstr "Cygwin"
 
 
 msgid "Dark mode"
-msgstr "夜间模式"
+msgstr "暗色模式"
 
 
 msgid "Data bits"
@@ -1256,7 +1254,7 @@ msgstr "使用 Shell 替代操作系统处理 Meta 键"
 
 
 msgid "Light mode"
-msgstr "亮色主题"
+msgstr "亮色模式"
 
 
 msgid "Line by line"
@@ -1762,8 +1760,8 @@ msgid "Profiles"
 msgstr "配置"
 
 
-msgid "Profiles & connections"
-msgstr "配置和连接"
+msgid "Sessions"
+msgstr "会话"
 
 
 msgid "Program"
@@ -2926,3 +2924,15 @@ msgstr "在此处打开 Tabby"
 
 msgid "Paste path into Tabby"
 msgstr "粘贴路径到 Tabby"
+
+msgid "Styles"
+msgstr "样式"
+
+msgid "Configuration"
+msgstr "配置"
+
+msgid "Window style"
+msgstr "窗口样式"
+
+msgid "Cursor"
+msgstr "光标"

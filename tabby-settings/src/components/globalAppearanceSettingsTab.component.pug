@@ -1,0 +1,57 @@
+h3.mb-3(translate) Window style
+
+.form-line(*ngIf='themeList.length > 1')
+    .header
+        .title(translate) Theme
+    select.form-control(
+        [(ngModel)]='config.store.appearance.theme',
+        (ngModelChange)='saveConfiguration()',
+    )
+        option(*ngFor='let theme of themeList', [ngValue]='theme.name') {{theme.name|translate}}
+
+.form-line
+    .header
+        .title(translate) Spaciness
+        .description(translate) Controls the amount of space between elements
+    input(
+        type='range',
+        [(ngModel)]='config.store.appearance.spaciness',
+        (mouseup)='saveConfiguration()',
+        min='0.6',
+        max='1.4',
+        step='0.1'
+    )
+
+h3.mt-4(translate) CSS
+
+.form-line
+    .header
+        .title(translate) Custom CSS
+
+textarea.form-control(
+    [(ngModel)]='config.store.appearance.css',
+    (ngModelChange)='saveConfiguration()',
+)
+
+.form-line(*ngIf='pluginGlobalStyles')
+    .header
+        .title(translate) Global styles contributed by plugins (read-only)
+
+pre.plugin-css-preview(*ngIf='pluginGlobalStyles') {{ pluginGlobalStyles }}
+
+.form-line
+    .header
+        .title(translate) Show CSS variables reference
+        .description(translate) The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field
+
+    toggle([(ngModel)]='showCssVariableReference')
+
+table.table.css-variables-table(*ngIf='showCssVariableReference')
+    thead
+        tr
+            th.text-muted(translate) Variable
+            th.text-muted(translate) Current value
+    tbody
+        tr(*ngFor='let variable of cssVariables')
+            td {{ variable.name }}
+            td {{ variable.value }}

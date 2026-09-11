@@ -1,0 +1,14 @@
+h3.mb-3(translate) Terminal
+
+ul.nav-tabs(ngbNav, #nav='ngbNav', [activeId]='defaultTab')
+    li(ngbNavItem='styles')
+        a(ngbNavLink, translate) Styles
+        ng-template(ngbNavContent)
+            terminal-styles-tab
+
+    li(ngbNavItem='config')
+        a(ngbNavLink, translate) Configuration
+        ng-template(ngbNavContent)
+            terminal-config-tab
+
+div([ngbNavOutlet]='nav')

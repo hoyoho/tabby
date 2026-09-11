@@ -209,37 +209,6 @@ div.mt-4
             label.btn.btn-secondary(for='bellAudible')
                 span(translate) Audible
 
-.mt-4
-    h3(translate) Startup
-
-    .form-line(*ngIf='hostApp.platform !== Platform.Web')
-        .header
-            .title(translate) Auto-open a terminal on app start
-
-        toggle(
-            [(ngModel)]='config.store.terminal.autoOpen',
-            (ngModelChange)='config.save()',
-        )
-
-    .form-line
-        .header
-            .title(translate) Restore workspaces on app start
-
-        toggle(
-            [(ngModel)]='config.store.workspace.recoverTabs',
-            (ngModelChange)='config.save()',
-        )
-
-    .form-line
-        .header
-            .title(translate) Open new sessions in the current workspace
-            .description(translate) New sessions are added to the active workspace pane instead of a separate workspace.
-
-        toggle(
-            [(ngModel)]='config.store.session.appendToPaneByDefault',
-            (ngModelChange)='config.save()',
-        )
-
 div.mt-4(*ngIf='hostApp.platform === Platform.Windows')
     h3(translate) Windows
 

@@ -1,8 +1,3 @@
-color-scheme-preview {
-    flex-shrink: 0;
-    margin-bottom: 20px;
-}
-
 textarea {
     font-family: 'Source Code Pro', monospace;
     min-height: 120px;
@@ -50,9 +45,4 @@ textarea {
     thead th:first-child, td:first-child {
         width: 40%;
     }
-}
-
-.font-size-input {
-    width: 100px;
-    flex: none;
 }

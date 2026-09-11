@@ -3,9 +3,10 @@ import { ConfigService, HostAppService, Platform, altKeyName, metaKeyName } from
 
 /** @hidden */
 @Component({
-    templateUrl: './terminalSettingsTab.component.pug',
+    selector: 'terminal-config-tab',
+    templateUrl: './terminalConfigTab.component.pug',
 })
-export class TerminalSettingsTabComponent {
+export class TerminalConfigTabComponent {
     Platform = Platform
     altKeyName = altKeyName
     metaKeyName = metaKeyName

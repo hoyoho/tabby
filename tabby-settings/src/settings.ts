@@ -1,10 +1,26 @@
 import { Injectable } from '@angular/core'
 import { SettingsTabProvider } from './api'
+import { GlobalAppearanceSettingsTabComponent } from './components/globalAppearanceSettingsTab.component'
 import { HotkeySettingsTabComponent } from './components/hotkeySettingsTab.component'
 import { WindowSettingsTabComponent } from './components/windowSettingsTab.component'
 import { VaultSettingsTabComponent } from './components/vaultSettingsTab.component'
 import { ProfilesSettingsTabComponent } from './components/profilesSettingsTab.component'
 import { TranslateService } from 'tabby-core'
+
+/** @hidden */
+@Injectable()
+export class AppearanceSettingsTabProvider extends SettingsTabProvider {
+    id = 'appearance'
+    icon = 'swatchbook'
+    title = this.translate.instant('Appearance')
+    prioritized = true
+
+    constructor (private translate: TranslateService) { super() }
+
+    getComponentType (): any {
+        return GlobalAppearanceSettingsTabComponent
+    }
+}
 
 /** @hidden */
 @Injectable()
@@ -59,7 +75,7 @@ export class VaultSettingsTabProvider extends SettingsTabProvider {
 export class ProfilesSettingsTabProvider extends SettingsTabProvider {
     id = 'profiles'
     icon = 'window-restore'
-    title = this.translate.instant('Profiles & connections')
+    title = this.translate.instant('Sessions')
     prioritized = true
 
     constructor (private translate: TranslateService) { super() }

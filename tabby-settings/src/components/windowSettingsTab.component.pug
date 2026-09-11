@@ -1,27 +1,5 @@
 h3.mb-3(translate) Window
 
-.form-line(*ngIf='themes.length > 1')
-    .header
-        .title(translate) Theme
-    select.form-control(
-        [(ngModel)]='config.store.appearance.theme',
-        (ngModelChange)='saveConfiguration()',
-    )
-        option(*ngFor='let theme of themes', [ngValue]='theme.name') {{theme.name|translate}}
-
-.form-line
-    .header
-        .title(translate) Spaciness
-        .description(translate) Controls the amount of space between elements
-    input(
-        type='range',
-        [(ngModel)]='config.store.appearance.spaciness',
-        (mouseup)='saveConfiguration()',
-        min='0.6',
-        max='1.4',
-        step='0.1'
-    )
-
 .form-line(*ngIf='hostApp.platform === Platform.Web')
     .header
         .title(translate) Ask before closing the browser tab
@@ -31,58 +9,6 @@ h3.mb-3(translate) Window
         (ngModelChange)='saveConfiguration()',
     )
 
-
-.form-line(*ngIf='platform.supportsWindowControls')
-    .header
-        .title(*ngIf='hostApp.platform !== Platform.macOS', translate) Acrylic background
-        .title(*ngIf='hostApp.platform === Platform.macOS', translate) Vibrancy
-        .description(translate) Gives the window a blurred transparent background
-
-    toggle(
-        [(ngModel)]='config.store.appearance.vibrancy',
-        (ngModelChange)='config.save()'
-    )
-
-.form-line(*ngIf='config.store.appearance.vibrancy && isFluentVibrancySupported && config.store.hacks.enableFluentBackground')
-    .header
-        .title(translate) Background type
-    .btn-group
-        input.btn-check(
-            type='radio',
-            name='vibracy',
-            [(ngModel)]='config.store.appearance.vibrancyType',
-            (ngModelChange)='config.save()',
-            id='vibrancyTypeBlur',
-            [value]='"blur"'
-        )
-        label.btn.btn-secondary(
-            for='vibrancyTypeBlur'
-        )
-            span(translate) Blur
-        input.btn-check(
-            type='radio',
-            name='vibracy',
-            [(ngModel)]='config.store.appearance.vibrancyType',
-            (ngModelChange)='config.save()',
-            id='vibrancyTypeFluent',
-            [value]='"fluent"'
-        )
-        label.btn.btn-secondary(
-            for='vibrancyTypeFluent'
-        )
-            span(translate) Fluent
-
-.form-line(*ngIf='platform.supportsWindowControls')
-    .header
-        .title(translate) Opacity
-    input(
-        type='range',
-        [(ngModel)]='config.store.appearance.opacity',
-        (ngModelChange)='saveConfiguration(); (hostApp.platform === Platform.Linux && config.requestRestart())',
-        min='0.4',
-        max='1',
-        step='0.01'
-    )
 
 .form-line(*ngIf='hostApp.platform !== Platform.Web && hostApp.platform !== Platform.Linux')
     .header
@@ -100,29 +26,6 @@ h3.mb-3(translate) Window
     toggle(
         [(ngModel)]='config.store.showProfileTree',
         (ngModelChange)='saveConfiguration(false)'
-    )
-
-.form-line
-    .header
-        .title(translate) Background image
-        .description(translate) Display an image behind the terminal window
-    .d-flex.align-items-center.min-w-0.flex-shrink-1
-        span.text-truncate.me-2.text-muted(style='max-width: 240px', [title]='backgroundImageName || null') {{ backgroundImageName || ("Not set"|translate) }}
-        .btn-group.flex-shrink-0
-            button.btn.btn-secondary(translate, (click)='selectBackgroundImage()') Browse…
-            button.btn.btn-secondary(translate, (click)='clearBackgroundImage()', [disabled]='!config.store.appearance.backgroundImage') Clear
-
-.form-line(*ngIf='config.store.appearance.backgroundImage')
-    .header
-        .title(translate) Background image brightness
-        .description(translate) Adjust the dark scrim behind the interface
-    input(
-        type='range',
-        [(ngModel)]='config.store.appearance.backgroundImageBrightness',
-        (ngModelChange)='saveConfiguration()',
-        min='0',
-        max='1',
-        step='0.05'
     )
 
 h3.mt-4(translate) Docking
@@ -309,6 +212,27 @@ h3.mt-4(translate) Panes
     toggle(
         [(ngModel)]='config.store.terminal.focusFollowsMouse',
         (ngModelChange)='config.save(); config.requestRestart()'
+    )
+
+h3.mt-4(translate) Startup
+
+.form-line
+    .header
+        .title(translate) Restore workspaces on app start
+
+    toggle(
+        [(ngModel)]='config.store.workspace.recoverTabs',
+        (ngModelChange)='config.save()',
+    )
+
+.form-line
+    .header
+        .title(translate) Open new sessions in the current workspace
+        .description(translate) New sessions are added to the active workspace pane instead of a separate workspace.
+
+    toggle(
+        [(ngModel)]='config.store.session.appendToPaneByDefault',
+        (ngModelChange)='config.save()',
     )
 
 h3.mt-4(translate) Hacks

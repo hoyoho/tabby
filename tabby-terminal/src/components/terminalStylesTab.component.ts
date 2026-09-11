@@ -7,36 +7,25 @@ import { ConfigService, getCSSFontFamily, PlatformService, ThemesService } from 
 
 /** @hidden */
 @Component({
-    templateUrl: './appearanceSettingsTab.component.pug',
-    styleUrls: ['./appearanceSettingsTab.component.scss'],
+    selector: 'terminal-styles-tab',
+    templateUrl: './terminalStylesTab.component.pug',
+    styleUrls: ['./terminalStylesTab.component.scss'],
 })
-export class AppearanceSettingsTabComponent {
+export class TerminalStylesTabComponent {
     fonts: string[] = []
+    defaultTab = 'dark'
 
     constructor (
         public config: ConfigService,
         public themes: ThemesService,
         private platform: PlatformService,
-    ) { }
-
-    get pluginGlobalStyles (): string {
-        return this.themes.getGlobalStyles()
-    }
-
-    showCssVariableReference = false
-
-    get cssVariables (): { name: string; value: string }[] {
-        const cssText = document.documentElement.style.cssText
-        const regexp = /(--[a-zA-Z0-9-]+)\s*:\s*([^;]+);/g
-        const result: { name: string; value: string }[] = []
-        let match: RegExpExecArray|null
-        while ((match = regexp.exec(cssText))) {
-            if (match[1].startsWith('--bs-') || match[1].startsWith('--icon-')) {
-                continue
-            }
-            result.push({ name: match[1], value: match[2].trim() })
+    ) {
+        const mode = this.config.store.appearance.colorSchemeMode
+        if (mode === 'dark' || mode === 'light') {
+            this.defaultTab = mode
+        } else {
+            this.defaultTab = platform.getTheme()
         }
-        return result.sort((a, b) => a.name.localeCompare(b.name))
     }
 
     async ngOnInit () {

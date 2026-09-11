@@ -8,6 +8,7 @@ import TabbyCorePlugin, { ToolbarButtonProvider, HotkeyProvider, ConfigProvider,
 
 import { EditProfileModalComponent } from './components/editProfileModal.component'
 import { EditProfileGroupModalComponent } from './components/editProfileGroupModal.component'
+import { GlobalAppearanceSettingsTabComponent } from './components/globalAppearanceSettingsTab.component'
 import { HotkeyInputModalComponent } from './components/hotkeyInputModal.component'
 import { HotkeySettingsTabComponent } from './components/hotkeySettingsTab.component'
 import { MultiHotkeyInputComponent } from './components/multiHotkeyInput.component'
@@ -22,7 +23,7 @@ import { ShowSecretModalComponent } from './components/showSecretModal.component
 
 
 import { SettingsTabProvider } from './api'
-import { HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabProvider, ProfilesSettingsTabProvider } from './settings'
+import { AppearanceSettingsTabProvider, HotkeySettingsTabProvider, WindowSettingsTabProvider, VaultSettingsTabProvider, ProfilesSettingsTabProvider } from './settings'
 import { ButtonProvider } from './buttonProvider'
 import { SettingsHotkeyProvider } from './hotkeys'
 import { SettingsConfigProvider } from './config'
@@ -45,6 +46,7 @@ import { SettingsProfileEditHost } from './profileEditHost'
         { provide: ConfigProvider, useClass: SettingsConfigProvider, multi: true },
         { provide: HotkeyProvider, useClass: SettingsHotkeyProvider, multi: true },
         { provide: SettingsTabProvider, useClass: HotkeySettingsTabProvider, multi: true },
+        { provide: SettingsTabProvider, useClass: AppearanceSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: WindowSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: VaultSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: ProfilesSettingsTabProvider, multi: true },
@@ -52,6 +54,7 @@ import { SettingsProfileEditHost } from './profileEditHost'
     declarations: [
         EditProfileModalComponent,
         EditProfileGroupModalComponent,
+        GlobalAppearanceSettingsTabComponent,
         HotkeyInputModalComponent,
         HotkeySettingsTabComponent,
         MultiHotkeyInputComponent,

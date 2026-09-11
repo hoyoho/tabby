@@ -8,9 +8,9 @@ import { NgxColorsModule } from 'ngx-colors'
 import TabbyCorePlugin, { ConfigProvider, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, MenuProvider } from 'tabby-core'
 import { SettingsTabProvider } from 'tabby-settings'
 
-import { AppearanceSettingsTabComponent } from './components/appearanceSettingsTab.component'
-import { ColorSchemeSettingsTabComponent } from './components/colorSchemeSettingsTab.component'
-import { TerminalSettingsTabComponent } from './components/terminalSettingsTab.component'
+import { TerminalTabComponent } from './components/terminalTab.component'
+import { TerminalStylesTabComponent } from './components/terminalStylesTab.component'
+import { TerminalConfigTabComponent } from './components/terminalConfigTab.component'
 import { ColorPickerComponent } from './components/colorPicker.component'
 import { ColorSchemePreviewComponent } from './components/colorSchemePreview.component'
 import { SearchPanelComponent } from './components/searchPanel.component'
@@ -24,7 +24,7 @@ import { TerminalToolbarComponent } from './components/terminalToolbar.component
 import { TerminalDecorator } from './api/decorator'
 import { TerminalContextMenuItemProvider } from './api/contextMenuProvider'
 import { TerminalColorSchemeProvider } from './api/colorSchemeProvider'
-import { TerminalSettingsTabProvider, AppearanceSettingsTabProvider, ColorSchemeSettingsTabProvider } from './settings'
+import { TerminalSettingsTabProvider } from './settings'
 import { DebugDecorator } from './features/debug'
 import { ZModemDecorator } from './features/zmodem'
 import { TerminalConfigProvider } from './config'
@@ -49,8 +49,6 @@ import { TerminalMenuProvider } from './menu'
     ],
     providers: [
         { provide: MenuProvider, useClass: TerminalMenuProvider, multi: true },
-        { provide: SettingsTabProvider, useClass: AppearanceSettingsTabProvider, multi: true },
-        { provide: SettingsTabProvider, useClass: ColorSchemeSettingsTabProvider, multi: true },
         { provide: SettingsTabProvider, useClass: TerminalSettingsTabProvider, multi: true },
 
         { provide: ConfigProvider, useClass: TerminalConfigProvider, multi: true },
@@ -70,9 +68,9 @@ import { TerminalMenuProvider } from './menu'
         ColorPickerComponent,
         ColorSchemePreviewComponent,
         ColorSchemeSelectorComponent,
-        AppearanceSettingsTabComponent,
-        ColorSchemeSettingsTabComponent,
-        TerminalSettingsTabComponent,
+        TerminalTabComponent,
+        TerminalStylesTabComponent,
+        TerminalConfigTabComponent,
         SearchPanelComponent,
         StreamProcessingSettingsComponent,
         LoginScriptsSettingsComponent,

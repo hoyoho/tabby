@@ -165,8 +165,6 @@ msgid "Auto"
 msgstr "自動"
 
 
-msgid "Auto-open a terminal on app start"
-msgstr "在應用程式啟動時自動打開終端"
 
 
 msgid "Automatic"
@@ -1235,7 +1233,7 @@ msgstr "使用 Shell 替代作業系統處理 Meta 鍵"
 
 
 msgid "Light mode"
-msgstr "淺色模式"
+msgstr "明亮模式"
 
 
 msgid "Line by line"
@@ -1741,8 +1739,8 @@ msgid "Profiles"
 msgstr "設定檔"
 
 
-msgid "Profiles & connections"
-msgstr "設定檔與連線"
+msgid "Sessions"
+msgstr "會話"
 
 
 msgid "Program"
@@ -2822,3 +2820,15 @@ msgstr ""
 
 msgid "Paste path into Tabby"
 msgstr ""
+
+msgid "Styles"
+msgstr "樣式"
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Window style"
+msgstr "視窗樣式"
+
+msgid "Cursor"
+msgstr "游標"
