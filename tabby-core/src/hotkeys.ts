@@ -20,7 +20,7 @@ export class AppHotkeyProvider extends HotkeyProvider {
         },
         {
             id: 'toggle-profile-tree',
-            name: this.translate.instant('Show or hide the profile sidebar'),
+            name: this.translate.instant('Show or hide the sidebar'),
         },
         {
             id: 'rename-tab',

@@ -103,7 +103,7 @@ export class AppMenuProvider extends MenuProvider {
                     {
                         separatorBefore: true,
                         weight: 30,
-                        label: this.t('Profile sidebar'),
+                        label: this.t('Sidebar'),
                         checked: this.config.store.showProfileTree,
                         click: () => this.toggleProfileTree(),
                     },
