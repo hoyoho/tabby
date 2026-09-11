@@ -773,6 +773,16 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /** @hidden PaneDragHost */
+    async serializeSessionForDrag (tab: SessionTab): Promise<any|null> {
+        return this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+    }
+
+    /** @hidden PaneDragHost */
+    updateNativeDragState (dragId: string, state: unknown): void {
+        this.hostApp.nativeDragStateUpdate(dragId, state)
+    }
+
+    /** @hidden PaneDragHost */
     getNativeDragState (dragId: string): any {
         return this.hostApp.nativeDragState(dragId)
     }
@@ -877,11 +887,27 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden PaneDragHost */
     async acceptProfileIntoWorkspace (payload: NativeDragPayload, x: number, y: number): Promise<boolean> {
-        const params = await this.tabRecovery.recoverTab({
-            type: 'app:local-tab',
-            profile: payload.profile,
-            savedState: payload.savedState,
-        })
+        let dragState = payload.savedState
+        // The source registers the session's FULL recovery token out-of-band
+        // (see PaneDragController.beginNativeDrag), carrying the tab type plus
+        // the connection/PTY id needed to re-attach. The token is serialized
+        // asynchronously, so a very fast drop may find the entry still empty —
+        // retry briefly (parity with the native workspace drop path).
+        if (payload.dragId && !(dragState && typeof dragState === 'object' && typeof dragState.type === 'string')) {
+            for (let attempt = 0; attempt < 15 && !(dragState && typeof dragState === 'object' && typeof dragState.type === 'string'); attempt++) {
+                await new Promise(resolve => setTimeout(resolve, 100))
+                dragState = this.hostApp.nativeDragState(payload.dragId)
+            }
+        }
+        // Recover through the session's own tab type ('app:ssh-tab',
+        // 'app:local-tab', …) so e.g. an SSH session is revived by the SSH
+        // provider and keeps its live connection — routing every profile through
+        // 'app:local-tab' spawns SSH with no command and the session dies,
+        // leaving a dangling empty workspace.
+        let params: NewTabParameters<BaseTabComponent>|null = null
+        if (dragState && typeof dragState === 'object' && typeof dragState.type === 'string') {
+            params = await this.tabRecovery.recoverTab(dragState as RecoveryToken)
+        }
         if (!params) {
             return false
         }
@@ -895,6 +921,15 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         params.inputs.icon = payload.tabIcon ?? null
         const session = this.tabsService.create(params as NewTabParameters<any>)
         this.app.selectTab(this)
+
+        // This workspace may be brand-new (an empty-window cross-window drop):
+        // its #vc ViewChild / host element only exist after the first render,
+        // but paneHit needs them to hit-test the panes — call it before
+        // ngAfterViewInit and it throws on the null viewContainer, aborting the
+        // whole drop and leaving a dangling empty workspace.
+        if (!this.viewContainer) {
+            await this.initialized$.toPromise()
+        }
 
         // Same placement routing as the in-window gesture: header / body centre
         // merge into the HOVERED pane as a tab (one shown, the rest hidden);
@@ -1464,20 +1499,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
                 }
                 pane.activeTab = pane.tabs[Math.min(Math.max(0, childState.active ?? 0), pane.tabs.length - 1)] ?? null
                 children.push(pane)
-            } else {
-                // legacy: plain tab token → wrap into a single-tab pane
-                const recovered = await this.tabRecovery.recoverTab(childState)
-                if (recovered) {
-                    // Recovery only ever recreates session tabs.
-                    const tab = this.tabsService.create(recovered) as SessionTab
-                    tab.pinned = false
-                    const pane = new Pane(tab)
-                    children.push(pane)
-                    tab.parent = this
-                    await this.attachTabView(tab)
-                } else {
-                    state.ratios.splice(state.children.indexOf(childState), 1)
-                }
             }
         }
         while (root.ratios.length < root.children.length) {

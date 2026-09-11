@@ -215,13 +215,17 @@ export class AppService {
             // when the active tab hosts no workspace).
             payload.savedState = this.hostApp.nativeDragState(payload.dragId)
             void (async () => {
-                const target = this._activeTab instanceof WorkspaceComponent
-                    ? this._activeTab
-                    : this.createWorkspaceTab()
-                const restored = await target.acceptProfileIntoWorkspace(payload, e.clientX, e.clientY)
-                if (restored) {
-                    this.hostApp.nativeDragAccepted(payload.dragId)
-                    this.hostWindow.bringToFront()
+                try {
+                    const target = this._activeTab instanceof WorkspaceComponent
+                        ? this._activeTab
+                        : this.createWorkspaceTab()
+                    const restored = await target.acceptProfileIntoWorkspace(payload, e.clientX, e.clientY)
+                    if (restored) {
+                        this.hostApp.nativeDragAccepted(payload.dragId)
+                        this.hostWindow.bringToFront()
+                    }
+                } catch (err) {
+                    console.error('Cross-window drop restore failed:', err)
                 }
             })()
         })

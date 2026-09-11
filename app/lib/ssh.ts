@@ -1436,8 +1436,28 @@ export class SSHConnectionManager {
             conn.armGrace()
         })
 
-        ipcMain.on('ssh:kill', (_event, id) => {
-            this.connections[id]?.destroy()
+        ipcMain.on('ssh:kill', (event, id) => {
+            const conn = this.connections[id]
+            if (!conn || conn.closed) {
+                return
+            }
+            // A window closing its last shell on a SHARED connection must only
+            // drop its own claim — the connection may still be used by other
+            // windows (e.g. after a cross-window drag, the destination window's
+            // duplicate facade shares the same connection as the source window's
+            // remaining tabs). Killing it unconditionally tears the connection
+            // down underneath every other window. Only when the LAST attacher
+            // releases do we destroy it immediately (a transferred window that
+            // cancelled but never re-attached dies on its grace timer instead).
+            conn.attachers.delete(event.sender.id)
+            if (conn.owner === event.sender.id) {
+                conn.owner = [...conn.attachers].pop() ?? null
+            }
+            if (conn.attachers.size === 0) {
+                conn.destroy()
+            } else {
+                conn.cancelGrace()
+            }
         })
 
         ipcMain.on('ssh:ch-write', (_event, connId, chId, data) => {

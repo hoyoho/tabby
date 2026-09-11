@@ -86,9 +86,18 @@ export interface PaneDragHost {
     /**
      * Register a native drag id (+ serialized screen state) with the main
      * process (source side). The state is fetched by the target by id on drop —
-     * see [[getNativeDragState]].
+     * see [[getNativeDragState]]. Once the session's full recovery token is
+     * serialized ([[serializeSessionForDrag]]), [[updateNativeDragState]]
+     * replaces it so the target can recover through the session's own tab type.
      */
     beginNativeDrag: (dragId: string, savedState: any) => void
+    /**
+     * Serialize the session's full recovery token (carrying the tab type plus
+     * the session's connection/PTY id so the target re-attaches correctly).
+     */
+    serializeSessionForDrag: (tab: SessionTab) => Promise<any|null>
+    /** Replace the registered out-of-band state for a drag id (source side). */
+    updateNativeDragState: (dragId: string, state: any) => void
     /** Release the registration (source side; no committed cross-window drop). */
     endNativeDrag: (dragId: string) => void
     /**
@@ -499,12 +508,11 @@ export class PaneDragController {
                 restoreFromPTYID: (tab as any).session?.getID?.() ?? null,
             },
         }
-        // The serialized screen state is intentionally NOT embedded in the
+        // The recovery token intentionally does NOT ride inside the
         // DataTransfer payload — custom blobs crossing the compositor between
-        // windows are size-limited and intermittently dropped, killing the drop.
-        // Register it with the main process instead; the drop target fetches it
-        // by drag id ([[PaneDragHost.getNativeDragState]]).
-        const savedState = (tab as any).frontend?.saveState?.() ?? null
+        // windows are size-limited and intermittently dropped, killing the
+        // drop. It is registered with the main process instead; the drop
+        // target fetches it by drag id ([[PaneDragHost.getNativeDragState]]).
         const payload: NativeDragPayload = {
             dragId,
             profile,
@@ -561,7 +569,23 @@ export class PaneDragController {
             fallbackTimer: null,
         }
         this.installDragEndFallback()
-        this.host.beginNativeDrag(dragId, savedState)
+        this.host.beginNativeDrag(dragId, null)
+        // Cross-window: register the full recovery token so the target rebuilds
+        // the session through its own tab type (e.g. SSH → 'app:ssh-tab',
+        // attaching to the live connection). Without this, the legacy code
+        // routes every profile through 'app:local-tab' — SSH is fed as a
+        // local terminal with no command and dies instantly, leaving a dangling
+        // empty workspace on the receiving side.
+        void (async () => {
+            try {
+                const token = await this.host.serializeSessionForDrag(tab)
+                if (token) {
+                    this.host.updateNativeDragState(dragId, JSON.parse(JSON.stringify(token)))
+                }
+            } catch (error) {
+                console.error('[pane-drag] failed to serialize session recovery token:', error)
+            }
+        })()
     }
 
     /**
