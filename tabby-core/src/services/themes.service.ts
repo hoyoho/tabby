@@ -1,7 +1,6 @@
 ﻿import { Inject, Injectable, Optional } from '@angular/core'
 import { Subject, Observable } from 'rxjs'
 import * as Color from 'color'
-import { pathToFileURL } from 'url'
 import { ConfigService } from '../services/config.service'
 import { TerminalColorScheme, Theme } from '../api/theme'
 import { GlobalStyleProvider } from '../api/globalStyleProvider'
@@ -173,29 +172,6 @@ export class ThemesService {
         }
 
         vars['--spaciness'] = this.getConfigStoreOrDefaults().appearance.spaciness
-        const backgroundImage = this.getConfigStoreOrDefaults().appearance.backgroundImage
-        if (backgroundImage) {
-            // Convert a platform path into a CSS-loadable file URL. Direct
-            // interpolation breaks on Windows (backslashes are escapes inside
-            // url()) and is unportable across platforms, so normalize via
-            // pathToFileURL when available and fall back to fixing separators.
-            let imageUrl: string
-            try {
-                imageUrl = pathToFileURL(backgroundImage).toString()
-            } catch {
-                imageUrl = 'file:///' + backgroundImage.replace(/\\/g, '/').replace(/^\/?(?=[A-Za-z]:)/, '').replace(/'/g, '%27').replace(/"/g, '%22')
-            }
-            // The background image and its dark scrim are scoped to the
-            // workspace/terminal area only. Settings, menus and other chrome
-            // keep their regular opaque surfaces.
-            vars['--app-workspace-image'] = `url("${imageUrl}")`
-            const brightness = this.getConfigStoreOrDefaults().appearance.backgroundImageBrightness
-            const scrimAlpha = Math.max(0, Math.min(1, 1 - brightness))
-            vars['--app-workspace-scrim'] = `rgba(20, 22, 26, ${scrimAlpha})`
-        } else {
-            vars['--app-workspace-image'] = 'none'
-            vars['--app-workspace-scrim'] = 'transparent'
-        }
 
         for (const [bg, fg] of contrastPairs) {
             const colorBg = Color(vars[bg]).hsl()
