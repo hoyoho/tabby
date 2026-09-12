@@ -258,14 +258,25 @@ export class ThemesService {
         return scheme ?? fallbackScheme
     }
 
+    private getGlobalStyleProviderList (): GlobalStyleProvider[] {
+        return this.globalStyleProviders == null ? [] : (Array.isArray(this.globalStyleProviders) ? this.globalStyleProviders : [this.globalStyleProviders])
+    }
+
+    /**
+     * Whether any registered [[GlobalStyleProvider]] needs the terminal surface
+     * kept transparent (so its background shows through).
+     */
+    wantsTransparentTerminal (): boolean {
+        return this.getGlobalStyleProviderList().some(provider => provider.wantsTransparentTerminal())
+    }
+
     /**
      * CSS contributed by all registered [[GlobalStyleProvider]]s, together with
      * each provider's module name, so consumers can attribute individual rules
      * or CSS variables to the module that emitted them.
      */
     getGlobalStyleChunks (): { module: string; css: string }[] {
-        const providers = this.globalStyleProviders == null ? [] : (Array.isArray(this.globalStyleProviders) ? this.globalStyleProviders : [this.globalStyleProviders])
-        return providers.map(provider => ({
+        return this.getGlobalStyleProviderList().map(provider => ({
             module: provider.getStyleModuleName() || provider.constructor.name,
             css: provider.provideStyles(),
         }))

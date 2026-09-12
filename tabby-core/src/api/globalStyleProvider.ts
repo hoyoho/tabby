@@ -29,4 +29,14 @@ export abstract class GlobalStyleProvider {
     getStyleModuleName (): string {
         return ''
     }
+
+    /**
+     * When true, the terminal surface is kept transparent so the provider's
+     * background (image, wallpaper, ...) shows through instead of the theme's
+     * terminal color. Providers that paint behind the terminal should return
+     * true while their background is active.
+     */
+    wantsTransparentTerminal (): boolean {
+        return false
+    }
 }

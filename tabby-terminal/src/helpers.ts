@@ -43,9 +43,9 @@ export function getXtermBackgroundColor (
         return '#00000000'
     }
 
-    // With a custom background image the terminal surface must stay
-    // transparent so the image can show through.
-    if (config.store.appearance?.backgroundImage) {
+    // A registered background provider (e.g. the wallpaper plugin) needs the
+    // terminal surface transparent so its background shows through.
+    if (themes.wantsTransparentTerminal()) {
         return '#00000000'
     }
 
