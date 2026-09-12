@@ -254,17 +254,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                 return
             }
             if (hotkey === 'search') {
-                this.showSearchPanel = true
-                setImmediate(() => {
-                    const input = this.element.nativeElement.querySelector('.search-input')
-                    const selectedText = (this.frontend?.getSelection() ?? '').trim()
-                    if (input && selectedText.length) {
-                        input.value = selectedText
-                    }
-
-                    input?.focus()
-                    input?.select()
-                })
+                this.openSearch()
             }
         })
 
@@ -501,6 +491,28 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
         // non-tabHeader provider contributions only.
         const actions = await this.actions.getAsync(ActionSurface.TabContext, { tab: this, tabHeader: false })
         return actionsToMenuItems(actions, { tab: this })
+    }
+
+    /**
+     * Opens the in-terminal search panel, pre-filling the query with the
+     * current selection (if any) and focusing the input.
+     */
+    openSearch (): void {
+        this.showSearchPanel = true
+        setImmediate(() => {
+            const input = this.element.nativeElement.querySelector('.search-input') as HTMLInputElement | null
+            const selectedText = (this.frontend?.getSelection() ?? '').trim()
+            if (input && selectedText.length) {
+                input.value = selectedText
+                // Programmatic assignment does not fire Angular's ngModel, so
+                // dispatch an `input` event to let the binding update `query`
+                // and trigger the debounced search — otherwise the result
+                // counter and navigation buttons stay hidden.
+                input.dispatchEvent(new Event('input'))
+            }
+            input?.focus()
+            input?.select()
+        })
     }
 
     /**

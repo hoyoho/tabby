@@ -43,6 +43,11 @@ export class CopyPasteContextMenu extends TabContextMenuItemProvider {
                     label: this.translate.instant('Paste'),
                     click: () => tab.paste(),
                 },
+                { type: 'separator' },
+                {
+                    label: this.translate.instant('Search'),
+                    click: () => tab.openSearch(),
+                },
             ]
         }
         return []
