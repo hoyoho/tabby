@@ -1,4 +1,5 @@
 !macro customInit
+  StrCpy $installModePageSkipped "0"
   nsExec::Exec '"$LOCALAPPDATA\tabby\Update.exe" --uninstall -s'
 !macroend
 

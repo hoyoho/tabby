@@ -13,3 +13,73 @@ index d159c17..eb48466 100644
      }
      get sanitizedName() {
          return (0, filename_1.sanitizeFileName)(this.name);
+diff --git a/node_modules/app-builder-lib/templates/nsis/multiUserUi.nsh b/node_modules/app-builder-lib/templates/nsis/multiUserUi.nsh
+index 52a83df6..bb5b456d 100644
+--- a/node_modules/app-builder-lib/templates/nsis/multiUserUi.nsh
++++ b/node_modules/app-builder-lib/templates/nsis/multiUserUi.nsh
+@@ -4,6 +4,7 @@ Var HasTwoAvailableOptions
+ Var RadioButtonLabel1
+ Var isForceMachineInstall
+ Var isForceCurrentInstall
++Var installModePageSkipped
+ 
+ !macro PAGE_INSTALL_MODE
+   !insertmacro MUI_PAGE_INIT
+@@ -29,10 +30,18 @@ Var isForceCurrentInstall
+ 
+ !macro FUNCTION_INSTALL_MODE_PAGE_FUNCTION PRE LEAVE UNINSTALLER_FUNCPREFIX
+ 	Function "${UNINSTALLER_FUNCPREFIX}${PRE}"
++		; If this page was already auto-skipped once (e.g. UAC inner instance),
++		; show it normally when the user navigates back. Calling Abort during
++		; reverse navigation quits the installer instead of going back.
++		${if} $installModePageSkipped == "1"
++			Goto showInstallModePage
++		${endIf}
++
+ 		${if} ${UAC_IsInnerInstance}
+ 		${andIf} ${UAC_IsAdmin}
+ 		  # inner Process (and Admin) - skip selection, inner process is always used for elevation (machine-wide)
+ 			!insertmacro setInstallModePerAllUsers
++			StrCpy $installModePageSkipped "1"
+ 			Abort
+ 		${endIf}
+ 
+@@ -53,6 +62,7 @@ Var isForceCurrentInstall
+       ${endIf}
+ 
+       !insertmacro setInstallModePerAllUsers
++      StrCpy $installModePageSkipped "1"
+       Abort
+     ${endIf}
+ 
+@@ -61,6 +71,7 @@ Var isForceCurrentInstall
+       StrCpy $hasPerMachineInstallation "0"
+       StrCpy $hasPerUserInstallation "1"
+       !insertmacro setInstallModePerUser
++      StrCpy $installModePageSkipped "1"
+       Abort
+     ${endIf}
+ 
+@@ -71,6 +82,7 @@ Var isForceCurrentInstall
+ 			${if} $hasPerUserInstallation == "1"
+       ${andif} $hasPerMachineInstallation == "0"
+ 				!insertmacro setInstallModePerUser
++				StrCpy $installModePageSkipped "1"
+ 				Abort
+ 			${elseIf} $hasPerUserInstallation == "0"
+       ${andIf} $hasPerMachineInstallation == "1"
+@@ -81,11 +93,14 @@ Var isForceCurrentInstall
+         ${endIf}
+ 
+ 				!insertmacro setInstallModePerAllUsers
++				StrCpy $installModePageSkipped "1"
+ 				Abort
+ 			${endIf}
+ 
++      showInstallModePage:
+       !insertmacro MUI_HEADER_TEXT "$(chooseUninstallationOptions)" "$(whichInstallationShouldBeRemoved)"
+ 		!else
++      showInstallModePage:
+       !insertmacro MUI_HEADER_TEXT "$(chooseInstallationOptions)" "$(whoShouldThisApplicationBeInstalledFor)"
+ 		!endif
+ 
