@@ -24,6 +24,10 @@
 input {
     border: 1px solid var(--theme-secondary);
     background-color: transparent;
+    // Match the tree rows and bottom panels (0.875rem) instead of Bootstrap's
+    // form-control-sm (0.765625rem) so the filter reads at the same size as
+    // the rest of the sidebar text.
+    font-size: 0.875rem;
 }
 
 .profile-tree {
