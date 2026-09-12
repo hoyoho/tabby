@@ -178,6 +178,9 @@ export class AppRootComponent {
             this.noTabs = false
             this.app.emitTabDragEnded()
             this.scheduleTabsOverflowUpdate()
+            // A newly opened tab is appended (or inserted) and selected; if the
+            // strip overflows it may land off-screen, so scroll it into view.
+            this.scheduleScrollActiveTabIntoView()
         })
 
         this.app.tabRemoved$.subscribe(tab => {
@@ -283,6 +286,42 @@ export class AppRootComponent {
         if (!el) { return }
         const amount = Math.max(el.clientWidth * 0.8, 120)
         el.scrollBy({ left: direction * amount, behavior: 'smooth' })
+    }
+
+    /**
+     * @hidden Scrolls the top-level tab strip horizontally so the active tab
+     * header is visible. Used when a new workspace (or any top-level tab) is
+     * appended while the strip overflows — otherwise the freshly selected tab
+     * can land off-screen to the right.
+     */
+    scrollActiveTabIntoView (): void {
+        if (this.hasVerticalTabs()) { return }
+        const el = this.tabsScroll?.nativeElement
+        if (!el) { return }
+        const active = el.querySelector('tab-header.active') as HTMLElement | null
+        if (!active) { return }
+        const elRect = el.getBoundingClientRect()
+        const tabRect = active.getBoundingClientRect()
+        const pad = 8
+        if (tabRect.left < elRect.left) {
+            el.scrollLeft -= (elRect.left - tabRect.left) + pad
+        } else if (tabRect.right > elRect.right) {
+            el.scrollLeft += (tabRect.right - elRect.right) + pad
+        }
+    }
+
+    /** @hidden Scrolls the active tab into view after the next paint, so the
+     *  just-added tab header exists in the DOM. Also schedules a follow-up
+     *  pass after the `:enter` width animation (250ms) has settled — the first
+     *  pass measures the tab mid-grow and would only scroll far enough to show
+     *  its current (narrow) width, leaving the final 200px tab half-hidden. */
+    private scheduleScrollActiveTabIntoView (): void {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => this.scrollActiveTabIntoView())
+        })
+        // The workspace tab `:enter` animation grows width 1px → 200px over
+        // 250ms; re-measure once it has settled so the full tab lands in view.
+        window.setTimeout(() => this.scrollActiveTabIntoView(), 280)
     }
 
     onTabsReordered (event: CdkDragDrop<BaseTabComponent[]>) {

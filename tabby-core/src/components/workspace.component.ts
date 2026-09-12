@@ -610,6 +610,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // would rebuild every spanner/drop-zone/header and re-style all pane
         // DOM on each click (and on every mousemove with focus-follows-mouse).
         this.refreshPaneFocus()
+
+        // Bring the now-active sub-tab into view so an appended session (or a
+        // clicked off-screen tab) isn't left hidden when the strip overflows.
+        if (pane) {
+            this.scheduleScrollActivePaneTabIntoView(pane)
+        }
     }
 
     /**
@@ -691,6 +697,46 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const amount = Math.max(el.clientWidth * 0.8, 120)
         el.scrollBy({ left: direction * amount, behavior: 'smooth' })
         this.paneTabScrollLeft.set(pane, el.scrollLeft + direction * amount)
+    }
+
+    /**
+     * @hidden Scrolls `pane`'s tab strip so its focused (active) sub-tab is
+     * visible. Called after a session is appended to a pane (and on any focus
+     * change) so a freshly added session isn't left off-screen when the strip
+     * overflows. No-op when the active tab already fits in the viewport.
+     */
+    scrollActivePaneTabIntoView (pane: Pane): void {
+        const idx = this._paneHeaders.findIndex(h => h.pane === pane)
+        const el = this.paneTabScrolls?.toArray()[idx]?.nativeElement
+        if (!el) { return }
+        // Resolve the active sub-tab's header by index rather than the
+        // `.focused` class: the class is applied by Angular's [class.focused]
+        // binding, which may not have re-run when `focus` is invoked from a
+        // drag-commit handler outside the Angular zone.
+        const activeTab = pane.activeTab ?? pane.tabs[0]
+        if (!activeTab) { return }
+        const tabIdx = pane.tabs.indexOf(activeTab)
+        if (tabIdx < 0) { return }
+        const tabEls = el.querySelectorAll(':scope > .pane-tab')
+        const active = tabEls[tabIdx] as HTMLElement | undefined
+        if (!active) { return }
+        const elRect = el.getBoundingClientRect()
+        const tabRect = active.getBoundingClientRect()
+        const pad = 8
+        if (tabRect.left < elRect.left) {
+            el.scrollLeft -= (elRect.left - tabRect.left) + pad
+        } else if (tabRect.right > elRect.right) {
+            el.scrollLeft += (tabRect.right - elRect.right) + pad
+        }
+        this.paneTabScrollLeft.set(pane, el.scrollLeft)
+    }
+
+    /** @hidden Scrolls the active pane tab into view after the next paint, so a
+     *  just-appended sub-tab has been rendered into the strip. */
+    private scheduleScrollActivePaneTabIntoView (pane: Pane): void {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => this.scrollActivePaneTabIntoView(pane))
+        })
     }
 
     /**

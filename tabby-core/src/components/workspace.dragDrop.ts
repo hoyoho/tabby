@@ -762,6 +762,12 @@ export class PaneDragController {
         // path can leave a stale highlight.
         const zone = this.lastZone
         const reorderPane = this.liveReorderPane
+        // Clear the live-reorder tracking immediately: every branch below
+        // either commits or cancels the reorder, so leaving the field set would
+        // make the next drag in the same pane skip beginLiveReorder (the guard
+        // `liveReorderPane !== header.pane` would match the stale pane) and
+        // silently do nothing.
+        this.liveReorderPane = null
         this.resetDropPreview()
         if (!this.state) {
             return
@@ -801,6 +807,13 @@ export class PaneDragController {
         // settled locally). Leaving it stale would show a phantom drop zone.
         removeDragImageClones()
         this.resetDropPreview()
+        // Final safety net: if a live reorder was still active at drag-end
+        // (e.g. dropped outside the window without a dragleave clearing it),
+        // restore the DOM and drop the tracking so the next gesture is clean.
+        if (this.liveReorderPane) {
+            this.host.cancelLiveReorder(this.liveReorderPane)
+            this.liveReorderPane = null
+        }
         if (!this.state) { return }
         const state = this.state
         const commit = event.dataTransfer?.dropEffect === 'move'
