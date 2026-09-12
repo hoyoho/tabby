@@ -9,12 +9,6 @@ export interface Shell {
     args?: string[]
     env: Record<string, string>
 
-    /**
-     * Base path to which shell's internal FS is relative
-     * Currently used for WSL only
-     */
-    fsBase?: string
-
     cwd?: string
 
     /**
@@ -46,12 +40,6 @@ export interface SessionOptions {
     shellType: ShellType | null
     pauseAfterExit: boolean
     runAsAdministrator: boolean
-
-    /**
-     * Base path to which cwd is relative, e.g. `\\wsl$\Ubuntu` for WSL shells.
-     * Used to translate a POSIX cwd reported by the guest shell into a real Windows path.
-     */
-    fsBase: string | null
 }
 
 export interface LocalProfile extends BaseTerminalProfile {
