@@ -36,5 +36,5 @@
 *.color15:      #f7f7f7
 !
 ! Selection
-*.selectionBackground: #ffffff40
-*.selectionForeground: #ffffff
+*.selectionBackground: #ffffff
+*.selectionForeground: #000000

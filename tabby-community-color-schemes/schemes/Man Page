@@ -44,5 +44,5 @@
 !*.colorUL:
 !
 ! Selection
-*.selectionBackground: #00000040
-*.selectionForeground: #000000
+*.selectionBackground: #000000
+*.selectionForeground: #ffffff
