@@ -1,5 +1,6 @@
 import { Component, Input, ChangeDetectorRef, Inject, Optional } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
+import { Subscription, merge } from 'rxjs'
 import deepClone from 'clone-deep'
 import FuzzySearch from 'fuzzy-search'
 
@@ -43,6 +44,8 @@ export class ProfileTreeComponent extends BaseComponent {
     @Input() filter = ''
     private draggedProfile: PartialProfile<Profile>|null = null
     private draggedGroup: PartialProfileGroup<ProfileGroup>|null = null
+    /** Subscription to the active tab's focus stream; re-created on tab change. */
+    private activeTabFocusSub: Subscription|null = null
 
     constructor (
         private app: AppService,
@@ -62,7 +65,48 @@ export class ProfileTreeComponent extends BaseComponent {
         await this.loadTreeItems()
         this.subscribeUntilDestroyed(this.config.changed$, () => this.loadTreeItems())
         this.app.tabsChanged$.subscribe(() => this.tabStateChanged())
-        this.app.activeTabChange$.subscribe(() => this.tabStateChanged())
+        this.app.activeTabChange$.subscribe(() => {
+            this.tabStateChanged()
+            // The active tab's own focus stream is what tells us the user has
+            // (re)engaged with a session — `activeTabChange$` stays silent when
+            // the already-active tab is clicked again or its terminal is clicked
+            // into, so without this the profile preview would stay stuck on
+            // screen instead of yielding to the connection panel.
+            this.resubscribeActiveTabFocus()
+        })
+        this.resubscribeActiveTabFocus()
+    }
+
+    /**
+     * Re-subscribes to the currently active tab's focus streams. Whenever the
+     * active session receives focus — whether by top-level tab click,
+     * click-into-terminal, or `selectTab` re-selecting the same tab — the
+     * profile preview is dismissed so the connection panel can take its place.
+     *
+     * For a workspace the workspace's own `focused$` only fires on selectTab /
+     * window focus; inner-session clicks surface through `focusChanged$`, so
+     * both are merged.
+     */
+    private resubscribeActiveTabFocus (): void {
+        this.activeTabFocusSub?.unsubscribe()
+        this.activeTabFocusSub = null
+        const tab = this.app.activeTab
+        if (!tab) {
+            return
+        }
+        if (tab instanceof WorkspaceComponent) {
+            this.activeTabFocusSub = merge(tab.focused$, tab.focusChanged$)
+                .subscribe(() => this.tabStateChanged())
+        } else {
+            this.activeTabFocusSub = tab.focused$
+                .subscribe(() => this.tabStateChanged())
+        }
+    }
+
+    ngOnDestroy (): void {
+        this.activeTabFocusSub?.unsubscribe()
+        this.activeTabFocusSub = null
+        super.ngOnDestroy()
     }
 
 
@@ -353,6 +397,11 @@ export class ProfileTreeComponent extends BaseComponent {
         // A session gaining focus takes the bottom panel back from a profile
         // preview: the two never show at the same time.
         this.previewProfile = null
+        // The getters `previewInfo` / `connectionInfo` are re-evaluated on the
+        // next CD pass; without an explicit mark the panel swap can lag behind
+        // the focus event (observable callbacks run outside Angular's zone in
+        // some Electron input paths).
+        this.cdr.markForCheck()
     }
 
     onProfileDragStart (profile: PartialProfile<Profile>, event: DragEvent): void {
@@ -476,6 +525,7 @@ export class ProfileTreeComponent extends BaseComponent {
 
     selectPreview (profile: PartialProfile<Profile>): void {
         this.previewProfile = profile
+        this.cdr.markForCheck()
     }
 
     private optionsOf (profile: unknown): { host?: string, user?: string, port?: number, type?: string } {

@@ -1,3 +1,5 @@
+import * as fs from 'fs'
+import * as path from 'path'
 import Arborist from '@npmcli/arborist'
 
 import { loadConfig } from './config'
@@ -18,8 +20,17 @@ export class PluginManager {
     }
 
     async uninstall (targetPath: string, name: string): Promise<void> {
-        await new Arborist({ path: targetPath, save: false })
-            .reify({ rm: [name] })
+        // Remove the plugin directory directly instead of going through Arborist.
+        // Installs run with save:false, so the user-plugins tree has no
+        // package.json — Arborist therefore treats every locally-copied plugin
+        // as "extraneous" and prunes them all whenever reify() runs. Uninstalling
+        // one local plugin via Arborist wiped every other local plugin too.
+        // A plain directory remove only touches the target, leaving siblings
+        // (and their dependencies) untouched.
+        const pluginPath = path.join(targetPath, 'node_modules', name)
+        if (fs.existsSync(pluginPath)) {
+            fs.rmSync(pluginPath, { recursive: true, force: true })
+        }
     }
 }
 

@@ -102,6 +102,10 @@ input {
 
 // Bottom connection-info panel: the clicked profile's details, or the focused
 // Session indicator: the focused session's name and user@host:port.
+// No background-color here — the panel is intentionally transparent so it
+// inherits the profile-tree host's background. When the background plugin
+// makes the sidebar translucent, this panel stays in sync with the tree rows
+// above instead of blocking the wallpaper with an opaque fill.
 .connection-info {
     flex: none;
     display: flex;
@@ -109,7 +113,6 @@ input {
     gap: 8px;
     padding: 6px 10px;
     border-top: 1px solid var(--theme-secondary);
-    background-color: var(--theme-bg-more-2);
 
     .conn-dot {
         flex: none;
@@ -131,25 +134,25 @@ input {
     }
 
     .conn-name {
-        font-size: 0.78rem;
+        font-size: 0.875rem;
     }
 
     .conn-addr {
-        font-size: 0.7rem;
+        font-size: 0.875rem;
         opacity: 0.65;
     }
 }
 
 // Profile preview: the clicked sidebar profile's details.
+// Transparent by design — see .connection-info comment above.
 .profile-preview {
     flex: none;
     padding: 6px 10px;
     border-top: 1px solid var(--theme-secondary);
-    background-color: var(--theme-bg-more-2);
 
     .preview-table {
         width: 100%;
-        font-size: 0.72rem;
+        font-size: 0.875rem;
         border-collapse: collapse;
 
         td {
