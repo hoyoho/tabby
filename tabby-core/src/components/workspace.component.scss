@@ -37,7 +37,10 @@
     gap: 4px;
     padding: 0 6px;
     overflow: hidden;
-    background: #f2f3f5;
+    // Tab tints are mixed against this so dark themes don't produce dark
+    // chips with the hard-coded dark label text.
+    --pane-header-bg: #f2f3f5;
+    background: var(--pane-header-bg);
     border: 1px solid #000;
     border-radius: 0;
 
@@ -49,7 +52,8 @@
         line-height: 18px;
         border-radius: 3px;
         color: #2b2f36;
-        background: rgba(0, 0, 0, 0.05);
+        // Not in the focused pane: neutral grey chip.
+        background: #a0a0a0;
         cursor: pointer;
         white-space: nowrap;
         overflow: hidden;
@@ -63,10 +67,16 @@
         }
 
         &:hover {
-            background: var(--theme-primary-less-2);
+            background: color-mix(in srgb, var(--theme-primary) 60%, var(--pane-header-bg));
         }
 
-        &.active {
+        // Same pane as the focused tab but not itself focused (colour A).
+        &.same-pane:not(.focused) {
+            background: color-mix(in srgb, var(--theme-primary) 60%, var(--pane-header-bg));
+        }
+
+        // Focused (or focus-all participant): full accent.
+        &.focused {
             background: var(--theme-primary);
             color: var(--theme-primary-fg);
         }

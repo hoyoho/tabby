@@ -50,7 +50,8 @@ import { SessionTab } from '../api/session'
             <span
                 *ngFor='let paneTab of header.pane.tabs; trackBy: paneTabBy; let idx = index'
                 class='pane-tab'
-                [class.active]='paneTab === (header.pane.activeTab ?? header.pane.tabs[0])'
+                [class.focused]='isPaneTabFocused(header.pane, paneTab)'
+                [class.same-pane]='isFocusedPane(header.pane)'
                 (click)='activatePaneTab(header.pane, paneTab)'
                 (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
                 (contextmenu)='openPaneTabContextMenu($event, paneTab)'
@@ -583,6 +584,30 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             element?.classList.toggle('pane-tab-inactive', !isActive)
             element?.classList.toggle('focused', isActive)
         }
+    }
+
+    /**
+     * Whether the given pane tab is considered "focused" for colouring.
+     * In focus-all mode every pane's foreground tab participates in the
+     * broadcast focus, so they all highlight; otherwise only the single
+     * globally focused tab does.
+     */
+    isPaneTabFocused (pane: Pane, tab: SessionTab): boolean {
+        if (this.focusAllMode) {
+            return tab === (pane.activeTab ?? pane.tabs[0])
+        }
+        return tab === this.focusedTab
+    }
+
+    /**
+     * Whether the pane contains the currently focused tab. In focus-all
+     * mode every pane counts (each has a broadcast-focused foreground tab).
+     */
+    isFocusedPane (pane: Pane): boolean {
+        if (this.focusAllMode) {
+            return true
+        }
+        return this.focusedTab !== null && this.getPaneOf(this.focusedTab) === pane
     }
 
     /** @hidden */
