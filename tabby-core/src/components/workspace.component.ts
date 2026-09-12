@@ -56,10 +56,12 @@ import { SessionTab } from '../api/session'
                     (click)='activatePaneTab(header.pane, paneTab)'
                     (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
                     (contextmenu)='openPaneTabContextMenu($event, paneTab)'
+                    (mouseenter)='onPaneTabMouseEnter($event)'
+                    (mouseleave)='onPaneTabMouseLeave($event)'
                     draggable='true'
                     (dragstart)='onPaneTabDragStart($event, paneTab)'
                     (dragend)='onPaneTabDragEnd($event, paneTab)'
-                ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span>
+                ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i><span class='pane-tab-label'>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span></span>
             </div>
             <button
                 *ngIf='isPaneTabsOverflowing(header.pane)'
@@ -143,6 +145,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     @HostBinding('class.resizing') get resizingClass (): boolean { return this._pixelResizing }
 
     private resizeObserver: ResizeObserver|null = null
+    private titleMutationObserver: MutationObserver|null = null
+    private _overflowRefreshFrame = 0
     private layoutFrame = false
 
     /**
@@ -493,6 +497,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             this.color = this._recoveredColor
         }
         this.setupResizeObserver()
+        this.setupTitleMutationObserver()
         // Re-measure tab-strip overflow whenever the set of scroll containers
         // changes (panes added/removed) or after their first paint.
         this.paneTabScrolls?.changes.subscribe(() => this.schedulePaneTabOverflowUpdate())
@@ -506,6 +511,46 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         if (!host || typeof ResizeObserver === 'undefined') { return }
         this.resizeObserver = new ResizeObserver(() => this.scheduleLayout())
         this.resizeObserver.observe(host)
+    }
+
+    /**
+     * @hidden Watches pane-tab label text for changes so the `overflowing`
+     * class (left-align + no-centre-clip) is applied the moment a session's
+     * dynamic title grows past the chip width — not only on hover. Without
+     * this, a freshly-lengthened title stays centre-aligned and its leading
+     * characters are clipped, reading as if the new name never appeared.
+     */
+    private setupTitleMutationObserver (): void {
+        const host = this.hostElement()
+        if (!host || typeof MutationObserver === 'undefined') { return }
+        this.titleMutationObserver = new MutationObserver(() => this.schedulePaneTabOverflowRefresh())
+        this.titleMutationObserver.observe(host, {
+            subtree: true,
+            characterData: true,
+            childList: true,
+        })
+    }
+
+    /** @hidden Re-evaluates every pane-tab label's overflow state and toggles
+     *  the persistent `overflowing` class so long titles are left-aligned. */
+    private refreshPaneTabOverflowStates (): void {
+        const host = this.hostElement()
+        if (!host) { return }
+        const tabs = Array.from(host.querySelectorAll('.pane-tab')) as HTMLElement[]
+        for (const tab of tabs) {
+            const label = tab.querySelector(':scope > .pane-tab-label') as HTMLElement | null
+            if (!label) { continue }
+            tab.classList.toggle('overflowing', label.scrollWidth > label.clientWidth)
+        }
+    }
+
+    /** @hidden Debounced overflow refresh (rAF-throttled). */
+    private schedulePaneTabOverflowRefresh (): void {
+        if (this._overflowRefreshFrame) { return }
+        this._overflowRefreshFrame = requestAnimationFrame(() => {
+            this._overflowRefreshFrame = 0
+            this.refreshPaneTabOverflowStates()
+        })
     }
 
     /** @hidden the split-tab host element anchoring all absolutely positioned children */
@@ -547,6 +592,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.paneDrag.abort()
         this.resizeObserver?.disconnect()
         this.resizeObserver = null
+        this.titleMutationObserver?.disconnect()
+        this.titleMutationObserver = null
+        if (this._overflowRefreshFrame) {
+            cancelAnimationFrame(this._overflowRefreshFrame)
+            this._overflowRefreshFrame = 0
+        }
         this.tabAdded.complete()
         this.tabRemoved.complete()
         this.focusChanged.complete()
@@ -768,7 +819,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      */
     private schedulePaneTabOverflowUpdate (): void {
         requestAnimationFrame(() => {
-            requestAnimationFrame(() => this.updatePaneTabOverflow())
+            requestAnimationFrame(() => {
+                this.updatePaneTabOverflow()
+                // Also (re)evaluate per-tab title overflow so freshly rendered
+                // long titles are left-aligned instead of centre-clipped.
+                this.refreshPaneTabOverflowStates()
+            })
         })
     }
 
@@ -930,6 +986,32 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     onPaneTabDragEnd (event: DragEvent, _tab: SessionTab): void {
         this.draggedPaneTabEl = null
         this.paneDrag.endNativeDrag(event)
+    }
+
+    /**
+     * @hidden Hover a pane-tab: if its title overflows the fixed-width chip,
+     * kick off a marquee animation that scrolls the label left so the hidden
+     * trailing portion is readable. Measured imperatively because overflow
+     * depends on the rendered text width.
+     */
+    onPaneTabMouseEnter (event: MouseEvent): void {
+        const tab = event.currentTarget as HTMLElement
+        const label = tab.querySelector('.pane-tab-label') as HTMLElement | null
+        if (!label) { return }
+        const overflow = label.scrollWidth - label.clientWidth
+        if (overflow <= 0) { return }
+        // The persistent `overflowing` class (left-align) is kept in sync by a
+        // MutationObserver; here we only start the scroll animation.
+        const duration = Math.min(Math.max(overflow * 0.025, 1.5), 6)
+        tab.style.setProperty('--marquee-distance', `-${overflow}px`)
+        tab.style.setProperty('--marquee-duration', `${duration}s`)
+        tab.classList.add('marquee')
+    }
+
+    /** @hidden Stop the marquee when the pointer leaves the tab. */
+    onPaneTabMouseLeave (event: MouseEvent): void {
+        const tab = event.currentTarget as HTMLElement
+        tab.classList.remove('marquee')
     }
 
     /** @hidden PaneDragHost */
