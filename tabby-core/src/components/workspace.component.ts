@@ -191,6 +191,16 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     /** @hidden Panes whose tab strip overflows the header width (arrows shown). */
     private readonly paneTabsOverflowing = new Set<Pane>()
 
+    /** @hidden The currently dragged pane-tab DOM element (live reorder source). */
+    private draggedPaneTabEl: HTMLElement|null = null
+    /** @hidden Live-reorder session state: captured DOM order for restore. */
+    private liveReorder: {
+        pane: Pane
+        scrollEl: HTMLElement
+        originalOrder: HTMLElement[]
+        elToTab: Map<HTMLElement, SessionTab>
+    }|null = null
+
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
         const visible = hint?.visible ?? false
@@ -198,8 +208,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const y = hint?.y ?? 0
         const w = hint?.w ?? 0
         const h = hint?.h ?? 0
-        const kind = hint?.kind ?? 'box'
-        if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h && this._dragHintKind === kind) {
+        if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h) {
             // Hint unchanged — during a stationary drag Chromium keeps re-firing
             // dragover (~350ms), so skipping the update avoids redundant work.
             return
@@ -209,7 +218,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this._dragHintY = y
         this._dragHintW = w
         this._dragHintH = h
-        this._dragHintKind = kind
 
         // Drive the overlay directly on the DOM. The drag listeners run OUTSIDE
         // the Angular zone, and ANY zone.run() from a drag handler — even a
@@ -220,7 +228,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const element = this.dropHint?.nativeElement
         if (element) {
             element.classList.toggle('visible', visible)
-            element.classList.toggle('reorder', kind === 'reorder')
             element.style.left = `${x}px`
             element.style.top = `${y}px`
             element.style.width = `${w}px`
@@ -245,7 +252,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     _dragHintY = 0
     _dragHintW = 0
     _dragHintH = 0
-    _dragHintKind: 'box' | 'reorder' = 'box'
 
     private tabAdded = new Subject<BaseTabComponent>()
     private tabRemoved = new Subject<BaseTabComponent>()
@@ -870,11 +876,13 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden */
     onPaneTabDragStart (event: DragEvent, tab: SessionTab): void {
+        this.draggedPaneTabEl = event.currentTarget as HTMLElement
         this.paneDrag.beginNativeDrag(event, tab)
     }
 
     /** @hidden */
     onPaneTabDragEnd (event: DragEvent, _tab: SessionTab): void {
+        this.draggedPaneTabEl = null
         this.paneDrag.endNativeDrag(event)
     }
 
@@ -1028,24 +1036,96 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return null
     }
 
-    /** @hidden PaneDragHost — move a tab within its own pane to `targetIndex`.
-     *  The index is interpreted as the post-removal insertion slot, so a tab
-     *  dragged past its own position lands correctly without an off-by-one. */
-    reorderTabInPane (tab: SessionTab, pane: Pane, targetIndex: number): void {
-        const idx = pane.tabs.indexOf(tab)
-        if (idx < 0) {
-            return
-        }
-        pane.tabs.splice(idx, 1)
+    /** @hidden PaneDragHost — begin a live-reorder session by snapshotting the
+     *  current DOM order of `pane`'s tab strip. The dragged element's parent
+     *  (the `.pane-tabs-scroll` container) is the reorder surface. */
+    beginLiveReorder (tab: SessionTab, pane: Pane): void {
+        const draggedEl = this.draggedPaneTabEl
+        if (!draggedEl) { return }
+        const scrollEl = draggedEl.parentElement
+        if (!scrollEl) { return }
+        const children = Array.from(scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        const elToTab = new Map<HTMLElement, SessionTab>()
+        children.forEach((el, i) => {
+            // `pane.tabs` order matches the rendered DOM order at snapshot time
+            // (the data array hasn't been mutated yet during the drag).
+            elToTab.set(el, pane.tabs[i])
+        })
+        this.liveReorder = { pane, scrollEl, originalOrder: children, elToTab }
+    }
+
+    /** @hidden PaneDragHost — move the dragged tab's DOM element to
+     *  `targetIndex` (DOM child position) for live visual feedback. Does NOT
+     *  touch `pane.tabs`. */
+    liveReorderTo (pane: Pane, targetIndex: number): void {
+        const state = this.liveReorder
+        const draggedEl = this.draggedPaneTabEl
+        if (!state || !draggedEl || state.pane !== pane) { return }
+        const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        const idx = children.indexOf(draggedEl)
+        if (idx < 0) { return }
+        // `targetIndex` is computed against the live DOM (which still contains
+        // the dragged element). After we remove it, slots above `idx` shift
+        // left by one — mirror the same adjustment reorderTabInPane used.
         let insertAt = targetIndex
         if (idx < targetIndex) {
             insertAt = targetIndex - 1
         }
-        insertAt = Math.max(0, Math.min(insertAt, pane.tabs.length))
-        pane.tabs.splice(insertAt, 0, tab)
-        pane.activeTab = tab
-        this.focus(tab)
+        insertAt = Math.max(0, Math.min(insertAt, children.length - 1))
+        // The element is already in the target slot when `targetIndex` points
+        // at itself or the slot immediately after it (insert-before-self or
+        // insert-before-next both leave it in place).
+        if (targetIndex === idx || targetIndex === idx + 1) { return }
+        state.scrollEl.removeChild(draggedEl)
+        const afterRemoval = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        const insertBefore = afterRemoval[insertAt] ?? null
+        state.scrollEl.insertBefore(draggedEl, insertBefore)
+    }
+
+    /** @hidden PaneDragHost — commit the live-reordered DOM order back into
+     *  `pane.tabs`, keeping the active tab selected. */
+    commitLiveReorder (pane: Pane): void {
+        const state = this.liveReorder
+        if (!state || state.pane !== pane) {
+            this.liveReorder = null
+            return
+        }
+        const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        const newOrder: SessionTab[] = []
+        for (const el of children) {
+            const tab = state.elToTab.get(el)
+            if (tab) { newOrder.push(tab) }
+        }
+        // Defensive: if anything went wrong with the mapping, keep the old
+        // order rather than dropping tabs.
+        if (newOrder.length === pane.tabs.length) {
+            pane.tabs.length = 0
+            pane.tabs.push(...newOrder)
+        }
+        // Keep the dragged tab active after reorder.
+        const active = this.draggedPaneTabEl ? state.elToTab.get(this.draggedPaneTabEl) : null
+        if (active) {
+            pane.activeTab = active
+            this.focus(active)
+        }
+        this.liveReorder = null
         this.cleanRoot()
+    }
+
+    /** @hidden PaneDragHost — restore `pane`'s tab strip to its pre-drag DOM
+     *  order (drag cancelled or pointer left the header). */
+    cancelLiveReorder (pane: Pane): void {
+        const state = this.liveReorder
+        if (!state || state.pane !== pane) {
+            this.liveReorder = null
+            return
+        }
+        // Re-append children in the captured original order. appendChild on an
+        // already-attached node moves it, so this is a single pass.
+        for (const el of state.originalOrder) {
+            state.scrollEl.appendChild(el)
+        }
+        this.liveReorder = null
     }
 
     /** @hidden PaneDragHost */

@@ -14,9 +14,6 @@ export interface DragHintState {
     y: number
     w: number
     h: number
-    /** Visual style of the hint: 'box' (default) tints a pane area,
-     *  'reorder' draws a thin vertical insertion line in a tab strip. */
-    kind?: 'box' | 'reorder'
 }
 
 /**
@@ -96,8 +93,20 @@ export interface PaneDragHost {
      * strip as well as its body.
      */
     headerHit: (x: number, y: number) => { pane: Pane, targetIndex: number, lineX: number, headerRect: { left: number, top: number, width: number, height: number }, bodyRect: { left: number, top: number, width: number, height: number } }|null
-    /** Reorder a tab within its own pane to `targetIndex` (post-removal slot). */
-    reorderTabInPane: (tab: SessionTab, pane: Pane, targetIndex: number) => void
+    /**
+     * Begin a live-reorder session for `tab` in `pane`. Captures the current
+     * DOM order of the pane's tab strip so it can be restored on cancel.
+     * Called the first time the pointer enters the same pane's header during
+     * a drag.
+     */
+    beginLiveReorder: (tab: SessionTab, pane: Pane) => void
+    /** Move the dragged tab's DOM element to `targetIndex` (DOM order) within
+     *  its pane's tab strip for live visual feedback. Does NOT mutate data. */
+    liveReorderTo: (pane: Pane, targetIndex: number) => void
+    /** Commit the live-reordered DOM order back into `pane.tabs` and clean up. */
+    commitLiveReorder: (pane: Pane) => void
+    /** Restore the pane's tab strip DOM to its pre-drag order and clean up. */
+    cancelLiveReorder: (pane: Pane) => void
     /** Client rect of the workspace's host element, or null if unavailable. */
     hostRect: () => { left: number, top: number, width: number, height: number }|null
 
@@ -323,6 +332,10 @@ export class PaneDragController {
         targetIndex: number
     } | null = null
 
+    /** The pane currently in a live-reorder session (DOM being rearranged),
+     *  or null when the pointer is not over its own header strip. */
+    private liveReorderPane: Pane|null = null
+
     /**
      * Drag-over watchdog. Chromium re-fires `dragover` every ~350ms while the
      * native drag hovers a document — but `dragleave` may silently never fire
@@ -423,18 +436,20 @@ export class PaneDragController {
             if (header) {
                 const dragged = this.state?.tab
                 const sourcePane = dragged ? this.host.getPaneOf(dragged) : null
-                if (header.pane === sourcePane) {
-                    // Reorder within the same pane: draw a vertical insertion
-                    // line at the computed boundary (lineX) spanning the header.
-                    const r = header.headerRect
-                    this.host.setDragHint({
-                        visible: true,
-                        x: header.lineX - 1,
-                        y: r.top + 2,
-                        w: 2,
-                        h: r.height - 4,
-                        kind: 'reorder',
-                    })
+                if (header.pane === sourcePane && dragged) {
+                    // Reorder within the same pane: move the dragged tab's DOM
+                    // element live (no static insertion line — the tab itself
+                    // slides into its target slot, which is unambiguous even
+                    // when the target shares the active-tab colour).
+                    if (this.liveReorderPane !== header.pane) {
+                        if (this.liveReorderPane) {
+                            this.host.cancelLiveReorder(this.liveReorderPane)
+                        }
+                        this.host.beginLiveReorder(dragged, header.pane)
+                        this.liveReorderPane = header.pane
+                    }
+                    this.host.liveReorderTo(header.pane, header.targetIndex)
+                    this.host.setDragHint(null)
                     this.lastZone = { type: 'reorder', pane: header.pane, targetIndex: header.targetIndex }
                     return true
                 }
@@ -442,6 +457,10 @@ export class PaneDragController {
                 // zone). Highlight the whole pane cell (header + body) so the
                 // target container is fully covered — matches the existing
                 // merge visual language, no separate header box.
+                if (this.liveReorderPane) {
+                    this.host.cancelLiveReorder(this.liveReorderPane)
+                    this.liveReorderPane = null
+                }
                 const hr = header.headerRect
                 const br = header.bodyRect
                 const pad = 4
@@ -458,6 +477,10 @@ export class PaneDragController {
             // Outside this workspace's panes: highlight another workspace's tab
             // header when the pointer hovers one, so a cross-workspace move is
             // discoverable during the gesture.
+            if (this.liveReorderPane) {
+                this.host.cancelLiveReorder(this.liveReorderPane)
+                this.liveReorderPane = null
+            }
             const workspaceTarget = this.host.workspaceTargetAt(x, y)
             if (workspaceTarget) {
                 const r = workspaceTarget.rect
@@ -490,6 +513,12 @@ export class PaneDragController {
             this.host.setDragHint(null)
             this.lastZone = null
             return false
+        }
+        // Pointer is over a pane BODY — any live reorder must be cancelled so
+        // the tab strip snaps back to its data order before a split/merge.
+        if (this.liveReorderPane) {
+            this.host.cancelLiveReorder(this.liveReorderPane)
+            this.liveReorderPane = null
         }
         // No-op zone suppression: hovering the dragged session's OWN pane
         // offers nothing — merging ('all') puts it right back where it lives,
@@ -732,6 +761,7 @@ export class PaneDragController {
         // A drop of any kind finalizes the preview — clear it first so NO drop
         // path can leave a stale highlight.
         const zone = this.lastZone
+        const reorderPane = this.liveReorderPane
         this.resetDropPreview()
         if (!this.state) {
             return
@@ -740,14 +770,19 @@ export class PaneDragController {
         // nothing is recomputed here, so the drop is always exactly what the
         // user saw.
         if (zone?.type === 'workspace' && zone.workspace !== (this.state.tab.parent as any)) {
+            if (reorderPane) { this.host.cancelLiveReorder(reorderPane) }
             void this.host.moveSessionToWorkspace(this.state.tab, zone.workspace)
         } else if (zone?.type === 'reorder') {
-            this.host.reorderTabInPane(this.state.tab, zone.pane, zone.targetIndex)
+            // The DOM was rearranged live during the drag; commit that order
+            // back into pane.tabs.
+            this.host.commitLiveReorder(zone.pane)
         } else if (zone?.type === 'pane' && zone.pane) {
+            if (reorderPane) { this.host.cancelLiveReorder(reorderPane) }
             this.commitDrag(this.state.tab, { pane: zone.pane, side: zone.side })
         } else {
             // No live highlight at the drop point — treat as cancelled,
             // keep the tab where it was.
+            if (reorderPane) { this.host.cancelLiveReorder(reorderPane) }
             this.cancelState()
             return
         }
@@ -813,6 +848,10 @@ export class PaneDragController {
         this.state = null
         this.removeDragEndFallback()
         this.resetDropPreview()
+        if (this.liveReorderPane) {
+            this.host.cancelLiveReorder(this.liveReorderPane)
+            this.liveReorderPane = null
+        }
         state.committedSub.unsubscribe()
         if (state.fallbackTimer) {
             clearTimeout(state.fallbackTimer)
@@ -847,6 +886,10 @@ export class PaneDragController {
      * source window and stays live; a later dragover re-arms the hint.
      */
     clearHint (): void {
+        if (this.liveReorderPane) {
+            this.host.cancelLiveReorder(this.liveReorderPane)
+            this.liveReorderPane = null
+        }
         this.resetDropPreview()
     }
 
