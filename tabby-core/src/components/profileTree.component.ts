@@ -97,7 +97,7 @@ export class ProfileTreeComponent extends BaseComponent {
         if (!provider) { throw new Error('Cannot edit a profile without a provider') }
 
         const result = await this.profileEditHost?.editProfile({
-            partialProfile: deepClone(profile),
+            partialProfile: deepClone({ ...profile }),
             provider,
         }) ?? null
         if (!result) { return }

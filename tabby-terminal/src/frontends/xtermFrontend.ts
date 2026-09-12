@@ -90,6 +90,11 @@ export class XTermFrontend extends Frontend {
     private canvasAddon?: CanvasAddon
     private opened = false
     private resizeObserver?: any
+
+    private resizeTimeout?: ReturnType<typeof setTimeout>
+    private resizeAnimationFrame?: number
+    private resizePending = false
+    private disposed = false
     private flowControl: FlowControl
     private pinnedToBottom = true
     private pendingRendererRecovery = false
@@ -105,6 +110,10 @@ export class XTermFrontend extends Frontend {
     private platformService: PlatformService
     private hostApp: HostAppService
     private themes: ThemesService
+
+    private isAttachActive (): boolean {
+        return !this.disposed && this.opened
+    }
 
     constructor (injector: Injector) {
         super(injector)
@@ -125,6 +134,23 @@ export class XTermFrontend extends Frontend {
         })
         this.flowControl = new FlowControl(this.xterm)
         this.xtermCore = this.xterm['_core']
+
+        // xterm.js#6054 does this in _keyDown itself. Keep the workaround at
+        // that boundary so Shift cannot overwrite a previous keydown's state.
+        const oldKeyDown = this.xtermCore._keyDown.bind(this.xtermCore)
+        this.xtermCore._keyDown = (event: KeyboardEvent) => {
+            if (this.hostApp.platform !== Platform.Windows || event.key !== 'Shift' && event.keyCode !== 16) {
+                return oldKeyDown(event)
+            }
+
+            // Sogou can commit preedit text when Shift switches to English.
+            // Preserve the existing value so Shift itself does not arm
+            // xterm's input fallback guard.
+            const keyDownSeen = this.xtermCore._keyDownSeen
+            const result = oldKeyDown(event)
+            this.xtermCore._keyDownSeen = keyDownSeen
+            return result
+        }
 
         this.xterm.onBinary(data => {
             this.input.next(Buffer.from(data, 'binary'))
@@ -263,23 +289,29 @@ export class XTermFrontend extends Frontend {
         // always running a trailing fit keeps the final size correct without
         // outrunning the renderer. Tune RESIZE_MIN_INTERVAL if needed.
         const RESIZE_MIN_INTERVAL = 32
-        let resizePending = false
         let lastResize = 0
         const runResize = () => {
-            resizePending = false
+            this.resizeAnimationFrame = undefined
+            this.resizePending = false
+            if (!this.isAttachActive()) {
+                return
+            }
             lastResize = Date.now()
             doResize()
         }
         this.resizeHandler = () => {
-            if (resizePending) {
+            if (this.resizePending) {
                 return
             }
-            resizePending = true
+            this.resizePending = true
             const wait = Math.max(0, RESIZE_MIN_INTERVAL - (Date.now() - lastResize))
             if (wait > 0) {
-                setTimeout(() => requestAnimationFrame(runResize), wait)
+                this.resizeTimeout = setTimeout(() => {
+                    this.resizeTimeout = undefined
+                    this.resizeAnimationFrame = requestAnimationFrame(runResize)
+                }, wait)
             } else {
-                requestAnimationFrame(runResize)
+                this.resizeAnimationFrame = requestAnimationFrame(runResize)
             }
         }
 
@@ -307,6 +339,9 @@ export class XTermFrontend extends Frontend {
     }
 
     async attach (host: HTMLElement, profile: BaseTerminalProfile): Promise<void> {
+        if (this.disposed) {
+            return
+        }
         this.element = host
 
         this.xterm.open(host)
@@ -333,6 +368,9 @@ export class XTermFrontend extends Frontend {
 
         // Work around font loading bugs
         await new Promise(resolve => setTimeout(resolve, this.hostApp.platform === Platform.Web ? 1000 : 0))
+        if (!this.isAttachActive()) {
+            return
+        }
 
         // Just configure the colors to avoid a flash
         this.configureColors(profile.terminalColorScheme)
@@ -356,6 +394,9 @@ export class XTermFrontend extends Frontend {
 
         // Allow an animation frame
         await new Promise(r => setTimeout(r, 100))
+        if (!this.isAttachActive()) {
+            return
+        }
 
         this.ready.next()
         this.ready.complete()
@@ -378,6 +419,9 @@ export class XTermFrontend extends Frontend {
 
         // Allow an animation frame
         await new Promise(r => setTimeout(r, 0))
+        if (!this.isAttachActive()) {
+            return
+        }
 
         // User-initiated scroll detection: only wheel and keyboard events
         // should unpin. xterm.onScroll is content-driven only and must never
@@ -442,6 +486,15 @@ export class XTermFrontend extends Frontend {
 
     detach (_host: HTMLElement): void {
         window.removeEventListener('resize', this.resizeHandler)
+        if (this.resizeTimeout !== undefined) {
+            clearTimeout(this.resizeTimeout)
+            this.resizeTimeout = undefined
+        }
+        if (this.resizeAnimationFrame !== undefined) {
+            cancelAnimationFrame(this.resizeAnimationFrame)
+            this.resizeAnimationFrame = undefined
+        }
+        this.resizePending = false
         this.resizeObserver?.disconnect()
         delete this.resizeObserver
         // Remove every listener attach() registered on the host. Leaving them
@@ -452,9 +505,18 @@ export class XTermFrontend extends Frontend {
             _host.removeEventListener(event, handler as EventListener, opts)
         }
         this.hostListeners = []
+        this.opened = false
+        this.element = undefined
     }
 
     destroy (): void {
+        if (this.disposed) {
+            return
+        }
+        this.disposed = true
+        if (this.element) {
+            this.detach(this.element)
+        }
         super.destroy()
         this.webGLAddon?.dispose()
         this.canvasAddon?.dispose()

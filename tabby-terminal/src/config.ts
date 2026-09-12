@@ -24,6 +24,7 @@ export class TerminalConfigProvider extends ConfigProvider {
             fallbackFont: null,
             linePadding: 0,
             bell: 'off',
+            bellFlashFrame: false,
             bracketedPaste: true,
             background: 'theme',
             ligatures: false,
@@ -106,6 +107,7 @@ export class TerminalConfigProvider extends ConfigProvider {
                 search: [
                     '⌘-F',
                 ],
+                'insert-new-line': ['⌥-Shift-Enter'],
                 'scroll-to-top': ['Shift-PageUp'],
                 'scroll-page-up': ['⌥-PageUp'],
                 'scroll-up': ['Ctrl-Shift-Up'],
@@ -153,6 +155,7 @@ export class TerminalConfigProvider extends ConfigProvider {
                 search: [
                     'Ctrl-Shift-F',
                 ],
+                'insert-new-line': ['Alt-Shift-Enter'],
                 'scroll-to-top': ['Ctrl-PageUp'],
                 'scroll-page-up': ['Alt-PageUp'],
                 'scroll-up': ['Ctrl-Shift-Up'],
@@ -198,6 +201,7 @@ export class TerminalConfigProvider extends ConfigProvider {
                 search: [
                     'Ctrl-Shift-F',
                 ],
+                'insert-new-line': ['Alt-Shift-Enter'],
                 'scroll-to-top': ['Ctrl-PageUp'],
                 'scroll-page-up': ['Alt-PageUp'],
                 'scroll-up': ['Ctrl-Shift-Up'],

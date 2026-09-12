@@ -163,7 +163,8 @@ export class Window {
             if (
                 this.isDocked() &&
                 this.configStore.appearance?.dockHideOnBlur &&
-                !BrowserWindow.getFocusedWindow()
+                !BrowserWindow.getFocusedWindow() &&
+                this.window.isEnabled()
             ) {
                 this.hide()
             }
@@ -496,6 +497,7 @@ export class Window {
 
         this.window.on('focus', () => {
             this.application.markFocused(this)
+            this.window.flashFrame(false)
             this.send('host:window-focused')
         })
 
@@ -606,7 +608,7 @@ export class Window {
             return { action: 'deny' }
         })
 
-        ipcMain.on('window-set-disable-vibrancy-while-dragging', (_event, value) => {
+        this.on('window-set-disable-vibrancy-while-dragging', (_event, value) => {
             this.disableVibrancyWhileDragging = value && this.configStore.hacks?.disableVibrancyWhileDragging
         })
 
@@ -642,6 +644,12 @@ export class Window {
 
         this.on('window-set-progress-bar', (_, value) => {
             this.window?.setProgressBar(value, { mode: value < 0 ? 'none' : 'normal' })
+        })
+
+        this.on('window-flash-frame', () => {
+            if (this.window && !this.window.isFocused()) {
+                this.window.flashFrame(true)
+            }
         })
     }
 

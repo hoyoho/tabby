@@ -209,6 +209,16 @@ div.mt-4
             label.btn.btn-secondary(for='bellAudible')
                 span(translate) Audible
 
+    .form-line(*ngIf='hostApp.platform !== Platform.Web')
+        .header
+            .title(translate) Flash taskbar
+            .description(translate) Flash the taskbar or dock icon when the terminal bell rings and the window is not focused
+        toggle(
+            [(ngModel)]='config.store.terminal.bellFlashFrame',
+            (ngModelChange)='config.save()',
+        )
+
+
 div.mt-4(*ngIf='hostApp.platform === Platform.Windows')
     h3(translate) Windows
 

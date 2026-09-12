@@ -380,7 +380,8 @@ export class AppService {
             this._activeTab?.emitFocused()
             this._activeTab?.emitVisibility(true)
         })
-        this.hostWindow.setTitle(this._activeTab?.title)
+        const active = this._activeTab
+        this.hostWindow.setTitle(active ? active.customTitle || active.title : undefined)
     }
 
     getParentTab (tab: BaseTabComponent): WorkspaceComponent|null {
