@@ -9,6 +9,8 @@ export class DefaultColorSchemes extends TerminalColorSchemeProvider {
         foreground: '#cacaca',
         background: '#171717',
         cursor: '#bbbbbb',
+        selection: '#ffffff',
+        selectionForeground: '#000000',
         colors: [
             '#000000',
             '#ff615a',
@@ -34,6 +36,8 @@ export class DefaultColorSchemes extends TerminalColorSchemeProvider {
         foreground: '#4d4d4c',
         background: '#ffffff',
         cursor: '#4d4d4c',
+        selection: '#000000',
+        selectionForeground: '#ffffff',
         colors: [
             '#000000',
             '#c82829',

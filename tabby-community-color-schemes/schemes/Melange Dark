@@ -42,3 +42,7 @@
 *.colorBD:     #fff4ea
 !*.colorIT:
 !*.colorUL:
+!
+! Selection
+*.selectionBackground: #ffffff40
+*.selectionForeground: #ffffff

@@ -41,6 +41,8 @@ export class ColorSchemes extends TerminalColorSchemeProvider {
                 foreground: values.foreground,
                 background: values.background,
                 cursor: values.cursorColor,
+                selection: values.selectionBackground,
+                selectionForeground: values.selectionForeground,
                 colors,
             })
         })

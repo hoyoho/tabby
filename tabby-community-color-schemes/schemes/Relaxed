@@ -34,3 +34,7 @@
 ! white
 *.color7:       #d8d8d8
 *.color15:      #f7f7f7
+!
+! Selection
+*.selectionBackground: #ffffff40
+*.selectionForeground: #ffffff

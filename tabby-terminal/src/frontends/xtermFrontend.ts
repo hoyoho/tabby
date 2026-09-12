@@ -22,6 +22,47 @@ const COLOR_NAMES = [
     'brightBlack', 'brightRed', 'brightGreen', 'brightYellow', 'brightBlue', 'brightMagenta', 'brightCyan', 'brightWhite',
 ]
 
+/**
+ * Parse a #rgb / #rrggbb / #rrggbbaa color string into r,g,b(,a) components.
+ * Returns null if the string cannot be parsed.
+ */
+function parseColor (color: string): { r: number, g: number, b: number, a: number } | null {
+    const m = color.match(/^#([0-9a-f]{3,8})$/i)
+    if (!m) {
+        return null
+    }
+    let hex = m[1]
+    if (hex.length === 3) {
+        hex = hex.split('').map(c => c + c).join('')
+    }
+    if (hex.length === 4) {
+        hex = hex.split('').map(c => c + c).join('')
+    }
+    const r = parseInt(hex.slice(0, 2), 16)
+    const g = parseInt(hex.slice(2, 4), 16)
+    const b = parseInt(hex.slice(4, 6), 16)
+    const a = hex.length === 8 ? parseInt(hex.slice(6, 8), 16) / 255 : 1
+    return { r, g, b, a }
+}
+
+/**
+ * Blend a semi-transparent foreground color over an opaque background and
+ * return the resulting opaque color as #rrggbb. If the foreground has no
+ * alpha channel or is already opaque it is returned unchanged.
+ */
+function blendOverBackground (foreground: string, background: string): string {
+    const fg = parseColor(foreground)
+    const bg = parseColor(background)
+    if (!fg || !bg || fg.a >= 1) {
+        return foreground
+    }
+    const a = fg.a
+    const r = Math.round(fg.r * a + bg.r * (1 - a))
+    const g = Math.round(fg.g * a + bg.g * (1 - a))
+    const b = Math.round(fg.b * a + bg.b * (1 - a))
+    return `#${[r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')}`
+}
+
 // How many times to recreate the WebGL renderer after a lost GPU context
 // before giving up and letting xterm fall back to its DOM renderer.
 const MAX_WEBGL_RECOVERY_ATTEMPTS = 3
@@ -385,6 +426,10 @@ export class XTermFrontend extends Frontend {
         } else {
             this.canvasAddon = new CanvasAddon()
             this.xterm.loadAddon(this.canvasAddon)
+            // The canvas renderer stacks the selection layer above the text
+            // layer, so the semi-transparent selection background tints the
+            // selectionForeground text. Swap them so text paints on top.
+            this.fixCanvasLayerOrder()
             this.platformService.displayMetricsChanged$.pipe(
                 takeUntil(this.destroyed$),
             ).subscribe(() => {
@@ -695,16 +740,52 @@ export class XTermFrontend extends Frontend {
         this.xtermCore._scrollToBottom()
     }
 
+    /**
+     * The xterm canvas renderer creates .xterm-selection-layer above
+     * .xterm-text-layer. Because xterm forces the selection background to
+     * ~30% opacity, that overlay tints the selectionForeground text. Move
+     * the text canvas above the selection canvas so the foreground color
+     * stays pure. Only the canvas renderer has separate layers; the WebGL
+     * renderer composites everything on a single surface and already
+     * honours selectionForeground in its shader.
+     */
+    private fixCanvasLayerOrder (): void {
+        const screen = this.element?.querySelector('.xterm-screen')
+        if (!screen) {
+            return
+        }
+        const text = screen.querySelector<HTMLElement>('.xterm-text-layer')
+        const selection = screen.querySelector<HTMLElement>('.xterm-selection-layer')
+        if (text && selection) {
+            text.style.zIndex = '2'
+            selection.style.zIndex = '1'
+        }
+    }
+
     private configureColors (scheme: TerminalColorScheme | null): void {
         const appColorScheme = this.themes._getActiveColorScheme()
 
         scheme = scheme ?? appColorScheme
 
+        const background = getXtermBackgroundColor(this.configService, this.themes, scheme)
+        // Pre-blend the selection background with the terminal background so
+        // the canvas renderer (which uses the transparent variant directly)
+        // and the WebGL renderer (which uses the opaque, pre-blended variant)
+        // produce the same selection color.
+        // xterm's ThemeService forces *opaque* selection backgrounds to 30%
+        // opacity (see @xterm/xterm ThemeService.ts, issue #2737). That only
+        // affects the canvas renderer, leaving WebGL with the fully opaque
+        // color. Append alpha=254 so xterm treats the color as non-opaque and
+        // leaves it untouched; 254/255 is visually indistinguishable from
+        // fully opaque.
+        const blendedSelection = scheme.selection ? blendOverBackground(scheme.selection, background) : undefined
+        const selectionBackground = blendedSelection ? `${blendedSelection}FE` : undefined
+
         const theme: ITheme = {
             foreground: scheme.foreground,
-            selectionBackground: scheme.selection ?? '#88888888',
-            selectionForeground: scheme.selectionForeground ?? undefined,
-            background: getXtermBackgroundColor(this.configService, this.themes, scheme),
+            selectionBackground,
+            selectionForeground: scheme.selectionForeground,
+            background,
             cursor: scheme.cursor,
             cursorAccent: scheme.cursorAccent,
         }

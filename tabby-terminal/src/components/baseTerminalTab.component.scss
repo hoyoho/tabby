@@ -19,16 +19,6 @@
             color: white !important;
         }
     }
-
-    // Fix xterm canvas renderer layer order: draw text ABOVE selection
-    // so that selectionForeground is not tinted by the semi-transparent
-    // selection background overlay.
-    .xterm-text-layer {
-        z-index: 1 !important;
-    }
-    .xterm-selection-layer {
-        z-index: 0 !important;
-    }
 }
 
 :host-context(.with-title-inset) {
