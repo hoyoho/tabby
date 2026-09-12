@@ -9,17 +9,23 @@
     }
 }
 
+// The sidebar's own background lives here so every panel (profile tree,
+// plugin panels, the switcher) inherits it without each needing its own
+// background-color. The background plugin overrides this to make the whole
+// sidebar translucent.
 .sidebar-main {
     flex: 1 1 auto;
     min-width: 0;
     min-height: 0;
+    background-color: var(--theme-bg-more-2);
 }
 
+// No background-color — inherits .sidebar-main's fill so it stays in sync
+// when the background plugin makes the sidebar translucent.
 .sidebar-panel-switcher {
     flex: none;
     gap: 2px;
     padding: 2px 4px;
-    background: var(--theme-bg-more-2);
     border-bottom: 1px solid var(--theme-secondary);
     overflow-x: auto;
     scrollbar-width: none;

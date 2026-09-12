@@ -1,5 +1,8 @@
+// No background-color here — the profile tree is intentionally transparent
+// so it inherits the sidebar's background (.sidebar-main). The background
+// plugin only needs to make the sidebar translucent for the whole tree to
+// follow.
 :host {
-    background-color: var(--theme-bg-more-2);
     position: relative;
     border-right: 1px solid var(--theme-secondary);
     display: flex;
@@ -16,8 +19,11 @@
     min-width: 0;
 }
 
+// Transparent so the filter box inherits the sidebar's background instead
+// of sitting on an opaque --bs-form-control-bg fill.
 input {
     border: 1px solid var(--theme-secondary);
+    background-color: transparent;
 }
 
 .profile-tree {
@@ -103,9 +109,9 @@ input {
 // Bottom connection-info panel: the clicked profile's details, or the focused
 // Session indicator: the focused session's name and user@host:port.
 // No background-color here — the panel is intentionally transparent so it
-// inherits the profile-tree host's background. When the background plugin
-// makes the sidebar translucent, this panel stays in sync with the tree rows
-// above instead of blocking the wallpaper with an opaque fill.
+// inherits the sidebar's background. When the background plugin makes the
+// sidebar translucent, this panel stays in sync with the tree rows above
+// instead of blocking the wallpaper with an opaque fill.
 .connection-info {
     flex: none;
     display: flex;
