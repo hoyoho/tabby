@@ -1,5 +1,5 @@
 import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
-import { Component, Injectable, HostBinding, ViewChild, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef } from '@angular/core'
+import { Component, Injectable, HostBinding, ViewChild, ViewChildren, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef, QueryList } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
 import { TabRecoveryProvider, RecoveryToken } from '../api/tabRecovery'
@@ -47,18 +47,36 @@ import { SessionTab } from '../api/session'
             (dblclick)='duplicatePaneActiveSession($event, header.pane)'
             [ngStyle]='{left: header.x + "px", top: header.y + "px", width: header.w + "px", height: header.h + "px"}'
         >
-            <span
-                *ngFor='let paneTab of header.pane.tabs; trackBy: paneTabBy; let idx = index'
-                class='pane-tab'
-                [class.focused]='isPaneTabFocused(header.pane, paneTab)'
-                [class.same-pane]='isFocusedPane(header.pane)'
-                (click)='activatePaneTab(header.pane, paneTab)'
-                (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
-                (contextmenu)='openPaneTabContextMenu($event, paneTab)'
-                draggable='true'
-                (dragstart)='onPaneTabDragStart($event, paneTab)'
-                (dragend)='onPaneTabDragEnd($event, paneTab)'
-            ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span>
+            <div class='pane-tabs-scroll' #paneTabScroll (scroll)='onPaneTabsScroll(header.pane, $event)'>
+                <span
+                    *ngFor='let paneTab of header.pane.tabs; trackBy: paneTabBy; let idx = index'
+                    class='pane-tab'
+                    [class.focused]='isPaneTabFocused(header.pane, paneTab)'
+                    [class.same-pane]='isFocusedPane(header.pane)'
+                    (click)='activatePaneTab(header.pane, paneTab)'
+                    (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
+                    (contextmenu)='openPaneTabContextMenu($event, paneTab)'
+                    draggable='true'
+                    (dragstart)='onPaneTabDragStart($event, paneTab)'
+                    (dragend)='onPaneTabDragEnd($event, paneTab)'
+                ><i class='fas fa-user-shield pane-tab-admin' *ngIf='isAdminSession(paneTab)'></i>{{paneTab.customTitle || sessionDisplayTitle(paneTab)}}</span>
+            </div>
+            <button
+                *ngIf='isPaneTabsOverflowing(header.pane)'
+                class='pane-tab-arrow'
+                type='button'
+                (click)='scrollPaneTabs(header.pane, -1)'
+                (dblclick)='$event.stopPropagation()'
+                title='Scroll left'
+            ><i class='fas fa-chevron-left'></i></button>
+            <button
+                *ngIf='isPaneTabsOverflowing(header.pane)'
+                class='pane-tab-arrow'
+                type='button'
+                (click)='scrollPaneTabs(header.pane, 1)'
+                (dblclick)='$event.stopPropagation()'
+                title='Scroll right'
+            ><i class='fas fa-chevron-right'></i></button>
         </div>
         <div #dropHint class='pane-drop-hint'></div>
     `,
@@ -165,6 +183,14 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     /** @hidden Drag overlay element — driven imperatively during a drag. */
     @ViewChild('dropHint') private dropHint?: ElementRef<HTMLElement>
 
+    /** @hidden Per-pane tab strip scroll containers, in _paneHeaders order. */
+    @ViewChildren('paneTabScroll') private paneTabScrolls?: QueryList<ElementRef<HTMLElement>>
+
+    /** @hidden Pane tab scroll positions (px) keyed by pane, restored after relayout. */
+    private readonly paneTabScrollLeft = new Map<Pane, number>()
+    /** @hidden Panes whose tab strip overflows the header width (arrows shown). */
+    private readonly paneTabsOverflowing = new Set<Pane>()
+
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
         const visible = hint?.visible ?? false
@@ -172,7 +198,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const y = hint?.y ?? 0
         const w = hint?.w ?? 0
         const h = hint?.h ?? 0
-        if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h) {
+        const kind = hint?.kind ?? 'box'
+        if (this._dragHintVisible === visible && this._dragHintX === x && this._dragHintY === y && this._dragHintW === w && this._dragHintH === h && this._dragHintKind === kind) {
             // Hint unchanged — during a stationary drag Chromium keeps re-firing
             // dragover (~350ms), so skipping the update avoids redundant work.
             return
@@ -182,6 +209,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this._dragHintY = y
         this._dragHintW = w
         this._dragHintH = h
+        this._dragHintKind = kind
 
         // Drive the overlay directly on the DOM. The drag listeners run OUTSIDE
         // the Angular zone, and ANY zone.run() from a drag handler — even a
@@ -192,6 +220,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const element = this.dropHint?.nativeElement
         if (element) {
             element.classList.toggle('visible', visible)
+            element.classList.toggle('reorder', kind === 'reorder')
             element.style.left = `${x}px`
             element.style.top = `${y}px`
             element.style.width = `${w}px`
@@ -216,6 +245,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     _dragHintY = 0
     _dragHintW = 0
     _dragHintH = 0
+    _dragHintKind: 'box' | 'reorder' = 'box'
 
     private tabAdded = new Subject<BaseTabComponent>()
     private tabRemoved = new Subject<BaseTabComponent>()
@@ -457,6 +487,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             this.color = this._recoveredColor
         }
         this.setupResizeObserver()
+        // Re-measure tab-strip overflow whenever the set of scroll containers
+        // changes (panes added/removed) or after their first paint.
+        this.paneTabScrolls?.changes.subscribe(() => this.schedulePaneTabOverflowUpdate())
+        this.schedulePaneTabOverflowUpdate()
         this.initialized.next()
         this.initialized.complete()
     }
@@ -627,6 +661,63 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     paneTabBy (_index: number, tab: SessionTab): SessionTab {
         return tab
+    }
+
+    /** @hidden Whether the given pane's tab strip overflows the header width. */
+    isPaneTabsOverflowing (pane: Pane): boolean {
+        return this.paneTabsOverflowing.has(pane)
+    }
+
+    /** @hidden Saves the live scroll position for a pane as the user scrolls. */
+    onPaneTabsScroll (pane: Pane, event: Event): void {
+        const el = event.target as HTMLElement
+        this.paneTabScrollLeft.set(pane, el.scrollLeft)
+    }
+
+    /**
+     * @hidden Scrolls a pane's tab strip by roughly one visible page.
+     * `direction` is -1 (left) or +1 (right).
+     */
+    scrollPaneTabs (pane: Pane, direction: number): void {
+        const idx = this._paneHeaders.findIndex(h => h.pane === pane)
+        const el = this.paneTabScrolls?.toArray()[idx]?.nativeElement
+        if (!el) { return }
+        const amount = Math.max(el.clientWidth * 0.8, 120)
+        el.scrollBy({ left: direction * amount, behavior: 'smooth' })
+        this.paneTabScrollLeft.set(pane, el.scrollLeft + direction * amount)
+    }
+
+    /**
+     * @hidden Measures every pane header's scroll container to decide whether
+     * the tab strip overflows (arrows shown) and restores the saved scroll
+     * position. Must run AFTER Angular has rendered the latest _paneHeaders.
+     */
+    private updatePaneTabOverflow (): void {
+        const headers = this._paneHeaders
+        const scrolls = this.paneTabScrolls?.toArray() ?? []
+        this.paneTabsOverflowing.clear()
+        headers.forEach((header, i) => {
+            const el = scrolls[i]?.nativeElement
+            if (!el) { return }
+            // A 1px tolerance rounds off sub-pixel jitter from flex layout.
+            if (el.scrollWidth > el.clientWidth + 1) {
+                this.paneTabsOverflowing.add(header.pane)
+            }
+            const saved = this.paneTabScrollLeft.get(header.pane) ?? 0
+            if (saved !== el.scrollLeft) {
+                el.scrollLeft = saved
+            }
+        })
+    }
+
+    /**
+     * @hidden Schedules overflow measurement after the current layout pass has
+     * been committed to the DOM.
+     */
+    private schedulePaneTabOverflowUpdate (): void {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => this.updatePaneTabOverflow())
+        })
     }
 
     /**
@@ -847,11 +938,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     /** @hidden PaneDragHost — GoldenLayout-demo hit test over the pane CELL
      * boxes. Cells come from the layout pass (`_paneCells`), never from
      * getBoundingClientRect of the mid-transition terminal DOM, so a drop can
-     * only ever resolve to the pane whose highlight is showing. Head UI
-     * parity: the pane's header chip strip is NOT a drop target, and the
-     * merge zone ('all') is the UPPER BAND of the pane BODY — the hint rect
-     * is the body box (header never tinted). Below the merge band: left/right
-     * 25% columns → 'l'/'r'; upper/lower remainder → 't'/'b'. */
+     * only ever resolve to the pane whose highlight is showing. The pane's
+     * header chip strip is handled by [[headerHit]] (reorder / merge), so this
+     * body hit-test skips it. The merge zone ('all') is the UPPER BAND of the
+     * pane BODY — the hint rect is the body box (header never tinted). Below
+     * the merge band: left/right 25% columns → 'l'/'r'; upper/lower remainder
+     * → 't'/'b'. */
     paneHit (x: number, y: number): PaneHit|null {
         const host = this.hostElement()
         const cells = this._paneCells
@@ -869,8 +961,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             const bodyY = top + headerH
             const bodyH = Math.max(cell.h - headerH, 1)
             if (y < bodyY) {
-                // The pane header chip strip: deliberately NOT a drop target
-                // (HEAD parity) — releasing there snaps the session back.
+                // The pane header chip strip: handled separately by headerHit
+                // (reorder within the same pane / merge into a different pane),
+                // so the body hit-test deliberately ignores it here.
                 continue
             }
             const rect = { left, top: bodyY, width: cell.w, height: bodyH }
@@ -888,6 +981,71 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // OS report no-drop while a pane is highlighted) reads as a lie, so the
         // seams are left genuinely dead — no highlight, no accept.
         return null
+    }
+
+    /** @hidden PaneDragHost — hit-test the pane HEADER (tab) strips.
+     *  Returns the pane whose header contains the point, the target insertion
+     *  index (derived from the live `.pane-tab` DOM positions), the client x
+     *  of the insertion boundary, and the header's client rect. Null when the
+     *  point is not over any header strip. */
+    headerHit (x: number, y: number): { pane: Pane, targetIndex: number, lineX: number, headerRect: { left: number, top: number, width: number, height: number }, bodyRect: { left: number, top: number, width: number, height: number } }|null {
+        const host = this.hostElement()
+        const cells = this._paneCells
+        if (!host || !cells?.length) {
+            return null
+        }
+        const origin = host.getBoundingClientRect()
+        const headerH = this.paneHeaderHeight
+        const headers = host.querySelectorAll('.pane-header')
+        for (let i = 0; i < cells.length; i++) {
+            const cell = cells[i]
+            const left = origin.left + cell.x
+            const top = origin.top + cell.y
+            if (x < left || x > left + cell.w || y < top || y > top + headerH) {
+                continue
+            }
+            // Found the pane whose header strip contains the point. Resolve the
+            // insertion index from the live tab DOM positions in that header.
+            const headerEl = headers[i] as HTMLElement | undefined
+            const headerRect = { left, top, width: cell.w, height: headerH }
+            const bodyY = top + headerH
+            const bodyH = Math.max(cell.h - headerH, 1)
+            const bodyRect = { left, top: bodyY, width: cell.w, height: bodyH }
+            const tabEls = headerEl?.querySelectorAll('.pane-tab') ?? []
+            let targetIndex = cell.pane.tabs.length
+            let lineX = left + cell.w
+            for (let j = 0; j < tabEls.length; j++) {
+                const r = (tabEls[j] as HTMLElement).getBoundingClientRect()
+                if (x < r.left + r.width / 2) {
+                    targetIndex = j
+                    lineX = r.left
+                    break
+                }
+                lineX = r.right
+            }
+            return { pane: cell.pane, targetIndex, lineX, headerRect, bodyRect }
+        }
+        return null
+    }
+
+    /** @hidden PaneDragHost — move a tab within its own pane to `targetIndex`.
+     *  The index is interpreted as the post-removal insertion slot, so a tab
+     *  dragged past its own position lands correctly without an off-by-one. */
+    reorderTabInPane (tab: SessionTab, pane: Pane, targetIndex: number): void {
+        const idx = pane.tabs.indexOf(tab)
+        if (idx < 0) {
+            return
+        }
+        pane.tabs.splice(idx, 1)
+        let insertAt = targetIndex
+        if (idx < targetIndex) {
+            insertAt = targetIndex - 1
+        }
+        insertAt = Math.max(0, Math.min(insertAt, pane.tabs.length))
+        pane.tabs.splice(insertAt, 0, tab)
+        pane.activeTab = tab
+        this.focus(tab)
+        this.cleanRoot()
     }
 
     /** @hidden PaneDragHost */
@@ -1375,6 +1533,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         for (const placement of result.placements) {
             this.positionPane(placement)
         }
+
+        // Re-evaluate tab-strip overflow and restore scroll positions once the
+        // freshly sized headers have been painted.
+        this.schedulePaneTabOverflowUpdate()
     }
 
     /** Positions one pane's session DOM under its header strip. */

@@ -24,15 +24,23 @@ title-bar(
     )
         .tab-bar(
             *ngIf='!hostWindow.isFullscreen || config.store.appearance.tabsInFullscreen',
-            [class.tab-bar-no-controls-overlay]='hostApp.platform == Platform.macOS',
-            (dblclick)='!isDocked() && !isTitleBarNeeded() && toggleMaximize()'
+            [class.tab-bar-no-controls-overlay]='hostApp.platform == Platform.macOS'
         )
             app-menu(*ngIf='hostApp.platform !== Platform.macOS && !isTitleBarNeeded()')
             .inset.background(*ngIf='hostApp.platform == Platform.macOS \
             && !hostWindow.isFullscreen \
             && (config.store.appearance.tabsLocation == "top" \
             || (config.store.appearance.tabsLocation == "left" && !config.store.showProfileTree))')
+            button.tab-scroll-arrow(
+                *ngIf='!hasVerticalTabs() && tabsOverflowing',
+                type='button',
+                (click)='scrollTabs(-1)',
+                (dblclick)='$event.stopPropagation()',
+                title='Scroll tabs left'
+            )
+                i.fas.fa-chevron-left
             .tabs(
+                #tabsScroll,
                 cdkDropList,
                 [cdkDropListOrientation]='(config.store.appearance.tabsLocation == "top" || config.store.appearance.tabsLocation == "bottom") ? "horizontal" : "vertical"',
                 [cdkDropListSortPredicate]='tabSortDisabled',
@@ -50,6 +58,14 @@ title-bar(
                     (click)='app.selectTab(tab)',
                     [class.fully-draggable]='hostApp.platform !== Platform.macOS'
                 )
+            button.tab-scroll-arrow(
+                *ngIf='!hasVerticalTabs() && tabsOverflowing',
+                type='button',
+                (click)='scrollTabs(1)',
+                (dblclick)='$event.stopPropagation()',
+                title='Scroll tabs right'
+            )
+                i.fas.fa-chevron-right
 
             .btn-group.background
                 .d-flex(
@@ -81,7 +97,8 @@ title-bar(
 
             .btn-space.background(
                 [class.drag]='config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right" && hostApp.platform !== Platform.macOS',
-                [class.persistent]='config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right" && hostApp.platform !== Platform.macOS'
+                [class.persistent]='config.store.appearance.tabsLocation !== "left" && config.store.appearance.tabsLocation !== "right" && hostApp.platform !== Platform.macOS',
+                (dblclick)='!isDocked() && !isTitleBarNeeded() && toggleMaximize()'
             )
 
             .btn-group.background

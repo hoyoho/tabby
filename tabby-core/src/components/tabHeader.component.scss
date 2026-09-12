@@ -7,7 +7,10 @@ $tabs-height: 38px;
 
     > * { cursor: pointer; }
 
-    flex: 1000 1 200px;
+    // flex-shrink: 0 keeps each tab at its basis (fixed 200px or content
+    // width) instead of squeezing it down; once the strip overflows the
+    // scrollable .tabs container, the scroll arrows take over.
+    flex: 1000 0 200px;
     width: 200px;
     // flex-basis and width are also set through animation on AppRoot
 
@@ -20,7 +23,7 @@ $tabs-height: 38px;
     overflow: hidden;
 
     &.flex-width {
-        flex: 1000 1 auto;
+        flex: 1000 0 auto;
         width: auto;
     }
 

@@ -44,9 +44,27 @@
     border: 1px solid #000;
     border-radius: 0;
 
-    .pane-tab {
-        flex: 1 1 0;
+    .pane-tabs-scroll {
+        flex: 1 1 auto;
         min-width: 0;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    .pane-tab {
+        // Fixed-width tabs laid out left-to-right; they do not stretch to
+        // fill the header. When they overflow the strip, the scroll arrows
+        // appear on the right.
+        flex: 0 0 auto;
+        width: 160px;
         padding: 2px 10px;
         font-size: 16px;
         line-height: 18px;
@@ -81,6 +99,26 @@
             color: var(--theme-primary-fg);
         }
     }
+
+    .pane-tab-arrow {
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border: none;
+        border-radius: 3px;
+        background: transparent;
+        color: #2b2f36;
+        cursor: pointer;
+        font-size: 11px;
+
+        &:hover {
+            background: color-mix(in srgb, var(--theme-primary) 40%, var(--pane-header-bg));
+        }
+    }
 }
 
 :host > .pane-drop-hint {
@@ -95,6 +133,19 @@
 
     &.visible {
         opacity: 1;
+    }
+
+    // Reorder insertion indicator: a thin vertical line in the tab strip
+    // instead of the full-area merge/split highlight box.
+    &.reorder {
+        border: none;
+        border-radius: 0;
+        background: var(--theme-primary);
+        opacity: 0;
+
+        &.visible {
+            opacity: 0.9;
+        }
     }
 }
 

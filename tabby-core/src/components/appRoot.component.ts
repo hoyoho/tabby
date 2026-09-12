@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { Component, Input, HostListener, HostBinding, ViewChildren, ViewChild, Optional } from '@angular/core'
+import { Component, Input, HostListener, HostBinding, ViewChildren, ViewChild, Optional, ElementRef } from '@angular/core'
 import { trigger, style, animate, transition, state } from '@angular/animations'
 import { NgbDropdown, NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { CdkDragDrop } from '@angular/cdk/drag-drop'
@@ -81,6 +81,14 @@ export class AppRootComponent {
     @HostBinding('class.no-tabs') noTabs = true
     @ViewChildren(TabBodyComponent) tabBodies: TabBodyComponent[]
     @ViewChild('activeTransfersDropdown') activeTransfersDropdown: NgbDropdown
+    /** @hidden scrollable top-level tab strip (horizontal layout only) */
+    @ViewChild('tabsScroll') tabsScroll?: ElementRef<HTMLElement>
+    /** @hidden whether the top-level tab strip overflows (arrows shown) */
+    tabsOverflowing = false
+    /** @hidden timestamp of the most recent tab removal; used to swallow the
+     *  second click of a double-click on a tab's close button, which would
+     *  otherwise land on the tab bar and toggle window maximize. */
+    private lastTabRemovedAt = 0
     unsortedTabs: BaseTabComponent[] = []
     activeTransfers: FileTransfer[] = []
     private logger: Logger
@@ -169,6 +177,7 @@ export class AppRootComponent {
             this.unsortedTabs.push(tab)
             this.noTabs = false
             this.app.emitTabDragEnded()
+            this.scheduleTabsOverflowUpdate()
         })
 
         this.app.tabRemoved$.subscribe(tab => {
@@ -180,6 +189,7 @@ export class AppRootComponent {
             this.unsortedTabs = this.unsortedTabs.filter(x => x !== tab)
             this.noTabs = app.tabs.length === 0
             this.app.emitTabDragEnded()
+            this.scheduleTabsOverflowUpdate()
         })
 
         platform.fileTransferStarted$.subscribe(transfer => {
@@ -206,13 +216,19 @@ export class AppRootComponent {
         let resizeEndTimeout: any = null
         window.addEventListener('resize', () => {
             document.body.classList.add('resizing')
+            this.scheduleTabsOverflowUpdate()
             if (resizeEndTimeout) {
                 clearTimeout(resizeEndTimeout)
             }
             resizeEndTimeout = setTimeout(() => {
                 document.body.classList.remove('resizing')
+                this.updateTabsOverflow()
             }, 200)
         })
+
+        // Switching flexTabs or tabsLocation changes tab widths and can flip
+        // the overflow state.
+        this.config.changed$.subscribe(() => this.scheduleTabsOverflowUpdate())
     }
 
     @HostListener('dragover')
@@ -234,6 +250,39 @@ export class AppRootComponent {
             return '*'
         }
         return this.config.store.appearance.flexTabs ? '*' : '200px'
+    }
+
+    /**
+     * @hidden Measures the top-level tab strip and flips `tabsOverflowing`
+     * when the tabs don't fit in the visible width. No-op for vertical tab
+     * layouts (those already scroll via the .tab-bar's overflow-y).
+     */
+    updateTabsOverflow (): void {
+        if (this.hasVerticalTabs()) {
+            this.tabsOverflowing = false
+            return
+        }
+        const el = this.tabsScroll?.nativeElement
+        if (!el) { return }
+        this.tabsOverflowing = el.scrollWidth > el.clientWidth + 1
+    }
+
+    /** @hidden Schedules an overflow measurement after the next paint. */
+    private scheduleTabsOverflowUpdate (): void {
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => this.updateTabsOverflow())
+        })
+    }
+
+    /**
+     * @hidden Scrolls the top-level tab strip left (-1) or right (+1) by
+     * roughly one visible page.
+     */
+    scrollTabs (direction: number): void {
+        const el = this.tabsScroll?.nativeElement
+        if (!el) { return }
+        const amount = Math.max(el.clientWidth * 0.8, 120)
+        el.scrollBy({ left: direction * amount, behavior: 'smooth' })
     }
 
     onTabsReordered (event: CdkDragDrop<BaseTabComponent[]>) {
@@ -290,6 +339,13 @@ export class AppRootComponent {
     }
 
     toggleMaximize (): void {
+        // Swallow the second click of a double-click that lands on the tab
+        // bar right after a tab was closed (which would otherwise toggle
+        // maximize unintentionally).
+        if (Date.now() - this.lastTabRemovedAt < 500) {
+            this.lastTabRemovedAt = 0
+            return
+        }
         this.hostWindow.toggleMaximize()
     }
 

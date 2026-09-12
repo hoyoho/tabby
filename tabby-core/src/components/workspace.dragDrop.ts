@@ -14,6 +14,9 @@ export interface DragHintState {
     y: number
     w: number
     h: number
+    /** Visual style of the hint: 'box' (default) tints a pane area,
+     *  'reorder' draws a thin vertical insertion line in a tab strip. */
+    kind?: 'box' | 'reorder'
 }
 
 /**
@@ -80,6 +83,21 @@ export interface PaneDragHost {
      * point can only ever match its own pane.
      */
     paneHit: (x: number, y: number) => PaneHit|null
+    /**
+     * Hit-test a point against the pane HEADER (tab) strips. Returns the pane
+     * whose header contains the point, the target insertion index within that
+     * pane's tab list (computed from the live `.pane-tab` DOM positions), and
+     * the client x where the insertion indicator line should be drawn. Null
+     * when the point is not over any header strip.
+     *
+     * Same-pane drops here reorder the tab within its pane; different-pane
+     * drops merge the session into that pane (equivalent to the body 'all'
+     * zone), so a dragged session can be parked onto another pane by its tab
+     * strip as well as its body.
+     */
+    headerHit: (x: number, y: number) => { pane: Pane, targetIndex: number, lineX: number, headerRect: { left: number, top: number, width: number, height: number }, bodyRect: { left: number, top: number, width: number, height: number } }|null
+    /** Reorder a tab within its own pane to `targetIndex` (post-removal slot). */
+    reorderTabInPane: (tab: SessionTab, pane: Pane, targetIndex: number) => void
     /** Client rect of the workspace's host element, or null if unavailable. */
     hostRect: () => { left: number, top: number, width: number, height: number }|null
 
@@ -299,6 +317,10 @@ export class PaneDragController {
     } | {
         type: 'workspace'
         workspace: WorkspaceComponent
+    } | {
+        type: 'reorder'
+        pane: Pane
+        targetIndex: number
     } | null = null
 
     /**
@@ -386,13 +408,53 @@ export class PaneDragController {
      * Preview the drop zone for a client point and answer whether the drop is
      * accepted there. The SAME hit-test both decides the dataTransfer.dropEffect
      * (the cursor) and draws the highlight, so the two can never disagree: a
-     * pane cell (header → merge / edges → split) or another workspace's tab
-     * header → accepted; anywhere else → rejected and no highlight.
+     * pane header strip (same pane → reorder / different pane → merge), a pane
+     * body edge (split), or another workspace's tab header → accepted; anywhere
+     * else → rejected and no highlight.
      * @returns true when a drop zone exists at the point (highlight shown).
      */
     updateDragHint (x: number, y: number): boolean {
         const hit = this.host.paneHit(x, y)
         if (!hit) {
+            // The pane BODY returned no hit — but the pointer may be over a
+            // pane HEADER (tab strip). A drop there either reorders within the
+            // same pane or merges into a different one.
+            const header = this.host.headerHit(x, y)
+            if (header) {
+                const dragged = this.state?.tab
+                const sourcePane = dragged ? this.host.getPaneOf(dragged) : null
+                if (header.pane === sourcePane) {
+                    // Reorder within the same pane: draw a vertical insertion
+                    // line at the computed boundary (lineX) spanning the header.
+                    const r = header.headerRect
+                    this.host.setDragHint({
+                        visible: true,
+                        x: header.lineX - 1,
+                        y: r.top + 2,
+                        w: 2,
+                        h: r.height - 4,
+                        kind: 'reorder',
+                    })
+                    this.lastZone = { type: 'reorder', pane: header.pane, targetIndex: header.targetIndex }
+                    return true
+                }
+                // Different pane: merge the session in (same as the body 'all'
+                // zone). Highlight the whole pane cell (header + body) so the
+                // target container is fully covered — matches the existing
+                // merge visual language, no separate header box.
+                const hr = header.headerRect
+                const br = header.bodyRect
+                const pad = 4
+                this.host.setDragHint({
+                    visible: true,
+                    x: hr.left + pad,
+                    y: hr.top + pad,
+                    w: hr.width - pad * 2,
+                    h: (br.top + br.height) - hr.top - pad * 2,
+                })
+                this.lastZone = { type: 'pane', pane: header.pane, side: 'all' }
+                return true
+            }
             // Outside this workspace's panes: highlight another workspace's tab
             // header when the pointer hovers one, so a cross-workspace move is
             // discoverable during the gesture.
@@ -679,6 +741,8 @@ export class PaneDragController {
         // user saw.
         if (zone?.type === 'workspace' && zone.workspace !== (this.state.tab.parent as any)) {
             void this.host.moveSessionToWorkspace(this.state.tab, zone.workspace)
+        } else if (zone?.type === 'reorder') {
+            this.host.reorderTabInPane(this.state.tab, zone.pane, zone.targetIndex)
         } else if (zone?.type === 'pane' && zone.pane) {
             this.commitDrag(this.state.tab, { pane: zone.pane, side: zone.side })
         } else {
