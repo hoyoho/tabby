@@ -1584,7 +1584,7 @@ msgstr "端口已打开"
 
 
 msgid "Ports"
-msgstr "端口"
+msgstr "端口转发"
 
 
 msgid "Press any key to reconnect"
