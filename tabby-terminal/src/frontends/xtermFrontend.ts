@@ -167,7 +167,7 @@ export class XTermFrontend extends Frontend {
         this.xterm = new Terminal({
             allowTransparency: true,
             allowProposedApi: true,
-            overviewRulerWidth: 8,
+            overviewRulerWidth: 7,
             windowsPty: process.platform === 'win32' ? {
                 backend: this.configService.store.terminal.useConPTY ? 'conpty' : 'winpty',
                 buildNumber: getWindows10Build(),
@@ -482,6 +482,67 @@ export class XTermFrontend extends Frontend {
             requestAnimationFrame(() => this.updatePinnedState())
         }, { capture: true, passive: true })
 
+        // Native scrollbar drag (thumb / track click) does NOT emit wheel or
+        // keyboard events, so the handlers above would leave pinnedToBottom
+        // stale at `true`. The next write() would then re-scroll to the bottom
+        // even though the user explicitly dragged away from it. The DOM
+        // `scroll` event on xterm's viewport covers every scroll source
+        // (scrollbar drag, wheel, keyboard, programmatic — including the
+        // search addon's scrollToLine to reveal a match), so we re-evaluate
+        // pin state from the actual viewport position. Unlike xterm.onScroll
+        // this fires for user drags too; the transient-false-positive concern
+        // from the constructor comment does not apply here because scrollTop
+        // only changes when the viewport actually moves.
+        //
+        // Update SYNCHRONOUSLY (no rAF): the search addon scrolls to a match
+        // and then a concurrent write() may run within the same task. If
+        // pinnedToBottom were still stale `true`, write() would capture
+        // wasPinned=true and yank the viewport back to the bottom, undoing the
+        // search reveal. Updating here closes that race window.
+        const viewport = this.xterm.element?.querySelector('.xterm-viewport') as HTMLElement | null
+        if (viewport) {
+            viewport.addEventListener('scroll', () => {
+                this.updatePinnedState()
+            }, { passive: true })
+
+            // The scrollbar thumb is rendered thin by default and should
+            // expand to the full rail width when the pointer enters the rail
+            // area. WebKit offers no CSS combinator for "track hover affects
+            // thumb" (::-webkit-scrollbar:hover does not propagate to
+            // ::-webkit-scrollbar-thumb), so we detect the right-edge hover
+            // band in JS and toggle a class. SCROLLBAR_WIDTH mirrors the
+            // 7px rail declared in xterm.css.
+            const SCROLLBAR_WIDTH = 7
+
+            // Clicking the scrollbar (thumb / track) must not clear the
+            // terminal selection. xterm attaches a `mousedown` listener on the
+            // `.xterm` element that unconditionally starts a new selection
+            // (and therefore wipes the current one). Because the scrollbar is
+            // not a real DOM node, the event target is the viewport and it
+            // bubbles up to `.xterm`. We catch it here, while still on the
+            // viewport, and stop propagation for clicks inside the right-edge
+            // rail band. This keeps the search addon's "last match" selection
+            // intact across scrollbar drags.
+            viewport.addEventListener('mousedown', (e) => {
+                const rect = viewport.getBoundingClientRect()
+                if (e.clientX >= rect.right - SCROLLBAR_WIDTH) {
+                    e.stopImmediatePropagation()
+                    // The user grabbed the scrollbar, so the next search
+                    // navigation should re-anchor to the viewport instead of
+                    // continuing from the last selected match.
+                    this.userScrolledSinceLastSearch = true
+                }
+            })
+
+            const onRailPointerMove = (e: MouseEvent) => {
+                const rect = viewport.getBoundingClientRect()
+                viewport.classList.toggle('scrollbar-rail-hover', e.clientX >= rect.right - SCROLLBAR_WIDTH)
+            }
+            const onRailPointerLeave = () => viewport.classList.remove('scrollbar-rail-hover')
+            viewport.addEventListener('mousemove', onRailPointerMove)
+            viewport.addEventListener('mouseleave', onRailPointerLeave)
+        }
+
         this.hotkeysService.hotkey$
             .pipe(
                 takeUntil(this.destroyed$),
@@ -675,24 +736,27 @@ export class XTermFrontend extends Frontend {
                 this.suppressNextClearSequence = false
             }
         }
-        // Capture pinned state before the write — the async write yields
-        // to the event loop, and RAF callbacks (e.g. from wheel events)
-        // could change pinnedToBottom mid-write.
+        // Capture pinned state before the async write yields to the event loop.
+        // pinnedToBottom is kept in sync by the viewport's scroll listener
+        // (which fires synchronously for every real scroll, including the
+        // search addon's scrollToLine), so re-evaluate it AFTER the await:
+        // a search/wheel that scrolled the viewport away from the bottom
+        // during the write must not be undone by a stale wasPinned=true.
         const wasPinned = this.pinnedToBottom
         const savedViewportY = this.xterm.buffer.active.viewportY
         await this.flowControl.write(data)
-        if (wasPinned) {
+        const nowPinned = this.pinnedToBottom
+        const b = this.xterm.buffer.active
+        if (nowPinned) {
             this.xtermCore._scrollToBottom()
-        } else {
-            // Restore scroll position — xterm internally disturbs viewportY
-            // during fast output, and the patched-out scrollToBottom no-op
-            // prevents xterm from correcting it.
-            const maxScroll = this.xterm.buffer.active.baseY
-            const targetY = Math.min(savedViewportY, maxScroll)
-            if (this.xterm.buffer.active.viewportY !== targetY) {
+        } else if (!wasPinned) {
+            const targetY = Math.min(savedViewportY, b.baseY)
+            if (b.viewportY !== targetY) {
                 this.xterm.scrollToLine(targetY)
             }
         }
+        // else: wasPinned && !nowPinned — the user scrolled during the write;
+        // leave the viewport where they put it.
     }
 
     clear (): void {
@@ -879,22 +943,53 @@ export class XTermFrontend extends Frontend {
         return this.searchState
     }
 
+    /**
+     * Set when the user interacts with the scrollbar (drag / track click).
+     * The next findNext/findPrevious call then re-anchors the search to the
+     * current viewport instead of continuing from the last selected match,
+     * so navigation resumes from wherever the user chose to look.
+     */
+    private userScrolledSinceLastSearch = false
+
+    /**
+     * Decides where the next search starts from.
+     *  - Default: leave the current selection alone, so the SearchAddon
+     *    continues from the last match (natural up/down navigation, and
+     *    right-click → Search on a selected keyword).
+     *  - If the user grabbed the scrollbar since the last search: re-anchor
+     *    to the viewport so browsing resumes from the visible area.
+     *  - If there is no selection at all (fresh search with no prior match):
+     *    anchor to the viewport rather than the top of the buffer.
+     */
+    private prepareSearchAnchor (direction: 'next' | 'previous'): void {
+        const anchorToViewport = this.userScrolledSinceLastSearch || !this.xterm.hasSelection()
+        this.userScrolledSinceLastSearch = false
+        if (!anchorToViewport) {
+            return
+        }
+        const viewportY = this.xterm.buffer.active.viewportY
+        const row = direction === 'next' ? viewportY : viewportY + this.xterm.rows - 1
+        this.xterm.select(0, row, 1)
+    }
+
     findNext (term: string, searchOptions?: SearchOptions): SearchState {
         if (this.copyOnSelect) {
             this.preventNextOnSelectionChangeEvent = true
         }
-        return this.wrapSearchResult(
-            this.search.findNext(term, this.getSearchOptions(searchOptions)),
-        )
+        this.prepareSearchAnchor('next')
+        const result = this.search.findNext(term, this.getSearchOptions(searchOptions))
+        this.updatePinnedState()
+        return this.wrapSearchResult(result)
     }
 
     findPrevious (term: string, searchOptions?: SearchOptions): SearchState {
         if (this.copyOnSelect) {
             this.preventNextOnSelectionChangeEvent = true
         }
-        return this.wrapSearchResult(
-            this.search.findPrevious(term, this.getSearchOptions(searchOptions)),
-        )
+        this.prepareSearchAnchor('previous')
+        const result = this.search.findPrevious(term, this.getSearchOptions(searchOptions))
+        this.updatePinnedState()
+        return this.wrapSearchResult(result)
     }
 
     cancelSearch (): void {

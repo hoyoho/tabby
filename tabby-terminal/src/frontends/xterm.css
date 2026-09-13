@@ -10,12 +10,35 @@
     overflow-y: auto;
 }
 
+/* Match the splitter band width (SPLITTER_BAND = 7px) so the scrollbar
+   and the pane divider read as the same visual unit. The track is always
+   7px wide (no layout shift); the visible thumb is kept thin (3px) via
+   transparent side borders that also preserve the full 7px hit area, so
+   the thumb is easy to grab even when it looks slender. On hover the
+   borders collapse and the thumb fills the 7px rail with the theme
+   primary colour, mirroring split-tab-spanner's hover treatment.
+
+   A min-height floor keeps the thumb grabbable even when the scrollback is
+   huge (otherwise the proportional thumb shrinks to a 1-2px sliver that is
+   easy to miss against the terminal background). */
 .xterm-viewport::-webkit-scrollbar {
-    background: rgba(0, 0, 0, .125);
+    width: 7px;
+    background: transparent;
 }
 
 .xterm-viewport::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .25);
+    min-height: 32px;
+    background: color-mix(in srgb, var(--theme-fg) 38%, transparent);
+    background-clip: padding-box;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+}
+
+.xterm-viewport.scrollbar-rail-hover::-webkit-scrollbar-thumb,
+.xterm-viewport::-webkit-scrollbar-thumb:hover {
+    border-left: 0;
+    border-right: 0;
+    background: var(--theme-primary);
 }
 
 .xterm-decoration-overview-ruler {
