@@ -7,11 +7,6 @@
 ::ng-deep split-tab > .child {
     position: absolute;
     transition: 0.125s all;
-    opacity: .75;
-
-    &.focused {
-        opacity: 1;
-    }
 }
 
 ::ng-deep split-tab > .pane-tab-view {

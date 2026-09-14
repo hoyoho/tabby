@@ -671,17 +671,31 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /**
-     * Cheap focus-only pass: toggles the `focused`/`pane-tab-inactive` classes
-     * of the pane-tab DOM without recomputing layout.
+     * Cheap focus-only pass: toggles the `pane-tab-inactive` and
+     * `globally-focused` classes of the pane-tab DOM without recomputing
+     * layout. Called on focus changes so the foreground/background visibility
+     * and the global-focus marker stay in sync.
      */
     private refreshPaneFocus (): void {
         for (const [tab, ref] of this.viewRefs) {
-            const pane = this.getPaneOf(tab)
-            const isActive = pane !== null && pane.tab === tab
-            const element = ref.rootNodes[0]
-            element?.classList.toggle('pane-tab-inactive', !isActive)
-            element?.classList.toggle('focused', isActive)
+            this.applyPaneTabStateClasses(tab, ref.rootNodes[0])
         }
+    }
+
+    /**
+     * Applies the state classes shared by `refreshPaneFocus` and
+     * `positionPane` to a single pane-tab DOM node:
+     *  - `pane-tab-inactive`: the session is not its pane's foreground tab
+     *    (CSS hides it with `display: none`).
+     *  - `globally-focused`: the session's pane holds the global focus
+     *    (every pane in focus-all mode) so plugins can dim non-focused panes.
+     */
+    private applyPaneTabStateClasses (tab: SessionTab, element: Element|null): void {
+        if (!element) { return }
+        const pane = this.getPaneOf(tab)
+        const isActive = pane !== null && pane.tab === tab
+        element.classList.toggle('pane-tab-inactive', !isActive)
+        element.classList.toggle('globally-focused', pane !== null && this.isFocusedPane(pane))
     }
 
     /**
@@ -1759,16 +1773,13 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** Positions one pane's session DOM under its header strip. */
     private positionPane (placement: PanePlacement): void {
-        const activeTab = placement.pane.tab
         for (const tab of placement.pane.tabs) {
             const viewRef = this.viewRefs.get(tab)
             if (!viewRef) { continue }
             const element = viewRef.rootNodes[0]
-            const isActive = tab === activeTab
             element.classList.add('child')
             element.classList.add('pane-tab-view')
-            element.classList.toggle('pane-tab-inactive', !isActive)
-            element.classList.toggle('focused', isActive)
+            this.applyPaneTabStateClasses(tab, element)
             element.style.left = `${placement.x}px`
             element.style.top = `${placement.y + this.paneHeaderHeight}px`
             element.style.width = `${placement.w}px`
