@@ -73,7 +73,7 @@
         border-radius: 3px;
         color: #2b2f36;
         // Not in the focused pane: neutral grey chip.
-        background: #a0a0a0;
+        background: color-mix(in srgb, #ffffff 45%, #a0a0a0);
         cursor: pointer;
         white-space: nowrap;
         overflow: hidden;
@@ -124,6 +124,12 @@
         // Same pane as the focused tab but not itself focused (colour A).
         &.same-pane:not(.focused) {
             background: color-mix(in srgb, var(--theme-primary) 60%, var(--pane-header-bg));
+        }
+
+        // Active foreground tab of a non-focused pane: whitish chip to
+        // separate it from plain inactive (grey) tabs.
+        &.other-pane-active:not(.focused) {
+            background: #a0a0a0;
         }
 
         // Focused (or focus-all participant): full accent.

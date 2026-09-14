@@ -53,6 +53,7 @@ import { SessionTab } from '../api/session'
                     class='pane-tab'
                     [class.focused]='isPaneTabFocused(header.pane, paneTab)'
                     [class.same-pane]='isFocusedPane(header.pane)'
+                    [class.other-pane-active]='isPaneTabActiveOtherPane(header.pane, paneTab)'
                     (click)='activatePaneTab(header.pane, paneTab)'
                     (dblclick)='duplicatePaneActiveTab($event, header.pane, paneTab)'
                     (contextmenu)='openPaneTabContextMenu($event, paneTab)'
@@ -705,6 +706,15 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             return true
         }
         return this.focusedTab !== null && this.getPaneOf(this.focusedTab) === pane
+    }
+
+    /**
+     * Whether the tab is the active foreground tab of a pane that does
+     * NOT contain the globally focused tab, i.e. it is the foreground
+     * session of a background split.
+     */
+    isPaneTabActiveOtherPane (pane: Pane, tab: SessionTab): boolean {
+        return tab === (pane.activeTab ?? pane.tabs[0]) && !this.isFocusedPane(pane)
     }
 
     /** @hidden */
