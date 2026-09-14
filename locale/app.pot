@@ -821,6 +821,10 @@ msgstr ""
 msgid "Enables the experimental Windows ConPTY API"
 msgstr ""
 
+#: tabby-terminal/src/features/toolbarToggleActionProvider.ts:20
+msgid "Enable toolbar"
+msgstr ""
+
 #: locale/tmp-html/tabby-settings/src/components/vaultSettingsTab.component.html:37
 msgid "Encrypt config file"
 msgstr ""

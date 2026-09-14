@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktivera global snabbtangent (Ctrl-Mellanslag)"
 
 
+msgid "Enable toolbar"
+msgstr "Aktivera verktygsfältet"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Aktiverar det experimentella Windows ConPTY API"
 

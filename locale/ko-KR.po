@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "전역 단축키 활성 (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "도구 모음 활성화"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "실험적인 Windows ConPTY API 사용"
 

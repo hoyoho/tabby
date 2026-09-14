@@ -702,6 +702,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Evrensel kısayol tuşunu etkinleştir (Ctrl-Boşluk)"
 
 
+msgid "Enable toolbar"
+msgstr "Araç çubuğunu etkinleştir"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Deneysel Windows ConPTY API'ı etkinleştir"
 

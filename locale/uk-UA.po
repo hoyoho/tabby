@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Увімкнути глобальні сполучення клавіш (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Увімкнути панель інструментів"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Вмикає експериментальне API ConPTY Windows"
 

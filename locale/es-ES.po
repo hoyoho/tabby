@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Habilitar tecla de acceso rápido (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Habilitar barra de herramientas"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Habilitar la API experimental de Windows ConPTY"
 

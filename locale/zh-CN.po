@@ -712,6 +712,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "启用全局快捷键 (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "启用工具栏"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "启用实验性 Windows ConPTY API"
 

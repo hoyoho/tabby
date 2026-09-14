@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Povolit globální zkratku (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Povolit panel nástrojů"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Povolit experimentální Windows ConPTY API"
 

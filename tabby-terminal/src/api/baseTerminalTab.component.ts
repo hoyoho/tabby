@@ -95,6 +95,9 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
     @HostBinding('class.toolbar-pinned') pinToolbar = (window.localStorage.pinTerminalToolbar ?? 'false') === 'true'
 
     /** @hidden */
+    toolbarEnabled = (window.localStorage.terminalToolbarEnabled ?? 'true') === 'true'
+
+    /** @hidden */
     private toolbarRevealTimeout?: any
 
     /** @hidden */
@@ -130,6 +133,18 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
         if (this.pinToolbar) {
             this.revealToolbar = true
             this.clearToolbarRevealTimeout()
+        }
+    }
+
+    /** @hidden */
+    toggleToolbarEnabled (): void {
+        this.toolbarEnabled = !this.toolbarEnabled
+        window.localStorage.terminalToolbarEnabled = String(this.toolbarEnabled)
+        if (this.toolbarEnabled) {
+            this.revealToolbar = true
+            this.clearToolbarRevealTimeout()
+        } else {
+            this.revealToolbar = false
         }
     }
 

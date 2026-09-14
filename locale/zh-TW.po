@@ -703,6 +703,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "啟用全域快速鍵 (Ctrl+Space)"
 
 
+msgid "Enable toolbar"
+msgstr "啟用工具列"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "啟用實驗性 Windows ConPTY API"
 

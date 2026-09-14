@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Омогући глобалну пречицу (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Омогући траку са алаткама"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Омогући експерименталан Windows ConPTY API"
 

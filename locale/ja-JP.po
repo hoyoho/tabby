@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "グローバルホットキーを有効にする (Ctrl+Space)"
 
 
+msgid "Enable toolbar"
+msgstr "ツールバーを有効にする"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "実験的な Windows ConPTY API を有効にする"
 

@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktifkan hotkey global (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Izinkan bilah alat"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Mengaktifkan Windows ConPTY API eksperimental"
 

@@ -5,7 +5,7 @@ import { BaseTerminalTabComponent } from '../api/baseTerminalTab.component'
 /** @hidden */
 @Component({
     selector: 'terminal-toolbar',
-    host: { class: 'terminal-toolbar' },
+    host: { 'class': 'terminal-toolbar' },
     templateUrl: './terminalToolbar.component.pug',
     styleUrls: ['./terminalToolbar.component.scss'],
 })
@@ -15,11 +15,11 @@ export class TerminalToolbarComponent {
 
     @HostBinding('class.empty')
     get isEmpty (): boolean {
-        return this.buttons.length === 0 || this.tab?.enableToolbar === false
+        return this.buttons.length === 0 || this.tab?.enableToolbar === false || this.tab?.toolbarEnabled === false
     }
 
     get pinned (): boolean {
-        return !!(this.tab?.pinToolbar)
+        return !!this.tab?.pinToolbar
     }
 
     constructor (

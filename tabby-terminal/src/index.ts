@@ -5,7 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
 import { ToastrModule } from 'ngx-toastr'
 import { NgxColorsModule } from 'ngx-colors'
 
-import TabbyCorePlugin, { ConfigProvider, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, MenuProvider } from 'tabby-core'
+import TabbyCorePlugin, { ConfigProvider, HotkeyProvider, TabContextMenuItemProvider, CLIHandler, MenuProvider, ActionProvider } from 'tabby-core'
 import { SettingsTabProvider } from 'tabby-settings'
 
 import { TerminalTabComponent } from './components/terminalTab.component'
@@ -36,6 +36,7 @@ import { XTermFrontend, XTermWebGLFrontend } from './frontends/xtermFrontend'
 import { TerminalCLIHandler } from './cli'
 import { DefaultColorSchemes } from './colorSchemes'
 import { TerminalMenuProvider } from './menu'
+import { ToolbarToggleActionProvider } from './features/toolbarToggleActionProvider'
 
 /** @hidden */
 @NgModule({
@@ -63,6 +64,7 @@ import { TerminalMenuProvider } from './menu'
 
         { provide: CLIHandler, useClass: TerminalCLIHandler, multi: true },
         { provide: TerminalColorSchemeProvider, useClass: DefaultColorSchemes, multi: true },
+        { provide: ActionProvider, useClass: ToolbarToggleActionProvider, multi: true },
     ],
     declarations: [
         ColorPickerComponent,

@@ -701,6 +701,10 @@ msgid "Enable global hotkey (Ctrl-Space)"
 msgstr "Aktiveer globale snelsleutel (Ctrl-Space)"
 
 
+msgid "Enable toolbar"
+msgstr "Aktiveer nutsbalk"
+
+
 msgid "Enables the experimental Windows ConPTY API"
 msgstr "Aktiveer die eksperimentele Windows ConPTY API"
 
