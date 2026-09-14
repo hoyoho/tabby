@@ -108,7 +108,14 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
         return {
             type: `app:${this.profile.type}-tab`,
-            profile: this.profile,
+            // The live profile may be a ConfigProxy instance (recovered tabs
+            // arrive as ConfigProxy). Persisting the instance itself leaks its
+            // closure-based `__getValue`/`__setValue` members into the recovery
+            // token; a later `config.save()` strips them silently, but any
+            // in-memory consumer (e.g. a plugin calling `structuredClone` on
+            // `getProfiles()`) blows up on them. Round-trip through JSON to
+            // persist pure data only.
+            profile: JSON.parse(JSON.stringify(this.profile)),
             savedState: options?.includeState && this.frontend?.saveState(),
         }
     }
