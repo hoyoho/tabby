@@ -216,10 +216,10 @@ export class SSHShellSession extends BaseSession {
     }
 
     supportsWorkingDirectory (): boolean {
-        return !!this.reportedCWD
+        return !!(this.reportedCWD ?? this.titleCWD)
     }
 
     async getWorkingDirectory (): Promise<string|null> {
-        return this.reportedCWD ?? null
+        return this.reportedCWD ?? this.titleCWD ?? null
     }
 }

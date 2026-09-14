@@ -6,7 +6,7 @@ import { BaseSession } from 'tabby-terminal'
 import { SessionOptions, ChildProcess, PTYInterface, PTYProxy } from './api'
 import { getEnvironment, substituteEnv } from './environment'
 
-const windowsDirectoryRegex = /([a-zA-Z]:[^\:\[\]\?\"\<\>\|]+)/mi
+const windowsDirectoryRegex = /([a-zA-Z]:\\[^\x00-\x1f\x7f:\[\]\?\"\<\>\|]+)/mi
 
 function mergeEnv (...envs) {
     const result = {}
@@ -30,6 +30,7 @@ export class Session extends BaseSession {
     private destroying = false
     private guessedCWD: string|null = null
     private initialCWD: string|null = null
+    private isWSL = false
     private config: ConfigService
     private hostApp: HostAppService
     private bootstrapData: BootstrapData
@@ -109,6 +110,7 @@ export class Session extends BaseSession {
             if (this.hostApp.platform === Platform.Windows && options.cwd) {
                 const exe = options.command.toLowerCase()
                 if (exe.endsWith('\\system32\\wsl.exe') || exe === 'wsl.exe' || exe.endsWith('\\system32\\bash.exe')) {
+                    this.isWSL = true
                     wslCdArgs = ['--cd', options.cwd]
                     if (!fsSync.existsSync(options.cwd)) {
                         // Linux-side path: keep the ConPTY process in a real
@@ -123,7 +125,7 @@ export class Session extends BaseSession {
                 cwd = undefined
             }
 
-            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...(options.args ?? [])], {
+            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], {
                 name: 'xterm-256color',
                 cols: options.width ?? 80,
                 rows: options.height ?? 30,
@@ -288,12 +290,30 @@ export class Session extends BaseSession {
     }
 
     supportsWorkingDirectory (): boolean {
-        return !!(this.initialCWD ?? this.reportedCWD ?? this.guessedCWD)
+        if (this.isWSL) {
+            // WSL shells only support CWD detection when they actively report
+            // it (OSC 1337 or a path-carrying window title). The Windows-side
+            // guessedCWD is merely the launch directory, never the real Linux
+            // cwd, so it must not count here.
+            return !!(this.reportedCWD ?? this.titleCWD)
+        }
+        return !!(this.initialCWD ?? this.reportedCWD ?? this.titleCWD ?? this.guessedCWD)
     }
 
     async getWorkingDirectory (): Promise<string|null> {
         if (this.reportedCWD) {
             return this.reportedCWD
+        }
+        // bash-like shells embed the current directory in their window title
+        // (OSC 0/2). Unix-style results can't be validated from the Windows
+        // side, so hand them out as-is.
+        if (this.titleCWD && (this.isWSL || /^[~/]/.test(this.titleCWD))) {
+            return this.titleCWD
+        }
+        if (this.isWSL) {
+            // Without a shell report there's nothing reliable to return: the
+            // Windows-side CWD of wsl.exe is just the launch directory.
+            return null
         }
         let cwd: string|null = null
         try {
@@ -311,12 +331,21 @@ export class Session extends BaseSession {
             cwd = await fs.realpath(cwd)
         } catch {}
 
-        if (this.hostApp.platform === Platform.Windows && (cwd === this.initialCWD || cwd === process.env.WINDIR)) {
-            // shell doesn't truly change its process' CWD
-            cwd = null
+        if (this.hostApp.platform === Platform.Windows) {
+            if (cwd === process.env.WINDIR) {
+                cwd = null
+            }
+            // Some shells (cmd.exe) never update the process CWD, so
+            // pty.getWorkingDirectory() always returns the startup value.
+            // When a prompt/title-derived path differs from the pty value,
+            // prefer it as the more accurate source.
+            const derived = this.guessedCWD ?? this.titleCWD
+            if (derived && derived !== cwd) {
+                cwd = derived
+            }
         }
 
-        cwd = cwd ?? this.guessedCWD
+        cwd = cwd ?? this.guessedCWD ?? this.titleCWD ?? null
 
         try {
             await fs.access(cwd)
@@ -329,7 +358,16 @@ export class Session extends BaseSession {
     private guessWindowsCWD (data: string) {
         const match = windowsDirectoryRegex.exec(data)
         if (match) {
-            this.guessedCWD = match[0]
+            // Only accept paths that actually resolve to a directory, so shell
+            // banners (e.g. `C:\...\bash.exe` from Git Bash/WSL startup), URLs
+            // and other non-path text never pollute guessedCWD.
+            try {
+                if (fsSync.statSync(match[0]).isDirectory()) {
+                    this.guessedCWD = match[0]
+                }
+            } catch {
+                // not a real directory on disk — ignore
+            }
         }
     }
 }

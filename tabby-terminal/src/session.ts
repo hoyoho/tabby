@@ -18,6 +18,7 @@ export abstract class BaseSession {
     protected destroyed = new Subject<void>()
     protected loginScriptProcessor: LoginScriptProcessor | null = null
     protected reportedCWD?: string
+    protected titleCWD?: string
     private initialDataBuffer = Buffer.from('')
     private initialDataBufferReleased = false
 
@@ -30,6 +31,9 @@ export abstract class BaseSession {
         this.middleware.push(this.oscProcessor)
         this.oscProcessor.cwdReported$.subscribe(cwd => {
             this.reportedCWD = cwd
+        })
+        this.oscProcessor.titleCWDReported$.subscribe(cwd => {
+            this.titleCWD = cwd
         })
 
         this.middleware.outputToTerminal$.subscribe(data => {

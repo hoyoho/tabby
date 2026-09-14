@@ -8,10 +8,12 @@ const OSCSuffixes = [Buffer.from('\x07'), Buffer.from('\x1b\\')]
 export class OSCProcessor extends SessionMiddleware {
     get cwdReported$ (): Observable<string> { return this.cwdReported }
     get copyRequested$ (): Observable<string> { return this.copyRequested }
+    get titleCWDReported$ (): Observable<string> { return this.titleCWDReported }
 
     private cwdReported = new Subject<string>()
     private buffer: Buffer | null = null
     private copyRequested = new Subject<string>()
+    private titleCWDReported = new Subject<string>()
 
     feedFromSession (data: Buffer): void {
         // Prepend any buffered data from previous chunks
@@ -79,6 +81,16 @@ export class OSCProcessor extends SessionMiddleware {
                     const content = Buffer.from(oscParams[1], 'base64')
                     this.copyRequested.next(content.toString())
                 }
+            } else if (oscCode === 0 || oscCode === 2) {
+                // OSC 0/2 = window title. bash packages the current directory
+                // into its PS1 title (`\e]0;\u@\h: \w\a`), so use it as a
+                // fallback CWD source for shells that don't emit OSC 1337.
+                const title = oscParams.join(';')
+                const cwd = this.extractCWDFromTitle(title)
+                if (cwd) {
+                    this.titleCWDReported.next(cwd)
+                }
+                processedData.push(data.subarray(prefixIndex, foundSuffix[1] + foundSuffix[0].length))
             } else {
                 processedData.push(data.subarray(prefixIndex, foundSuffix[1] + foundSuffix[0].length))
             }
@@ -93,9 +105,46 @@ export class OSCProcessor extends SessionMiddleware {
         }
     }
 
+    /**
+     * Extract a working directory from a shell-provided window title.
+     *
+     * Common formats:
+     * - `user@host: /home/user`        (Ubuntu/Debian default `\u@\h: \w`)
+     * - `user@host: ~/foo`             (same, but home-relative)
+     * - `/home/user`                   (title set to bare `pwd`)
+     * - `MINGW64:/c/Users/me`          (Git Bash)
+     *
+     * Anything that doesn't look like a path is rejected (e.g. window titles,
+     * program names), so non-bash shells like cmd/PowerShell fall through to
+     * the existing Windows CWD guessing untouched.
+     */
+    private extractCWDFromTitle (title: string): string|null {
+        const stripped = title.replace(/\x1b\[[0-9;]*[a-zA-Z]/g, '').trim()
+        if (!stripped) {
+            return null
+        }
+        // `user@host: path` — take everything after the first `: ` that follows
+        // a single `@` host segment (avoid matching `C:` inside Windows paths).
+        const hostPath = /^\s*[\w.+-]+@[\w.+-]+\s*:\s*(.+)/.exec(stripped)
+        if (hostPath) {
+            return hostPath[1] || null
+        }
+        // Bare Unix-style path (leading `/` or `~/`).
+        if (/^(~|~\/|\/)/.test(stripped)) {
+            return stripped
+        }
+        // Git Bash: `MINGW64:/c/...`
+        const mingw = /^\s*[\w.+-]+\s*:\s*(\/.*)/.exec(stripped)
+        if (mingw) {
+            return mingw[1] || null
+        }
+        return null
+    }
+
     close (): void {
         this.cwdReported.complete()
         this.copyRequested.complete()
+        this.titleCWDReported.complete()
         super.close()
     }
 }
