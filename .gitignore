@@ -4,6 +4,7 @@ app/assets/webpack
 node_modules
 
 build/files.wxs
+build/vc_redist.exe
 dist
 */dist
 */typings

@@ -3,6 +3,8 @@
 import { build as builder } from 'electron-builder'
 import * as vars from './vars.mjs'
 import { execSync } from 'child_process'
+import { existsSync, writeFileSync } from 'fs'
+import path from 'node:path'
 
 const isTag = (process.env.GITHUB_REF || process.env.BUILD_SOURCEBRANCH || '').startsWith('refs/tags/')
 const keypair = process.env.SM_KEYPAIR_ALIAS
@@ -10,6 +12,20 @@ const keypair = process.env.SM_KEYPAIR_ALIAS
 process.env.ARCH = process.env.ARCH || process.arch
 
 console.log('Signing enabled:', !!keypair)
+
+const vcRedistPath = path.resolve('build/vc_redist.exe')
+if (!existsSync(vcRedistPath)) {
+    const arch = process.env.ARCH === 'arm64' ? 'arm64' : 'x64'
+    const url = `https://aka.ms/vs/17/release/vc_redist.${arch}.exe`
+    console.log('VC++ redistributable not found, downloading:', url)
+    const response = await fetch(url)
+    if (!response.ok) {
+        throw new Error(`Failed to download ${url}: HTTP ${response.status}`)
+    }
+    const body = Buffer.from(await response.arrayBuffer())
+    writeFileSync(vcRedistPath, body)
+    console.log('Saved:', vcRedistPath, '(', body.length, 'bytes )')
+}
 
 builder({
     dir: true,
