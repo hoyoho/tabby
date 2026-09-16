@@ -50,7 +50,7 @@
                 .input-group
                     input.form-control.color-picker(
                         type='color',
-                        [(ngModel)]='group.color',
+                        [(ngModel)]='colorPickerValue',
                         [ngbTypeahead]='colorsAutocomplete',
                         [resultFormatter]='colorsFormatter'
                     )

@@ -85,6 +85,23 @@ groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
         return TAB_COLORS.find(x => x.value === value)?.name ?? value
     }
 
+    /**
+     * `<input type='color'>` only accepts strict `#rrggbb`: binding the raw
+     * `group.color` (undefined until a color is picked, or a free-form string
+     * typed by hand in the sibling text input) makes Angular write an invalid
+     * value into it, and Chromium logs a console warning on every modal open.
+     * Feed the picker a neutral fallback unless the value is well-formed hex —
+     * the text input stays free-form so CSS consumers can still use names —
+     * and only write through when the user actually picks a color.
+     */
+    get colorPickerValue (): string {
+        const color = this.group?.color
+        return color && /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#000000'
+    }
+    set colorPickerValue (color: string) {
+        this.group.color = color
+    }
+
     groupTypeahead: OperatorFunction<string, readonly (PartialProfileGroup<ProfileGroup> & { displayName: string })[]> = (text$: Observable<string>) =>
         text$.pipe(
             debounceTime(200),
