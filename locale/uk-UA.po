@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Insert new line"
+msgstr "Вставити новий рядок"
+
 msgid "Protocol"
 msgstr "Протокол"
 
@@ -800,6 +803,12 @@ msgstr "Готово"
 msgid "Fixed"
 msgstr "Фіксований"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Перетворювати вставлений текст в один рядок для терміналів, які не підтримують багаторядкове вставлення"

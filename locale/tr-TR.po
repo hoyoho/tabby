@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Insert new line"
+msgstr "Yeni satır ekle"
+
 msgid "Protocol"
 msgstr "Protokol"
 
@@ -801,6 +804,12 @@ msgstr "Bitir"
 msgid "Fixed"
 msgstr "Sabit"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Çok satırlı yapıştırmayı desteklemeyen terminaller için yapıştırılan metni tek satıra düzleştir"

@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Insert new line"
+msgstr "Infoga ny rad"
+
 msgid "Protocol"
 msgstr "Protokoll"
 
@@ -800,6 +803,12 @@ msgstr "Slutför"
 msgid "Fixed"
 msgstr "Fast"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Konvertera inklistrad text till en enda rad för terminaler som inte stöder inklistring av flera rader"

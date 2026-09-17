@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2025-01-22 22:02\n"
 
 
+msgid "Insert new line"
+msgstr "Sisipkan baris baru"
+
 msgid "Protocol"
 msgstr "Protokol"
 
@@ -800,6 +803,12 @@ msgstr "Selesai"
 msgid "Fixed"
 msgstr "Tetap"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Ratakan teks yang ditempel menjadi satu baris untuk terminal yang tidak mendukung tempel multibaris"

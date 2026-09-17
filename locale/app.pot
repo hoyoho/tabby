@@ -917,6 +917,16 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
+#: locale/tmp-html/tabby-terminal/src/components/terminalConfigTab.component.html:214
+msgid "Flash taskbar"
+msgstr ""
+
+#: locale/tmp-html/tabby-terminal/src/components/terminalConfigTab.component.html:215
+msgid ""
+"Flash the taskbar or dock icon when the terminal bell rings and the window "
+"is not focused"
+msgstr ""
+
 #: locale/tmp-html/tabby-terminal/src/components/terminalConfigTab.component.html:124
 msgid ""
 "Flatten pasted text into a single line for terminals that do not support "

@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Insert new line"
+msgstr "Umetni novi red"
+
 msgid "Protocol"
 msgstr "Protokol"
 
@@ -800,6 +803,12 @@ msgstr "Završi"
 msgid "Fixed"
 msgstr "Fiksno"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Pretvori umetnuti tekst u jedan redak za terminale koji ne podržavaju višeredno umetanje"

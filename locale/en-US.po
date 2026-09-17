@@ -1,6 +1,9 @@
 msgid "Close all sessions in pane"
 msgstr ""
 
+msgid "Insert new line"
+msgstr "Insert new line"
+
 msgid "Protocol"
 msgstr "Protocol"
 
@@ -785,6 +788,12 @@ msgstr ""
 msgid "Fixed"
 msgstr ""
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr ""

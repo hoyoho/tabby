@@ -13,6 +13,9 @@ msgstr ""
 "PO-Revision-Date: 2024-12-24 22:58\n"
 
 
+msgid "Insert new line"
+msgstr "Insertar nueva línea"
+
 msgid "Protocol"
 msgstr "Protocolo"
 
@@ -800,6 +803,12 @@ msgstr "Finalizar"
 msgid "Fixed"
 msgstr "Solucionado"
 
+
+msgid "Flash taskbar"
+msgstr ""
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr ""
 
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "Aplanar el texto pegado en una sola línea para terminales que no admiten pegado multilínea"

@@ -803,6 +803,12 @@ msgid "Fixed"
 msgstr "固定寬度"
 
 
+msgid "Flash taskbar"
+msgstr "閃爍工作列"
+
+msgid "Flash the taskbar or dock icon when the terminal bell rings and the window is not focused"
+msgstr "當終端響鈴且視窗未取得焦點時，閃爍工作列或 Dock 圖示"
+
 msgid "Flatten pasted text into a single line for terminals that do not support multiline paste"
 msgstr "將貼上的文字壓平成單行，適用於不支援多行貼上的終端機"
 
@@ -1061,6 +1067,10 @@ msgstr "輸入模式"
 
 msgid "Input newlines"
 msgstr "換行"
+
+
+msgid "Insert new line"
+msgstr "插入換行"
 
 
 msgid "Installed"
