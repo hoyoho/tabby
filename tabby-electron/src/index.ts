@@ -176,6 +176,9 @@ export default class ElectronModule {
 
     private updateVibrancy () {
         let vibrancyType = this.config.store.appearance.vibrancyType
+        if (this.config.store.hacks.enableFluentBackground) {
+            vibrancyType = 'fluent'
+        }
         if (this.hostApp.platform === Platform.Windows && !isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
             vibrancyType = null
         }
