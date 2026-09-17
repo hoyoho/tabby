@@ -6,8 +6,6 @@ import {
     ConfigService,
     HostAppService,
     Platform,
-    isWindowsBuild,
-    WIN_BUILD_FLUENT_BG_SUPPORTED,
     BaseComponent,
     PlatformService,
 } from 'tabby-core'
@@ -20,7 +18,6 @@ import {
 })
 export class WindowSettingsTabComponent extends BaseComponent {
     Platform = Platform
-    isFluentVibrancySupported = false
 
     @HostBinding('class.content-box') true
 
@@ -31,8 +28,6 @@ export class WindowSettingsTabComponent extends BaseComponent {
         @Optional() public docking?: DockingService,
     ) {
         super()
-
-        this.isFluentVibrancySupported = isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
     }
 
     @debounce(500)

@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr ""
 
 
-msgid "Disable fluent background while dragging"
-msgstr ""
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr ""
 
 
-msgid "Enable fluent background option"
-msgstr ""
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr ""
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr ""
 
 
 msgid "Focus follows mouse"
@@ -2645,3 +2639,33 @@ msgstr ""
 
 msgid "Paste path into Tabby"
 msgstr ""
+
+msgid "Translucent background"
+msgstr "Translucent background"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+
+
+msgid "Opacity"
+msgstr "Opacity"
+
+msgid "Blur"
+msgstr "Blur"
+
+msgid "Acrylic (Fluent)"
+msgstr "Acrylic (Fluent)"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "Overall window opacity. Affects all content including text."
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "Makes the window background translucent. Choose the blur style."
+
+msgid "Disable background blur while dragging"
+msgstr "Disable background blur while dragging"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "Prevents flicker while moving or resizing the window"

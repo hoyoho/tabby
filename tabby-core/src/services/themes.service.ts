@@ -1,4 +1,4 @@
-﻿import { Inject, Injectable, Optional } from '@angular/core'
+import { Inject, Injectable, Optional } from '@angular/core'
 import { Subject, Observable } from 'rxjs'
 import * as Color from 'color'
 import { ConfigService } from '../services/config.service'
@@ -71,9 +71,9 @@ export class ThemesService {
         if (this.getConfigStoreOrDefaults().appearance.vibrancy) {
             background = background.fade(0.6)
         }
-        // const background = theme.background
-        const backgroundMore = more(background.string(), 0.25).string()
-        // const backgroundMore =more(theme.background, 0.25).string()
+        // UI elements (dropdowns, modals, etc.) should stay opaque even with
+        // vibrancy enabled — only the main window background is faded.
+        const backgroundMore = more(theme.background, 0.25).string()
         const accentIndex = 4
         const vars: Record<string, string> = {}
         const contrastPairs: string[][] = []

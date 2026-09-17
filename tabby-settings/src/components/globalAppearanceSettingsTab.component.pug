@@ -22,6 +22,46 @@ h3.mb-3(translate) Window style
         step='0.1'
     )
 
+.form-line(*ngIf='hostApp.platform !== Platform.Web')
+    .header
+        .title(translate) Translucent background
+        .description(translate) Makes the window background translucent. Choose the blur style.
+
+    select.form-control(
+        [(ngModel)]='vibrancyStyle',
+        (ngModelChange)='config.save()'
+    )
+        option([ngValue]='"off"', translate) Off
+        option([ngValue]='"blur"', translate) Blur
+        option(
+            *ngIf='hostApp.platform === Platform.Windows && isFluentVibrancySupported',
+            [ngValue]='"acrylic"',
+            translate
+        ) Acrylic (Fluent)
+
+.form-line(*ngIf='vibrancyStyle !== "off"')
+    .header
+        .title(translate) Disable background blur while dragging
+        .description(translate) Prevents flicker while moving or resizing the window
+
+    toggle(
+        [(ngModel)]='config.store.hacks.disableVibrancyWhileDragging',
+        (ngModelChange)='config.save(); config.requestRestart()'
+    )
+
+.form-line(*ngIf='supportsOpacity')
+    .header
+        .title(translate) Opacity
+        .description(translate) Overall window opacity. Affects all content including text.
+    input(
+        type='range',
+        [(ngModel)]='config.store.appearance.opacity',
+        (ngModelChange)='saveConfiguration(); (hostApp.platform === Platform.Linux && config.requestRestart())',
+        min='0.4',
+        max='1',
+        step='0.05'
+    )
+
 h3.mt-4(translate) CSS
 
 .form-line

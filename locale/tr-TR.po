@@ -569,8 +569,6 @@ msgid "Disable dynamic session title"
 msgstr "Dinamik oturum başlığını devre dışı bırak"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Sürüklerken akıcı arka planı devre dışı bırak"
 
 
 msgid "Disable GPU acceleration"
@@ -693,8 +691,6 @@ msgid "Enable animations"
 msgstr "Animasyonları etkinleştir"
 
 
-msgid "Enable fluent background option"
-msgstr "Akıcı arka plan seçeneğini etkinleştir"
 
 
 msgid "Enable font ligatures"
@@ -815,8 +811,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Çok satırlı yapıştırmayı desteklemeyen terminaller için yapıştırılan metni tek satıra düzleştir"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Akışkan arkaplan bazen kasmalara sebep olabilir"
 
 
 msgid "Focus follows mouse"
@@ -2706,3 +2700,33 @@ msgstr "Pencere stili"
 
 msgid "Defined by"
 msgstr "Tanımlayan"
+
+msgid "Translucent background"
+msgstr ""
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr ""
+
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Blur"
+msgstr ""
+
+msgid "Acrylic (Fluent)"
+msgstr ""
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr ""
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr ""
+
+msgid "Disable background blur while dragging"
+msgstr ""
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr ""

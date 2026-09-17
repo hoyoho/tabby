@@ -60,7 +60,6 @@ export class Window {
     private lastVibrancy: { enabled: boolean, type?: string } | null = null
     private disableVibrancyWhileDragging = false
     private touchBarControl: any
-    private isFluentVibrancy = false
 
     /**
      * Current dock side of this window. Session-scoped: it is only ever
@@ -223,7 +222,6 @@ export class Window {
                 this.window.blurType = enabled ? type === 'fluent' ? 'acrylic' : 'blurbehind' : null
                 try {
                     this.window.setBlur(enabled)
-                    this.isFluentVibrancy = enabled && type === 'fluent'
                 } catch (error) {
                     console.error('Failed to set window blur', error)
                 }
@@ -614,7 +612,7 @@ export class Window {
 
         let moveEndedTimeout: any = null
         const onBoundsChange = () => {
-            if (!this.lastVibrancy?.enabled || !this.disableVibrancyWhileDragging || !this.isFluentVibrancy) {
+            if (!this.lastVibrancy?.enabled || !this.disableVibrancyWhileDragging) {
                 return
             }
             this.setVibrancy(false, undefined, false)

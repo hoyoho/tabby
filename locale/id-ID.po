@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Nonaktifkan judul sesi dinamis"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Nonaktifkan latar belakang yang lancar saat menyeret"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Aktifkan animasi"
 
 
-msgid "Enable fluent background option"
-msgstr "Aktifkan opsi latar belakang lancar"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Ratakan teks yang ditempel menjadi satu baris untuk terminal yang tidak mendukung tempel multibaris"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Latar belakang yang lancar terkadang menyebabkan kelambatan seret"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Gaya jendela"
 
 msgid "Defined by"
 msgstr "Ditentukan oleh"
+
+msgid "Translucent background"
+msgstr ""
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr ""
+
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Blur"
+msgstr ""
+
+msgid "Acrylic (Fluent)"
+msgstr ""
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr ""
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr ""
+
+msgid "Disable background blur while dragging"
+msgstr ""
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr ""

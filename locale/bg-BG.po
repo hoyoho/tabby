@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Изключване на динамичното заглавие на сесията"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Деактивиране на плавния фон при влачене"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Активиране на анимации"
 
 
-msgid "Enable fluent background option"
-msgstr "Включи на опцията за плавен фон"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Изравняване на поставения текст в един ред за терминали, които не поддържат поставяне на няколко реда"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "В някои случаи плавният фон води до насичания при влачене"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Стил на прозореца"
 
 msgid "Defined by"
 msgstr "Дефинирано от"
+
+msgid "Translucent background"
+msgstr ""
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr ""
+
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Blur"
+msgstr ""
+
+msgid "Acrylic (Fluent)"
+msgstr ""
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr ""
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr ""
+
+msgid "Disable background blur while dragging"
+msgstr ""
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr ""

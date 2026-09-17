@@ -4,8 +4,13 @@ import { Component, HostBinding, Inject } from '@angular/core'
 import {
     BaseComponent,
     ConfigService,
+    HostAppService,
+    Platform,
+    PlatformService,
     Theme,
     ThemesService,
+    isWindowsBuild,
+    WIN_BUILD_FLUENT_BG_SUPPORTED,
 } from 'tabby-core'
 
 
@@ -16,18 +21,52 @@ import {
     styleUrls: ['./globalAppearanceSettingsTab.component.scss'],
 })
 export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
+    Platform = Platform
     showCssVariableReference = false
+    isFluentVibrancySupported = false
 
     @HostBinding('class.content-box') true
 
     constructor (
         public config: ConfigService,
         public themes: ThemesService,
+        public hostApp: HostAppService,
+        public platform: PlatformService,
         @Inject(Theme) public themeList: Theme[],
     ) {
         super()
 
         this.themeList = config.enabledServices(this.themeList)
+        this.isFluentVibrancySupported = isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
+    }
+
+    /**
+     * Maps the vibrancy config (vibrancy + enableFluentBackground) to a single
+     * dropdown value: 'off' | 'blur' | 'acrylic'.
+     */
+    get vibrancyStyle (): string {
+        if (!this.config.store.appearance.vibrancy) {
+            return 'off'
+        }
+        return this.config.store.hacks.enableFluentBackground ? 'acrylic' : 'blur'
+    }
+
+    set vibrancyStyle (value: string) {
+        if (value === 'off') {
+            this.config.store.appearance.vibrancy = false
+            this.config.store.hacks.enableFluentBackground = false
+        } else if (value === 'blur') {
+            this.config.store.appearance.vibrancy = true
+            this.config.store.hacks.enableFluentBackground = false
+        } else if (value === 'acrylic') {
+            this.config.store.appearance.vibrancy = true
+            this.config.store.hacks.enableFluentBackground = true
+        }
+        this.config.save()
+    }
+
+    get supportsOpacity (): boolean {
+        return this.platform.supportsWindowControls
     }
 
     get pluginGlobalStyles (): string {

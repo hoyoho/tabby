@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Zakázat dynamický název relace"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Zakázat plynulé pozadí při přetažení"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Povolit animace"
 
 
-msgid "Enable fluent background option"
-msgstr "Povolit fluent pozadí"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Srovnat vložený text do jednoho řádku pro terminály, které nepodporují vkládání více řádků"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Plynulé pozadí někdy způsobuje lagy při přetažení"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Styl okna"
 
 msgid "Defined by"
 msgstr "Definováno"
+
+msgid "Translucent background"
+msgstr ""
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr ""
+
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Blur"
+msgstr ""
+
+msgid "Acrylic (Fluent)"
+msgstr ""
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr ""
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr ""
+
+msgid "Disable background blur while dragging"
+msgstr ""
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr ""

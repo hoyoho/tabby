@@ -247,32 +247,4 @@ h3.mt-4(translate) Hacks
         (ngModelChange)='config.save(); config.requestRestart()'
     )
 
-.form-line(*ngIf='hostApp.platform !== Platform.Web')
-    .header
-        .title(translate) Translucent background
-        .description(translate) Makes the window background translucent. Combine with the fluent style for the acrylic effect.
 
-    toggle(
-        [(ngModel)]='config.store.appearance.vibrancy',
-        (ngModelChange)='config.save()'
-    )
-
-.form-line(*ngIf='hostApp.platform === Platform.Windows && isFluentVibrancySupported')
-    .header
-        .title(translate) Enable fluent background option
-        .description(translate) Experimental Windows 10 acrylic background style. Requires "Translucent background" to be on.
-
-    toggle(
-        [(ngModel)]='config.store.hacks.enableFluentBackground',
-        (ngModelChange)='config.save()'
-    )
-
-.form-line(*ngIf='hostApp.platform === Platform.Windows && isFluentVibrancySupported')
-    .header
-        .title(translate) Disable fluent background while dragging
-        .description(translate) Fluent background sometimes causes drag lag
-
-    toggle(
-        [(ngModel)]='config.store.hacks.disableVibrancyWhileDragging',
-        (ngModelChange)='config.save(); config.requestRestart()'
-    )

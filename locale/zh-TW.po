@@ -567,8 +567,6 @@ msgid "Disable dynamic session title"
 msgstr "停用動態工作階段標題"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "拖曳時停用 fluent 背景"
 
 
 msgid "Disable GPU acceleration"
@@ -691,8 +689,6 @@ msgid "Enable animations"
 msgstr "啟用動畫"
 
 
-msgid "Enable fluent background option"
-msgstr "啟用 fluent 背景"
 
 
 msgid "Enable font ligatures"
@@ -813,8 +809,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "將貼上的文字壓平成單行，適用於不支援多行貼上的終端機"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Fluent 背景有時會導致拖曳延遲"
 
 
 msgid "Focus follows mouse"
@@ -2709,3 +2703,33 @@ msgstr "變數"
 
 msgid "Defined by"
 msgstr "定義來源"
+
+msgid "Translucent background"
+msgstr "半透明背景"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "實驗性 Windows 10 壓克力背景樣式。需要先開啟「半透明背景」。"
+
+
+msgid "Opacity"
+msgstr "不透明度"
+
+msgid "Blur"
+msgstr "模糊"
+
+msgid "Acrylic (Fluent)"
+msgstr "壓克力（Fluent）"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "視窗整體不透明度。影響包括文字在內的所有內容。"
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "使視窗背景半透明。選擇模糊樣式。"
+
+msgid "Disable background blur while dragging"
+msgstr "拖動時停用背景模糊"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "防止移動或調整視窗大小時出現閃爍"

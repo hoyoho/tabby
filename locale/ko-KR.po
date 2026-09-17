@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "동적 세션 제목 비활성화"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "창 이동하는 동안 반투명 배경 끄기"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "애니메이션 활성화"
 
 
-msgid "Enable fluent background option"
-msgstr "fluent 배경 활성화"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "여러 줄 붙여넣기를 지원하지 않는 터미널을 위해 붙여넣은 텍스트를 한 줄로 합칩니다"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "반투명 배경으로 인해 창 이동 지연이 발생할 수도 있습니다"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "창 스타일"
 
 msgid "Defined by"
 msgstr "정의 출처"
+
+msgid "Translucent background"
+msgstr "반투명 배경"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "실험적인 Windows 10 아크릴 배경 스타일입니다. \"반투명 배경\"을 켜야 합니다."
+
+
+msgid "Opacity"
+msgstr "불투명도"
+
+msgid "Blur"
+msgstr "블러"
+
+msgid "Acrylic (Fluent)"
+msgstr "아크릴（Fluent）"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "창 전체 불투명도. 텍스트를 포함한 모든 콘텐츠에 영향을 줍니다."
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "창 배경을 반투명하게 만듭니다. 블러 스타일을 선택하세요."
+
+msgid "Disable background blur while dragging"
+msgstr "드래그 중 배경 블러 비활성화"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "창 이동 또는 크기 조정 시 깜빡임을 방지합니다"

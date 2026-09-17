@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Desactivar el título dinámico de la sesión"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Desactivar el fondo de fluidez mientras arrastra"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Activar animaciones"
 
 
-msgid "Enable fluent background option"
-msgstr "Activar la opción de fondo de fluido"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Aplanar el texto pegado en una sola línea para terminales que no admiten pegado multilínea"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Fondo fluido a veces causa retraso de arrastre"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Estilo de ventana"
 
 msgid "Defined by"
 msgstr "Definido por"
+
+msgid "Translucent background"
+msgstr "Fondo translúcido"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "Estilo de fondo acrílico experimental de Windows 10. Requiere activar \"Fondo translúcido\"."
+
+
+msgid "Opacity"
+msgstr "Opacidad"
+
+msgid "Blur"
+msgstr "Desenfoque"
+
+msgid "Acrylic (Fluent)"
+msgstr "Acrílico (Fluent)"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "Opacidad global de la ventana. Afecta a todo el contenido, incluido el texto."
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "Hace el fondo de la ventana translúcido. Elige el estilo de desenfoque."
+
+msgid "Disable background blur while dragging"
+msgstr "Desactivar el desenfoque de fondo al arrastrar"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "Evita el parpadeo al mover o redimensionar la ventana"

@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Отключить динамический заголовок сессии"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Отключить прозрачный фон на время перетаскивания окна"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Включить анимацию"
 
 
-msgid "Enable fluent background option"
-msgstr "Включить опцию свободного фона"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Преобразовывать вставленный текст в одну строку для терминалов, не поддерживающих многострочную вставку"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Иногда прозрачный фон вызывает лаги при перетаскивании"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Стиль окна"
 
 msgid "Defined by"
 msgstr "Определено"
+
+msgid "Translucent background"
+msgstr "Полупрозрачный фон"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "Экспериментальный стиль акрилового фона Windows 10. Требует включения «Полупрозрачного фона»."
+
+
+msgid "Opacity"
+msgstr "Непрозрачность"
+
+msgid "Blur"
+msgstr "Размытие"
+
+msgid "Acrylic (Fluent)"
+msgstr "Акрил (Fluent)"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "Общая непрозрачность окна. Влияет на всё содержимое, включая текст."
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "Делает фон окна полупрозрачным. Выберите стиль размытия."
+
+msgid "Disable background blur while dragging"
+msgstr "Отключать размытие фона при перетаскивании"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "Предотвращает мерцание при перемещении или изменении размера окна"

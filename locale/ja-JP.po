@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "動的セッションタイトルを無効化"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "ドラッグ中はFluent背景を無効化する"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "アニメーションを有効化"
 
 
-msgid "Enable fluent background option"
-msgstr "Fluent背景オプションを有効にする"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "複数行の貼り付けに対応していない端末向けに、貼り付けたテキストを 1 行にまとめます"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Fluent背景はドラッグ中にラグを発生させることがあります"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "ウィンドウスタイル"
 
 msgid "Defined by"
 msgstr "定義元"
+
+msgid "Translucent background"
+msgstr "半透明背景"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "実験的な Windows 10 アクリル背景スタイル。「半透明背景」をオンにする必要があります。"
+
+
+msgid "Opacity"
+msgstr "不透明度"
+
+msgid "Blur"
+msgstr "ぼかし"
+
+msgid "Acrylic (Fluent)"
+msgstr "アクリル（Fluent）"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "ウィンドウ全体の不透明度。テキストを含むすべてのコンテンツに影響します。"
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "ウィンドウの背景を半透明にします。ぼかしスタイルを選択してください。"
+
+msgid "Disable background blur while dragging"
+msgstr "ドラッグ中に背景ぼかしを無効化"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "ウィンドウの移動やサイズ変更時のちらつきを防ぎます"

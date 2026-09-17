@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Dynamischen Sitzungstitel deaktivieren"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Transparenten Hintergrund beim Ziehen des Fensters deaktivieren"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Animationen aktivieren"
 
 
-msgid "Enable fluent background option"
-msgstr "Fluent Hintergrund-Option aktivieren"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Eingefügten Text zu einer Zeile zusammenfassen für Terminals, die mehrzeiliges Einfügen nicht unterstützen"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Der transparente Hintergrund führt manchmal zum Stottern"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Fensterstil"
 
 msgid "Defined by"
 msgstr "Definiert durch"
+
+msgid "Translucent background"
+msgstr "Halbtransparenter Hintergrund"
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr "Experimenteller Windows 10-Acrylhintergrundstil. Erfordert die Aktivierung von „Halbtransparenter Hintergrund“."
+
+
+msgid "Opacity"
+msgstr "Deckkraft"
+
+msgid "Blur"
+msgstr "Unschärfe"
+
+msgid "Acrylic (Fluent)"
+msgstr "Acryl (Fluent)"
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr "Gesamtfensterdeckkraft. Wirkt sich auf alle Inhalte einschließlich Text aus."
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr "Macht den Fensterhintergrund transluzent. Wählen Sie den Unschärfestil."
+
+msgid "Disable background blur while dragging"
+msgstr "Hintergrundunschärfe beim Ziehen deaktivieren"
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr "Verhindert Flackern beim Verschieben oder Ändern der Fenstergröße"

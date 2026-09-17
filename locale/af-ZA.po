@@ -568,8 +568,6 @@ msgid "Disable dynamic session title"
 msgstr "Deaktiveer dinamiese sessietitel"
 
 
-msgid "Disable fluent background while dragging"
-msgstr "Deaktiveer vlot-agtergrond terwyl jy sleep"
 
 
 msgid "Disable GPU acceleration"
@@ -692,8 +690,6 @@ msgid "Enable animations"
 msgstr "Aktiveer animasies"
 
 
-msgid "Enable fluent background option"
-msgstr "Aktiveer vloeiende agtergrondopsie"
 
 
 msgid "Enable font ligatures"
@@ -814,8 +810,6 @@ msgid "Flatten pasted text into a single line for terminals that do not support 
 msgstr "Maak geplakte teks een reël vir terminale wat nie veelreël-plak ondersteun nie"
 
 
-msgid "Fluent background sometimes causes drag lag"
-msgstr "Vloeiende agtergrond veroorsaak soms sleep vertraging"
 
 
 msgid "Focus follows mouse"
@@ -2705,3 +2699,33 @@ msgstr "Vensterstyl"
 
 msgid "Defined by"
 msgstr "Gedefinieer deur"
+
+msgid "Translucent background"
+msgstr ""
+
+
+
+msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
+msgstr ""
+
+
+msgid "Opacity"
+msgstr ""
+
+msgid "Blur"
+msgstr ""
+
+msgid "Acrylic (Fluent)"
+msgstr ""
+
+msgid "Overall window opacity. Affects all content including text."
+msgstr ""
+
+msgid "Makes the window background translucent. Choose the blur style."
+msgstr ""
+
+msgid "Disable background blur while dragging"
+msgstr ""
+
+msgid "Prevents flicker while moving or resizing the window"
+msgstr ""
