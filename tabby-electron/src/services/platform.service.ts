@@ -77,7 +77,7 @@ export class ElectronPlatformService extends PlatformService {
     }
 
     readClipboard (): string {
-        return this.electron.clipboard.readText()
+        return require('@electron/remote').clipboard.readText()
     }
 
     setClipboard (content: ClipboardContent): void {
