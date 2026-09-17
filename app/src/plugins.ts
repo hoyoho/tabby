@@ -46,6 +46,14 @@ const builtinModules = [
     'tabby-local',
     'tabby-settings',
     'tabby-terminal',
+    'tabby-ssh',
+    'tabby-electron',
+    'tabby-serial',
+    'tabby-telnet',
+    'tabby-community-color-schemes',
+    'tabby-plugin-manager',
+    'tabby-linkifier',
+    'tabby-auto-sudo-password',
 ]
 
 const originalRequire = (global as any).require
@@ -80,7 +88,7 @@ export function initModuleLookup (userPluginsPath: string): void {
     paths.unshift(builtinPluginsPath)
     // paths.unshift(path.join((process as any).resourcesPath, 'app.asar', 'node_modules'))
     if (process.env.TABBY_PLUGINS) {
-        process.env.TABBY_PLUGINS.split(':').map(x => paths.push(normalizePath(x)))
+        process.env.TABBY_PLUGINS.split(path.delimiter).map(x => paths.push(normalizePath(x)))
     }
 
     process.env.NODE_PATH += path.delimiter + paths.join(path.delimiter)
@@ -88,7 +96,11 @@ export function initModuleLookup (userPluginsPath: string): void {
 
     builtinModules.forEach(m => {
         if (!cachedBuiltinModules[m]) {
-            cachedBuiltinModules[m] = nodeRequire(m)
+            try {
+                cachedBuiltinModules[m] = nodeRequire(m)
+            } catch (e) {
+                console.warn(`Could not load builtin module ${m}:`, e)
+            }
         }
     })
 }
