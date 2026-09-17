@@ -118,7 +118,6 @@ export class Application {
 
         app.commandLine.appendSwitch('disable-http-cache')
         app.commandLine.appendSwitch('max-active-webgl-contexts', '9000')
-        app.commandLine.appendSwitch('lang', 'EN')
 
         // Leave adapter selection to the OS unless the user supplies a flag
         for (const flag of this.configStore.electronFlags || []) {

@@ -28,8 +28,8 @@ h3.mb-3(translate) Window style
         .description(translate) Makes the window background translucent. Choose the blur style.
 
     select.form-control(
-        [(ngModel)]='vibrancyStyle',
-        (ngModelChange)='config.save()'
+        [ngModel]='vibrancyStyle',
+        (ngModelChange)='onVibrancyStyleChange($event)'
     )
         option([ngValue]='"off"', translate) Off
         option([ngValue]='"blur"', translate) Blur

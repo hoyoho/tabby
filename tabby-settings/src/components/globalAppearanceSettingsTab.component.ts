@@ -24,6 +24,7 @@ export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
     Platform = Platform
     showCssVariableReference = false
     isFluentVibrancySupported = false
+    vibrancyStyle = 'off'
 
     @HostBinding('class.content-box') true
 
@@ -38,20 +39,18 @@ export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
 
         this.themeList = config.enabledServices(this.themeList)
         this.isFluentVibrancySupported = isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
+        this.vibrancyStyle = this.computeVibrancyStyle()
     }
 
-    /**
-     * Maps the vibrancy config (vibrancy + enableFluentBackground) to a single
-     * dropdown value: 'off' | 'blur' | 'acrylic'.
-     */
-    get vibrancyStyle (): string {
+    private computeVibrancyStyle (): string {
         if (!this.config.store.appearance.vibrancy) {
             return 'off'
         }
         return this.config.store.hacks.enableFluentBackground ? 'acrylic' : 'blur'
     }
 
-    set vibrancyStyle (value: string) {
+    onVibrancyStyleChange (value: string): void {
+        this.vibrancyStyle = value
         if (value === 'off') {
             this.config.store.appearance.vibrancy = false
             this.config.store.hacks.enableFluentBackground = false
