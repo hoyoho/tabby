@@ -1853,11 +1853,21 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         tab.parent = this
         const ref = tab.insertIntoContainer(this.viewContainer)
         this.viewRefs.set(tab, ref)
-        tab.addEventListenerUntilDestroyed(ref.rootNodes[0], 'click', () => {
+        // Press-to-focus: ANY button focuses the pane under the pointer. The
+        // DOM `click` event only ever fires for the primary button, so
+        // middle-click paste / right-click menus used to leave the pane
+        // unfocused. Registered in the CAPTURE phase: the terminal's own
+        // mousedown handler stops propagation for middle/right buttons, which
+        // would swallow a bubbling listener before it ever ran. Presses into
+        // keyboard-focusable UI (search panel inputs) are skipped so the
+        // terminal does not steal their focus.
+        tab.addEventListenerUntilDestroyed(ref.rootNodes[0], 'mousedown', (event: MouseEvent) => {
+            const target = event.target as HTMLElement | null
+            if (target?.closest('input, textarea, select, [contenteditable="true"]')) { return }
             // Guard: the session may have been moved to another workspace, in
             // which case this workspace must not claim focus on its behalf.
             if (this.getAllTabs().includes(tab)) { this.focus(tab) }
-        })
+        }, { capture: true })
         if (this.config.store.terminal.focusFollowsMouse) {
             tab.addEventListenerUntilDestroyed(ref.rootNodes[0], 'mousemove', () => {
                 if (this._spannerResizing || !this.getAllTabs().includes(tab)) { return }
