@@ -132,11 +132,34 @@
             background: var(--theme-primary);
             color: var(--theme-primary-fg);
         }
+
+        // Freshly duplicated tab: expands from zero width while its label
+        // fades in after a short delay, so the strip visibly "grows" it.
+        &.pane-tab-appear {
+            animation: pane-tab-in 260ms cubic-bezier(.2, .7, .3, 1);
+
+            .pane-tab-label {
+                animation: pane-tab-label-in 200ms ease-out 140ms backwards;
+            }
+        }
     }
 
     @keyframes pane-tab-marquee {
         from { transform: translateX(0); }
         to   { transform: translateX(var(--marquee-distance, -50px)); }
+    }
+
+    @keyframes pane-tab-in {
+        from {
+            width: 0;
+            padding-left: 0;
+            padding-right: 0;
+            opacity: 0;
+        }
+    }
+
+    @keyframes pane-tab-label-in {
+        from { opacity: 0; }
     }
 
     .pane-tab-arrow {

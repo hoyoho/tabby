@@ -52,6 +52,8 @@ import { SessionTab } from '../api/session'
                     *ngFor='let paneTab of header.pane.tabs; trackBy: paneTabBy; let idx = index'
                     class='pane-tab'
                     [class.focused]='isPaneTabFocused(header.pane, paneTab)'
+                    [class.pane-tab-appear]='appearingTabs.has(paneTab)'
+                    (animationend)='onPaneTabAppearanceEnd($event, paneTab)'
                     [class.same-pane]='isFocusedPane(header.pane)'
                     [class.other-pane-active]='isPaneTabActiveOtherPane(header.pane, paneTab)'
                     (click)='activatePaneTab(header.pane, paneTab)'
@@ -1038,6 +1040,17 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         tab.classList.remove('marquee')
     }
 
+    /** Freshly duplicated sessions, animated while present in this set. */
+    protected appearingTabs = new WeakSet<SessionTab>()
+
+    /** @hidden Clear the appear-animation flag once the tab finished expanding. */
+    onPaneTabAppearanceEnd (event: AnimationEvent, tab: SessionTab): void {
+        // `animationend` bubbles: ignore the label's own delayed fade-in.
+        if (event.animationName === 'pane-tab-in') {
+            this.appearingTabs.delete(tab)
+        }
+    }
+
     /** @hidden PaneDragHost */
     beginNativeDrag (dragId: string, savedState: any): void {
         // Register as OUR OWN drag first: a drop of it re-dispatched after the
@@ -1440,6 +1453,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             return null
         }
         this.adoptTab(dup)
+        // Mark for the appear animation (expand + delayed label fade-in);
+        // the flag clears when the CSS animation ends.
+        this.appearingTabs.add(dup)
         await this.insertTabIntoPane(dup, pane, tab)
         this.onAfterTabAdded(dup)
         this.recoveryStateChangedHint.next()
