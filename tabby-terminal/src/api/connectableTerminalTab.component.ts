@@ -117,6 +117,9 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
             // persist pure data only.
             profile: JSON.parse(JSON.stringify(this.profile)),
             savedState: options?.includeState && this.frontend?.saveState(),
+            // Only requested on live-session transfers (workspace drag); stale
+            // modes must never leak into fresh sessions after a restart.
+            terminalModes: options?.includeTerminalModes && this.frontend?.getTerminalModeSnapshot(),
         }
     }
 

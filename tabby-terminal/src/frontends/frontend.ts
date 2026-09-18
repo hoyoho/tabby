@@ -15,6 +15,30 @@ export interface SearchState {
 }
 
 /**
+ * JSON-safe snapshot of every terminal-global DEC/ANSI mode a TUI application
+ * may have enabled (alt screen, mouse tracking, bracketed paste, kitty-era
+ * hygiene like cursor visibility, ...). Carried inside recovery tokens on
+ * workspace-drag transfers so a fresh frontend attached to the same live
+ * session can be brought back to the exact state the remote app believes in.
+ */
+export interface TerminalModeSnapshot {
+    altScreen: boolean
+    mouseProtocol: 'none' | 'x10' | 'vt200' | 'drag' | 'any'
+    mouseEncoding: 'DEFAULT' | 'SGR' | 'URXVT'
+    bracketedPaste: boolean
+    sendFocus: boolean
+    appCursorKeys: boolean
+    appKeypad: boolean
+    originMode: boolean
+    insertMode: boolean
+    wraparound: boolean
+    reverseWraparound: boolean
+    cursorHidden: boolean
+    /** 0-based top/bottom margins; absent when default or unreadable. */
+    scrollRegion?: [number, number]
+}
+
+/**
  * Extend to add support for a different VT frontend implementation
  */
 export abstract class Frontend {
@@ -89,7 +113,13 @@ export abstract class Frontend {
     abstract cancelSearch (): void
 
     abstract saveState (): any
-    abstract restoreState (state: string): void
+    abstract restoreState (state: any, modes?: TerminalModeSnapshot | null): void
+
+    /**
+     * Capture the current terminal-global mode state for a live-session
+     * transfer. Frontends that keep no migrateable state return null.
+     */
+    getTerminalModeSnapshot (): TerminalModeSnapshot | null { return null }
 
     abstract supportsBracketedPaste (): boolean
     abstract isAlternateScreenActive (): boolean

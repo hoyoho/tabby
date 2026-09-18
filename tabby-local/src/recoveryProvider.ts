@@ -18,6 +18,7 @@ export class RecoveryProvider extends TabRecoveryProvider<TerminalTabComponent> 
             inputs: {
                 profile: this.injector.get(ProfilesService).getConfigProxyForProfile(recoveryToken.profile),
                 savedState: recoveryToken.savedState,
+                terminalModes: recoveryToken.terminalModes,
             },
         }
     }

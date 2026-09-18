@@ -27,6 +27,8 @@ export interface SessionProfileRef {
 
 export interface GetRecoveryTokenOptions {
     includeState: boolean
+    /** Live-session transfer only: also capture terminal-global mode state. */
+    includeTerminalModes?: boolean
 }
 
 /**

@@ -707,7 +707,7 @@ export class AppService {
         })
         this.workspaceNativeDrag = { dragId, tab, committedSub, settled: false, acceptTimer: null }
         try {
-            const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+            const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
             if (token) {
                 this.hostApp.nativeDragStateUpdate(dragId, JSON.parse(JSON.stringify(token)))
             }
@@ -799,7 +799,7 @@ export class AppService {
     }
 
     async moveWorkspaceToWindow (tab: WorkspaceComponent, screenPoint?: { x: number, y: number }): Promise<void> {
-        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
         if (!token) {
             return
         }

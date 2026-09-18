@@ -87,6 +87,8 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
                 },
             },
             savedState: options?.includeState && this.frontend?.saveState(),
+            // Live-session transfers only (see connectableTerminalTab).
+            terminalModes: options?.includeTerminalModes && this.frontend?.getTerminalModeSnapshot(),
         }
     }
 

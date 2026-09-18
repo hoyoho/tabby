@@ -67,6 +67,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     session: BaseSession|null = null
     savedState?: any
+    /** Mode snapshot from a live-session transfer (see Frontend.getTerminalModeSnapshot). */
+    terminalModes?: any
     /** Set when a saved terminal state was restored into this tab (drag/recovery). */
     protected hasRestoredState = false
 
@@ -481,15 +483,31 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     protected onFrontendReady (): void {
         this.frontendIsReady = true
-        if (this.savedState) {
-            this.frontend!.restoreState(this.savedState)
-            // Mark before any async session continuation (e.g. the
-            // clear-on-connect path) gets a chance to wipe the scrollback.
-            this.hasRestoredState = true
-            // Swallow the ConPTY initial clear so it cannot wipe the
-            // freshly restored scrollback (Windows local sessions).
-            if (this.frontend instanceof XTermFrontend) {
-                this.frontend.armClearSuppression()
+        if (this.savedState || this.terminalModes) {
+            this.frontend!.restoreState(this.savedState, this.terminalModes)
+            if (this.savedState) {
+                // Mark before any async session continuation (e.g. the
+                // clear-on-connect path) gets a chance to wipe the scrollback.
+                this.hasRestoredState = true
+                // Swallow the ConPTY initial clear so it cannot wipe the
+                // freshly restored scrollback (Windows local sessions).
+                if (this.frontend instanceof XTermFrontend) {
+                    this.frontend.armClearSuppression()
+                }
+            }
+            if (this.terminalModes) {
+                // When the alternate screen content was replayed, the screen
+                // already matches the app's last frame — a repaint nudge (two
+                // clustered SIGWINCHes) would only race the app's async frame
+                // writes over a laggy link and tear its diff baseline. Nudge
+                // only when the alt screen is blank (legacy snapshot path) and
+                // the app must repaint from scratch.
+                const altRestored = !!(this.savedState
+                    && typeof this.savedState === 'object'
+                    && this.savedState.alternate)
+                if (!altRestored) {
+                    this.nudgeSessionRepaint()
+                }
             }
         }
 
@@ -497,6 +515,39 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
             this.recentInputs += data
             this.recentInputs = this.recentInputs.substring(this.recentInputs.length - 32)
         })
+    }
+
+    /**
+     * Workspace-drag transfers attach a fresh frontend to a live session that
+     * kept streaming into the now-dropped screen. After mode/content replay
+     * the remote TUI still believes its last frame is on screen, so force two
+     * real PTY resizes: the resulting SIGWINCH makes it repaint from scratch
+     * (needed e.g. because the alternate screen content is not replayed).
+     */
+    private nudgeSessionRepaint (): void {
+        const nudge = () => {
+            if (this.isTerminating || !this.session || !this.size) {
+                return
+            }
+            const { columns, rows } = this.size
+            if (rows <= 1) {
+                return
+            }
+            this.session.resize(columns, rows - 1)
+            // Gap must comfortably exceed the link RTT: the two PTY resizes
+            // make the remote TUI reflow twice, and clustered SIGWINCHes can
+            // interleave its async frame writes (screen tearing).
+            setTimeout(() => {
+                if (!this.isTerminating) {
+                    this.session?.resize(columns, rows)
+                }
+            }, 300)
+        }
+        if (this.session) {
+            nudge()
+        } else {
+            this.sessionChanged$.pipe(first()).subscribe(() => nudge())
+        }
     }
 
     async buildContextMenu (): Promise<MenuItemOptions[]> {

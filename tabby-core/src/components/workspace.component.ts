@@ -1050,7 +1050,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden PaneDragHost */
     async serializeSessionForDrag (tab: SessionTab): Promise<any|null> {
-        return this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        return this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
     }
 
     /** @hidden PaneDragHost */

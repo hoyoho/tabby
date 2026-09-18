@@ -18,6 +18,7 @@ export class RecoveryProvider extends TabRecoveryProvider<SSHTabComponent> {
             inputs: {
                 profile: this.injector.get(ProfilesService).getConfigProxyForProfile(recoveryToken.profile),
                 savedState: recoveryToken.savedState,
+                terminalModes: recoveryToken.terminalModes,
                 restoreConnectionId: recoveryToken.sshConnectionId ?? null,
                 restoreChannelId: recoveryToken.shellChannelId ?? null,
             },

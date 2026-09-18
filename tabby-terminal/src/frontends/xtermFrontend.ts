@@ -2,7 +2,7 @@ import deepEqual from 'deep-equal'
 import { BehaviorSubject, filter, firstValueFrom, fromEvent, takeUntil } from 'rxjs'
 import { Injector } from '@angular/core'
 import { ConfigService, getCSSFontFamily, getWindows10Build, HostAppService, HotkeysService, Platform, PlatformService, TerminalColorScheme, ThemesService } from 'tabby-core'
-import { Frontend, SearchOptions, SearchState } from './frontend'
+import { Frontend, SearchOptions, SearchState, TerminalModeSnapshot } from './frontend'
 import { Terminal, ITheme } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { LigaturesAddon } from '@xterm/addon-ligatures'
@@ -997,14 +997,63 @@ export class XTermFrontend extends Frontend {
         this.focus()
     }
 
+    /**
+     * Serialize both buffers (primary with scrollback + alternate screen when
+     * active). Modes are NOT part of the serialized stream; they travel in the
+     * [[TerminalModeSnapshot]] produced by [[getTerminalModeSnapshot]].
+     */
     saveState (): any {
-        return this.serializeAddon.serialize({
-            excludeAltBuffer: true,
+        const serializeOptions = {
             excludeModes: true,
             // Honor the user's configured scrollback so drag transfers and
             // recovery snapshots carry the full visible history.
             scrollback: this.configService.store.terminal.scrollbackLines,
-        })
+        }
+        return {
+            v: 2,
+            primary: this.serializeAddon.serialize({ ...serializeOptions, excludeAltBuffer: true }),
+            alternate: this.isAlternateScreenActive()
+                ? this.serializeAddon.serialize({ ...serializeOptions, excludeAltBuffer: false })
+                : null,
+        }
+    }
+
+    /**
+     * Capture every terminal-global DEC/ANSI mode plus the mouse encoding so a
+     * fresh frontend attached to the same live session (workspace drag) can be
+     * brought back to the exact state the remote application believes it is in.
+     * Only JSON-safe values: the snapshot travels inside recovery tokens.
+     */
+    getTerminalModeSnapshot (): TerminalModeSnapshot {
+        // xterm 5.4 keeps the mouse encoding, cursor visibility and scroll
+        // margins off its public API; read them through the internal core with
+        // defensive access so an xterm upgrade degrades to defaults, never to
+        // a crash.
+        const core = (this.xterm as any)._core
+        const mouseService = core?.coreMouseService
+        const buffer = core?.bufferService?.buffer
+        const scrollTop = buffer?.scrollTopMargin
+        const scrollBottom = buffer?.scrollBottomMargin
+        return {
+            altScreen: this.isAlternateScreenActive(),
+            mouseProtocol: this.xterm.modes.mouseTrackingMode,
+            // Fallback SGR: xterm only accepts 1006/1015 DECSETs, so when the
+            // internal read fails the active encoding is SGR in practice.
+            mouseEncoding: mouseService?.activeEncoding ?? 'SGR',
+            bracketedPaste: this.xterm.modes.bracketedPasteMode,
+            sendFocus: this.xterm.modes.sendFocusMode,
+            appCursorKeys: this.xterm.modes.applicationCursorKeysMode,
+            appKeypad: this.xterm.modes.applicationKeypadMode,
+            originMode: this.xterm.modes.originMode,
+            insertMode: this.xterm.modes.insertMode,
+            wraparound: this.xterm.modes.wraparoundMode,
+            reverseWraparound: this.xterm.modes.reverseWraparoundMode,
+            cursorHidden: core?.coreService?.isCursorHidden ?? false,
+            ...(typeof scrollTop === 'number' && typeof scrollBottom === 'number'
+                && (scrollTop !== 0 || scrollBottom !== this.xterm.rows - 1)
+                ? { scrollRegion: [scrollTop, scrollBottom] as [number, number] }
+                : {}),
+        }
     }
 
     private suppressNextClearSequence = false
@@ -1018,8 +1067,66 @@ export class XTermFrontend extends Frontend {
         this.suppressNextClearSequence = true
     }
 
-    restoreState (state: string): void {
-        this.xterm.write(state)
+    restoreState (state: any, modes?: TerminalModeSnapshot | null): void {
+        let altScreenEntered = false
+        if (state && typeof state === 'object' && 'primary' in state) {
+            this.xterm.write(state.primary)
+            if (state.alternate) {
+                // 1049 = save cursor + switch to the alternate screen + clear
+                // it. Entering alt is content-coupled (the alt content must be
+                // written AFTER the switch), so it is owned here, never in
+                // mode replay.
+                this.xterm.write('\x1b[?1049h')
+                this.xterm.write(state.alternate)
+                altScreenEntered = true
+            }
+        } else if (state) {
+            // Legacy snapshots (pre-v2) are plain serialized strings of the
+            // primary buffer only.
+            this.xterm.write(state)
+        }
+        if (modes) {
+            if (modes.altScreen && !altScreenEntered) {
+                // Legacy path or snapshot/content mismatch: re-enter the alt
+                // screen anyway (blank until the app repaints on SIGWINCH).
+                this.xterm.write('\x1b[?1049h')
+            }
+            this.writeModeReplay(modes)
+        }
+    }
+
+    /**
+     * Re-emit every terminal-global mode EXCEPT the alt screen switch (which
+     * is content-coupled and handled by restoreState), mirroring
+     * [[resetTerminalModes]]. The kitty keyboard protocol is deliberately
+     * absent: xterm 5.4 does not implement it, so no kitty state exists here
+     * to migrate (apps fall back to legacy encodings via capability detect).
+     */
+    private writeModeReplay (m: TerminalModeSnapshot): void {
+        let seq = ''
+        if (m.appCursorKeys) { seq += '\x1b[?1h' }
+        if (m.appKeypad) { seq += '\x1b[?66h' }
+        if (m.originMode) { seq += '\x1b[?6h' }
+        if (m.insertMode) { seq += '\x1b[4h' }
+        if (!m.wraparound) { seq += '\x1b[?7l' }
+        if (m.reverseWraparound) { seq += '\x1b[?45h' }
+        switch (m.mouseProtocol) {
+            case 'x10': seq += '\x1b[?9h'; break
+            case 'vt200': seq += '\x1b[?1000h'; break
+            case 'drag': seq += '\x1b[?1002h'; break
+            case 'any': seq += '\x1b[?1003h'; break
+        }
+        if (m.mouseProtocol !== 'none' && m.mouseEncoding === 'SGR') { seq += '\x1b[?1006h' }
+        if (m.mouseProtocol !== 'none' && m.mouseEncoding === 'URXVT') { seq += '\x1b[?1015h' }
+        if (m.sendFocus) { seq += '\x1b[?1004h' }
+        if (m.bracketedPaste) { seq += '\x1b[?2004h' }
+        if (m.cursorHidden) { seq += '\x1b[?25l' }
+        if (m.scrollRegion) {
+            seq += `\x1b[${m.scrollRegion[0] + 1};${m.scrollRegion[1] + 1}r`
+        }
+        if (seq) {
+            this.xterm.write(seq)
+        }
     }
 
     supportsBracketedPaste (): boolean {
