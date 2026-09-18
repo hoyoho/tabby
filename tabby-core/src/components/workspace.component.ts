@@ -1391,8 +1391,11 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      * attaches its view (no-op when the tab merely moved within this
      * workspace) and focuses it.
      */
-    private async insertTabIntoPane (tab: SessionTab, pane: Pane): Promise<void> {
-        pane.tabs.push(tab)
+    private async insertTabIntoPane (tab: SessionTab, pane: Pane, after?: SessionTab): Promise<void> {
+        // Insert directly to the right of `after` when given (session
+        // duplication lands next to its source), otherwise append at the end.
+        const idx = after ? pane.tabs.indexOf(after) : -1
+        pane.tabs.splice(idx >= 0 ? idx + 1 : pane.tabs.length, 0, tab)
         pane.activeTab = tab
         await this.attachTabView(tab)
         this.focus(tab)
@@ -1437,7 +1440,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             return null
         }
         this.adoptTab(dup)
-        await this.insertTabIntoPane(dup, pane)
+        await this.insertTabIntoPane(dup, pane, tab)
         this.onAfterTabAdded(dup)
         this.recoveryStateChangedHint.next()
         return dup
