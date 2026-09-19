@@ -78,18 +78,19 @@ export class ThemesService {
         // theme.new.scss), so this alpha is exactly how strongly the tint
         // covers the blurred backdrop; the chrome re-applies it further down.
         const tintAlpha = vibrancy === 'off' ? 1 : Math.min(100, Math.max(0, tintPercent)) / 100
-        // `color`'s `fade()` *subtracts* from the alpha; `alpha()` sets it, which
-        // is what the slider means (100 = opaque, 0 = fully transparent).
-        let background = Color(theme.background)
-        if (tintAlpha < 1) {
-            background = background.alpha(tintAlpha)
-        }
-        // Popups (dropdown menus, search panel, accordion) are tinted from
-        // `--theme-bg-more` and must stay opaque to remain readable, so this
-        // is kept fully opaque. The window chrome (sidebar, tab bar, title
-        // bar) uses `--theme-bg-more-2`, which re-applies the vibrancy alpha
-        // further down so it can go translucent instead.
-        const backgroundMore = more(theme.background, 0.25).string()
+
+        // Under vibrancy every panel shade follows the window tint, so rows,
+        // accordions and hotkey chips stop reading as solid black next to the
+        // form controls, which already followed the tint. `-solid` keeps one
+        // opaque copy of the elevated shade for the surfaces that must stay
+        // more solid than the window: menus, dialogs and tooltips.
+        //
+        // Note: `color`'s `fade()` *subtracts* from the alpha, `alpha()` sets
+        // it — which is what the tint slider means.
+        const tinted = (color: Color): Color => vibrancy === 'off' ? color : color.alpha(tintAlpha)
+
+        const background = tinted(Color(theme.background))
+        const backgroundMoreSolid = more(theme.background, 0.25).string()
         const accentIndex = 4
         const vars: Record<string, string> = {}
         const contrastPairs: string[][] = []
@@ -122,13 +123,14 @@ export class ThemesService {
             vars['--theme-fg-less'] = less(theme.foreground, 0.25).string()
             vars['--theme-fg-less-2'] = less(theme.foreground, 0.5).string()
 
-            vars['--theme-bg-less-2'] = less(theme.background, 0.5).string()
-            vars['--theme-bg-less'] = less(theme.background, 0.25).string()
-            vars['--theme-bg'] = theme.background
-            vars['--theme-bg-more'] = backgroundMore
-            // Same shade as `-1`, but carrying `--body-bg`'s faded alpha under
-            // vibrancy, so the chrome lets the OS acrylic/blur show through.
-            vars['--theme-bg-more-2'] = more(backgroundMore, 0.25).alpha(background.alpha()).string()
+            vars['--theme-bg-less-2'] = tinted(less(theme.background, 0.5)).string()
+            vars['--theme-bg-less'] = tinted(less(theme.background, 0.25)).string()
+            // Under vibrancy this coincides with `--body-bg`: both are the theme
+            // background at the window tint.
+            vars['--theme-bg'] = background.string()
+            vars['--theme-bg-more'] = tinted(more(theme.background, 0.25)).string()
+            vars['--theme-bg-more-solid'] = backgroundMoreSolid
+            vars['--theme-bg-more-2'] = tinted(more(backgroundMoreSolid, 0.25)).string()
 
             contrastPairs.push(['--theme-bg', '--theme-fg'])
             contrastPairs.push(['--theme-bg-less', '--theme-fg-less'])

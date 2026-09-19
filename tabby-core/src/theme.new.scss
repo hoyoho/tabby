@@ -199,20 +199,85 @@ select.form-control {
     }
 }
 
+// Bootstrap compiles its own solid `$content-bg-solid` into these surfaces, so
+// without this they ignore the theme entirely (a hard-coded near-black dialog
+// on a light theme) and would also jump to a theme tint the moment vibrancy
+// turns them into frosted glass. Point them at the theme shade instead, in
+// both modes.
 .dropdown-menu {
     --bs-dropdown-bg: var(--theme-bg-more);
 }
 
-// Menus are attached to <body> (ngbDropdown uses `container='body'`), so they
-// are keyed off the `vibrancy` class ThemesService puts on <body> — an
-// app-root ancestor selector cannot reach them. `backdrop-filter` blurs
-// whatever the menu covers (the app content), and the tint is kept stronger
-// than the window background so the menu stays readable.
+.modal-content {
+    --bs-modal-bg: var(--theme-bg-more);
+}
+
+// ── Frosted surfaces ──────────────────────────────────────────────────
+// Two categories, one rule each — add a surface by picking the right one:
+//
+//  1. Content panels (window chrome, lists, accordions, rows, key chips)
+//     follow the window tint, because they sit directly on `body`. ThemesService
+//     tints the whole `--theme-bg*` family for that, so a new panel only has to
+//     use one of those variables and inherits the behaviour for free.
+//  2. Floating surfaces (menus, dialogs, tooltips, toasts, the search bar) sit
+//     above other content and must stay more solid than the window, so they
+//     take `--frost-tint` below and a `backdrop-filter` for the frosted look.
+//
+// The frost tint is mixed from `--theme-bg-more-solid`, the one deliberately
+// opaque shade (see ThemesService) — mixing `--theme-bg-more` instead would
+// apply the window tint twice.
+//
+// Keyed off the `vibrancy` class ThemesService puts on <body>: menus, dialogs
+// and toasts all attach to <body>, so an app-root selector cannot reach them.
 body.vibrancy {
+    --frost-blur: 16px;
+    --frost-tint: color-mix(in srgb, var(--theme-bg-more-solid) 80%, transparent);
+
+    .dropdown-menu,
+    .app-menu-submenu,
+    .modal-content,
+    .tooltip-inner,
+    .toast,
+    search-panel {
+        backdrop-filter: blur(var(--frost-blur));
+    }
+
+    // Each surface reads its own library variable, so everything else about it
+    // (borders, padding, icons) stays exactly as the library defines it.
     .dropdown-menu,
     .app-menu-submenu {
-        --bs-dropdown-bg: color-mix(in srgb, var(--theme-bg-more) 80%, transparent);
-        backdrop-filter: blur(16px);
+        --bs-dropdown-bg: var(--frost-tint);
+    }
+    .modal-content {
+        --bs-modal-bg: var(--frost-tint);
+    }
+    .tooltip-inner {
+        --bs-tooltip-bg: var(--frost-tint);
+    }
+    search-panel {
+        --search-panel-bg: var(--frost-tint);
+    }
+
+    // A lighter dialog dim, so the dialog has visible content to blur behind it.
+    .modal-backdrop {
+        --bs-backdrop-opacity: 0.25;
+    }
+
+    // Notifications keep their semantic colour, just made translucent.
+    .toast {
+        background-color: var(--frost-tint);
+    }
+    .toast-success {
+        background-color: color-mix(in srgb, rgb(var(--bs-success-rgb)) 80%, transparent);
+    }
+    .toast-error {
+        background-color: color-mix(in srgb, rgb(var(--bs-danger-rgb)) 80%, transparent);
+    }
+    .toast-info {
+        background-color: color-mix(in srgb, rgb(var(--bs-info-rgb)) 80%, transparent);
+    }
+    .toast-warning {
+        background-color: color-mix(in srgb, rgb(var(--bs-warning-rgb)) 80%, transparent);
     }
 }
 
@@ -423,7 +488,10 @@ hotkey-input-modal {
 }
 
 search-panel {
-    background: var(--theme-bg-more) !important;
+    // The panel's own `:host` fill is opaque on purpose, so this has to stay
+    // `!important`; `--search-panel-bg` lets the vibrancy block below frost it
+    // without adding another `!important`.
+    background: var(--search-panel-bg, var(--theme-bg-more)) !important;
 
     input {
         border-radius: 0 !important;
