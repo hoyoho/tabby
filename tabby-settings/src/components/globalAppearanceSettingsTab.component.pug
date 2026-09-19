@@ -25,21 +25,17 @@ h3.mb-3(translate) Window style
 .form-line(*ngIf='hostApp.platform !== Platform.Web')
     .header
         .title(translate) Translucent background
-        .description(translate) Makes the window background translucent. Choose the blur style.
+        .description(translate) Makes the window background translucent, choose the blur style
 
     select.form-control(
-        [ngModel]='vibrancyStyle',
-        (ngModelChange)='onVibrancyStyleChange($event)'
+        [(ngModel)]='config.store.appearance.vibrancy',
+        (ngModelChange)='saveConfiguration()'
     )
         option([ngValue]='"off"', translate) Off
-        option([ngValue]='"blur"', translate) Blur
-        option(
-            *ngIf='hostApp.platform === Platform.Windows && isFluentVibrancySupported',
-            [ngValue]='"acrylic"',
-            translate
-        ) Acrylic (Fluent)
+        option(*ngIf='supportsBlurVibrancy', [ngValue]='"blur"', translate) Blur
+        option(*ngIf='supportsAcrylicVibrancy', [ngValue]='"acrylic"', translate) Acrylic (Fluent)
 
-.form-line(*ngIf='vibrancyStyle !== "off"')
+.form-line(*ngIf='config.store.appearance.vibrancy !== "off"')
     .header
         .title(translate) Disable background blur while dragging
         .description(translate) Prevents flicker while moving or resizing the window
@@ -49,17 +45,17 @@ h3.mb-3(translate) Window style
         (ngModelChange)='config.save(); config.requestRestart()'
     )
 
-.form-line(*ngIf='supportsOpacity')
+.form-line(*ngIf='config.store.appearance.vibrancy !== "off"')
     .header
-        .title(translate) Opacity
-        .description(translate) Overall window opacity. Affects all content including text.
+        .title(translate) Translucent background strength
+        .description(translate) How strongly the tint covers the blurred backdrop
     input(
         type='range',
-        [(ngModel)]='config.store.appearance.opacity',
-        (ngModelChange)='saveConfiguration(); (hostApp.platform === Platform.Linux && config.requestRestart())',
-        min='0.4',
-        max='1',
-        step='0.05'
+        [(ngModel)]='config.store.appearance.vibrancyTint',
+        (ngModelChange)='saveConfiguration()',
+        min='0',
+        max='100',
+        step='1'
     )
 
 h3.mt-4(translate) CSS

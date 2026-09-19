@@ -116,10 +116,6 @@ export class ElectronHostWindow extends HostWindowService {
         this.electron.ipcRenderer.send('window-set-traffic-light-position', x, y)
     }
 
-    setOpacity (opacity: number): void {
-        this.electron.ipcRenderer.send('window-set-opacity', opacity)
-    }
-
     setProgressBar (value: number): void {
         this.electron.ipcRenderer.send('window-set-progress-bar', value)
     }

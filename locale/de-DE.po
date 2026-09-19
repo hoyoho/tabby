@@ -2705,9 +2705,6 @@ msgstr "Halbtransparenter Hintergrund"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "Experimenteller Windows 10-Acrylhintergrundstil. Erfordert die Aktivierung von „Halbtransparenter Hintergrund“."
-
 
 msgid "Opacity"
 msgstr "Deckkraft"
@@ -2715,14 +2712,17 @@ msgstr "Deckkraft"
 msgid "Blur"
 msgstr "Unschärfe"
 
+msgid "Translucent background strength"
+msgstr "Stärke des durchscheinenden Hintergrunds"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "Wie stark die Tönung den unscharfen Hintergrund überdeckt"
+
 msgid "Acrylic (Fluent)"
 msgstr "Acryl (Fluent)"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "Gesamtfensterdeckkraft. Wirkt sich auf alle Inhalte einschließlich Text aus."
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "Macht den Fensterhintergrund transluzent. Wählen Sie den Unschärfestil."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "Macht den Fensterhintergrund transluzent, wählen Sie den Unschärfestil"
 
 msgid "Disable background blur while dragging"
 msgstr "Hintergrundunschärfe beim Ziehen deaktivieren"

@@ -5,7 +5,32 @@ import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 export const WIN_BUILD_CONPTY_SUPPORTED = 17692
 export const WIN_BUILD_CONPTY_STABLE = 18309
 export const WIN_BUILD_WSL_EXE_DISTRO_FLAG = 17763
-export const WIN_BUILD_FLUENT_BG_SUPPORTED = 17063
+/**
+ * Build that introduced acrylic (`ACCENT_ENABLE_ACRYLICBLURBEHIND`) and
+ * deprecated the legacy blurbehind effect. Kept in sync with glasstron's own
+ * `supportsAcrylic()` check — below it glasstron silently falls back to
+ * blurbehind, which no longer blurs on modern Windows.
+ */
+export const WIN_BUILD_FLUENT_BG_SUPPORTED = 17134
+
+export type VibrancyStyle = 'off'|'blur'|'acrylic'
+
+/**
+ * The vibrancy style the current machine can actually render.
+ *
+ * Windows 10 1803 deprecated blurbehind, so from that build onwards a stored
+ * `blur` would paint a solid fill instead of blurring the desktop. Acrylic is
+ * the supported replacement there, hence the promotion.
+ */
+export function resolveVibrancyStyle (style: VibrancyStyle|undefined|null): VibrancyStyle {
+    if (!style || style === 'off') {
+        return 'off'
+    }
+    if (style === 'blur' && isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
+        return 'acrylic'
+    }
+    return style
+}
 
 export function getWindows10Build (): number|undefined {
     return process.platform === 'win32' && parseFloat(os.release()) >= 10 ? parseInt(os.release().split('.')[2]) : undefined

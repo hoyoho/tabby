@@ -2705,9 +2705,6 @@ msgstr "반투명 배경"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "실험적인 Windows 10 아크릴 배경 스타일입니다. \"반투명 배경\"을 켜야 합니다."
-
 
 msgid "Opacity"
 msgstr "불투명도"
@@ -2715,14 +2712,17 @@ msgstr "불투명도"
 msgid "Blur"
 msgstr "블러"
 
+msgid "Translucent background strength"
+msgstr "반투명 배경 농도"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "창 색상이 흐린 배경을 덮는 정도"
+
 msgid "Acrylic (Fluent)"
 msgstr "아크릴（Fluent）"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "창 전체 불투명도. 텍스트를 포함한 모든 콘텐츠에 영향을 줍니다."
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "창 배경을 반투명하게 만듭니다. 블러 스타일을 선택하세요."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "창 배경을 반투명하게 만들고, 블러 스타일을 선택하세요"
 
 msgid "Disable background blur while dragging"
 msgstr "드래그 중 배경 블러 비활성화"

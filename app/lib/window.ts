@@ -37,6 +37,13 @@ export interface WindowOptions {
 
 type DockSide = 'off'|'left'|'right'|'top'|'bottom'
 
+/**
+ * Mirrors `VibrancyStyle` from tabby-core. Main deliberately avoids importing
+ * the renderer bundle, so the union is restated here; the renderer always sends
+ * an already-resolved (renderable) style over `window-set-vibrancy`.
+ */
+type VibrancyStyle = 'off'|'blur'|'acrylic'
+
 abstract class GlasstronWindow extends BrowserWindow {
     blurType: string
     abstract setBlur (_: boolean)
@@ -57,7 +64,7 @@ export class Window {
     private windowBounds?: Rectangle
     private closing = false
     private forceCloseTimer: ReturnType<typeof setTimeout>|null = null
-    private lastVibrancy: { enabled: boolean, type?: string } | null = null
+    private lastVibrancy: VibrancyStyle = 'off'
     private disableVibrancyWhileDragging = false
     private touchBarControl: any
 
@@ -140,9 +147,12 @@ export class Window {
         this.window.webContents.once('did-finish-load', () => {
             if (process.platform === 'darwin') {
                 this.window.setVibrancy(macOSVibrancyType)
-            } else if (process.platform === 'win32' && this.configStore.appearance?.vibrancy) {
-                this.setVibrancy(true)
             }
+            // Windows is driven entirely by the renderer: it resolves the
+            // stored style to one this machine can render and sends
+            // `window-set-vibrancy` during startup. Applying a guess here would
+            // only flash the wrong backdrop first (e.g. a solid black window
+            // when blurbehind is requested on Windows 10 1803+).
 
             this.setDarkMode(this.configStore.appearance?.colorSchemeMode ?? 'dark')
 
@@ -213,13 +223,14 @@ export class Window {
         this.window.webContents.send('host:became-main-window')
     }
 
-    setVibrancy (enabled: boolean, type?: string, userRequested?: boolean): void {
+    setVibrancy (style: VibrancyStyle, userRequested?: boolean): void {
         if (userRequested ?? true) {
-            this.lastVibrancy = { enabled, type }
+            this.lastVibrancy = style
         }
+        const enabled = style !== 'off'
         if (process.platform === 'win32') {
             if (parseFloat(os.release()) >= 10) {
-                this.window.blurType = enabled ? type === 'fluent' ? 'acrylic' : 'blurbehind' : null
+                this.window.blurType = !enabled ? null : style === 'acrylic' ? 'acrylic' : 'blurbehind'
                 try {
                     this.window.setBlur(enabled)
                 } catch (error) {
@@ -554,8 +565,8 @@ export class Window {
             this.enableDockedWindowStyles(this.isDockedOnTop())
         })
 
-        this.on('window-set-vibrancy', (_, enabled, type) => {
-            this.setVibrancy(enabled, type)
+        this.on('window-set-vibrancy', (_, style) => {
+            this.setVibrancy(style)
         })
 
         this.on('window-set-dark-mode', (_, mode) => {
@@ -612,15 +623,15 @@ export class Window {
 
         let moveEndedTimeout: any = null
         const onBoundsChange = () => {
-            if (!this.lastVibrancy?.enabled || !this.disableVibrancyWhileDragging) {
+            if (this.lastVibrancy === 'off' || !this.disableVibrancyWhileDragging) {
                 return
             }
-            this.setVibrancy(false, undefined, false)
+            this.setVibrancy('off', false)
             if (moveEndedTimeout) {
                 clearTimeout(moveEndedTimeout)
             }
             moveEndedTimeout = setTimeout(() => {
-                this.setVibrancy(this.lastVibrancy.enabled, this.lastVibrancy.type)
+                this.setVibrancy(this.lastVibrancy)
             }, 50)
         }
         this.window.on('move', onBoundsChange)
@@ -628,10 +639,6 @@ export class Window {
 
         this.on('window-set-traffic-light-position', (_event, x, y) => {
             this.window?.setWindowButtonPosition({ x, y })
-        })
-
-        this.on('window-set-opacity', (_event, opacity) => {
-            this.window?.setOpacity(opacity)
         })
 
         this.on('window-set-progress-bar', (_, value) => {

@@ -11,13 +11,14 @@
 
 // The sidebar's own background lives here so every panel (profile tree,
 // plugin panels, the switcher) inherits it without each needing its own
-// background-color. The background plugin overrides this to make the whole
-// sidebar translucent.
+// background-color. The background plugin points `--sidebar-bg` at a
+// translucent mix to make the whole sidebar see-through (see
+// GlobalStyleProvider).
 .sidebar-main {
     flex: 1 1 auto;
     min-width: 0;
     min-height: 0;
-    background-color: var(--theme-bg-more-2);
+    background-color: var(--sidebar-bg, var(--theme-bg-more-2));
 }
 
 // No background-color — inherits .sidebar-main's fill so it stays in sync

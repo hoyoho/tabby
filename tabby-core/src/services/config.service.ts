@@ -10,7 +10,7 @@ import { PlatformService } from '../api/platform'
 import { HostAppService } from '../api/hostApp'
 import { PLUGIN_MODULES } from '../api/mainProcess'
 import { Vault, VaultService } from './vault.service'
-import { serializeFunction } from '../utils'
+import { resolveVibrancyStyle, serializeFunction } from '../utils'
 import { PartialProfileGroup, ProfileGroup } from '../api/profileProvider'
 const deepmerge = require('deepmerge')
 
@@ -263,6 +263,36 @@ const CONFIG_MIGRATIONS: AnyConfigMigration[] = [
             // Frame-mode concept removed entirely: the app only renders the
             // thin custom frame (menus live in the title-bar hamburger now).
             delete config.appearance?.frame
+        },
+    },
+    {
+        version: 16,
+        run: config => {
+            // Vibrancy collapsed into a single style enum
+            // (`off`/`blur`/`acrylic`). `appearance.vibrancyType` was never
+            // written by the UI, and `hacks.enableFluentBackground` only
+            // duplicated the old boolean.
+            const appearance = config.appearance ??= {}
+            if (typeof appearance.vibrancy === 'boolean') {
+                appearance.vibrancy = appearance.vibrancy
+                    ? (config.hacks?.enableFluentBackground ? 'acrylic' : 'blur')
+                    : 'off'
+            }
+            delete appearance.vibrancyType
+            delete config.hacks?.enableFluentBackground
+            // Leave behind a style this machine can actually render: on
+            // Windows 10 1803+ `blur` maps to the deprecated blurbehind accent
+            // state, which paints a solid fill instead of blurring the desktop.
+            appearance.vibrancy = resolveVibrancyStyle(appearance.vibrancy)
+        },
+    },
+    {
+        version: 17,
+        run: config => {
+            // Window opacity faded the entire window, text included, which made
+            // it useless in practice. `appearance.vibrancyTint` replaces it and
+            // only controls how strongly the tint covers the blurred backdrop.
+            delete config.appearance?.opacity
         },
     },
 ]

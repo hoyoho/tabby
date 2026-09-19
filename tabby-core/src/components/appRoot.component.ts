@@ -351,10 +351,6 @@ export class AppRootComponent {
         }
     }
 
-    @HostBinding('class.vibrant') get isVibrant () {
-        return this.config.store?.appearance.vibrancy
-    }
-
     private async getToolbarButtons (aboveZero: boolean): Promise<Command[]> {
         const surface = aboveZero ? ActionSurface.ToolbarRight : ActionSurface.ToolbarLeft
         const actions = this.actions.get(surface, { tab: this.app.activeTab })

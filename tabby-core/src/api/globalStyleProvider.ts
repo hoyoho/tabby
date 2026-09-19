@@ -7,6 +7,14 @@
  * Scope your selectors: this stylesheet applies to the entire UI, not just
  * the terminal area.
  *
+ * Background ownership: `body` is the window's single background layer
+ * (`--body-bg`, faded by core while vibrancy is on), and `tab-body` /
+ * `split-tab` are deliberately transparent. A provider that supplies its own
+ * background must paint it *above* that layer — e.g. a negative-z-index
+ * pseudo-element — and report it via [[wantsCustomBackground]]. Do not
+ * re-paint `tab-body` / `split-tab`: those layers stack on top of `body` and
+ * their alphas multiply, which drowns out the OS vibrancy.
+ *
  * IMPORTANT: [[ThemesService]] instantiates every registered provider, so a
  * provider's constructor must not depend on [[ThemesService]] (that would be
  * a circular DI dependency). Inject it lazily, e.g. via `Injector.get()`, if
@@ -31,12 +39,16 @@ export abstract class GlobalStyleProvider {
     }
 
     /**
-     * When true, the terminal surface is kept transparent so the provider's
-     * background (image, wallpaper, ...) shows through instead of the theme's
-     * terminal color. Providers that paint behind the terminal should return
-     * true while their background is active.
+     * When true, this provider paints the window's own background (an image,
+     * a wallpaper, ...) and core gets out of its way:
+     *  - the terminal surface is kept transparent, so the provider's
+     *    background shows through instead of the theme's terminal colour;
+     *  - `body` gains the `custom-background` class, which lets core's own
+     *    full-window backgrounds (e.g. the start page) stand aside.
+     *
+     * Return true only while that background is actually active.
      */
-    wantsTransparentTerminal (): boolean {
+    wantsCustomBackground (): boolean {
         return false
     }
 }

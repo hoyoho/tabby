@@ -2635,12 +2635,9 @@ msgstr "Translucent background"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
 
-
-msgid "Opacity"
-msgstr "Opacity"
+msgid "Translucent background strength"
+msgstr "Translucent background strength"
 
 msgid "Blur"
 msgstr "Blur"
@@ -2648,11 +2645,11 @@ msgstr "Blur"
 msgid "Acrylic (Fluent)"
 msgstr "Acrylic (Fluent)"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "Overall window opacity. Affects all content including text."
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "How strongly the tint covers the blurred backdrop"
 
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "Makes the window background translucent. Choose the blur style."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "Makes the window background translucent, choose the blur style"
 
 msgid "Disable background blur while dragging"
 msgstr "Disable background blur while dragging"

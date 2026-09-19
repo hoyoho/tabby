@@ -6,7 +6,6 @@ import {
     ConfigService,
     HostAppService,
     Platform,
-    PlatformService,
     Theme,
     ThemesService,
     isWindowsBuild,
@@ -23,8 +22,6 @@ import {
 export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
     Platform = Platform
     showCssVariableReference = false
-    isFluentVibrancySupported = false
-    vibrancyStyle = 'off'
 
     @HostBinding('class.content-box') true
 
@@ -32,40 +29,23 @@ export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
         public config: ConfigService,
         public themes: ThemesService,
         public hostApp: HostAppService,
-        public platform: PlatformService,
         @Inject(Theme) public themeList: Theme[],
     ) {
         super()
 
         this.themeList = config.enabledServices(this.themeList)
-        this.isFluentVibrancySupported = isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
-        this.vibrancyStyle = this.computeVibrancyStyle()
     }
 
-    private computeVibrancyStyle (): string {
-        if (!this.config.store.appearance.vibrancy) {
-            return 'off'
-        }
-        return this.config.store.hacks.enableFluentBackground ? 'acrylic' : 'blur'
+    /**
+     * Acrylic (the Fluent DWM material) is Windows-only, and from Windows 10
+     * 1803 onwards it is the only usable style — see `resolveVibrancyStyle`.
+     */
+    get supportsAcrylicVibrancy (): boolean {
+        return this.hostApp.platform === Platform.Windows && isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)
     }
 
-    onVibrancyStyleChange (value: string): void {
-        this.vibrancyStyle = value
-        if (value === 'off') {
-            this.config.store.appearance.vibrancy = false
-            this.config.store.hacks.enableFluentBackground = false
-        } else if (value === 'blur') {
-            this.config.store.appearance.vibrancy = true
-            this.config.store.hacks.enableFluentBackground = false
-        } else if (value === 'acrylic') {
-            this.config.store.appearance.vibrancy = true
-            this.config.store.hacks.enableFluentBackground = true
-        }
-        this.config.save()
-    }
-
-    get supportsOpacity (): boolean {
-        return this.platform.supportsWindowControls
+    get supportsBlurVibrancy (): boolean {
+        return !this.supportsAcrylicVibrancy
     }
 
     get pluginGlobalStyles (): string {

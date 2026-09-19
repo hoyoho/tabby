@@ -2777,12 +2777,9 @@ msgstr "半透明背景"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "实验性 Windows 10 亚克力背景样式。需要先开启\"半透明背景\"。"
 
-
-msgid "Opacity"
-msgstr "不透明度"
+msgid "Translucent background strength"
+msgstr "半透明背景浓度"
 
 msgid "Blur"
 msgstr "模糊"
@@ -2790,11 +2787,11 @@ msgstr "模糊"
 msgid "Acrylic (Fluent)"
 msgstr "亚克力（Fluent）"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "窗口整体不透明度。影响包括文字在内的所有内容。"
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "窗口着色遮盖模糊背景的强度"
 
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "使窗口背景半透明。选择模糊样式。"
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "使窗口背景半透明，选择模糊样式"
 
 msgid "Disable background blur while dragging"
 msgstr "拖动时禁用背景模糊"

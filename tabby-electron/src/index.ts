@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core'
-import { PlatformService, LogService, UpdaterService, DockingService, HostAppService, ThemesService, Platform, AppService, ConfigService, WIN_BUILD_FLUENT_BG_SUPPORTED, isWindowsBuild, HostWindowService, HotkeyProvider, ConfigProvider, FileProvider } from 'tabby-core'
+import { PlatformService, LogService, UpdaterService, DockingService, HostAppService, ThemesService, Platform, AppService, ConfigService, resolveVibrancyStyle, HostWindowService, HotkeyProvider, ConfigProvider, FileProvider } from 'tabby-core'
 import { TerminalColorSchemeProvider, TerminalContextMenuItemProvider, TerminalDecorator } from 'tabby-terminal'
 import { SFTPContextMenuItemProvider, SSHProfileImporter, AutoPrivateKeyLocator } from 'tabby-ssh'
 import { PTYInterface, ShellProvider, UACService } from 'tabby-local'
@@ -91,7 +91,7 @@ export default class ElectronModule {
         private         config: ConfigService,
         private hostApp: ElectronHostAppService,
         private electron: ElectronService,
-        private hostWindow: ElectronHostWindow,
+        hostWindow: ElectronHostWindow,
         touchbar: TouchbarService,
         docking: DockingService,
         themeService: ThemesService,
@@ -175,16 +175,9 @@ export default class ElectronModule {
     }
 
     private updateVibrancy () {
-        let vibrancyType = this.config.store.appearance.vibrancyType
-        if (this.config.store.hacks.enableFluentBackground) {
-            vibrancyType = 'fluent'
-        }
-        if (this.hostApp.platform === Platform.Windows && !isWindowsBuild(WIN_BUILD_FLUENT_BG_SUPPORTED)) {
-            vibrancyType = null
-        }
-        this.electron.ipcRenderer.send('window-set-vibrancy', this.config.store.appearance.vibrancy, vibrancyType)
-
-        this.hostWindow.setOpacity(this.config.store.appearance.opacity)
+        // Sent resolved, so the main process never has to know which styles the
+        // current platform cannot actually render.
+        this.electron.ipcRenderer.send('window-set-vibrancy', resolveVibrancyStyle(this.config.store.appearance.vibrancy))
     }
 
     private updateDarkMode () {

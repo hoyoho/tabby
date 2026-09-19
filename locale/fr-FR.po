@@ -2705,9 +2705,6 @@ msgstr "Fond translucide"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "Style de fond acrylique Windows 10 expérimental. Nécessite d’activer « Fond translucide »."
-
 
 msgid "Opacity"
 msgstr "Opacité"
@@ -2715,14 +2712,17 @@ msgstr "Opacité"
 msgid "Blur"
 msgstr "Flou"
 
+msgid "Translucent background strength"
+msgstr "Intensité du fond translucide"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "Dans quelle mesure la teinte couvre l'arrière-plan flouté"
+
 msgid "Acrylic (Fluent)"
 msgstr "Acrylique (Fluent)"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "Opacité globale de la fenêtre. Affecte tout le contenu, y compris le texte."
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "Rend le fond de la fenêtre translucide. Choisissez le style de flou."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "Rend le fond de la fenêtre translucide, choisissez le style de flou"
 
 msgid "Disable background blur while dragging"
 msgstr "Désactiver le flou d'arrière-plan pendant le déplacement"

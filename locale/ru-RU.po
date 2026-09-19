@@ -2705,9 +2705,6 @@ msgstr "Полупрозрачный фон"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "Экспериментальный стиль акрилового фона Windows 10. Требует включения «Полупрозрачного фона»."
-
 
 msgid "Opacity"
 msgstr "Непрозрачность"
@@ -2715,14 +2712,17 @@ msgstr "Непрозрачность"
 msgid "Blur"
 msgstr "Размытие"
 
+msgid "Translucent background strength"
+msgstr "Интенсивность полупрозрачного фона"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "Насколько сильно оттенок перекрывает размытый фон"
+
 msgid "Acrylic (Fluent)"
 msgstr "Акрил (Fluent)"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "Общая непрозрачность окна. Влияет на всё содержимое, включая текст."
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "Делает фон окна полупрозрачным. Выберите стиль размытия."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "Делает фон окна полупрозрачным, выберите стиль размытия"
 
 msgid "Disable background blur while dragging"
 msgstr "Отключать размытие фона при перетаскивании"

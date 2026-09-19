@@ -39,13 +39,13 @@ export function getXtermBackgroundColor (
 
     // Keep terminal surface transparent when window vibrancy is enabled,
     // so the OS acrylic/blur effect is visible inside the terminal area too.
-    if (config.store.appearance?.vibrancy) {
+    if ((config.store.appearance?.vibrancy ?? 'off') !== 'off') {
         return '#00000000'
     }
 
     // A registered background provider (e.g. the wallpaper plugin) needs the
     // terminal surface transparent so its background shows through.
-    if (themes.wantsTransparentTerminal()) {
+    if (themes.wantsCustomBackground()) {
         return '#00000000'
     }
 

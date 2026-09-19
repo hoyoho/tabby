@@ -2705,9 +2705,6 @@ msgstr "半透明背景"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "実験的な Windows 10 アクリル背景スタイル。「半透明背景」をオンにする必要があります。"
-
 
 msgid "Opacity"
 msgstr "不透明度"
@@ -2715,14 +2712,17 @@ msgstr "不透明度"
 msgid "Blur"
 msgstr "ぼかし"
 
+msgid "Translucent background strength"
+msgstr "半透明背景の濃度"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "ウィンドウの色がぼかし背景を覆う強さ"
+
 msgid "Acrylic (Fluent)"
 msgstr "アクリル（Fluent）"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "ウィンドウ全体の不透明度。テキストを含むすべてのコンテンツに影響します。"
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "ウィンドウの背景を半透明にします。ぼかしスタイルを選択してください。"
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "ウィンドウの背景を半透明にし、ぼかしスタイルを選択します"
 
 msgid "Disable background blur while dragging"
 msgstr "ドラッグ中に背景ぼかしを無効化"

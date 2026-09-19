@@ -13,7 +13,7 @@ export class TransfersMenuComponent {
     @Input() transfers: FileTransfer[]
     @Output() transfersChange = new EventEmitter<FileTransfer[]>()
     @HostBinding('class.vibrant') get isVibrant (): boolean {
-        return this.config.store.appearance.vibrancy
+        return (this.config.store.appearance.vibrancy ?? 'off') !== 'off'
     }
 
     constructor (

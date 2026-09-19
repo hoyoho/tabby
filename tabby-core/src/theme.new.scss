@@ -14,10 +14,6 @@ $font-size-base: 0.875rem;
 app-root {
     background: transparent;
 
-    &.vibrant {
-        background: rgba(var(--bs-dark-rgb),.65);
-    }
-
     .main.content {
         .tab-bar {
             background: var(--theme-bg-more-2);
@@ -79,12 +75,16 @@ app-root {
     }
 }
 
-tab-body {
-    background: var(--app-content-bg, var(--body-bg));
-}
-
+// `body` is the window's *single* background layer (`--body-bg`), so the
+// containers between it and the terminal stay transparent. Painting them too
+// stacks several copies of the same semi-transparent colour, and the alphas
+// multiply — three 60% layers already composite to ~94% opaque, which drowns
+// out the OS vibrancy entirely. Plugins that supply their own background must
+// paint it *above* `body` rather than re-painting these (see
+// [[GlobalStyleProvider]]).
+tab-body,
 split-tab {
-    background-color: var(--body-bg);
+    background: transparent;
 }
 
 $tab-border-radius: 5px;
@@ -201,6 +201,19 @@ select.form-control {
 
 .dropdown-menu {
     --bs-dropdown-bg: var(--theme-bg-more);
+}
+
+// Menus are attached to <body> (ngbDropdown uses `container='body'`), so they
+// are keyed off the `vibrancy` class ThemesService puts on <body> — an
+// app-root ancestor selector cannot reach them. `backdrop-filter` blurs
+// whatever the menu covers (the app content), and the tint is kept stronger
+// than the window background so the menu stays readable.
+body.vibrancy {
+    .dropdown-menu,
+    .app-menu-submenu {
+        --bs-dropdown-bg: color-mix(in srgb, var(--theme-bg-more) 80%, transparent);
+        backdrop-filter: blur(16px);
+    }
 }
 
 .progress {
@@ -474,6 +487,12 @@ ngx-colors-panel .opened {
 
 start-page {
     background: var(--theme-bg-more-2);
+}
+
+// A provider that paints the window background (see GlobalStyleProvider) shows
+// through the start page as well, so this fill stands aside for it.
+body.custom-background start-page {
+    background: transparent;
 }
 
 split-tab-spanner {

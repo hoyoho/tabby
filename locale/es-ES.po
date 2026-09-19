@@ -2705,9 +2705,6 @@ msgstr "Fondo translúcido"
 
 
 
-msgid "Experimental Windows 10 acrylic background style. Requires \"Translucent background\" to be on."
-msgstr "Estilo de fondo acrílico experimental de Windows 10. Requiere activar \"Fondo translúcido\"."
-
 
 msgid "Opacity"
 msgstr "Opacidad"
@@ -2715,14 +2712,17 @@ msgstr "Opacidad"
 msgid "Blur"
 msgstr "Desenfoque"
 
+msgid "Translucent background strength"
+msgstr "Intensidad del fondo translúcido"
+
+msgid "How strongly the tint covers the blurred backdrop"
+msgstr "Cuánto cubre el tinte el fondo desenfocado"
+
 msgid "Acrylic (Fluent)"
 msgstr "Acrílico (Fluent)"
 
-msgid "Overall window opacity. Affects all content including text."
-msgstr "Opacidad global de la ventana. Afecta a todo el contenido, incluido el texto."
-
-msgid "Makes the window background translucent. Choose the blur style."
-msgstr "Hace el fondo de la ventana translúcido. Elige el estilo de desenfoque."
+msgid "Makes the window background translucent, choose the blur style"
+msgstr "Hace el fondo de la ventana translúcido, elige el estilo de desenfoque"
 
 msgid "Disable background blur while dragging"
 msgstr "Desactivar el desenfoque de fondo al arrastrar"

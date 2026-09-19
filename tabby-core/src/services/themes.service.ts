@@ -6,6 +6,10 @@ import { TerminalColorScheme, Theme } from '../api/theme'
 import { GlobalStyleProvider } from '../api/globalStyleProvider'
 import { PlatformService, PlatformTheme } from '../api/platform'
 import { NewTheme } from '../theme'
+import { resolveVibrancyStyle } from '../utils'
+
+/** Fallback for `appearance.vibrancyTint` when the config predates it. */
+const DEFAULT_VIBRANCY_TINT = 40
 
 @Injectable({ providedIn: 'root' })
 export class ThemesService {
@@ -67,12 +71,24 @@ export class ThemesService {
             return Color(some).lighten(factor)
         }
 
+        const vibrancy = resolveVibrancyStyle(this.getConfigStoreOrDefaults().appearance.vibrancy)
+        const tintPercent = this.getConfigStoreOrDefaults().appearance.vibrancyTint ?? DEFAULT_VIBRANCY_TINT
+
+        // `--body-bg` is the window's single background layer (see
+        // theme.new.scss), so this alpha is exactly how strongly the tint
+        // covers the blurred backdrop; the chrome re-applies it further down.
+        const tintAlpha = vibrancy === 'off' ? 1 : Math.min(100, Math.max(0, tintPercent)) / 100
+        // `color`'s `fade()` *subtracts* from the alpha; `alpha()` sets it, which
+        // is what the slider means (100 = opaque, 0 = fully transparent).
         let background = Color(theme.background)
-        if (this.getConfigStoreOrDefaults().appearance.vibrancy) {
-            background = background.fade(0.6)
+        if (tintAlpha < 1) {
+            background = background.alpha(tintAlpha)
         }
-        // UI elements (dropdowns, modals, etc.) should stay opaque even with
-        // vibrancy enabled — only the main window background is faded.
+        // Popups (dropdown menus, search panel, accordion) are tinted from
+        // `--theme-bg-more` and must stay opaque to remain readable, so this
+        // is kept fully opaque. The window chrome (sidebar, tab bar, title
+        // bar) uses `--theme-bg-more-2`, which re-applies the vibrancy alpha
+        // further down so it can go translucent instead.
         const backgroundMore = more(theme.background, 0.25).string()
         const accentIndex = 4
         const vars: Record<string, string> = {}
@@ -110,7 +126,9 @@ export class ThemesService {
             vars['--theme-bg-less'] = less(theme.background, 0.25).string()
             vars['--theme-bg'] = theme.background
             vars['--theme-bg-more'] = backgroundMore
-            vars['--theme-bg-more-2'] = more(backgroundMore, 0.25).string()
+            // Same shade as `-1`, but carrying `--body-bg`'s faded alpha under
+            // vibrancy, so the chrome lets the OS acrylic/blur show through.
+            vars['--theme-bg-more-2'] = more(backgroundMore, 0.25).alpha(background.alpha()).string()
 
             contrastPairs.push(['--theme-bg', '--theme-fg'])
             contrastPairs.push(['--theme-bg-less', '--theme-fg-less'])
@@ -187,6 +205,12 @@ export class ThemesService {
         }
 
         document.body.classList.toggle('no-animations', !this.getConfigStoreOrDefaults().accessibility.animations)
+        // Kept on <body> rather than app-root: menus are attached to <body>,
+        // so vibrancy-only styling needs a hook that can reach them.
+        document.body.classList.toggle('vibrancy', vibrancy !== 'off')
+        // Set while a plugin paints the window background; core's own
+        // full-window fills stand aside for it (see GlobalStyleProvider).
+        document.body.classList.toggle('custom-background', this.wantsCustomBackground())
     }
 
     private ensureContrast (color: Color, against: Color): Color {
@@ -263,11 +287,11 @@ export class ThemesService {
     }
 
     /**
-     * Whether any registered [[GlobalStyleProvider]] needs the terminal surface
-     * kept transparent (so its background shows through).
+     * Whether any registered [[GlobalStyleProvider]] paints the window
+     * background and therefore needs core to stand aside.
      */
-    wantsTransparentTerminal (): boolean {
-        return this.getGlobalStyleProviderList().some(provider => provider.wantsTransparentTerminal())
+    wantsCustomBackground (): boolean {
+        return this.getGlobalStyleProviderList().some(provider => provider.wantsCustomBackground())
     }
 
     /**

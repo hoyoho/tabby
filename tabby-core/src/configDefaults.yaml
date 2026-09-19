@@ -15,9 +15,8 @@ appearance:
   cycleTabs: true
   theme: Follow the color scheme
   css: '/* * { color: blue !important; } */'
-  opacity: 1.0
-  vibrancy: false
-  vibrancyType: 'blur'
+  vibrancy: 'off'
+  vibrancyTint: 40
   lastTabClosesWindow: false
   spaciness: 1
   colorSchemeMode: 'dark'
@@ -58,7 +57,6 @@ profileBlacklist: []
 hacks:
   disableGPU: false
   disableVibrancyWhileDragging: false
-  enableFluentBackground: false
   globalHotkey: null
 language: null
 defaultQuickConnectProvider: "ssh"
