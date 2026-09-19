@@ -112,6 +112,10 @@ export class PluginManagerService {
      * standalone copy: the source folder can be moved or deleted afterwards
      * without affecting the installed plugin.
      *
+     * The copy goes to `plugins/local`, not `plugins/node_modules`: the latter
+     * belongs to npm, which deletes anything it has not installed itself — an
+     * install or upgrade of any other plugin would otherwise wipe local plugins.
+     *
      * @throws when the folder is not a valid Tabby plugin
      */
     addLocalPlugin (pluginDir: string): PluginInfo {
@@ -128,7 +132,7 @@ export class PluginManagerService {
             throw new Error(`Plugin package name must start with "tabby-" (got "${pkg.name}")`)
         }
 
-        const targetPath = path.join(this.userPluginsPath, 'node_modules', pkg.name)
+        const targetPath = path.join(this.userPluginsPath, 'local', pkg.name)
         if (fs.existsSync(targetPath)) {
             throw new Error(`Plugin "${pkg.name}" is already installed at ${targetPath}`)
         }

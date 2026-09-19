@@ -79,6 +79,11 @@ export function initModuleLookup (userPluginsPath: string): void {
 
     const paths = []
     paths.unshift(path.join(userPluginsPath, 'node_modules'))
+    // Local plugins live next to node_modules rather than in it, because npm
+    // prunes anything in its directory that is not declared in package.json
+    // (see PluginManager). Listed first so a locally supplied copy wins over an
+    // equally named npm install.
+    paths.unshift(path.join(userPluginsPath, 'local'))
     paths.unshift(path.join(remote.app.getAppPath(), 'node_modules'))
 
     if (process.env.TABBY_DEV) {
