@@ -138,7 +138,12 @@
         &.pane-tab-appear {
             animation: pane-tab-in 260ms cubic-bezier(.2, .7, .3, 1);
 
-            .pane-tab-label {
+            // Entrance and marquee both drive the label's single `animation`
+            // property, so exactly one of them may own it at a time. The marquee
+            // is the state the user is actively asking for: while it runs, the
+            // entrance fade-in stands down instead of winning on source order
+            // and silently suppressing the scroll.
+            &:not(.marquee) .pane-tab-label {
                 animation: pane-tab-label-in 200ms ease-out 140ms backwards;
             }
         }

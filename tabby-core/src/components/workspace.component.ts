@@ -534,16 +534,26 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         })
     }
 
-    /** @hidden Re-evaluates every pane-tab label's overflow state and toggles
-     *  the persistent `overflowing` class so long titles are left-aligned. */
+    /**
+     * @hidden Re-evaluates every pane-tab label's overflow: toggles the
+     * persistent `overflowing` class so long titles are left-aligned, and keeps a
+     * marquee that is already running aimed at the title that is on screen (a
+     * session that re-titles itself mid-hover, or a chip whose final width has
+     * just been reached). Both consumers take their numbers from the same
+     * measurement, so they cannot disagree about how much is hidden.
+     */
     private refreshPaneTabOverflowStates (): void {
         const host = this.hostElement()
         if (!host) { return }
         const tabs = Array.from(host.querySelectorAll('.pane-tab')) as HTMLElement[]
         for (const tab of tabs) {
-            const label = tab.querySelector(':scope > .pane-tab-label') as HTMLElement | null
+            const label = this.paneTabLabelOf(tab)
             if (!label) { continue }
-            tab.classList.toggle('overflowing', label.scrollWidth > label.clientWidth)
+            const overflow = this.paneTabTitleOverflow(tab, label)
+            tab.classList.toggle('overflowing', overflow > 0)
+            if (tab.classList.contains('marquee')) {
+                this.applyPaneTabMarquee(tab, overflow)
+            }
         }
     }
 
@@ -1022,16 +1032,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      */
     onPaneTabMouseEnter (event: MouseEvent): void {
         const tab = event.currentTarget as HTMLElement
-        const label = tab.querySelector('.pane-tab-label') as HTMLElement | null
+        const label = this.paneTabLabelOf(tab)
         if (!label) { return }
-        const overflow = label.scrollWidth - label.clientWidth
-        if (overflow <= 0) { return }
-        // The persistent `overflowing` class (left-align) is kept in sync by a
-        // MutationObserver; here we only start the scroll animation.
-        const duration = Math.min(Math.max(overflow * 0.025, 1.5), 6)
-        tab.style.setProperty('--marquee-distance', `-${overflow}px`)
-        tab.style.setProperty('--marquee-duration', `${duration}s`)
-        tab.classList.add('marquee')
+        this.applyPaneTabMarquee(tab, this.paneTabTitleOverflow(tab, label))
     }
 
     /** @hidden Stop the marquee when the pointer leaves the tab. */
@@ -1040,15 +1043,74 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         tab.classList.remove('marquee')
     }
 
+    /**
+     * @hidden Start, re-aim or stop a pane-tab marquee for a measured overflow.
+     * The measurement is passed in instead of being re-taken so the scroll always
+     * covers exactly what the `overflowing` class reports as hidden.
+     */
+    private applyPaneTabMarquee (tab: HTMLElement, overflow: number): void {
+        if (overflow <= 0) {
+            tab.classList.remove('marquee')
+            return
+        }
+        // The keyframes own the motion; this only feeds them the distance and a
+        // pace proportional to it, clamped so short overflows don't fly past and
+        // long ones don't crawl.
+        const duration = Math.min(Math.max(overflow * 0.025, 1.5), 6)
+        tab.style.setProperty('--marquee-distance', `-${overflow}px`)
+        tab.style.setProperty('--marquee-duration', `${duration}s`)
+        tab.classList.add('marquee')
+    }
+
+    /**
+     * @hidden How many pixels of a pane-tab's title the chip hides, 0 when it
+     * fits — measured independently of what the chip is currently showing.
+     *
+     * The label's `scrollWidth` is the title's natural width in either layout
+     * (clipped to the chip when idle, max-content while marqueeing), and the
+     * window it is given comes from the chip's own box minus whatever its other
+     * children (the admin badge) take. Reading `label.clientWidth` instead would
+     * report no overflow for a chip whose marquee is already running — which is
+     * exactly the case a title change during a hover arrives in.
+     */
+    private paneTabTitleOverflow (tab: HTMLElement, label: HTMLElement): number {
+        // Computed lengths are strings, and `auto` (a valid margin) has no numeric
+        // value: NaN here would poison the custom property feeding the keyframes.
+        const px = (value: string): number => parseFloat(value) || 0
+        const chipStyle = getComputedStyle(tab)
+        let available = tab.clientWidth - px(chipStyle.paddingLeft) - px(chipStyle.paddingRight)
+        for (const child of Array.from(tab.children)) {
+            if (child === label) { continue }
+            const childStyle = getComputedStyle(child)
+            available -= child.getBoundingClientRect().width + px(childStyle.marginLeft) + px(childStyle.marginRight)
+        }
+        return Math.max(label.scrollWidth - available, 0)
+    }
+
+    /** @hidden The title element of a pane-tab chip. */
+    private paneTabLabelOf (tab: HTMLElement): HTMLElement|null {
+        return tab.querySelector(':scope > .pane-tab-label')
+    }
+
     /** Freshly duplicated sessions, animated while present in this set. */
     protected appearingTabs = new WeakSet<SessionTab>()
 
     /** @hidden Clear the appear-animation flag once the tab finished expanding. */
     onPaneTabAppearanceEnd (event: AnimationEvent, tab: SessionTab): void {
-        // `animationend` bubbles: ignore the label's own delayed fade-in.
-        if (event.animationName === 'pane-tab-in') {
-            this.appearingTabs.delete(tab)
+        // `animationend` also bubbles up from the label's own animations, and the
+        // chip's entrance animation has to be told apart from them without
+        // `animationName`: Angular scopes this component's styles by renaming the
+        // @keyframes (they get prefixed with the component's content attribute),
+        // so the event's name never equals the one written in the stylesheet.
+        // The event origin is name-independent: only an animation of the chip
+        // itself fires on the element carrying the listener.
+        if (event.target !== event.currentTarget) {
+            return
         }
+        this.appearingTabs.delete(tab)
+        // The chip has just reached its final width: re-measure so a marquee that
+        // was started while it was still expanding scrolls the right distance.
+        this.schedulePaneTabOverflowRefresh()
     }
 
     /** @hidden PaneDragHost */
