@@ -7,7 +7,7 @@
     "declaration": true,
     "declarationDir": "./typings",
     "paths": {
-      "tabby-*": ["../../tabby-*/src"],
+      "tabby-*": ["../../tabby-*"],
       "*": [
         "../../app/node_modules/*",
         "../node_modules/xterm/src/*"
