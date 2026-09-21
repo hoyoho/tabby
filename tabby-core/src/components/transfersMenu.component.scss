@@ -4,8 +4,11 @@
     overflow-y: auto;
 
     &.vibrant {
-        background: rgba(var(--bs-dark-rgb), 0.55);
-        backdrop-filter: blur(10px);
+        // Same frosted token as every other floating surface (menus, dialogs,
+        // tooltips, toasts); the fallback keeps the old look when the app is
+        // not in the unified frost path (e.g. a custom theme).
+        background: var(--frost-tint, rgba(var(--bs-dark-rgb), 0.55));
+        backdrop-filter: blur(var(--frost-blur, 10px));
     }
 }
 

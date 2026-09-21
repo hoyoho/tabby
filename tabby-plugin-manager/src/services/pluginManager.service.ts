@@ -1,5 +1,5 @@
 import { compare as semverCompare } from 'semver'
-import { Observable, from, forkJoin, map, of } from 'rxjs'
+import { Observable, from, forkJoin, map, of, catchError } from 'rxjs'
 import { Injectable, Inject } from '@angular/core'
 import { Logger, LogService, PlatformService, BOOTSTRAP_DATA, BootstrapData, PluginInfo } from 'tabby-core'
 import { PLUGIN_BLACKLIST } from '../../../app/src/pluginBlacklist'
@@ -52,7 +52,12 @@ export class PluginManagerService {
 
     _listAvailableInternal (namePrefix: string, keyword: string, query?: string): Observable<PluginInfo[]> {
         return from(
-            fetch(`https://registry.npmjs.com/-/v1/search?text=keywords%3A${keyword}%20${query}&size=250`).then(r => r.json()),
+            fetch(`https://registry.npmjs.com/-/v1/search?text=keywords%3A${keyword}%20${query}&size=250`).then(r => {
+                if (!r.ok) {
+                    throw new Error(`plugin registry returned ${r.status} ${r.statusText}`)
+                }
+                return r.json()
+            }),
         ).pipe(
             map(response => response.objects
                 .filter(item => !item.keywords?.includes('tabby-dummy-transition-plugin'))
@@ -82,6 +87,14 @@ export class PluginManagerService {
                 })
             }),
             map(plugins => plugins.sort((a, b) => a.name.localeCompare(b.name))),
+            // The registry is a remote third-party service: a timeout, an
+            // offline machine or a non-JSON body must degrade to "no plugins
+            // found", never to an unhandled error that kills the stream and
+            // surfaces in the global error handler.
+            catchError(error => {
+                this.logger.warn(`Could not fetch the plugin registry: ${error.message ?? error}`)
+                return of([])
+            }),
         )
     }
 

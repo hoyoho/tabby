@@ -48,6 +48,27 @@ export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
         return !this.supportsAcrylicVibrancy
     }
 
+    /**
+     * The value shown in the dropdown. A stored style this machine cannot
+     * render (e.g. `blur` carried over from Windows 10 1803+, or `acrylic`
+     * copied from Windows onto macOS) has no matching `<option>` and would
+     * leave the select blank; map it onto a supported one for display only,
+     * without rewriting the config.
+     */
+    get vibrancyStyle (): string {
+        const value = this.config.store.appearance.vibrancy ?? 'off'
+        if (value === 'blur' && !this.supportsBlurVibrancy) { return 'acrylic' }
+        if (value === 'acrylic' && !this.supportsAcrylicVibrancy) { return 'blur' }
+        return value
+    }
+
+    onVibrancyStyleChange (value: string): void {
+        this.config.store.appearance.vibrancy = value
+        // Linux needs the window re-created to pick up the transparent visuals
+        // and disabled GPU that vibrancy requires, so ask for a restart there.
+        this.saveConfiguration(this.hostApp.platform === Platform.Linux)
+    }
+
     get pluginGlobalStyles (): string {
         return this.themes.getGlobalStyles()
     }

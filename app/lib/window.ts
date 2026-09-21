@@ -236,8 +236,15 @@ export class Window {
                 } catch (error) {
                     console.error('Failed to set window blur', error)
                 }
-            } else {
-                DwmEnableBlurBehindWindow(this.window.getNativeWindowHandle(), enabled)
+            } else if (DwmEnableBlurBehindWindow) {
+                // Pre-Windows-10 blurbehind. The native module is optional (see
+                // the guarded require above): when it failed to load this stays
+                // null and must degrade to no blur instead of crashing main.
+                try {
+                    DwmEnableBlurBehindWindow(this.window.getNativeWindowHandle(), enabled)
+                } catch (error) {
+                    console.error('Failed to set window blur', error)
+                }
             }
         } else if (process.platform === 'linux') {
             this.window.setBackgroundColor(enabled ? '#00000000' : '#131d27')

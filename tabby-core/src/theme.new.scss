@@ -231,7 +231,7 @@ select.form-control {
 // and toasts all attach to <body>, so an app-root selector cannot reach them.
 body.vibrancy {
     --frost-blur: 16px;
-    --frost-tint: color-mix(in srgb, var(--theme-bg-more-solid) 80%, transparent);
+    --frost-tint: color-mix(in srgb, var(--theme-bg-more-solid, var(--theme-bg-more)) 80%, transparent);
 
     .dropdown-menu,
     .app-menu-submenu,

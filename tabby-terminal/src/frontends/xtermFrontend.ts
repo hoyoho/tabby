@@ -1031,9 +1031,12 @@ export class XTermFrontend extends Frontend {
         // a crash.
         const core = (this.xterm as any)._core
         const mouseService = core?.coreMouseService
-        const buffer = core?.bufferService?.buffer
-        const scrollTop = buffer?.scrollTopMargin
-        const scrollBottom = buffer?.scrollBottomMargin
+        // `core.buffer` is the active buffer; margins are 0-based `scrollTop` /
+        // `scrollBottom` (default 0 / rows-1), not `scrollTopMargin` and not
+        // under a `bufferService` property.
+        const buffer = core?.buffer
+        const scrollTop = buffer?.scrollTop
+        const scrollBottom = buffer?.scrollBottom
         return {
             altScreen: this.isAlternateScreenActive(),
             mouseProtocol: this.xterm.modes.mouseTrackingMode,

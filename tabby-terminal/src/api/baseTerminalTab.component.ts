@@ -389,7 +389,13 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
             this.frontend?.focus()
         })
 
-        this.subscribeUntilDestroyed(this.platform.themeChanged$, () => {
+        // The app theme is re-applied (and with it `appearance.vibrancy`, the
+        // vibrancy tint and any background plugin's styles) on every config
+        // change. The terminal's xterm theme is set from JS, so it must be
+        // pushed again or the surface keeps a stale background after a
+        // vibrancy/background toggle. `ThemesService.themeChanged$` is emitted
+        // on OS theme changes too, so it supersedes `platform.themeChanged$`.
+        this.subscribeUntilDestroyed(this.themes.themeChanged$, () => {
             this.configure()
         })
 

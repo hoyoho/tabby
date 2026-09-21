@@ -333,6 +333,12 @@ export class ThemesService {
             this.getGlobalStyles(),
             this.getConfigStoreOrDefaults().appearance.css,
         ].filter(Boolean).join('\n')
+        // A provider can change whether it paints the window background at
+        // runtime (preview, wallpaper switch, cross-window config broadcast).
+        // Toggling here as well as in applyThemeVariables keeps the class in
+        // sync with the styles that were just emitted, instead of depending on
+        // which `config.changed$` subscriber happened to run first.
+        document.body.classList.toggle('custom-background', this.wantsCustomBackground())
     }
 
     applyTheme (theme: Theme): void {

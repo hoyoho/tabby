@@ -82,7 +82,7 @@ export class DebugDecorator extends TerminalDecorator {
     }
 
     private doSaveState (terminal: BaseTerminalTabComponent<any>) {
-        this.saveFile(terminal.frontend!.saveState(), 'state.txt')
+        this.saveFile(JSON.stringify(terminal.frontend!.saveState()), 'state.txt')
     }
 
     private async doCopyState (terminal: BaseTerminalTabComponent<any>) {
@@ -93,7 +93,15 @@ export class DebugDecorator extends TerminalDecorator {
     private async doLoadState (terminal: BaseTerminalTabComponent<any>) {
         const data = await this.loadFile()
         if (data) {
-            terminal.frontend!.restoreState(data)
+            // Newer dumps are JSON snapshots (`{ v: 2, primary, alternate }`),
+            // older ones are the raw serialized primary buffer. restoreState()
+            // accepts both, so parse when possible and fall back to the raw
+            // string for legacy files.
+            let state: any = data
+            try {
+                state = JSON.parse(data)
+            } catch { /* legacy raw dump */ }
+            terminal.frontend!.restoreState(state)
         }
     }
 
