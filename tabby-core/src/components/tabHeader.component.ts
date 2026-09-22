@@ -324,6 +324,13 @@ export class TabHeaderComponent extends BaseComponent {
         if ($event.which === 2) {
             $event.preventDefault()
         }
+        // Drag intent: pre-serialize the workspace's transfer token now, while
+        // the renderer is idle. Doing it lazily inside the drag would race the
+        // `dragover` stream and leave the token unready at the drop.
+        if ($event.which === 1 && this.tab instanceof WorkspaceComponent &&
+            !($event.target as HTMLElement|null)?.closest('button')) {
+            this.app.prepareWorkspaceTransfer(this.tab)
+        }
     }
 
     @HostListener('mouseup', ['$event']) async onMouseUp ($event: MouseEvent) {

@@ -63,6 +63,19 @@ export class AppService {
      * being dragged). Non-null only while a drag is pending resolution.
      */
     private workspaceNativeDrag: { dragId: string, tab: WorkspaceComponent, committedSub: Subscription, settled: boolean, acceptTimer: number|null }|null = null
+    /**
+     * A workspace's live-transfer token, serialized eagerly the moment the user
+     * signals drag intent (mousedown on the tab header) instead of inside the
+     * drag. The serialization is async (it snapshots every session's terminal
+     * buffer), and the renderer is saturated by `dragover` events for the whole
+     * gesture — starting it here keeps it off that starved critical path.
+     */
+    private preparedWorkspaceTransfer: {
+        tab: WorkspaceComponent
+        at: number
+        promise: Promise<RecoveryToken|null>
+    }|null = null
+
     // dragIds of native drags this window started, kept briefly. A very late
     // `drop` of our own drag (missed earlier, or re-dispatched after the
     // source already settled it) must never re-create the dragged item in
@@ -670,6 +683,41 @@ export class AppService {
     }
 
     /**
+     * Kick off (and cache) a workspace's live-transfer token the moment the user
+     * signals drag intent — mousedown on the tab header — so the async
+     * serialization runs while the renderer is still idle, instead of being
+     * starved by the drag's `dragover` stream. [[beginWorkspaceNativeDrag]]
+     * consumes the prepared promise; a plain click simply discards it.
+     */
+    prepareWorkspaceTransfer (tab: WorkspaceComponent): void {
+        const at = Date.now()
+        const promise = this.tabRecovery
+            .getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
+            .catch(err => {
+                console.error('[app] workspace transfer preparation failed:', err)
+                return null
+            })
+        this.preparedWorkspaceTransfer = { tab, at, promise }
+    }
+
+    /**
+     * @returns the live-transfer token for `tab`, preferring the one prepared at
+     * drag intent (a fresh one, so terminal output hasn't moved on much) and
+     * falling back to serializing on the spot.
+     */
+    private async serializeWorkspaceForTransfer (tab: WorkspaceComponent): Promise<RecoveryToken|null> {
+        const prepared = this.preparedWorkspaceTransfer
+        this.preparedWorkspaceTransfer = null
+        if (prepared && prepared.tab === tab && Date.now() - prepared.at < 10000) {
+            const token = await prepared.promise
+            if (token) {
+                return token
+            }
+        }
+        return this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
+    }
+
+    /**
      * Source side of a native workspace-tab drag: set an active-drag origin for
      * this window and register the drag id. The (async) recovery token is
      * serialized and pushed out-of-band once ready, so the target window can
@@ -707,7 +755,7 @@ export class AppService {
         })
         this.workspaceNativeDrag = { dragId, tab, committedSub, settled: false, acceptTimer: null }
         try {
-            const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, includeTerminalModes: true })
+            const token = await this.serializeWorkspaceForTransfer(tab)
             if (token) {
                 this.hostApp.nativeDragStateUpdate(dragId, JSON.parse(JSON.stringify(token)))
             }
@@ -924,10 +972,10 @@ export class AppService {
             this.clearDragPreview()
             return
         }
-        // Cross-window: rebuild the workspace from the out-of-band token. The
-        // token is serialized asynchronously on the source side, so it may not
-        // be published yet when a fast drop arrives — retry briefly before
-        // giving up.
+        // Cross-window: rebuild the workspace from the out-of-band token. It is
+        // normally already published — the source serializes it at drag intent,
+        // before the gesture — so this retry only covers a drag that outran the
+        // preparation.
         let token = this.hostApp.nativeDragState(payload.dragId)
         if (!token) {
             for (let attempt = 0; attempt < 15 && !token; attempt++) {
