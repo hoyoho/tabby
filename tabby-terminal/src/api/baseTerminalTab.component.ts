@@ -967,7 +967,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
             throw new Error('Session not set')
         }
 
-        // this.session.output$.bufferTime(10).subscribe((datas) => {
         this.attachSessionHandler(this.session.output$, data => {
             if (this.enablePassthrough) {
                 this.output.next(data)

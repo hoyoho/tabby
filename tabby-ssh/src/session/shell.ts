@@ -179,7 +179,7 @@ export class SSHShellSession extends BaseSession {
     }
 
     kill (_signal?: string): void {
-        // this.shell?.signal(signal ?? 'TERM')
+        // SSH shell channels are torn down with the session, not by a signal.
     }
 
     override async destroy (): Promise<void> {

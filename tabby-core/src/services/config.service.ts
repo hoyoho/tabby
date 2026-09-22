@@ -426,9 +426,6 @@ export class ConfigProxy<T extends AnyRec> {
     __cleanup () { }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-type-alias, @typescript-eslint/no-redeclare
-// export type ConfigProxy<T extends AnyRec> = ProxifiedConfig<T>
-
 @Injectable({ providedIn: 'root' })
 export class ConfigService {
     /**

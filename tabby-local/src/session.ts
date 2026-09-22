@@ -33,7 +33,6 @@ function mergeEnv (...envs) {
     const keyMap = {}
     for (const env of envs) {
         for (const [key, value] of Object.entries(env)) {
-            // const lookup = process.platform === 'win32' ? key.toLowerCase() : key
             const lookup = key.toLowerCase()
             keyMap[lookup] ??= key
             result[keyMap[lookup]] = value

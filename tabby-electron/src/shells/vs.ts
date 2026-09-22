@@ -56,24 +56,5 @@ export class VSDevToolsProvider extends ShellProvider {
             }
         }
         return result
-
-        // return [
-        //     {
-        //         id: 'cmderps',
-        //         name: 'Cmder PowerShell',
-        //         command: 'powershell.exe',
-        //         args: [
-        //             '-ExecutionPolicy',
-        //             'Bypass',
-        //             '-nologo',
-        //             '-noprofile',
-        //             '-noexit',
-        //             '-command',
-        //             `Invoke-Expression '. ''${path.join(process.env.CMDER_ROOT, 'vendor', 'profile.ps1')}'''`,
-        //         ],
-        //         icon: require('../icons/cmder-powershell.svg'),
-        //         env: {},
-        //     },
-        // ]
     }
 }

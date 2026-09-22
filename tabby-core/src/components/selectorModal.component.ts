@@ -1,5 +1,5 @@
 import { firstBy } from 'thenby'
-import { Component, Input, HostListener, ViewChildren, QueryList, ElementRef } from '@angular/core' // eslint-disable-line @typescript-eslint/no-unused-vars
+import { Component, Input, HostListener, ViewChildren, QueryList, ElementRef } from '@angular/core'
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap'
 import FuzzySearch from 'fuzzy-search'
 import { SelectorOption } from '../api/selector'
