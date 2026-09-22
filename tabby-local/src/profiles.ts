@@ -1,7 +1,6 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
-import deepClone from 'clone-deep'
 import { Injectable, Inject } from '@angular/core'
-import { ProfileProvider, NewTabParameters, ConfigService, WorkspaceComponent, AppService, PartialProfile } from 'tabby-core'
+import { ProfileProvider, NewTabParameters, ConfigService, PartialProfile } from 'tabby-core'
 import { TerminalTabComponent } from './components/terminalTab.component'
 import { LocalProfileSettingsComponent } from './components/localProfileSettings.component'
 import { ShellProvider, Shell, SessionOptions, LocalProfile } from './api'
@@ -29,7 +28,6 @@ export class LocalProfilesService extends ProfileProvider<LocalProfile> {
     }
 
     constructor (
-        private app: AppService,
         private config: ConfigService,
         @Inject(ShellProvider) private shellProviders: ShellProvider[],
     ) {
@@ -61,19 +59,15 @@ export class LocalProfilesService extends ProfileProvider<LocalProfile> {
         return templates as PartialProfile<LocalProfile>[]
     }
 
+    /**
+     * Turns a profile into tab parameters, honouring the profile exactly as
+     * configured — an empty working directory included. Inheriting the focused
+     * session's directory is deliberately NOT done here: this hook is the
+     * "create from config" path (profile tree, CLI, reconnect) and must never
+     * mutate or second-guess the stored profile. The "new tab, same directory"
+     * behaviour lives in TerminalService.openTab instead.
+     */
     async getNewTabParameters (profile: LocalProfile): Promise<NewTabParameters<TerminalTabComponent>> {
-        profile = deepClone({ ...profile })
-
-        if (!profile.options.cwd) {
-            if (this.app.activeTab instanceof WorkspaceComponent) {
-                const focusedTab = this.app.activeTab.getFocusedTab()
-
-                if (focusedTab instanceof TerminalTabComponent && focusedTab.session) {
-                    profile.options.cwd = await focusedTab.session.getWorkingDirectory() ?? null
-                }
-            }
-        }
-
         return {
             type: TerminalTabComponent,
             inputs: {

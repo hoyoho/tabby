@@ -13,6 +13,26 @@ import deepClone from 'clone-deep'
 import { v4 as uuidv4 } from 'uuid'
 import slugify from 'slugify'
 
+/**
+ * Deep-copies a value into plain objects/arrays, invoking any accessor (a
+ * ConfigProxy member) along the way. `clone-deep` returns non-plain objects —
+ * which every nested proxy is — by reference, so it cannot detach a profile on
+ * its own; this is the copy handed to providers at the launch boundary.
+ */
+function detachProfile<T> (value: T): T {
+    if (Array.isArray(value)) {
+        return value.map(item => detachProfile(item)) as unknown as T
+    }
+    if (value !== null && typeof value === 'object') {
+        const result: Record<string, unknown> = {}
+        for (const key of Object.keys(value)) {
+            result[key] = detachProfile((value as Record<string, unknown>)[key])
+        }
+        return result as unknown as T
+    }
+    return value
+}
+
 @Injectable({ providedIn: 'root' })
 export class ProfilesService {
     private profileDefaults = {
@@ -220,7 +240,13 @@ export class ProfilesService {
 
     async newTabParametersForProfile <P extends Profile> (profile: PartialProfile<P>): Promise<NewTabParameters<BaseTabComponent>|null> {
         const fullProfile = this.getConfigProxyForProfile(profile)
-        const params = await this.providerForProfile(fullProfile)?.getNewTabParameters(fullProfile) ?? null
+        // Providers get a detached snapshot, never the live ConfigProxy: a
+        // provider is free to fill values in (a serial baudrate/port, a local
+        // working directory) and a write through the proxy would silently
+        // rewrite the stored profile. The proxy has already resolved provider
+        // and group defaults, so the snapshot carries the effective config.
+        const launchProfile = detachProfile(fullProfile)
+        const params = await this.providerForProfile(launchProfile)?.getNewTabParameters(launchProfile) ?? null
         if (params) {
             params.inputs ??= {}
             params.inputs['title'] = profile.name
