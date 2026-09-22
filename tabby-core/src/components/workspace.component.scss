@@ -93,6 +93,15 @@
             background: color-mix(in srgb, var(--theme-primary) 60%, var(--pane-header-bg));
         }
 
+        // The chip currently being reordered. Keeps the live reorder readable
+        // for every chip: a non-focused one is otherwise the same tint as its
+        // neighbours, so its slide into the target slot would go unnoticed.
+        &.dragging {
+            opacity: 0.5;
+            outline: 1px dashed var(--theme-primary);
+            outline-offset: -1px;
+        }
+
         // Overflowing title: left-align so the beginning is readable (ellipsis
         // would otherwise show the middle of a centered string). The class is
         // set imperatively when the label is measured to overflow.

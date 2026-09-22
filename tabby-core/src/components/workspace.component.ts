@@ -1023,12 +1023,19 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden */
     onPaneTabDragStart (event: DragEvent, tab: SessionTab): void {
-        this.draggedPaneTabEl = event.currentTarget as HTMLElement
+        const el = event.currentTarget as HTMLElement
+        // Mark the chip being dragged. The live reorder slides the dragged
+        // element itself, and a non-focused chip shares its colour with every
+        // neighbour, so without a dedicated state the reorder is only visible
+        // when the dragged tab happens to be the accent-coloured focused one.
+        el.classList.add('dragging')
+        this.draggedPaneTabEl = el
         this.paneDrag.beginNativeDrag(event, tab)
     }
 
     /** @hidden */
     onPaneTabDragEnd (event: DragEvent, _tab: SessionTab): void {
+        (event.currentTarget as HTMLElement).classList.remove('dragging')
         this.draggedPaneTabEl = null
         this.paneDrag.endNativeDrag(event)
     }
