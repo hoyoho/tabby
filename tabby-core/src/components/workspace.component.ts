@@ -1,5 +1,5 @@
 import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
-import { Component, Injectable, HostBinding, ViewChild, ViewChildren, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef, QueryList } from '@angular/core'
+import { Component, Injectable, HostBinding, ViewChild, ViewChildren, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
 import { TabRecoveryProvider, RecoveryToken } from '../api/tabRecovery'
@@ -217,6 +217,20 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         originalOrder: HTMLElement[]
     }|null = null
 
+    /**
+     * @hidden Pane-tab chip re-render token.
+     *
+     * The live drag moves `.pane-tab` DOM nodes directly, which Angular's
+     * `*ngFor` differ never sees (the model is unchanged) — so it will not move
+     * them back, and a missed commit/cancel leaves the rendered strip rotated
+     * relative to `pane.tabs` (inserts then land at the wrong slot and the
+     * context menu targets the wrong tabs). Bumping this after a drag forces the
+     * chip views to be re-created from the model, restoring the invariant.
+     */
+    private paneTabsRevision = 0
+    private readonly paneTabKeys = new WeakMap<SessionTab, number>()
+    private nextPaneTabKey = 0
+
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
     setDragHint (hint: DragHintState|null): void {
         const visible = hint?.visible ?? false
@@ -300,6 +314,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         private hostApp: HostAppService,
         private hostWindow: HostWindowService,
         private zone: NgZone,
+        private changeDetectorRef: ChangeDetectorRef,
     ) {
         super(injector)
         this.root = new SplitContainer()
@@ -767,8 +782,28 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         return header.pane
     }
 
-    paneTabBy (_index: number, tab: SessionTab): SessionTab {
-        return tab
+    // An arrow property, not a method: Angular invokes the trackBy with `this`
+    // bound to the differ, so a method would lose the component instance.
+    paneTabBy = (_index: number, tab: SessionTab): string => {
+        let key = this.paneTabKeys.get(tab)
+        if (key === undefined) {
+            key = this.nextPaneTabKey++
+            this.paneTabKeys.set(tab, key)
+        }
+        // The revision makes every key change at once, so the differ re-creates
+        // the chips in `pane.tabs` order (see [[paneTabsRevision]]).
+        return `${this.paneTabsRevision}:${key}`
+    }
+
+    /**
+     * Rebuilds the pane-tab chips from `pane.tabs`. `detectChanges` is required
+     * because a plain change-detection pass would not move the DOM nodes the
+     * live drag repositioned by hand — only a key change (the revision) makes
+     * the `*ngFor` differ re-create them (see [[paneTabsRevision]]).
+     */
+    private reRenderPaneTabs (): void {
+        this.paneTabsRevision++
+        this.changeDetectorRef.detectChanges()
     }
 
     /** @hidden Whether the given pane's tab strip overflows the header width. */
@@ -1333,42 +1368,48 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     commitLiveReorder (pane: Pane): void {
         const state = this.liveReorder
         this.liveReorder = null
-        if (!state || state.pane !== pane) {
-            return
+        if (state && state.pane === pane) {
+            const { draggedEl, draggedTab } = state
+            const idx = pane.tabs.indexOf(draggedTab)
+            if (idx >= 0) {
+                const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+                const slot = children.indexOf(draggedEl)
+                // The live DOM must still describe the same set of tabs; otherwise
+                // the preview desynced from the model and committing would guess.
+                if (slot >= 0 && children.length === pane.tabs.length) {
+                    pane.tabs.splice(idx, 1)
+                    pane.tabs.splice(slot, 0, draggedTab)
+                }
+            }
+            pane.activeTab = draggedTab
+            this.focus(draggedTab)
+            this.cleanRoot()
         }
-        const { draggedEl, draggedTab } = state
-        const idx = pane.tabs.indexOf(draggedTab)
-        if (idx < 0) {
-            return
+        // Rebuild the strip from the model: the DOM was moved by hand, and a
+        // plain CD pass would leave it as-is.
+        if (state) {
+            this.reRenderPaneTabs()
         }
-        const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
-        const slot = children.indexOf(draggedEl)
-        // The live DOM must still describe the same set of tabs; otherwise the
-        // preview desynced from the model and committing would guess. Keep the
-        // model untouched and just focus the dragged tab.
-        if (slot >= 0 && children.length === pane.tabs.length) {
-            pane.tabs.splice(idx, 1)
-            pane.tabs.splice(slot, 0, draggedTab)
-        }
-        pane.activeTab = draggedTab
-        this.focus(draggedTab)
-        this.cleanRoot()
     }
 
     /** @hidden PaneDragHost — restore `pane`'s tab strip to its pre-drag DOM
      *  order (drag cancelled or pointer left the header). */
     cancelLiveReorder (pane: Pane): void {
         const state = this.liveReorder
-        if (!state || state.pane !== pane) {
-            this.liveReorder = null
+        this.liveReorder = null
+        if (!state) {
             return
         }
         // Re-append children in the captured original order. appendChild on an
         // already-attached node moves it, so this is a single pass.
-        for (const el of state.originalOrder) {
-            state.scrollEl.appendChild(el)
+        if (state.pane === pane) {
+            for (const el of state.originalOrder) {
+                state.scrollEl.appendChild(el)
+            }
         }
-        this.liveReorder = null
+        // Rebuild from the model regardless, so a missed restore can't leave the
+        // strip desynced.
+        this.reRenderPaneTabs()
     }
 
     /** @hidden PaneDragHost */
