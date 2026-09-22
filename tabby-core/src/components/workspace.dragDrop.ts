@@ -103,7 +103,8 @@ export interface PaneDragHost {
     /** Move the dragged tab's DOM element to `targetIndex` (DOM order) within
      *  its pane's tab strip for live visual feedback. Does NOT mutate data. */
     liveReorderTo: (pane: Pane, targetIndex: number) => void
-    /** Commit the live-reordered DOM order back into `pane.tabs` and clean up. */
+    /** Commit the dragged tab's live-reordered position into `pane.tabs` and
+     *  clean up. */
     commitLiveReorder: (pane: Pane) => void
     /** Restore the pane's tab strip DOM to its pre-drag order and clean up. */
     cancelLiveReorder: (pane: Pane) => void

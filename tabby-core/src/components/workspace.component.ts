@@ -200,12 +200,21 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden The currently dragged pane-tab DOM element (live reorder source). */
     private draggedPaneTabEl: HTMLElement|null = null
-    /** @hidden Live-reorder session state: captured DOM order for restore. */
+    /**
+     * @hidden Live-reorder session state.
+     *
+     * Only the dragged tab's element ever moves, so the drag is modelled as
+     * (a) the element being moved, (b) the tab it stands for and (c) the DOM
+     * order to restore on cancel. The model order is NOT snapshotted here:
+     * `pane.tabs` stays authoritative and the commit derives the new order from
+     * the dragged element's final DOM position (see [[commitLiveReorder]]).
+     */
     private liveReorder: {
         pane: Pane
         scrollEl: HTMLElement
+        draggedEl: HTMLElement
+        draggedTab: SessionTab
         originalOrder: HTMLElement[]
-        elToTab: Map<HTMLElement, SessionTab>
     }|null = null
 
     /** @hidden Drag overlay preview state. Setters are the PaneDragHost contract. */
@@ -1272,13 +1281,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const scrollEl = draggedEl.parentElement
         if (!scrollEl) { return }
         const children = Array.from(scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
-        const elToTab = new Map<HTMLElement, SessionTab>()
-        children.forEach((el, i) => {
-            // `pane.tabs` order matches the rendered DOM order at snapshot time
-            // (the data array hasn't been mutated yet during the drag).
-            elToTab.set(el, pane.tabs[i])
-        })
-        this.liveReorder = { pane, scrollEl, originalOrder: children, elToTab }
+        this.liveReorder = { pane, scrollEl, draggedEl, draggedTab: tab, originalOrder: children }
     }
 
     /** @hidden PaneDragHost — move the dragged tab's DOM element to
@@ -1286,9 +1289,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      *  touch `pane.tabs`. */
     liveReorderTo (pane: Pane, targetIndex: number): void {
         const state = this.liveReorder
-        const draggedEl = this.draggedPaneTabEl
-        if (!state || !draggedEl || state.pane !== pane) { return }
-        const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        if (!state || state.pane !== pane) { return }
+        const { draggedEl, scrollEl } = state
+        const children = Array.from(scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
         const idx = children.indexOf(draggedEl)
         if (idx < 0) { return }
         // `targetIndex` is computed against the live DOM (which still contains
@@ -1303,39 +1306,45 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // at itself or the slot immediately after it (insert-before-self or
         // insert-before-next both leave it in place).
         if (targetIndex === idx || targetIndex === idx + 1) { return }
-        state.scrollEl.removeChild(draggedEl)
-        const afterRemoval = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
+        scrollEl.removeChild(draggedEl)
+        const afterRemoval = Array.from(scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
         const insertBefore = afterRemoval[insertAt] ?? null
-        state.scrollEl.insertBefore(draggedEl, insertBefore)
+        scrollEl.insertBefore(draggedEl, insertBefore)
     }
 
-    /** @hidden PaneDragHost — commit the live-reordered DOM order back into
-     *  `pane.tabs`, keeping the active tab selected. */
+    /**
+     * @hidden PaneDragHost — commit the live-reordered position back into
+     * `pane.tabs`, keeping the dragged tab active.
+     *
+     * The strip is reordered live OUTSIDE the Angular zone, so the DOM order
+     * cannot be read back as a positional map onto `pane.tabs`: a stale or
+     * interleaved render would silently permute the model. But only the dragged
+     * tab's element ever moves — every other element keeps the relative order it
+     * has in the array — so the dragged element's final DOM index IS the array
+     * slot it belongs at. That single fact is all the commit needs.
+     */
     commitLiveReorder (pane: Pane): void {
         const state = this.liveReorder
+        this.liveReorder = null
         if (!state || state.pane !== pane) {
-            this.liveReorder = null
+            return
+        }
+        const { draggedEl, draggedTab } = state
+        const idx = pane.tabs.indexOf(draggedTab)
+        if (idx < 0) {
             return
         }
         const children = Array.from(state.scrollEl.querySelectorAll(':scope > .pane-tab')) as HTMLElement[]
-        const newOrder: SessionTab[] = []
-        for (const el of children) {
-            const tab = state.elToTab.get(el)
-            if (tab) { newOrder.push(tab) }
+        const slot = children.indexOf(draggedEl)
+        // The live DOM must still describe the same set of tabs; otherwise the
+        // preview desynced from the model and committing would guess. Keep the
+        // model untouched and just focus the dragged tab.
+        if (slot >= 0 && children.length === pane.tabs.length) {
+            pane.tabs.splice(idx, 1)
+            pane.tabs.splice(slot, 0, draggedTab)
         }
-        // Defensive: if anything went wrong with the mapping, keep the old
-        // order rather than dropping tabs.
-        if (newOrder.length === pane.tabs.length) {
-            pane.tabs.length = 0
-            pane.tabs.push(...newOrder)
-        }
-        // Keep the dragged tab active after reorder.
-        const active = this.draggedPaneTabEl ? state.elToTab.get(this.draggedPaneTabEl) : null
-        if (active) {
-            pane.activeTab = active
-            this.focus(active)
-        }
-        this.liveReorder = null
+        pane.activeTab = draggedTab
+        this.focus(draggedTab)
         this.cleanRoot()
     }
 
