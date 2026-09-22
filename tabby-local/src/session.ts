@@ -7,6 +7,26 @@ import { SessionOptions, ChildProcess, PTYInterface, PTYProxy } from './api'
 import { getEnvironment, substituteEnv } from './environment'
 
 const windowsDirectoryRegex = /([a-zA-Z]:\\[^\x00-\x1f\x7f:\[\]\?\"\<\>\|]+)/mi
+const msysPathRegex = /^\/(?:cygdrive\/)?([a-zA-Z])(?:\/(.*))?$/
+
+/**
+ * Git Bash / MSYS / Cygwin hand out POSIX-style drive paths — `/c/Users/me`
+ * or `/cygdrive/c/Users/me` — in `HOME` and in profile `cwd` settings. Windows
+ * APIs (and a PTY's cwd) need the native `C:\Users\me` form, so translate
+ * before validating: otherwise a perfectly valid directory is dropped by the
+ * existence check and the shell starts in the wrong place. Anything that is
+ * not a drive-rooted MSYS path (e.g. a WSL Linux path) is returned untouched.
+ */
+function msysToWindowsPath (path: string): string {
+    const match = msysPathRegex.exec(path)
+    if (!match) {
+        return path
+    }
+    // The trailing segment is optional (`/c` is a valid drive root), and TS
+    // types an unmatched capture as `string`, so test it by value.
+    const rest = match[2] ? match[2].replace(/\//g, '\\') : ''
+    return `${match[1].toUpperCase()}:\\${rest}`
+}
 
 function mergeEnv (...envs) {
     const result = {}
@@ -118,6 +138,10 @@ export class Session extends BaseSession {
                         cwd = process.env.USERPROFILE ?? process.env.HOME
                     }
                 }
+            }
+
+            if (this.hostApp.platform === Platform.Windows && cwd) {
+                cwd = msysToWindowsPath(cwd)
             }
 
             if (!fsSync.existsSync(cwd!)) {
