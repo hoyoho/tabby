@@ -75,7 +75,18 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
     }
 
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<any> {
-        const cwd = this.session ? await this.session.getWorkingDirectory() : null
+        // A recovery token is a best-effort snapshot: never block it on the
+        // native CWD probe (up to seconds — it would stall a duplicate or a
+        // cross-window drag). Use the directory the shell already reported, and
+        // only pay for the accurate probe on a persistence snapshot, which
+        // rebuilds the session from scratch and is not on an interactive path.
+        const needsAccurateCwd = options?.includeState === true && options.includeTerminalModes !== true
+        let cwd: string|null = null
+        if (this.session) {
+            cwd = needsAccurateCwd
+                ? await this.session.getWorkingDirectory()
+                : this.session.getCachedWorkingDirectory()
+        }
         return {
             type: 'app:local-tab',
             profile: {

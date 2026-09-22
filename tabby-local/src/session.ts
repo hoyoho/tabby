@@ -313,6 +313,15 @@ export class Session extends BaseSession {
         }
     }
 
+    /**
+     * Adds the launch/initial directory to [[BaseSession.getCachedWorkingDirectory]]'s
+     * reported/title value — still fully synchronous, so token snapshots never
+     * hit the native PID probe.
+     */
+    override getCachedWorkingDirectory (): string|null {
+        return super.getCachedWorkingDirectory() ?? this.guessedCWD ?? this.initialCWD
+    }
+
     supportsWorkingDirectory (): boolean {
         if (this.isWSL) {
             // WSL shells only support CWD detection when they actively report

@@ -104,6 +104,17 @@ export abstract class BaseSession {
         this.binaryOutput.complete()
     }
 
+    /**
+     * The working directory the shell has already told us about (OSC 7 or its
+     * window title). Synchronous and side-effect free: use it where a
+     * best-effort value is enough (e.g. a recovery-token snapshot) so nothing
+     * ever blocks on [[getWorkingDirectory]]'s native probe, which can take
+     * seconds.
+     */
+    getCachedWorkingDirectory (): string|null {
+        return this.reportedCWD ?? this.titleCWD ?? null
+    }
+
     abstract start (options: unknown): Promise<void>
     abstract resize (columns: number, rows: number): void
     abstract write (data: Buffer): void
