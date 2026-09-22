@@ -150,7 +150,7 @@ export class AppRootComponent {
                     this.app.explodeTab(this.app.activeTab)
                 }
                 if (hotkey === 'combine-tabs' && this.app.activeTab instanceof WorkspaceComponent) {
-                    this.app.combineTabsInto(this.app.activeTab)
+                    void this.app.combineTabsInto(this.app.activeTab)
                 }
             }
             if (hotkey === 'reopen-tab') {

@@ -1166,26 +1166,32 @@ export class AppService {
         return result
     }
 
-    combineTabsInto (into: WorkspaceComponent): void {
-        this.explodeTab(into)
-
+    async combineTabsInto (into: WorkspaceComponent): Promise<void> {
         // Only sessions can live inside a workspace's panes; whole-page hosts
-        // (settings / welcome / release notes) stay where they are.
-        let allChildren: SessionTab[] = []
-        for (const tab of this.tabs) {
-            if (into === tab) {
+        // (settings / welcome / release notes) stay where they are. Detach each
+        // session from its source as we collect it — the old flow handed tabs to
+        // `into` without removing them from the workspace that owned them, so
+        // that workspace kept rendering a session that now lived elsewhere (a
+        // phantom workspace) and a second combine picked the same tab up twice.
+        const children: SessionTab[] = []
+        for (const tab of [...this.tabs]) {
+            if (into === tab || !(tab instanceof WorkspaceComponent)) {
                 continue
             }
-            if (tab instanceof WorkspaceComponent) {
-                allChildren = allChildren.concat(tab.getAllTabs())
+            for (const child of [...tab.getAllTabs()]) {
+                tab.removeTab(child)
+                children.push(child)
             }
         }
 
+        // Lay the collected sessions out next to `into`'s existing ones in a
+        // roughly square grid. The adds are awaited so each split is committed
+        // before the next one references its neighbour as `relative`.
         let x = 1
         let previous: SessionTab|null = null
-        const stride = Math.ceil(Math.sqrt(allChildren.length + 1))
-        for (const child of allChildren) {
-            void into.addTab(child, x ? previous : null, x ? 'r' : 'b')
+        const stride = Math.ceil(Math.sqrt(children.length + 1))
+        for (const child of children) {
+            await into.addTab(child, x ? previous : null, x ? 'r' : 'b')
             previous = child
             x = (x + 1) % stride
         }
