@@ -63,6 +63,10 @@ overrides:
     - error
     - checksVoidReturn: false
     '@typescript-eslint/typedef': off
+    '@typescript-eslint/no-unnecessary-type-assertion': off
+    '@typescript-eslint/explicit-module-boundary-types':
+    - error
+    - allowArgumentsExplicitlyTypedAsAny: true
     '@typescript-eslint/consistent-type-imports': off
     '@typescript-eslint/sort-type-union-intersection-members': off
     '@typescript-eslint/no-use-before-define':
