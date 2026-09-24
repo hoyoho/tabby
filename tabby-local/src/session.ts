@@ -143,9 +143,11 @@ export class Session extends BaseSession {
                 cwd = msysToWindowsPath(cwd)
             }
 
-            if (!fsSync.existsSync(cwd!)) {
+            if (cwd && !fsSync.existsSync(cwd)) {
                 console.warn('Ignoring non-existent CWD:', cwd)
-                cwd = undefined
+                // The remembered/persisted CWD was deleted: fall back to the
+                // user's home directory instead of inheriting the agent's cwd.
+                cwd = process.env.USERPROFILE ?? process.env.HOME ?? undefined
             }
 
             pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], {
