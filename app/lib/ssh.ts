@@ -758,7 +758,7 @@ class SSHConnection {
 
             if (method.type === 'saved-password') {
                 this.emitServiceMessage({ t: 'Using saved password' })
-                const result = await client .authenticateWithPassword(this.authUsername, method.password)
+                const result = await client.authenticateWithPassword(this.authUsername, method.password)
                 if (result instanceof russh.AuthenticatedSSHClient) {
                     return result
                 }
@@ -793,7 +793,7 @@ class SSHConnection {
                     if (promptResult.remember) {
                         this.savedPassword = promptResult.value
                     }
-                    const result = await client .authenticateWithPassword(this.authUsername, promptResult.value)
+                    const result = await client.authenticateWithPassword(this.authUsername, promptResult.value)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
@@ -810,7 +810,7 @@ class SSHConnection {
                     const key = await this.loadPrivateKey(method.name, method.contents)
                     this.emitServiceMessage(`Trying private key: ${method.name}`)
                     this.activePrivateKey = true
-                    const result = await client .authenticateWithKeyPair(this.authUsername, key, null)
+                    const result = await client.authenticateWithKeyPair(this.authUsername, key, null)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
@@ -823,7 +823,7 @@ class SSHConnection {
             if (method.type === 'keyboard-interactive') {
                 kiAttempted = true
                 let state: russh.AuthenticatedSSHClient|russh.KeyboardInteractiveAuthenticationState =
-                    await client .startKeyboardInteractiveAuthentication(this.authUsername)
+                    await client.startKeyboardInteractiveAuthentication(this.authUsername)
                 let kiRounds = 0
 
                 while (true) {
@@ -865,7 +865,7 @@ class SSHConnection {
                         }
                     }
 
-                    state = await client .continueKeyboardInteractiveAuthentication(responses)
+                    state = await client.continueKeyboardInteractiveAuthentication(responses)
 
                     if (state instanceof russh.AuthenticatedSSHClient) {
                         return state
@@ -875,8 +875,8 @@ class SSHConnection {
             if (method.type === 'agent') {
                 try {
                     const result = method.publicKey
-                        ? await client .authenticateWithAgentIdentity(this.authUsername, method, method.publicKey)
-                        : await client .authenticateWithAgent(this.authUsername, method)
+                        ? await client.authenticateWithAgentIdentity(this.authUsername, method, method.publicKey)
+                        : await client.authenticateWithAgent(this.authUsername, method)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }

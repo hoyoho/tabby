@@ -120,7 +120,7 @@ export class TelnetSession extends BaseSession {
         const socket = this.socket = new TelnetSocketProxy()
 
         socket.on('error', err => {
-            this.emitServiceMessage(colors.bgRed.black(' X ') + ` Socket error: ${err }`)
+            this.emitServiceMessage(colors.bgRed.black(' X ') + ` Socket error: ${err}`)
             this.destroy()
         })
         socket.on('close', () => {
