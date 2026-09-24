@@ -864,11 +864,17 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /** @hidden Scrolls the active pane tab into view after the next paint, so a
-     *  just-appended sub-tab has been rendered into the strip. */
+     *  just-appended sub-tab has been rendered into the strip. Re-runs once the
+     *  `pane-tab-in` width animation (260ms) has settled — the first pass
+     *  measures the tab mid-grow and would leave the final 160px tab
+     *  half-hidden. */
     private scheduleScrollActivePaneTabIntoView (pane: Pane): void {
         requestAnimationFrame(() => {
             requestAnimationFrame(() => this.scrollActivePaneTabIntoView(pane))
         })
+        // The duplicated sub-tab animates width 0 -> 160px over 260ms; re-measure
+        // after it settles so the whole chip lands in view.
+        window.setTimeout(() => this.scrollActivePaneTabIntoView(pane), 300)
     }
 
     /**
