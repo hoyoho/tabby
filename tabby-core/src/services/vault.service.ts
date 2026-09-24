@@ -111,12 +111,12 @@ export class VaultService {
     private contentChanged = new Subject<void>()
 
     /** @hidden */
-private constructor (
-          private zone: NgZone,
-          private notifications: NotificationsService,
-          private ngbModal: NgbModal,
-          private translate: TranslateService,
-      ) {
+    private constructor (
+        private zone: NgZone,
+        private notifications: NotificationsService,
+        private ngbModal: NgbModal,
+        private translate: TranslateService,
+    ) {
         this.getPassphrase = serializeFunction(this.getPassphrase.bind(this))
     }
 

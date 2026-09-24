@@ -92,7 +92,7 @@ export class TabHeaderComponent extends BaseComponent {
             return
         }
         const loc = this.config.store.appearance.tabsLocation
-        this.dragAxis = (loc === 'left' || loc === 'right') ? 'y' : 'x'
+        this.dragAxis = loc === 'left' || loc === 'right' ? 'y' : 'x'
         this.dragStripRect = strip.getBoundingClientRect()
         this.dragPlaceholder = placeholder
         const pr = placeholder.getBoundingClientRect()
@@ -169,7 +169,7 @@ export class TabHeaderComponent extends BaseComponent {
                 shift = size
             }
             el.style.transform = shift
-                ? (horizontal ? `translate3d(${shift}px,0,0)` : `translate3d(0,${shift}px,0)`)
+                ? horizontal ? `translate3d(${shift}px,0,0)` : `translate3d(0,${shift}px,0)`
                 : ''
         })
     }
@@ -268,13 +268,13 @@ export class TabHeaderComponent extends BaseComponent {
         // same-window drop already re-ordered it (endWorkspaceNativeDrag
         // re-shows), a cross-window drop destroys this copy on commit.
         if (event.dataTransfer?.dropEffect !== 'move') {
-            ;(event.currentTarget as HTMLElement).classList.remove('ws-dragging')
+            (event.currentTarget as HTMLElement).classList.remove('ws-dragging')
         }
         this.app.emitTabDragEnded()
         this.app.endWorkspaceNativeDrag(this.tab, event.dataTransfer?.dropEffect)
     }
 
-    onTabDragEnd (event?: any) {
+    onTabDragEnd () {
         // By the time `ended` fires, CDK has already destroyed the placeholder
         // and parked the header back at its original slot; `dropped` follows in
         // the same task (onTabDropped) and applies the reorder. Just snap the

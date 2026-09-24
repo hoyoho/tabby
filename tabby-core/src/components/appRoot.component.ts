@@ -298,15 +298,15 @@ export class AppRootComponent {
         if (this.hasVerticalTabs()) { return }
         const el = this.tabsScroll?.nativeElement
         if (!el) { return }
-        const active = el.querySelector('tab-header.active') as HTMLElement | null
+        const active = el.querySelector('tab-header.active')
         if (!active) { return }
         const elRect = el.getBoundingClientRect()
         const tabRect = active.getBoundingClientRect()
         const pad = 8
         if (tabRect.left < elRect.left) {
-            el.scrollLeft -= (elRect.left - tabRect.left) + pad
+            el.scrollLeft -= elRect.left - tabRect.left + pad
         } else if (tabRect.right > elRect.right) {
-            el.scrollLeft += (tabRect.right - elRect.right) + pad
+            el.scrollLeft += tabRect.right - elRect.right + pad
         }
     }
 

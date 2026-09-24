@@ -205,6 +205,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         } catch (e) {
             this.restoreConnectionId = null
             this.restoreChannelId = null
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (this.noRetryOnFailure) {
                 // A fresh connection already failed with full auth UX —
                 // retrying would just reconnect and prompt all over again.
@@ -214,9 +215,9 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             }
             try {
                 await this.initializeSessionMaybeMultiplex(false)
-            } catch (e) {
-                console.error('SSH session initialization failed', e)
-                this.write(colors.black.bgRed(' X ') + ' ' + colors.red(e.message) + '\r\n')
+            } catch (err) {
+                console.error('SSH session initialization failed', err)
+                this.write(colors.black.bgRed(' X ') + ' ' + colors.red(err.message) + '\r\n')
                 return
             }
         }
@@ -224,14 +225,14 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
 
     async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<RecoveryToken> {
         return {
-            ...(await super.getRecoveryToken(options)),
+            ...await super.getRecoveryToken(options),
             // The live connection id travels with EVERY token (not just state
             // transfers): a duplicate/clone then attaches to the already-
             // authenticated connection even after the profile's auth mode was
             // switched — no re-prompt while the old connection lives. When it
             // is gone, attach fails and the new mode authenticates fresh.
             sshConnectionId: this.sshSession?.getID() ?? null,
-            shellChannelId: options?.includeState && this.session?.getID() || null,
+            shellChannelId: (options?.includeState && this.session?.getID()) ?? null,
         }
     }
 

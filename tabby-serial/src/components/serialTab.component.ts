@@ -86,7 +86,7 @@ export class SerialTabComponent extends ConnectableTerminalTabComponent<SerialPr
     override async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<any> {
         return {
             ...await super.getRecoveryToken(options),
-            portId: options?.includeState && this.session?.getID() || null,
+            portId: (options?.includeState && this.session?.getID()) ?? null,
         }
     }
 

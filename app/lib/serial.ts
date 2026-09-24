@@ -93,6 +93,7 @@ export class SerialManager {
             const id = uuidv4().toString()
             event.returnValue = id
             const conn = new SerialConnection(id, app, options)
+            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             conn.bindCleanup(() => delete this.connections[id])
             conn.attachers.add(event.sender.id)
             this.connections[id] = conn

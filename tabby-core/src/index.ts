@@ -67,12 +67,12 @@ import { AppMenuProvider } from './menu'
 const ngbModalRefPrototype = NgbModalRef.prototype as any
 if (typeof ngbModalRefPrototype._removeModalElements === 'function') {
     const originalRemoveModalElements = ngbModalRefPrototype._removeModalElements
-    ngbModalRefPrototype._removeModalElements = function (this: any) {
+    ngbModalRefPrototype._removeModalElements = function (this: any, ...args: any[]) {
         if (this._tabbyModalRemoving) {
             return
         }
         this._tabbyModalRemoving = true
-        originalRemoveModalElements.apply(this, arguments)
+        originalRemoveModalElements.apply(this, args)
     }
 }
 

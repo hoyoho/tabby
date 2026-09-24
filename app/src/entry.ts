@@ -66,7 +66,7 @@ ipcRenderer.once('start', async (_$event, bootstrapData: BootstrapData) => {
 
     initModuleLookup(bootstrapData.userPluginsPath)
 
-    let plugins = await findPlugins()
+    const plugins = await findPlugins()
     bootstrapData.installedPlugins = plugins
 
     console.log('Starting with plugins:', plugins)

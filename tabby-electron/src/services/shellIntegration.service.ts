@@ -29,6 +29,7 @@ export class ShellIntegrationService {
         'Software\\Classes\\Directory\\Background\\shell\\Tabby',
         'Software\\Classes\\Directory\\shell\\Tabby',
     ]
+
     private pasteLocation = 'Software\\Classes\\*\\shell\\Tabby'
     private folderPasteLocation = 'Software\\Classes\\Directory\\shell\\TabbyPaste'
 
@@ -154,6 +155,7 @@ export class ShellIntegrationService {
         const entries: MenuEntry[] = []
         const seen = new Set<string>()
         for (const shell of shells) {
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             if (shell.hidden || shell.id === 'default' || seen.has(shell.id)) {
                 continue
             }

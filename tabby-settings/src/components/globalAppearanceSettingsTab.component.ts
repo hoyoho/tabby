@@ -96,8 +96,8 @@ export class GlobalAppearanceSettingsTabComponent extends BaseComponent {
         const computed = getComputedStyle(document.documentElement)
         for (const [source, cssText] of sources) {
             regexp.lastIndex = 0
-            let match: RegExpExecArray|null
-            while ((match = regexp.exec(cssText))) {
+            let match: RegExpExecArray|null = null
+            while (match = regexp.exec(cssText)) {
                 if (match[1].startsWith('--bs-') || match[1].startsWith('--icon-')) {
                     continue
                 }

@@ -27,7 +27,7 @@ const COLOR_NAMES = [
  * Returns null if the string cannot be parsed.
  */
 function parseColor (color: string): { r: number, g: number, b: number, a: number } | null {
-    const m = color.match(/^#([0-9a-f]{3,8})$/i)
+    const m = /^#([0-9a-f]{3,8})$/i.exec(color)
     if (!m) {
         return null
     }
@@ -1052,10 +1052,10 @@ export class XTermFrontend extends Frontend {
             wraparound: this.xterm.modes.wraparoundMode,
             reverseWraparound: this.xterm.modes.reverseWraparoundMode,
             cursorHidden: core?.coreService?.isCursorHidden ?? false,
-            ...(typeof scrollTop === 'number' && typeof scrollBottom === 'number'
+            ...typeof scrollTop === 'number' && typeof scrollBottom === 'number'
                 && (scrollTop !== 0 || scrollBottom !== this.xterm.rows - 1)
                 ? { scrollRegion: [scrollTop, scrollBottom] as [number, number] }
-                : {}),
+                : {},
         }
     }
 
@@ -1114,6 +1114,7 @@ export class XTermFrontend extends Frontend {
         if (!m.wraparound) { seq += '\x1b[?7l' }
         if (m.reverseWraparound) { seq += '\x1b[?45h' }
         switch (m.mouseProtocol) {
+            case 'none': break
             case 'x10': seq += '\x1b[?9h'; break
             case 'vt200': seq += '\x1b[?1000h'; break
             case 'drag': seq += '\x1b[?1002h'; break

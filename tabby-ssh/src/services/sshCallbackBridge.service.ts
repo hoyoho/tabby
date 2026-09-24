@@ -17,17 +17,15 @@ import { SSHKnownHostsService } from './sshKnownHosts.service'
 @Injectable({ providedIn: 'root' })
 export class SSHCallbackBridgeService {
     private sessions = new Map<string, SSHSession>()
-    private injector: Injector
-    private ngbModal: NgbModal
-    private translate: TranslateService
-    private config: ConfigService
-    private passwordStorage: PasswordStorageService
-    private knownHosts: SSHKnownHostsService
-    private fileProviders: FileProvidersService
-    private notifications: NotificationsService
+    private ngbModal?: NgbModal
+    private translate?: TranslateService
+    private config?: ConfigService
+    private passwordStorage?: PasswordStorageService
+    private knownHosts?: SSHKnownHostsService
+    private fileProviders?: FileProvidersService
+    private notifications?: NotificationsService
 
-    constructor (injector: Injector) {
-        this.injector = injector
+    constructor (private injector: Injector) {
         // Lazy service resolution: this service may be instantiated during
         // Angular bootstrap where eager injection could hit NullInjector.
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
@@ -100,6 +98,7 @@ export class SSHCallbackBridgeService {
                 case 'retrieve-file': {
                     try {
                         const contents = await this.getFileProviders().retrieveFile(args[0].path)
+                        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                         result = contents ? Array.from(contents) : null
                     } catch {
                         result = null
@@ -155,8 +154,8 @@ export class SSHCallbackBridgeService {
     private async handleKeyboardInteractive (connId: string, payload: {
         name: string
         instruction: string
-        prompts: Array<{ prompt: string, echo?: boolean }>
-        prefill: Array<string|null>
+        prompts: { prompt: string, echo?: boolean }[]
+        prefill: (string|null)[]
     }): Promise<string[]> {
         const session = this.getSession(connId)
         const prompt = new KeyboardInteractivePrompt(
@@ -164,7 +163,7 @@ export class SSHCallbackBridgeService {
             payload.instruction,
             payload.prompts,
         )
-        payload.prefill?.forEach((value, index) => {
+        payload.prefill.forEach((value, index) => {
             if (value !== null) {
                 prompt.responses[index] = value
             }

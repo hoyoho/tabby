@@ -28,7 +28,7 @@ export class ColorPickerComponent implements OnDestroy {
     }
 
     ngOnDestroy (): void {
-        this.domObserver?.disconnect()
+        this.domObserver.disconnect()
         if (this.rafId !== null) {
             cancelAnimationFrame(this.rafId)
         }
@@ -70,7 +70,7 @@ export class ColorPickerComponent implements OnDestroy {
     }
 
     private findPanelInput (): HTMLInputElement | null {
-        return document.querySelector('ngx-colors-panel .g-input input') as HTMLInputElement | null
+        return document.querySelector('ngx-colors-panel .g-input input')
     }
 
     private applyInputColor (input: HTMLInputElement): void {
@@ -105,6 +105,7 @@ export class ColorPickerComponent implements OnDestroy {
         if (!value) {
             return null
         }
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!this.colorProbe) {
             this.colorProbe = document.createElement('div')
         }

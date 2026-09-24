@@ -275,7 +275,7 @@ const CONFIG_MIGRATIONS: AnyConfigMigration[] = [
             const appearance = config.appearance ??= {}
             if (typeof appearance.vibrancy === 'boolean') {
                 appearance.vibrancy = appearance.vibrancy
-                    ? (config.hacks?.enableFluentBackground ? 'acrylic' : 'blur')
+                    ? config.hacks?.enableFluentBackground ? 'acrylic' : 'blur'
                     : 'off'
             }
             delete appearance.vibrancyType

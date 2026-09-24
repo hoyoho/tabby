@@ -127,7 +127,7 @@ async function parseSSHConfigFile (
         mtime = (await fs.stat(filePath)).mtimeMs
         raw = await fs.readFile(filePath, 'utf8')
     } catch (err) {
-        if ((err as NodeJS.ErrnoException)?.code !== 'ENOENT') {
+        if ((err as { code?: string }).code !== 'ENOENT') {
             console.error(`Error reading SSH config file: ${filePath}`, err)
         }
         return { config: SSHConfig.parse(''), mtime: 0 }

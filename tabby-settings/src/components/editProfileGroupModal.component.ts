@@ -19,7 +19,7 @@ export class EditProfileGroupModalComponent<G extends ProfileGroup> {
     @Input() group: G & ConfigProxy<G>
     @Input() providers: ProfileProvider<Profile>[]
     @Input() selectedParentGroup: PartialProfileGroup<ProfileGroup> | undefined
-groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
+    groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
 
     getValidParents (groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[], targetId: string): (PartialProfileGroup<ProfileGroup> & { displayName: string })[] {
         // Build a quick lookup: parentGroupId -> [child groups]
@@ -95,9 +95,10 @@ groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
      * and only write through when the user actually picks a color.
      */
     get colorPickerValue (): string {
-        const color = this.group?.color
+        const color = this.group.color
         return color && /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#000000'
     }
+
     set colorPickerValue (color: string) {
         this.group.color = color
     }
@@ -106,7 +107,10 @@ groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
         text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(q => this.groups.filter(g => !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase()))),
+            map(q => this.groups.filter(g => {
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                return !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase())
+            })),
         )
 
     groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => (g as any).displayName ?? g.name
@@ -118,7 +122,7 @@ groups: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]
         )
 
     async save () {
-        if (!this.group.name?.trim()) {
+        if (!this.group.name.trim()) {
             this.group.name = this.translate.instant('Untitled group')
         }
 

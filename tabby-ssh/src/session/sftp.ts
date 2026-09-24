@@ -39,7 +39,7 @@ export class SFTPFileHandle {
     ) { }
 
     async read (): Promise<Uint8Array> {
-        return await ipcRenderer.invoke('ssh:sftp-handle-read', this.connId, this.sftpId, this.id)
+        return ipcRenderer.invoke('ssh:sftp-handle-read', this.connId, this.sftpId, this.id)
     }
 
     async write (chunk: Uint8Array): Promise<void> {

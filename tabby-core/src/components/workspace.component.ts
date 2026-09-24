@@ -330,7 +330,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.dragEnterListener = (event: DragEvent) => this.paneDrag.onNativeDragEnter(event)
         this.dragLeaveListener = (event: DragEvent) => {
             if (!this.isActiveWorkspace) { return }
-            if (!event.dataTransfer || !event.dataTransfer.types?.includes(TABBY_DRAG_MIME)) { return }
+            if (!event.dataTransfer || !event.dataTransfer.types.includes(TABBY_DRAG_MIME)) { return }
             // The pointer left this window (another Electron window, the
             // desktop, or another app): the last dragover hint is now stale.
             // Inter-element moves inside this document do NOT leave the window
@@ -844,7 +844,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // `.focused` class: the class is applied by Angular's [class.focused]
         // binding, which may not have re-run when `focus` is invoked from a
         // drag-commit handler outside the Angular zone.
-        const activeTab = pane.activeTab ?? pane.tabs[0]
+        const firstTab = pane.tabs.length > 0 ? pane.tabs[0] : null
+        const activeTab = pane.activeTab ?? firstTab
         if (!activeTab) { return }
         const tabIdx = pane.tabs.indexOf(activeTab)
         if (tabIdx < 0) { return }
@@ -855,9 +856,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const tabRect = active.getBoundingClientRect()
         const pad = 8
         if (tabRect.left < elRect.left) {
-            el.scrollLeft -= (elRect.left - tabRect.left) + pad
+            el.scrollLeft -= elRect.left - tabRect.left + pad
         } else if (tabRect.right > elRect.right) {
-            el.scrollLeft += (tabRect.right - elRect.right) + pad
+            el.scrollLeft += tabRect.right - elRect.right + pad
         }
         this.paneTabScrollLeft.set(pane, el.scrollLeft)
     }
@@ -880,7 +881,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         const scrolls = this.paneTabScrolls?.toArray() ?? []
         this.paneTabsOverflowing.clear()
         headers.forEach((header, i) => {
-            const el = scrolls[i]?.nativeElement
+            const scrolled = i < scrolls.length ? scrolls[i] : undefined
+            const el = scrolled?.nativeElement
             if (!el) { return }
             // A 1px tolerance rounds off sub-pixel jitter from flex layout.
             if (el.scrollWidth > el.clientWidth + 1) {
@@ -945,6 +947,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         if (tab.disableDynamicTitle) {
             return tab.getProfile()?.name ?? tab.title
         }
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         return tab.title || tab.getProfile()?.name || ''
     }
 
@@ -1039,7 +1042,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         ])
         const closeLabel = this.translate.instant('Close')
         const isCloseFamily = (item: { id?: string, label?: string }): boolean =>
-            (item.id !== undefined && closeFamilyIds.has(item.id)) || item.label === closeLabel
+            item.id !== undefined && closeFamilyIds.has(item.id) || item.label === closeLabel
         const closeFamily = items.filter(isCloseFamily)
         if (closeFamily.length) {
             items = items.filter(item => !isCloseFamily(item))
@@ -1051,10 +1054,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
     }
 
-/* ------------------------------------------------------------------ */
-/* Native (HTML5/system DnD) pane-tab drag                             */
-/* (gesture logic lives in PaneDragController)                          */
-/* ------------------------------------------------------------------ */
+    /* ------------------------------------------------------------------ */
+    /* Native (HTML5/system DnD) pane-tab drag                             */
+    /* (gesture logic lives in PaneDragController)                          */
+    /* ------------------------------------------------------------------ */
 
     /** @hidden */
     onPaneTabDragStart (event: DragEvent, tab: SessionTab): void {
@@ -1233,7 +1236,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     paneHit (x: number, y: number): PaneHit|null {
         const host = this.hostElement()
         const cells = this._paneCells
-        if (!host || !cells?.length) {
+        if (!host || !cells.length) {
             return null
         }
         const origin = host.getBoundingClientRect()
@@ -1277,7 +1280,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     headerHit (x: number, y: number): { pane: Pane, targetIndex: number, lineX: number, headerRect: { left: number, top: number, width: number, height: number }, bodyRect: { left: number, top: number, width: number, height: number } }|null {
         const host = this.hostElement()
         const cells = this._paneCells
-        if (!host || !cells?.length) {
+        if (!host || !cells.length) {
             return null
         }
         const origin = host.getBoundingClientRect()
@@ -1474,6 +1477,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // but paneHit needs them to hit-test the panes — call it before
         // ngAfterViewInit and it throws on the null viewContainer, aborting the
         // whole drop and leaving a dangling empty workspace.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!this.viewContainer) {
             await this.initialized$.toPromise()
         }
@@ -1544,6 +1548,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     async addSessionAt (tab: SessionTab, zone: { pane: Pane, side: SplitDirection|'all' }): Promise<void> {
         if (zone.side === 'all') {
             const pane = zone.pane
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (!pane || pane.tabs.includes(tab)) {
                 return
             }

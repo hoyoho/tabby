@@ -57,7 +57,7 @@ export class MenuActionAdapter extends ActionProvider {
                     label: menu.label,
                     // Store original English name for target matching
                     // (separate from display label which may be translated)
-                    ...(menu.name ? { name: menu.name } : {}),
+                    ...menu.name ? { name: menu.name } : {},
                     weight: (menu.weight ?? 0) + provider.weight,
                     surfaces: [ActionSurface.Menu],
                     run: () => undefined,
@@ -192,7 +192,7 @@ function menuShapeOf (item: MenuItemOptions): any {
         // 'submenu' is likewise presentation-only: the legacy parent passes
         // `type: undefined + submenu` while the registry rewrites it to
         // 'submenu'; presence is already encoded by the submenu field itself.
-        type: item.type === 'submenu' ? 'normal' : (item.type ?? 'normal'),
+        type: item.type === 'submenu' ? 'normal' : item.type ?? 'normal',
         label: item.label ?? '',
         sublabel: item.sublabel,
         commandLabel: item.commandLabel,

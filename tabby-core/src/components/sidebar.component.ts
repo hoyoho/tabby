@@ -100,7 +100,7 @@ export class AppSidebarComponent {
     /** The panel to render, falling back to the first when the stored one is gone. */
     get activePanel (): SidebarPanelRef|null {
         const panels = this.panels
-        return panels.find(p => p.id === this.activePanelId) ?? panels[0] ?? null
+        return panels.find(p => p.id === this.activePanelId) ?? (panels.length > 0 ? panels[0] : null)
     }
 
     /**
@@ -202,14 +202,11 @@ export class AppSidebarComponent {
         if (this.widthCache.has(panel.id)) {
             return this.widthCache.get(panel.id)!
         }
-        let width: number
-        if (panel.id === PROFILES_PANEL_ID) {
-            // Migrate the pre-per-panel keys for the built-in tree.
-            width = parseInt(window.localStorage.sidebarWidth ?? window.localStorage.profileTreeWidth ?? String(panel.defaultWidth))
-        } else {
-            const stored = window.localStorage[`sidebarWidth:${panel.id}`]
-            width = stored != null ? parseInt(stored) : panel.defaultWidth
-        }
+        // Migrate the pre-per-panel keys for the built-in tree.
+        const rawStored = panel.id === PROFILES_PANEL_ID
+            ? window.localStorage.sidebarWidth ?? window.localStorage.profileTreeWidth ?? String(panel.defaultWidth)
+            : window.localStorage[`sidebarWidth:${panel.id}`] ?? String(panel.defaultWidth)
+        const width = parseInt(rawStored)
         this.widthCache.set(panel.id, width)
         return width
     }

@@ -65,9 +65,10 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
      * and only write through when the user actually picks a color.
      */
     get colorPickerValue (): string {
-        const color = this.profile?.color
+        const color = this.profile.color
         return color && /^#[0-9a-fA-F]{6}$/.test(color) ? color : '#000000'
     }
+
     set colorPickerValue (color: string) {
         this.profile.color = color
     }
@@ -93,7 +94,10 @@ export class EditProfileModalComponent<P extends Profile, PP extends ProfileProv
         text$.pipe(
             debounceTime(200),
             distinctUntilChanged(),
-            map(q => this.groups.filter(g => !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase()))),
+            map(q => this.groups.filter(g => {
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+                return !q || (g.displayName ?? g.name).toLowerCase().includes(q.toLowerCase())
+            })),
         )
 
     groupFormatter = (g: PartialProfileGroup<ProfileGroup>) => (g as any).displayName ?? g.name

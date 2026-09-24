@@ -157,9 +157,11 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
             }
         }
         if (auth && auth !== 'publicKey') {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             for (const ref of this.profile.options.privateKeys ?? []) {
                 try {
                     const contents = await this.fileProviders.retrieveFile(ref)
+                    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                     if (!contents) {
                         continue
                     }

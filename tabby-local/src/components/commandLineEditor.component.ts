@@ -42,7 +42,8 @@ export class CommandLineEditorComponent {
     updateCommand () {
         this.command = shellQuote.quote([
             this.model.command,
-            ...(this.model.args ?? []),
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            ...this.model.args ?? [],
         ])
     }
 

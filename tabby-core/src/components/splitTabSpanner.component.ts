@@ -45,13 +45,13 @@ export class SplitTabSpannerComponent extends SelfPositioningComponent {
         })
 
         this.el.addEventListener('mousedown', (e: MouseEvent) => {
-            if (e.button !== 0) return
+            if (e.button !== 0) { return }
 
             const c = this.container
             const vertical = c.orientation === 'v'
             const axis: 'w'|'h' = vertical ? 'h' : 'w'
             const totalPx = c.axisPx
-            if (!totalPx) return
+            if (!totalPx) { return }
 
             this.isActive = true
             this.resizing.emit(true)
@@ -101,7 +101,7 @@ export class SplitTabSpannerComponent extends SelfPositioningComponent {
                 const offset = clampedOffset(event)
                 if (Math.abs(offset) >= 1) {
                     const newBefore = before0 + offset
-                    c.ratios[this.index - 1] = (newBefore / (before0 + after0)) * totalRatio
+                    c.ratios[this.index - 1] = newBefore / (before0 + after0) * totalRatio
                     c.ratios[this.index] = totalRatio - c.ratios[this.index - 1]
                 }
                 this.change.emit()

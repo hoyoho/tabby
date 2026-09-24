@@ -470,7 +470,7 @@ export class PaneDragController {
                     x: hr.left + pad,
                     y: hr.top + pad,
                     w: hr.width - pad * 2,
-                    h: (br.top + br.height) - hr.top - pad * 2,
+                    h: br.top + br.height - hr.top - pad * 2,
                 })
                 this.lastZone = { type: 'pane', pane: header.pane, side: 'all' }
                 return true
@@ -531,7 +531,7 @@ export class PaneDragController {
         // have no local state and are never suppressed.
         const dragged = this.state?.tab
         if (dragged && hit.pane === this.host.getPaneOf(dragged)) {
-            const singleTabPane = (hit.pane?.tabs.length ?? 1) <= 1
+            const singleTabPane = hit.pane.tabs.length <= 1
             if (hit.side === 'all' || singleTabPane) {
                 this.host.setDragHint(null)
                 this.lastZone = null
@@ -573,7 +573,7 @@ export class PaneDragController {
         // (The `sourcePane === target.pane` check short-circuits before
         // `sourcePane.tabs` could dereference a null source pane.)
         const sourcePane = this.host.getPaneOf(tab)
-        if (target.side !== 'all' && sourcePane === target.pane && (sourcePane?.tabs.length ?? 1) <= 1) {
+        if (target.side !== 'all' && sourcePane === target.pane && sourcePane.tabs.length <= 1) {
             this.host.cleanRoot()
             return
         }
@@ -594,9 +594,9 @@ export class PaneDragController {
         }
         const dragId = generateDragId()
         const profile = {
-            ...(tab.getProfile() ?? {}),
+            ...tab.getProfile() ?? {},
             options: {
-                ...(tab.getProfile()?.options ?? {}),
+                ...tab.getProfile()?.options ?? {},
                 restoreFromPTYID: (tab as any).session?.getID?.() ?? null,
             },
         }
@@ -688,7 +688,7 @@ export class PaneDragController {
      * flows through untouched.
      */
     onNativeDragOver (event: DragEvent): void {
-        if (!event.dataTransfer || !event.dataTransfer.types?.includes(TABBY_DRAG_MIME)) {
+        if (!event.dataTransfer || !event.dataTransfer.types.includes(TABBY_DRAG_MIME)) {
             return
         }
         if (!this.host.isActiveWorkspace) {
@@ -706,7 +706,7 @@ export class PaneDragController {
      * hit-test so the cursor is `move` from the moment the pointer enters.
      */
     onNativeDragEnter (event: DragEvent): void {
-        if (!event.dataTransfer || !event.dataTransfer.types?.includes(TABBY_DRAG_MIME)) {
+        if (!event.dataTransfer || !event.dataTransfer.types.includes(TABBY_DRAG_MIME)) {
             return
         }
         if (!this.host.isActiveWorkspace) {
@@ -851,7 +851,7 @@ export class PaneDragController {
         this.state = null
         this.removeDragEndFallback()
         this.host.keepSessionAlive(tab, true)
-        void tab.destroy()
+        tab.destroy()
         this.host.cleanRoot()
     }
 

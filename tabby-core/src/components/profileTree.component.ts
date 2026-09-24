@@ -529,7 +529,7 @@ export class ProfileTreeComponent extends BaseComponent {
     }
 
     private optionsOf (profile: unknown): { host?: string, user?: string, port?: number, type?: string } {
-        return (profile as { options?: { host?: string, user?: string, port?: number } })?.options ?? {}
+        return (profile as { options?: { host?: string, user?: string, port?: number } }).options ?? {}
     }
 
     get previewInfo (): ConnectionPanelInfo|null {
@@ -542,12 +542,14 @@ export class ProfileTreeComponent extends BaseComponent {
         // the raw type id.
         const provider = this.profilesService.providerForProfile(profile)
         return {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             name: profile.name ?? '',
             host: options.host ?? '',
             // No SSH-style default here: a profile that carries no port simply
             // has no port row (local/serial profiles, say).
             port: options.port != null ? String(options.port) : '',
-            protocol: provider ? this.translate.instant(provider.name) : (profile.type ?? ''),
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            protocol: provider ? this.translate.instant(provider.name) : profile.type ?? '',
             user: options.user ?? '',
             connected: null,
         }
@@ -573,6 +575,7 @@ export class ProfileTreeComponent extends BaseComponent {
             return null
         }
         return {
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             name: profile?.name || tab.title || '',
             host: options.host,
             user: options.user ?? '',

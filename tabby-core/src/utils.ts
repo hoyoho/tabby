@@ -15,6 +15,15 @@ export const WIN_BUILD_FLUENT_BG_SUPPORTED = 17134
 
 export type VibrancyStyle = 'off'|'blur'|'acrylic'
 
+export function getWindows10Build (): number|undefined {
+    return process.platform === 'win32' && parseFloat(os.release()) >= 10 ? parseInt(os.release().split('.')[2]) : undefined
+}
+
+export function isWindowsBuild (build: number): boolean {
+    const b = getWindows10Build()
+    return b !== undefined && b >= build
+}
+
 /**
  * The vibrancy style the current machine can actually render.
  *
@@ -30,15 +39,6 @@ export function resolveVibrancyStyle (style: VibrancyStyle|undefined|null): Vibr
         return 'acrylic'
     }
     return style
-}
-
-export function getWindows10Build (): number|undefined {
-    return process.platform === 'win32' && parseFloat(os.release()) >= 10 ? parseInt(os.release().split('.')[2]) : undefined
-}
-
-export function isWindowsBuild (build: number): boolean {
-    const b = getWindows10Build()
-    return b !== undefined && b >= build
 }
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types

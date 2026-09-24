@@ -43,6 +43,7 @@ export class ActionRegistry {
         const ordered: Action[] = []
 
         for (const list of lists) {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             for (const action of list ?? []) {
                 if (!action.surfaces.includes(surface)) {
                     continue

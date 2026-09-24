@@ -49,6 +49,7 @@ export class ThemesService {
         return this.config.store ?? this.config.getDefaults()
     }
 
+    // eslint-disable-next-line max-statements
     private applyThemeVariables () {
         if (!this.findCurrentTheme().followsColorScheme) {
             document.documentElement.style.cssText = this.rootElementStyleBackup
@@ -285,7 +286,8 @@ export class ThemesService {
     }
 
     private getGlobalStyleProviderList (): GlobalStyleProvider[] {
-        return this.globalStyleProviders == null ? [] : (Array.isArray(this.globalStyleProviders) ? this.globalStyleProviders : [this.globalStyleProviders])
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        return this.globalStyleProviders == null ? [] : Array.isArray(this.globalStyleProviders) ? this.globalStyleProviders : [this.globalStyleProviders]
     }
 
     /**

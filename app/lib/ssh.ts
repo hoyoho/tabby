@@ -308,7 +308,7 @@ class SSHConnection {
     private pendingCallbacks = new Map<string, PendingCallback>()
     private forwardedPorts: ForwardedPort[] = []
     private savedPassword?: string
-    private graceTimer: NodeJS.Timeout|null = null
+    private graceTimer: ReturnType<typeof setTimeout>|null = null
     private destroying = false
     /** Set when the user dismissed an auth prompt — the connect failure is a cancellation, not a rejection. */
     private userCancelledAuthentication = false
@@ -406,6 +406,7 @@ class SSHConnection {
         const options = this.options
         const allAuthMethods = await this.initAuthMethods()
 
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!options.algorithms) {
             throw new Error('No algorithms configured')
         }
@@ -585,7 +586,7 @@ class SSHConnection {
                 }
             } else {
                 // Auto key discovery stays renderer-side (plugin importers).
-                const keys: Array<{ name: string, contents: ArrayLike<number> }> = await this.request('locate-private-keys')
+                const keys: { name: string, contents: ArrayLike<number> }[] = await this.request('locate-private-keys')
                 for (const key of keys) {
                     methods.push({ type: 'publickey', name: key.name, contents: Buffer.from(key.contents) })
                 }
@@ -602,6 +603,7 @@ class SSHConnection {
                         const pubKeyPath = pk.endsWith('.pub') ? pk : pk + '.pub'
                         const pubKeyContent = await this.request('retrieve-file', { path: pubKeyPath })
                         if (pubKeyContent) {
+                            // eslint-disable-next-line max-depth
                             try {
                                 const publicKey = russh.parsePublicKey(Buffer.from(pubKeyContent).toString('utf-8'))
                                 methods.push({ type: 'agent', ...spec, publicKey } as AuthMethod)
@@ -657,6 +659,7 @@ class SSHConnection {
             } else if (agentType === 'pageant') {
                 return { kind: 'pageant' }
             } else {
+                // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
                 return { kind: 'named-pipe', path: this.config.agentPath || WINDOWS_OPENSSH_AGENT_PIPE }
             }
         } else {
@@ -704,7 +707,7 @@ class SSHConnection {
 
     // eslint-disable-next-line max-statements
     private async handleAuth (allAuthMethods: AuthMethod[]): Promise<russh.AuthenticatedSSHClient|null> {
-        let client = this.client
+        const client = this.client
         if (!(client instanceof russh.SSHClient)) {
             throw new Error('Wrong state for auth handling')
         }
@@ -755,7 +758,7 @@ class SSHConnection {
 
             if (method.type === 'saved-password') {
                 this.emitServiceMessage({ t: 'Using saved password' })
-                const result = await (client as russh.SSHClient).authenticateWithPassword(this.authUsername!, method.password)
+                const result = await client .authenticateWithPassword(this.authUsername, method.password)
                 if (result instanceof russh.AuthenticatedSSHClient) {
                     return result
                 }
@@ -790,7 +793,7 @@ class SSHConnection {
                     if (promptResult.remember) {
                         this.savedPassword = promptResult.value
                     }
-                    const result = await (client as russh.SSHClient).authenticateWithPassword(this.authUsername!, promptResult.value)
+                    const result = await client .authenticateWithPassword(this.authUsername, promptResult.value)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
@@ -807,7 +810,7 @@ class SSHConnection {
                     const key = await this.loadPrivateKey(method.name, method.contents)
                     this.emitServiceMessage(`Trying private key: ${method.name}`)
                     this.activePrivateKey = true
-                    const result = await (client as russh.SSHClient).authenticateWithKeyPair(this.authUsername!, key, null)
+                    const result = await client .authenticateWithKeyPair(this.authUsername, key, null)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
@@ -820,7 +823,7 @@ class SSHConnection {
             if (method.type === 'keyboard-interactive') {
                 kiAttempted = true
                 let state: russh.AuthenticatedSSHClient|russh.KeyboardInteractiveAuthenticationState =
-                    await (client as russh.SSHClient).startKeyboardInteractiveAuthentication(this.authUsername!)
+                    await client .startKeyboardInteractiveAuthentication(this.authUsername)
                 let kiRounds = 0
 
                 while (true) {
@@ -844,7 +847,7 @@ class SSHConnection {
                         }
                         // Keyboard-interactive never reuses cached credentials:
                         // every answer is typed in fresh by the user.
-                        const prefill: Array<string|null> = prompts.map(() => null)
+                        const prefill: (string|null)[] = prompts.map(() => null)
 
                         try {
                             responses = await this.request('keyboard-interactive', {
@@ -854,6 +857,7 @@ class SSHConnection {
                                 prefill,
                             })
                         } catch (e) {
+                            // eslint-disable-next-line max-depth
                             if (e instanceof Error && e.message === 'Keyboard-interactive auth rejected') {
                                 this.userCancelledAuthentication = true
                             }
@@ -861,7 +865,7 @@ class SSHConnection {
                         }
                     }
 
-                    state = await (client as russh.SSHClient).continueKeyboardInteractiveAuthentication(responses)
+                    state = await client .continueKeyboardInteractiveAuthentication(responses)
 
                     if (state instanceof russh.AuthenticatedSSHClient) {
                         return state
@@ -871,8 +875,8 @@ class SSHConnection {
             if (method.type === 'agent') {
                 try {
                     const result = method.publicKey
-                        ? await (client as russh.SSHClient).authenticateWithAgentIdentity(this.authUsername!, method, method.publicKey)
-                        : await (client as russh.SSHClient).authenticateWithAgent(this.authUsername!, method)
+                        ? await client .authenticateWithAgentIdentity(this.authUsername, method, method.publicKey)
+                        : await client .authenticateWithAgent(this.authUsername, method)
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
@@ -1047,6 +1051,7 @@ class SSHConnection {
         })
 
         client.x11ChannelOpen$.subscribe(async event => {
+            // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
             const displaySpec = (this.config.x11Display || process.env.DISPLAY) ?? 'localhost:0'
 
             if (!(this.client instanceof russh.AuthenticatedSSHClient)) {
@@ -1336,6 +1341,7 @@ class SSHConnection {
 
     /** Starts the abandoned-connection countdown (no-op if attachers remain). */
     armGrace (): void {
+        // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
         if (this.graceTimer || this.closed || this.attachers.size || this.dependents.size) {
             return
         }
@@ -1345,7 +1351,7 @@ class SSHConnection {
                 this.destroy()
             }
         }, GRACE_PERIOD_MS)
-        this.graceTimer.unref?.()
+        this.graceTimer.unref()
     }
 
     destroy (): void {
@@ -1545,6 +1551,7 @@ export class SSHConnectionManager {
     }
 
     dropConnection (id: string): void {
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
         delete this.connections[id]
     }
 

@@ -109,8 +109,8 @@ export class Window {
             Object.assign(bwOptions, {
                 x: options.x,
                 y: options.y,
-                ...(options.width !== undefined ? { width: options.width } : {}),
-                ...(options.height !== undefined ? { height: options.height } : {}),
+                ...options.width !== undefined ? { width: options.width } : {},
+                ...options.height !== undefined ? { height: options.height } : {},
             })
         } else if (this.windowBounds) {
             Object.assign(bwOptions, this.windowBounds)

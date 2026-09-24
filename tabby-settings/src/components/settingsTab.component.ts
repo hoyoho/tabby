@@ -43,7 +43,7 @@ export class SettingsTabComponent extends TopLevelTab {
     proxyTestOk = false
     proxyTestResult = ''
     @HostBinding('class.pad-window-controls') padWindowControls = false
-    @ViewChild('nav', { static: true }) nav: NgbNav
+    @ViewChild('nav', { 'static': true }) nav: NgbNav
 
     constructor (
         public config: ConfigService,

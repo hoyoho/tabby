@@ -532,6 +532,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
      */
     private nudgeSessionRepaint (): void {
         const nudge = () => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (this.isTerminating || !this.session || !this.size) {
                 return
             }

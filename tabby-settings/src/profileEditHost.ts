@@ -41,7 +41,7 @@ export class SettingsProfileEditHost extends ProfileEditHost {
         if (options.defaultsMode) {
             modal.componentInstance.defaultsMode = options.defaultsMode
         }
-        return (await modal.result.catch(() => null)) ?? null
+        return await modal.result.catch(() => null) ?? null
     }
 
     async editProfileGroup (
@@ -54,7 +54,7 @@ export class SettingsProfileEditHost extends ProfileEditHost {
         )
         modal.componentInstance.group = group as any
         modal.componentInstance.providers = providers
-        return (await modal.result.catch(() => null)) ?? null
+        return await modal.result.catch(() => null) ?? null
     }
 
     openSettings (activeTab?: string): void {

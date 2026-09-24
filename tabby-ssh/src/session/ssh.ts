@@ -128,19 +128,22 @@ export class SSHSession {
             port: o.port,
             user: o.user,
             auth: o.auth ?? null,
-            privateKeys: [...(o.privateKeys ?? [])],
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            privateKeys: [...o.privateKeys ?? []],
             keepaliveInterval: o.keepaliveInterval,
             keepaliveCountMax: o.keepaliveCountMax,
             readyTimeout: o.readyTimeout ?? null,
             x11: !!o.x11,
             skipBanner: !!o.skipBanner,
             agentForward: !!o.agentForward,
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             algorithms: o.algorithms ? JSON.parse(JSON.stringify(o.algorithms)) : undefined,
             proxyCommand: o.proxyCommand ?? null,
             socksProxyHost: o.socksProxyHost ?? null,
             socksProxyPort: o.socksProxyPort ?? null,
             httpProxyHost: o.httpProxyHost ?? null,
             httpProxyPort: o.httpProxyPort ?? null,
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             forwardedPorts: (o.forwardedPorts ?? []).map(fw => ({
                 type: fw.type,
                 host: fw.host,
@@ -162,8 +165,11 @@ export class SSHSession {
 
         await new Promise<void>((resolve, reject) => {
             const cleanup = () => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 ipcRenderer.off(`ssh:${id}:opened`, onOpened)
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 ipcRenderer.off(`ssh:${id}:connect-failed`, onFailed)
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 ipcRenderer.off(`ssh:${id}:destroyed`, onDestroyed)
             }
             const onOpened = () => {

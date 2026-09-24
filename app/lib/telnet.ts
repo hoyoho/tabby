@@ -104,6 +104,7 @@ export class TelnetManager {
             const id = uuidv4().toString()
             event.returnValue = id
             const conn = new TelnetConnection(id, app, host, port)
+            // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
             conn.bindCleanup(() => delete this.connections[id])
             conn.attachers.add(event.sender.id)
             this.connections[id] = conn
