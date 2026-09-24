@@ -69,7 +69,7 @@ export class TelnetTabComponent extends ConnectableTerminalTabComponent<TelnetPr
     override async getRecoveryToken (options?: GetRecoveryTokenOptions): Promise<any> {
         return {
             ...await super.getRecoveryToken(options),
-            socketId: (options?.includeState && this.session?.getID()) ?? null,
+            socketId: options?.includeState ? this.session?.getID() ?? null : null,
         }
     }
 

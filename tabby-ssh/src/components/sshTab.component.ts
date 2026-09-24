@@ -232,7 +232,7 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             // switched — no re-prompt while the old connection lives. When it
             // is gone, attach fails and the new mode authenticates fresh.
             sshConnectionId: this.sshSession?.getID() ?? null,
-            shellChannelId: (options?.includeState && this.session?.getID()) ?? null,
+            shellChannelId: options?.includeState ? this.session?.getID() ?? null : null,
         }
     }
 
