@@ -12,20 +12,14 @@
 
     .logo-area {
         .tabby-logo {
-            margin: 0 0 0 -8px;
+            margin: 0 auto;
             width: 60px;
             height: 60px;
         }
 
         .tabby-title {
-            text-align: left;
+            text-align: center;
         }
-    }
-
-    .link-card {
-        display: flex;
-        line-height: 1;
-        align-items: center;
     }
 
     > .content {

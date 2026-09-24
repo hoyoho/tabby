@@ -18,7 +18,6 @@ import {
 } from 'tabby-core'
 
 import { SettingsTabProvider } from '../api'
-import { ReleaseNotesComponent } from './releaseNotesTab.component'
 
 /** @hidden */
 @Component({
@@ -52,7 +51,6 @@ export class SettingsTabComponent extends TopLevelTab {
         public homeBase: HomeBaseService,
         public platform: PlatformService,
         public locale: LocaleService,
-        private app: AppService,
         @Inject(SettingsTabProvider) public settingsProviders: SettingsTabProvider[],
         private translate: TranslateService,
         injector: Injector,
@@ -171,11 +169,5 @@ export class SettingsTabComponent extends TopLevelTab {
         } catch {
             return false
         }
-    }
-
-    showReleaseNotes () {
-        this.app.openNewTabRaw({
-            type: ReleaseNotesComponent,
-        })
     }
 }

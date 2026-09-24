@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
-import { InfiniteScrollModule } from 'ngx-infinite-scroll'
 
 import TabbyCorePlugin, { ToolbarButtonProvider, HotkeyProvider, ConfigProvider, MenuProvider, ProfileEditHost } from 'tabby-core'
 
@@ -18,7 +17,6 @@ import { WindowSettingsTabComponent } from './components/windowSettingsTab.compo
 import { VaultSettingsTabComponent }  from './components/vaultSettingsTab.component'
 import { SetVaultPassphraseModalComponent } from './components/setVaultPassphraseModal.component'
 import { ProfilesSettingsTabComponent } from './components/profilesSettingsTab.component'
-import { ReleaseNotesComponent } from './components/releaseNotesTab.component'
 import { ShowSecretModalComponent } from './components/showSecretModal.component'
 
 
@@ -37,7 +35,6 @@ import { SettingsProfileEditHost } from './profileEditHost'
         FormsModule,
         NgbModule,
         TabbyCorePlugin,
-        InfiniteScrollModule,
     ],
     providers: [
         { provide: ToolbarButtonProvider, useClass: ButtonProvider, multi: true },
@@ -64,7 +61,6 @@ import { SettingsProfileEditHost } from './profileEditHost'
         SetVaultPassphraseModalComponent,
         VaultSettingsTabComponent,
         WindowSettingsTabComponent,
-        ReleaseNotesComponent,
         ShowSecretModalComponent,
     ],
 })
