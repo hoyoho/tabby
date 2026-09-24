@@ -26,7 +26,7 @@ export class TabRecoveryService {
         }
         window.localStorage.tabsRecovery = JSON.stringify(
             (await Promise.all(
-                tabs.map(async tab => this.getFullRecoveryToken(tab, { includeState: true })),
+                tabs.map(async tab => this.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })),
             )).filter(token => !!token),
         )
     }
@@ -46,6 +46,7 @@ export class TabRecoveryService {
     }
 
     async recoverTab (token: RecoveryToken): Promise<NewTabParameters<BaseTabComponent>|null> {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!token) {
             return null
         }

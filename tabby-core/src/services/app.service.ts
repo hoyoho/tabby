@@ -610,29 +610,29 @@ export class AppService {
         const vertical = this.config.store.appearance.tabsLocation === 'left' || this.config.store.appearance.tabsLocation === 'right'
         // Strip-only headers — stray `tab-header` clones from an interrupted
         // drag linger in the body and would skew the index/geometry below.
-        const headers = Array.from(document.querySelectorAll('.tab-bar tab-header')) as HTMLElement[]
+        const headers = Array.from(document.querySelectorAll('.tab-bar tab-header'))
         const index = this.workspaceDropIndex(x, y)
-        const strip = document.querySelector('.tab-bar') as HTMLElement|null
+        const strip = document.querySelector('.tab-bar')
         const stripRect = strip?.getBoundingClientRect()
-        let markerX: number
-        let markerY: number
+        let markerX = 0
+        let markerY = 0
         if (headers.length && index < headers.length) {
             const r = headers[index].getBoundingClientRect()
-            markerX = vertical ? (stripRect ? stripRect.left + stripRect.width / 2 : 0) : r.left
+            markerX = vertical ? stripRect ? stripRect.left + stripRect.width / 2 : 0 : r.left
             markerY = vertical ? r.top : r.top + r.height / 2
         } else if (headers.length) {
             const r = headers[headers.length - 1].getBoundingClientRect()
-            markerX = vertical ? (stripRect ? stripRect.left + stripRect.width / 2 : 0) : r.right
+            markerX = vertical ? stripRect ? stripRect.left + stripRect.width / 2 : 0 : r.right
             markerY = vertical ? r.bottom : r.top + r.height / 2
         } else {
-            const tabsEl = document.querySelector('.tab-bar .tabs') as HTMLElement|null
+            const tabsEl = document.querySelector('.tab-bar .tabs')
             const tr = tabsEl?.getBoundingClientRect()
             markerX = vertical
-                ? (stripRect ? stripRect.left + stripRect.width / 2 : (tr?.left ?? 0))
+                ? stripRect ? stripRect.left + stripRect.width / 2 : tr?.left ?? 0
                 : (tr?.left ?? stripRect?.left ?? 0) + 6
             markerY = vertical
                 ? (tr?.top ?? stripRect?.top ?? 0) + 6
-                : (stripRect ? stripRect.top + stripRect.height / 2 : 19)
+                : stripRect ? stripRect.top + stripRect.height / 2 : 19
         }
         // Vertical (left/right) tab bar: a horizontal divider spanning the full
         // strip width; horizontal tab bar: a vertical divider the header height.
@@ -750,7 +750,7 @@ export class AppService {
             this.hostApp.nativeDragEnd(drag.dragId)
             // Another window rebuilt our workspace from the token: drop this
             // copy. The sessions carry keepPTYAlive and are re-attached there.
-            void drag.tab.destroy()
+            drag.tab.destroy()
             this.maybeCloseWindowWhenEmpty()
         })
         this.workspaceNativeDrag = { dragId, tab, committedSub, settled: false, acceptTimer: null }
@@ -853,7 +853,7 @@ export class AppService {
         }
         const transferToken = JSON.parse(JSON.stringify(token))
         tab.keepAllSessionsAlive(true)
-        void tab.destroy()
+        tab.destroy()
         this.maybeCloseWindowWhenEmpty()
         this.hostApp.newWindow({
             recoveryToken: transferToken,
@@ -878,7 +878,7 @@ export class AppService {
             if (!dt) {
                 return
             }
-            if (!dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+            if (!dt.types.includes(TABBY_WORKSPACE_DRAG_MIME)) {
                 return
             }
             // Accept EVERYWHERE (vscode editor-area parity): a rejected
@@ -899,7 +899,7 @@ export class AppService {
             if (!dt) {
                 return
             }
-            if (!dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+            if (!dt.types.includes(TABBY_WORKSPACE_DRAG_MIME)) {
                 return
             }
             this.clearDragPreview()
@@ -928,7 +928,7 @@ export class AppService {
 
         window.addEventListener('dragleave', event => {
             const dt = event.dataTransfer
-            if (!dt || !dt.types?.includes(TABBY_WORKSPACE_DRAG_MIME)) {
+            if (!dt || !dt.types.includes(TABBY_WORKSPACE_DRAG_MIME)) {
                 return
             }
             // An interior element transition fires dragleave too, but the next
@@ -1007,7 +1007,7 @@ export class AppService {
     /** Whether the point sits inside this window's tab strip (with a small
       * vertical tolerance for the window edge the bar hugs). */
     private isPointOverTabStrip (x: number, y: number): boolean {
-        const strip = document.querySelector('.tab-bar') as HTMLElement|null
+        const strip = document.querySelector('.tab-bar')
         if (!strip) {
             return false
         }
@@ -1051,7 +1051,7 @@ export class AppService {
         if (checkCanClose && !await tab.canClose()) {
             return
         }
-        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })
         if (token) {
             this.closedTabsStack.push(token)
             this.closedTabsStack = this.closedTabsStack.slice(-5)
@@ -1072,7 +1072,7 @@ export class AppService {
             return null
         }
 
-        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true })
+        const token = await this.tabRecovery.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })
         if (!token) {
             return null
         }
@@ -1190,10 +1190,20 @@ export class AppService {
         let x = 1
         let previous: SessionTab|null = null
         const stride = Math.ceil(Math.sqrt(children.length + 1))
-        for (const child of children) {
-            await into.addTab(child, x ? previous : null, x ? 'r' : 'b')
-            previous = child
-            x = (x + 1) % stride
+        let cursor = 0
+        try {
+            for (; cursor < children.length; cursor++) {
+                await into.addTab(children[cursor], x ? previous : null, x ? 'r' : 'b')
+                previous = children[cursor]
+                x = (x + 1) % stride
+            }
+        } catch (err) {
+            console.error('[app] combine tabs failed:', err)
+            for (const child of children.slice(cursor)) {
+                if (!into.getAllTabs().includes(child)) {
+                    this.wrapAndAddTab(child)
+                }
+            }
         }
 
         into.equalize()

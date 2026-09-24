@@ -1,4 +1,3 @@
-import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import { Component, Input, Injector, Inject, Optional } from '@angular/core'
 import { BaseTabProcess, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, GetRecoveryTokenOptions } from 'tabby-core'
 import { BaseTerminalTabComponent } from 'tabby-terminal'
@@ -80,7 +79,7 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
         // cross-window drag). Use the directory the shell already reported, and
         // only pay for the accurate probe on a persistence snapshot, which
         // rebuilds the session from scratch and is not on an interactive path.
-        const needsAccurateCwd = options?.includeState === true && options.includeTerminalModes !== true
+        const needsAccurateCwd = options?.accurateWorkingDirectory === true
         let cwd: string|null = null
         if (this.session) {
             cwd = needsAccurateCwd

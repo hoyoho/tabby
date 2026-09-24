@@ -29,6 +29,14 @@ export interface GetRecoveryTokenOptions {
     includeState: boolean
     /** Live-session transfer only: also capture terminal-global mode state. */
     includeTerminalModes?: boolean
+    /**
+     * Recreation snapshots only (persistence, close-to-reopen, restart): allow
+     * the slow native working-directory probe, whose result is where the
+     * recreated session should land. Defaults to false — every interactive
+     * path (duplicate, drag, cross-window transfer) must stay off it and use
+     * the shell-reported directory instead.
+     */
+    accurateWorkingDirectory?: boolean
 }
 
 /**
