@@ -424,8 +424,8 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
             this.delayedResizeTimer = setTimeout(() => {
                 this.delayedResizeTimer = null
-                if (!this.isTerminating) {
-                    this.session?.resize(columns, rows)
+                if (!this.isTerminating && this.size) {
+                    this.session?.resize(this.size.columns, this.size.rows)
                 }
             }, 1000)
 
