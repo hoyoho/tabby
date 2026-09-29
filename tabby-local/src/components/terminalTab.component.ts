@@ -1,5 +1,5 @@
 import { Component, Input, Injector, Inject, Optional } from '@angular/core'
-import { BaseTabProcess, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, GetRecoveryTokenOptions } from 'tabby-core'
+import { BaseTabProcess, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, GetRecoveryTokenOptions, Platform } from 'tabby-core'
 import { BaseTerminalTabComponent } from 'tabby-terminal'
 import { LocalProfile, SessionOptions, UACService } from '../api'
 import { Session } from '../session'
@@ -79,7 +79,7 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
         // cross-window drag). Use the directory the shell already reported, and
         // only pay for the accurate probe on a persistence snapshot, which
         // rebuilds the session from scratch and is not on an interactive path.
-        const needsAccurateCwd = options?.accurateWorkingDirectory === true
+        const needsAccurateCwd = options?.accurateWorkingDirectory === true || this.hostApp.platform !== Platform.Windows
         let cwd: string|null = null
         if (this.session) {
             cwd = needsAccurateCwd

@@ -1,5 +1,6 @@
 import * as fs from 'mz/fs'
 import * as fsSync from 'fs'
+import * as os from 'os'
 import { Injector, NgZone } from '@angular/core'
 import { HostAppService, ConfigService, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, Platform, BootstrapData, BOOTSTRAP_DATA, LogService } from 'tabby-core'
 import { BaseSession } from 'tabby-terminal'
@@ -320,7 +321,19 @@ export class Session extends BaseSession {
      * hit the native PID probe.
      */
     override getCachedWorkingDirectory (): string|null {
-        return super.getCachedWorkingDirectory() ?? this.guessedCWD ?? this.initialCWD
+        return this.expandHome(super.getCachedWorkingDirectory() ?? this.guessedCWD ?? this.initialCWD)
+    }
+
+    /**
+     * bash 在 `\w` 提示符/标题里把 $HOME 缩写成 `~`（如 `~/src`）。标题来源的
+     * CWD 必须转成绝对路径才能通过校验并交给新 PTY，否则 existsSync('~/src')
+     * 失败会回退到 home。WSL 下的 `~` 指发行版的 home，不是 Windows 侧，故不展开。
+     */
+    private expandHome (cwd: string|null): string|null {
+        if (cwd && cwd.startsWith('~') && !this.isWSL) {
+            return os.homedir() + cwd.substring(1)
+        }
+        return cwd
     }
 
     supportsWorkingDirectory (): boolean {
@@ -342,7 +355,7 @@ export class Session extends BaseSession {
         // (OSC 0/2). Unix-style results can't be validated from the Windows
         // side, so hand them out as-is.
         if (this.titleCWD && (this.isWSL || /^[~/]/.test(this.titleCWD))) {
-            return this.titleCWD
+            return this.expandHome(this.titleCWD)
         }
         if (this.isWSL) {
             // Without a shell report there's nothing reliable to return: the
