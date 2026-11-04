@@ -167,7 +167,12 @@ export class XTermFrontend extends Frontend {
         this.xterm = new Terminal({
             allowTransparency: true,
             allowProposedApi: true,
-            overviewRulerWidth: 7,
+            overviewRuler: {
+                width: 7,
+                showBottomBorder: false,
+                showTopBorder: false,
+            },
+            reflowCursorLine: true,
             windowsPty: process.platform === 'win32' ? {
                 backend: this.configService.store.terminal.useConPTY ? 'conpty' : 'winpty',
                 buildNumber: getWindows10Build(),
@@ -296,7 +301,7 @@ export class XTermFrontend extends Frontend {
                     const savedViewportY = this.xterm.buffer.active.viewportY
 
                     this.fitAddon.fit()
-                    this.xtermCore.viewport._refresh()
+                    this.xterm.refresh(0, this.xterm.rows - 1)
 
                     if (savedPinned) {
                         this.xtermCore._scrollToBottom()
@@ -877,20 +882,19 @@ export class XTermFrontend extends Frontend {
         const config = this.configService.store
 
         setImmediate(() => {
-            if (this.xterm.cols && this.xterm.rows && this.xtermCore.charMeasure) {
-                if (this.xtermCore.charMeasure) {
-                    this.xtermCore.charMeasure.measure(this.xtermCore.options)
-                }
-                if (this.xtermCore.renderer) {
-                    this.xtermCore.renderer._updateDimensions()
-                }
+            if (this.xterm.cols && this.xterm.rows && this.xtermCore._charSizeService) {
+                this.xtermCore._charSizeService.measure()
+                this.xtermCore._renderService.handleResize(this.xterm.cols, this.xterm.rows)
                 this.resizeHandler()
             }
         })
 
-        this.xtermCore.browser.isWindows = this.hostApp.platform === Platform.Windows
-        this.xtermCore.browser.isLinux = this.hostApp.platform === Platform.Linux
-        this.xtermCore.browser.isMac = this.hostApp.platform === Platform.macOS
+        this.xtermCore.browser = {
+            ...this.xtermCore.browser,
+            isWindows: this.hostApp.platform === Platform.Windows,
+            isLinux: this.hostApp.platform === Platform.Linux,
+            isMac: this.hostApp.platform === Platform.macOS,
+        }
 
         this.xterm.options.fontFamily = getCSSFontFamily(config)
         this.xterm.options.cursorStyle = {
