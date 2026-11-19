@@ -140,6 +140,14 @@ export class XTermFrontend extends Frontend {
     private pinnedToBottom = true
     private pendingRendererRecovery = false
     private rendererRecoveryAttempts = 0
+    /** Animation frame id of the scrollbar-drag pin-state loop, if running. */
+    private scrollbarDragFrame?: number
+    /** Whether a scrollbar drag is currently being tracked. */
+    private scrollbarDragging = false
+    /** Stops the current scrollbar drag tracking and removes its window listeners. */
+    private stopScrollbarDrag?: () => void
+    /** The xterm 6 vertical scrollbar element, once the terminal is opened. */
+    private scrollbarElement?: HTMLElement
 
     // Broadcast (focus-all) state: while forced, the terminal behaves as
     // focused (blinking cursor) even though the real DOM focus is elsewhere.
@@ -290,8 +298,9 @@ export class XTermFrontend extends Frontend {
         // NOT for user wheel/keyboard scroll (xterm.js #3864, #3201). During
         // fast output, viewportY transiently equals baseY during xterm's
         // internal processing, so onScroll would falsely re-pin. We do NOT
-        // use onScroll for pin state. Re-pinning happens only via:
+        // use onScroll for pin state. Pin state is updated only via:
         //   - wheel/keyboard event listeners (below)
+        //   - the scrollbar drag loop (below)
         //   - explicit scrollToBottom() calls
 
         const doResize = () => {
@@ -311,6 +320,7 @@ export class XTermFrontend extends Frontend {
                         const targetY = Math.min(savedViewportY, maxScroll)
                         this.xterm.scrollToLine(targetY)
                     }
+                    this.updateScrollbarVisibility()
 
                     // fitAddon.fit() resizes the renderer's drawing buffer,
                     // which blanks it synchronously, but xterm only repaints on
@@ -372,7 +382,12 @@ export class XTermFrontend extends Frontend {
         this.xterm.buffer.onBufferChange(() => {
             const altBufferActive = this.xterm.buffer.active.type === 'alternate'
             this.alternateScreenActive.next(altBufferActive)
+            this.updateScrollbarVisibility()
         })
+
+        // xterm's own scrollbar fades out while idle; keep our own
+        // "has scrollback" class in sync with content changes.
+        this.xterm.onScroll(() => this.updateScrollbarVisibility())
     }
 
     private isAtBottom (): boolean {
@@ -382,6 +397,56 @@ export class XTermFrontend extends Frontend {
 
     private updatePinnedState (): void {
         this.pinnedToBottom = this.isAtBottom()
+    }
+
+    /**
+     * xterm fades its own scrollbar to `.invisible` after a short idle period,
+     * and the `.fade` class can outlive the scrollback (for example after a
+     * clear). Put the visibility class on the `.xterm` root instead of the
+     * scrollbar element itself: xterm rewrites the scrollbar's className when
+     * it reveals/hides it, but only adds/removes individual root classes.
+     */
+    private updateScrollbarVisibility (): void {
+        const hasScrollback = this.xterm.buffer.active.baseY > 0
+        this.xterm.element?.classList.toggle('tabby-has-scrollback', hasScrollback)
+    }
+
+    private onScrollbarPress = (e: MouseEvent): void => {
+        // xterm's own handler on `.xterm` starts a new selection and would
+        // wipe the current one. The scrollbar is a real DOM node inside
+        // `.xterm`, so stop the event before it bubbles up; this keeps the
+        // search addon's "last match" selection intact across scrollbar drags.
+        e.stopPropagation()
+        // The user grabbed the scrollbar, so the next search navigation should
+        // re-anchor to the viewport instead of continuing from the last match.
+        this.userScrolledSinceLastSearch = true
+
+        if (this.scrollbarDragging) {
+            return
+        }
+        this.scrollbarDragging = true
+        const update = () => {
+            this.updatePinnedState()
+            this.scrollbarDragFrame = requestAnimationFrame(update)
+        }
+        const stop = () => {
+            this.scrollbarDragging = false
+            this.stopScrollbarDrag = undefined
+            if (this.scrollbarDragFrame !== undefined) {
+                cancelAnimationFrame(this.scrollbarDragFrame)
+                this.scrollbarDragFrame = undefined
+            }
+            window.removeEventListener('mouseup', stop)
+            window.removeEventListener('blur', stop)
+            // Capture the position after the final pointer move, which may have
+            // happened after the last animation frame.
+            this.updatePinnedState()
+        }
+        this.stopScrollbarDrag = stop
+        window.addEventListener('mouseup', stop)
+        window.addEventListener('blur', stop)
+        this.updatePinnedState()
+        update()
     }
 
     async attach (host: HTMLElement, profile: BaseTerminalProfile): Promise<void> {
@@ -473,10 +538,10 @@ export class XTermFrontend extends Frontend {
             return
         }
 
-        // User-initiated scroll detection: only wheel and keyboard events
+        // User-initiated scroll detection: wheel, keyboard and scrollbar input
         // should unpin. xterm.onScroll is content-driven only and must never
         // unpin (see constructor comment). Use capture phase — xterm.js
-        // handles wheel/key events on its internal viewport element and may
+        // handles wheel/key events on its internal scrollable element and may
         // stop propagation, so bubbling listeners on host would never fire.
         this.addHostListener('wheel', (event: WheelEvent) => {
             // Immediately unpin on scroll-up so that writes arriving before
@@ -487,65 +552,27 @@ export class XTermFrontend extends Frontend {
             requestAnimationFrame(() => this.updatePinnedState())
         }, { capture: true, passive: true })
 
-        // Native scrollbar drag (thumb / track click) does NOT emit wheel or
-        // keyboard events, so the handlers above would leave pinnedToBottom
-        // stale at `true`. The next write() would then re-scroll to the bottom
-        // even though the user explicitly dragged away from it. The DOM
-        // `scroll` event on xterm's viewport covers every scroll source
-        // (scrollbar drag, wheel, keyboard, programmatic — including the
-        // search addon's scrollToLine to reveal a match), so we re-evaluate
-        // pin state from the actual viewport position. Unlike xterm.onScroll
-        // this fires for user drags too; the transient-false-positive concern
-        // from the constructor comment does not apply here because scrollTop
-        // only changes when the viewport actually moves.
-        //
-        // Update SYNCHRONOUSLY (no rAF): the search addon scrolls to a match
-        // and then a concurrent write() may run within the same task. If
-        // pinnedToBottom were still stale `true`, write() would capture
-        // wasPinned=true and yank the viewport back to the bottom, undoing the
-        // search reveal. Updating here closes that race window.
-        const viewport = this.xterm.element?.querySelector('.xterm-viewport') as HTMLElement | null
-        if (viewport) {
-            viewport.addEventListener('scroll', () => {
-                this.updatePinnedState()
-            }, { passive: true })
-
-            // The scrollbar thumb is rendered thin by default and should
-            // expand to the full rail width when the pointer enters the rail
-            // area. WebKit offers no CSS combinator for "track hover affects
-            // thumb" (::-webkit-scrollbar:hover does not propagate to
-            // ::-webkit-scrollbar-thumb), so we detect the right-edge hover
-            // band in JS and toggle a class. SCROLLBAR_WIDTH mirrors the
-            // 7px rail declared in xterm.css.
-            const SCROLLBAR_WIDTH = 7
-
-            // Clicking the scrollbar (thumb / track) must not clear the
-            // terminal selection. xterm attaches a `mousedown` listener on the
-            // `.xterm` element that unconditionally starts a new selection
-            // (and therefore wipes the current one). Because the scrollbar is
-            // not a real DOM node, the event target is the viewport and it
-            // bubbles up to `.xterm`. We catch it here, while still on the
-            // viewport, and stop propagation for clicks inside the right-edge
-            // rail band. This keeps the search addon's "last match" selection
-            // intact across scrollbar drags.
-            viewport.addEventListener('mousedown', (e) => {
-                const rect = viewport.getBoundingClientRect()
-                if (e.clientX >= rect.right - SCROLLBAR_WIDTH) {
-                    e.stopImmediatePropagation()
-                    // The user grabbed the scrollbar, so the next search
-                    // navigation should re-anchor to the viewport instead of
-                    // continuing from the last selected match.
-                    this.userScrolledSinceLastSearch = true
-                }
-            })
-
-            const onRailPointerMove = (e: MouseEvent) => {
-                const rect = viewport.getBoundingClientRect()
-                viewport.classList.toggle('scrollbar-rail-hover', e.clientX >= rect.right - SCROLLBAR_WIDTH)
-            }
-            const onRailPointerLeave = () => viewport.classList.remove('scrollbar-rail-hover')
-            viewport.addEventListener('mousemove', onRailPointerMove)
-            viewport.addEventListener('mouseleave', onRailPointerLeave)
+        // xterm 6 replaced the native viewport scrollbar with an internal
+        // ScrollableElement, so `.xterm-viewport` no longer scrolls and its DOM
+        // `scroll` event never fires. Scrollbar drags (thumb or track) emit
+        // neither wheel nor keyboard events, so follow the real vertical
+        // scrollbar and re-evaluate the pin state on every animation frame
+        // while the user holds it. Otherwise arriving output would yank the
+        // viewport back to the bottom mid-drag.
+        const scrollbar = this.xterm.element?.querySelector('.xterm-scrollable-element > .scrollbar.vertical') as HTMLElement | null
+        this.scrollbarElement = scrollbar ?? undefined
+        this.updateScrollbarVisibility()
+        if (scrollbar) {
+            // Remove handlers left over from a previous attach() that did not
+            // detach cleanly, then wire the shared press handler.
+            scrollbar.removeEventListener('pointerdown', this.onScrollbarPress)
+            scrollbar.removeEventListener('mousedown', this.onScrollbarPress)
+            // xterm 6 starts scrollbar drags from `pointerdown` and cancels it,
+            // which suppresses the compatibility `mousedown` in Chromium.
+            // Listen to both so tracking starts reliably everywhere; the
+            // explicit `scrollbarDragging` guard prevents a duplicate start.
+            scrollbar.addEventListener('pointerdown', this.onScrollbarPress)
+            scrollbar.addEventListener('mousedown', this.onScrollbarPress)
         }
 
         this.hotkeysService.hotkey$
@@ -605,6 +632,16 @@ export class XTermFrontend extends Frontend {
             cancelAnimationFrame(this.resizeAnimationFrame)
             this.resizeAnimationFrame = undefined
         }
+        this.stopScrollbarDrag?.()
+        if (this.scrollbarDragFrame !== undefined) {
+            cancelAnimationFrame(this.scrollbarDragFrame)
+            this.scrollbarDragFrame = undefined
+        }
+        this.scrollbarDragging = false
+        if (this.scrollbarElement) {
+            this.scrollbarElement.removeEventListener('pointerdown', this.onScrollbarPress)
+            this.scrollbarElement.removeEventListener('mousedown', this.onScrollbarPress)
+        }
         this.resizePending = false
         this.resizeObserver?.disconnect()
         delete this.resizeObserver
@@ -632,6 +669,7 @@ export class XTermFrontend extends Frontend {
         this.webGLAddon?.dispose()
         this.canvasAddon?.dispose()
         this.xterm.dispose()
+        this.scrollbarElement = undefined
     }
 
     getSelection (): string {
@@ -742,11 +780,10 @@ export class XTermFrontend extends Frontend {
             }
         }
         // Capture pinned state before the async write yields to the event loop.
-        // pinnedToBottom is kept in sync by the viewport's scroll listener
-        // (which fires synchronously for every real scroll, including the
-        // search addon's scrollToLine), so re-evaluate it AFTER the await:
-        // a search/wheel that scrolled the viewport away from the bottom
-        // during the write must not be undone by a stale wasPinned=true.
+        // pinnedToBottom is kept in sync by the wheel/keyboard handlers and the
+        // scrollbar drag loop, so re-evaluate it AFTER the await: a search/wheel
+        // that scrolled the viewport away from the bottom during the write must
+        // not be undone by a stale wasPinned=true.
         const wasPinned = this.pinnedToBottom
         const savedViewportY = this.xterm.buffer.active.viewportY
         await this.flowControl.write(data)
@@ -762,10 +799,12 @@ export class XTermFrontend extends Frontend {
         }
         // else: wasPinned && !nowPinned — the user scrolled during the write;
         // leave the viewport where they put it.
+        this.updateScrollbarVisibility()
     }
 
     clear (): void {
         this.xterm.clear()
+        this.updateScrollbarVisibility()
     }
 
     resetTerminalModes (): void {
@@ -857,6 +896,9 @@ export class XTermFrontend extends Frontend {
             background,
             cursor: scheme.cursor,
             cursorAccent: scheme.cursorAccent,
+            // xterm 6 draws a 1px bright border on the overview ruler's right
+            // edge; make it transparent so the terminal edge stays clean.
+            overviewRulerBorder: '#00000000',
         }
 
         for (let i = 0; i < COLOR_NAMES.length; i++) {
@@ -1029,8 +1071,8 @@ export class XTermFrontend extends Frontend {
      * Only JSON-safe values: the snapshot travels inside recovery tokens.
      */
     getTerminalModeSnapshot (): TerminalModeSnapshot {
-        // xterm 5.4 keeps the mouse encoding, cursor visibility and scroll
-        // margins off its public API; read them through the internal core with
+        // xterm keeps the mouse encoding, cursor visibility and scroll margins
+        // off its public API; read them through the internal core with
         // defensive access so an xterm upgrade degrades to defaults, never to
         // a crash.
         const core = (this.xterm as any)._core
@@ -1106,7 +1148,7 @@ export class XTermFrontend extends Frontend {
      * Re-emit every terminal-global mode EXCEPT the alt screen switch (which
      * is content-coupled and handled by restoreState), mirroring
      * [[resetTerminalModes]]. The kitty keyboard protocol is deliberately
-     * absent: xterm 5.4 does not implement it, so no kitty state exists here
+     * absent: xterm does not implement it, so no kitty state exists here
      * to migrate (apps fall back to legacy encodings via capability detect).
      */
     private writeModeReplay (m: TerminalModeSnapshot): void {
@@ -1217,10 +1259,9 @@ export class XTermFrontend extends Frontend {
     private redraw (): void {
         const renderService = this.xtermCore._renderService
         renderService?.clear()
-        // handleResize() alone is a no-op when cols/rows are unchanged
-        // resizeHandler() runs a real itAddon.fit() followed
-        // by an unconditional viewport._refresh(),
-        // forcing a full repaint
+        // handleResize() alone is a no-op when cols/rows are unchanged.
+        // resizeHandler() runs a real fitAddon.fit() followed by an
+        // unconditional xterm.refresh(...), forcing a full repaint.
         this.resizeHandler()
         renderService?.handleResize(this.xterm.cols, this.xterm.rows)
     }

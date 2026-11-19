@@ -1,4 +1,4 @@
-import { Component, Input, HostBinding, HostListener, ChangeDetectorRef } from '@angular/core'
+import { Component, Input, HostBinding, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigService } from '../services/config.service'
 import { SidebarService } from '../services/sidebar.service'
@@ -32,7 +32,7 @@ export const PROFILES_PANEL_ID = 'profiles'
     templateUrl: './sidebar.component.pug',
     styleUrls: ['./sidebar.component.scss'],
 })
-export class AppSidebarComponent {
+export class AppSidebarComponent implements OnDestroy {
     /** Mirrors the macOS traffic-light inset that the profile tree expects. */
     @Input() macInset = false
 
@@ -44,6 +44,15 @@ export class AppSidebarComponent {
     private resizingPanel: SidebarPanelRef|null = null
     private startX = 0
     private startWidth = 0
+    /**
+     * Live drag distance, applied to the sash as a transform while the sidebar
+     * width stays put. Committing the width on every move would reflow the
+     * terminal underneath; instead we only move the handle and commit once on
+     * release.
+     */
+    private dragOffset = 0
+    /** Body cursor to restore when the drag ends or the component is destroyed. */
+    private previousBodyCursor = ''
 
     /** Per-panel width cache, hydrated from localStorage on first use. */
     private widthCache = new Map<string, number>()
@@ -133,6 +142,11 @@ export class AppSidebarComponent {
         return this.isResizing
     }
 
+    /** Sash translation during a drag; null at rest so no transform lingers. */
+    get sashTransform (): string|null {
+        return this.dragOffset === 0 ? null : `translateX(${this.dragOffset}px)`
+    }
+
     selectPanel (panel: SidebarPanelRef): void {
         this.activePanelId = panel.id
         window.localStorage.sidebarActivePanel = panel.id
@@ -150,10 +164,15 @@ export class AppSidebarComponent {
         if (!this.activePanel) {
             return
         }
+        if (!this.isResizing) {
+            this.previousBodyCursor = document.body.style.cursor
+        }
         this.isResizing = true
         this.resizingPanel = this.activePanel
         this.startX = event.clientX
         this.startWidth = this.widthOf(this.activePanel)
+        this.dragOffset = 0
+        document.body.style.cursor = 'ew-resize'
         event.preventDefault()
     }
 
@@ -163,24 +182,23 @@ export class AppSidebarComponent {
             return
         }
         const delta = event.clientX - this.startX
-        // The width tracks the mouse continuously (0..max); the close/min
-        // decision is deferred to mouseup so the handle never teleports under
-        // the cursor.
+        // Track the clamped width as a sash offset only. The sidebar keeps its
+        // committed width during the drag, so the terminal is never asked to
+        // reflow on every frame; the close/min decision is deferred to release.
         const width = Math.max(0, Math.min(this.maxWidthOf(this.resizingPanel), this.startWidth + delta))
-        this.widthCache.set(this.resizingPanel.id, width)
+        this.dragOffset = width - this.startWidth
         this.cdr.markForCheck()
     }
 
     @HostListener('document:mouseup')
     stopResize (): boolean {
         const panel = this.resizingPanel
-        this.isResizing = false
-        this.resizingPanel = null
+        const width = this.startWidth + this.dragOffset
+        this.resetDragState()
         if (!panel) {
             return true
         }
 
-        const width = this.widthOf(panel)
         if (panel.id === PROFILES_PANEL_ID && width < this.panelCollapseThreshold) {
             // Released near the left edge: close the built-in profile panel
             // entirely, it can be re-enabled from the settings or the hotkey.
@@ -196,6 +214,35 @@ export class AppSidebarComponent {
         }
         this.cdr.markForCheck()
         return true
+    }
+
+    /**
+     * Fallback for a drag that ends outside the window: commit the current
+     * offset instead of leaving the sidebar stuck in resize mode with the
+     * ew-resize cursor applied.
+     */
+    @HostListener('document:mouseleave')
+    @HostListener('window:blur')
+    abortResize (): void {
+        if (this.isResizing) {
+            this.stopResize()
+        }
+    }
+
+    ngOnDestroy (): void {
+        // Do not leave the global resize cursor behind if the host disappears
+        // in the middle of a drag.
+        if (this.isResizing) {
+            this.resetDragState()
+        }
+    }
+
+    /** Clears drag state and restores the body cursor without committing width. */
+    private resetDragState (): void {
+        this.isResizing = false
+        this.resizingPanel = null
+        this.dragOffset = 0
+        document.body.style.cursor = this.previousBodyCursor
     }
 
     private widthOf (panel: SidebarPanelRef): number {

@@ -1,3 +1,7 @@
+// Shared by the host width and the sash transform so the two animations
+// cancel out on release.
+$resize-transition-duration: 0.12s;
+
 :host {
     display: flex;
     flex: none;
@@ -5,7 +9,10 @@
     min-height: 0;
 
     &:not(.resizing) {
-        transition: width 0.12s ease;
+        // On release the committed width animates to its new value while the
+        // sash transform animates back to zero over the same duration, so the
+        // two cancel out and the sash stays under the cursor.
+        transition: width $resize-transition-duration ease;
     }
 }
 
@@ -79,6 +86,15 @@
     cursor: ew-resize;
     background: transparent;
     -webkit-app-region: no-drag;
+    transition: transform $resize-transition-duration ease;
+
+    // While dragging, follow the pointer without animation and sit above the
+    // pane header (the sash may travel outside the sidebar during the drag).
+    :host(.resizing) & {
+        z-index: 50;
+        transition: none;
+        will-change: transform;
+    }
 
     // The visible hover/drag highlight fills the sash
     &::before {

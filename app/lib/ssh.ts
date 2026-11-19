@@ -16,6 +16,13 @@ import * as shellQuote from 'shell-quote'
  */
 const GRACE_PERIOD_MS = 10000
 
+/**
+ * How many socket chunks may sit in the serialized write queue before the
+ * local socket is paused. Bounds memory when a forwarded port is much faster
+ * than the SSH channel.
+ */
+const MAX_QUEUED_SOCKET_WRITES = 16
+
 const WINDOWS_OPENSSH_AGENT_PIPE = '\\\\.\\pipe\\openssh-ssh-agent'
 
 // Minimal ANSI helpers — the service messages keep the same look as the old
@@ -29,6 +36,19 @@ const MSG_PROXY = ansi([44, 30], ' Proxy ')
 const MSG_FWD_OK_LOCAL = ansi([42, 30], ' -> ')
 const MSG_FWD_OK_REMOTE = ansi([42, 30], ' <- ')
 const stripAnsi = (s: string): string => s.replace(/\x1b\[[0-9;]*m/g, '')
+
+/**
+ * Serializes async writes onto one promise chain. russh's `channel.write()`
+ * does not guarantee FIFO order for concurrent calls, so a second native write
+ * must not start before the previous one settles. `onError` is expected not to
+ * throw: the returned promise always resolves, keeping the queue usable after
+ * a failed or closed channel.
+ */
+function enqueueWrite (queue: Promise<void>, write: () => Promise<void>, onError: (err: unknown) => void): Promise<void> {
+    return queue.then(write).catch(err => {
+        onError(err)
+    })
+}
 
 /** A service message that still needs renderer-side translation. */
 export interface TranslatableMessage {
@@ -188,6 +208,13 @@ class ChannelDataQueue {
 interface ChannelEntry {
     channel: russh.Channel
     queue: ChannelDataQueue
+    /**
+     * Serializes native writes: russh's async `channel.write()` does not
+     * guarantee FIFO order for concurrent calls, which corrupts large ZMODEM
+     * uploads (chunks arrive out of order). Only one write may be in flight at
+     * a time.
+     */
+    writeQueue: Promise<void>
 }
 
 interface SFTPEntry {
@@ -1107,14 +1134,29 @@ class SSHConnection {
             },
         })
 
+        // Serialize the socket -> channel direction as well: concurrent calls
+        // to russh's async `channel.write()` are not guaranteed to stay in
+        // order. `data` is a view into a pooled Buffer that Node reuses for
+        // the next chunk, so copy it before the queued write runs later.
+        // Pause the local socket while the queue is deep so a fast producer
+        // cannot grow the promise chain without bound.
+        let writeQueue = Promise.resolve()
+        let queuedWrites = 0
         socket.on('data', data => {
-            try {
-                channel.write(new Uint8Array(data.buffer, data.byteOffset, data.byteLength))
-                    .catch(() => undefined)
-            } catch (err) {
+            const buffer = Buffer.from(data)
+            queuedWrites++
+            if (queuedWrites >= MAX_QUEUED_SOCKET_WRITES) {
+                socket.pause()
+            }
+            writeQueue = enqueueWrite(writeQueue, () => channel.write(buffer), err => {
                 console.error('channel write error:', err)
                 socket.destroy()
-            }
+            }).finally(() => {
+                queuedWrites--
+                if (!socket.destroyed && queuedWrites < MAX_QUEUED_SOCKET_WRITES) {
+                    socket.resume()
+                }
+            })
         })
 
         channel.eof$.subscribe(() => socket.end())
@@ -1163,6 +1205,7 @@ class SSHConnection {
         const entry: ChannelEntry = {
             channel: ch,
             queue: new ChannelDataQueue(data => this.emit(`ch:${chId}:data`, data)),
+            writeQueue: Promise.resolve(),
         }
         this.channels.set(chId, entry)
 
@@ -1185,9 +1228,12 @@ class SSHConnection {
         if (!entry) {
             return
         }
-        try {
-            entry.channel.write(data).catch(() => undefined)
-        } catch { /* channel may have just closed */ }
+        // Chain onto the channel's queue so only one native write is in flight
+        // at a time. A closed channel is a normal race, so log it at debug
+        // level instead of spamming the error log.
+        entry.writeQueue = enqueueWrite(entry.writeQueue, () => entry.channel.write(data), err => {
+            console.debug('channel write error:', err)
+        })
     }
 
     resizeChannel (chId: string, columns: number, rows: number): void {

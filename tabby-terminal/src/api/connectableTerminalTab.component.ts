@@ -17,6 +17,8 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
 
     protected reconnectOffered = false
     protected isDisconnectedByHand = false
+    /** Prevents overlapping reconnect attempts (hotkey + keypress prompt). */
+    private reconnecting = false
     // hasRestoredState is declared on BaseTerminalTabComponent and set in
     // its onFrontendReady() when a saved state was restored.
 
@@ -48,9 +50,16 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
     }
 
     protected onFrontendReady (): void {
-        this.initializeSession().then(() => {
-            this.clearServiceMessagesOnConnect()
-        })
+        this.initializeSession()
+            .then(() => this.clearServiceMessagesOnConnect())
+            .catch(e => this.logger.error('Session initialization failed', e))
+            .finally(() => {
+                // A failed initial connect never emits a session destroy event,
+                // so offer the keypress prompt here as well.
+                if (this.frontend && !this.session?.open) {
+                    this.offerReconnection()
+                }
+            })
         super.onFrontendReady()
     }
 
@@ -73,7 +82,7 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
             this.frontend.resetTerminalModes()
             if (this.profile.behaviorOnSessionEnd === 'reconnect' && !this.isDisconnectedByHand) {
                 this.reconnect()
-            } else if (this.profile.behaviorOnSessionEnd === 'keep' || !this.shouldTabBeDestroyedOnSessionClose()) {
+            } else if ((this.profile.behaviorOnSessionEnd === 'keep' || !this.shouldTabBeDestroyedOnSessionClose()) && !this.reconnecting) {
                 this.offerReconnection()
             }
         }
@@ -129,12 +138,30 @@ export abstract class ConnectableTerminalTabComponent<P extends ConnectableTermi
     }
 
     async reconnect (): Promise<void> {
-        this.session?.destroy()
-        this.frontend?.resetTerminalModes()
-        this.profile = this.injector.get(ProfilesService).refreshConfigProxyForProfile(this.profile)
-        await this.initializeSession()
-        this.clearServiceMessagesOnConnect()
-        this.session?.releaseInitialDataBuffer()
+        if (this.reconnecting) {
+            return
+        }
+        this.reconnecting = true
+        this.reconnectOffered = false
+        try {
+            this.session?.destroy()
+            this.frontend?.resetTerminalModes()
+            this.profile = this.injector.get(ProfilesService).refreshConfigProxyForProfile(this.profile)
+            try {
+                await this.initializeSession()
+            } catch (e) {
+                this.logger.error('Reconnect failed', e)
+            }
+            this.clearServiceMessagesOnConnect()
+            this.session?.releaseInitialDataBuffer()
+            // A failed reconnect leaves no live session. Restore the keypress
+            // prompt instead of stranding the tab on the error output.
+            if (!this.session?.open) {
+                this.offerReconnection()
+            }
+        } finally {
+            this.reconnecting = false
+        }
     }
 
     private clearServiceMessagesOnConnect (): void {

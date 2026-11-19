@@ -5,22 +5,16 @@
     src: url(../fonts/SourceCodePro.ttf) format("truetype");
 }
 
-/* Only reserve scrollbar space when content actually overflows */
+/* xterm 6 no longer scrolls this element, but its base CSS sets
+   `overflow-y: scroll`, which would force a hidden native scrollbar behind
+   the terminal (visible with transparent backgrounds). Keep it on `auto`. */
 .xterm .xterm-viewport {
     overflow-y: auto;
 }
 
-/* Match the splitter band width (SPLITTER_BAND = 7px) so the scrollbar
-   and the pane divider read as the same visual unit. The track is always
-   7px wide (no layout shift); the visible thumb is kept thin (3px) via
-   transparent side borders that also preserve the full 7px hit area, so
-   the thumb is easy to grab even when it looks slender. On hover the
-   borders collapse and the thumb fills the 7px rail with the theme
-   primary colour, mirroring split-tab-spanner's hover treatment.
-
-   A min-height floor keeps the thumb grabbable even when the scrollback is
-   huge (otherwise the proportional thumb shrinks to a 1-2px sliver that is
-   easy to miss against the terminal background). */
+/* Legacy native viewport scrollbar styling, kept as a no-op for older xterm
+   builds. xterm 6 replaced the native viewport scrollbar with an internal
+   ScrollableElement, so these ::-webkit-scrollbar rules no longer apply. */
 .xterm-viewport::-webkit-scrollbar {
     width: 7px;
     background: transparent;
@@ -34,11 +28,42 @@
     border-right: 2px solid transparent;
 }
 
-.xterm-viewport.scrollbar-rail-hover::-webkit-scrollbar-thumb,
 .xterm-viewport::-webkit-scrollbar-thumb:hover {
     border-left: 0;
     border-right: 0;
     background: var(--theme-primary);
+}
+
+/* xterm 6 scrollbar. The ScrollableElement sizes its vertical rail to 7px
+   (overviewRuler.width, set inline by xterm); its slider fills that rail, so
+   2px transparent side borders plus padding-box clipping leave a 3px visible
+   thumb. The min-height keeps the thumb grabbable when the scrollback is
+   huge. The selectors outrank xterm's inline-generated slider colors. */
+.xterm .xterm-scrollable-element > .scrollbar.vertical > .slider {
+    box-sizing: border-box;
+    min-height: 32px;
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+    background-color: color-mix(in srgb, var(--theme-fg) 38%, transparent);
+    background-clip: padding-box;
+}
+
+.xterm .xterm-scrollable-element > .scrollbar.vertical > .slider:hover,
+.xterm .xterm-scrollable-element > .scrollbar.vertical > .slider.active {
+    border-left: 0;
+    border-right: 0;
+    background-color: var(--theme-primary);
+}
+
+/* Toggled on the `.xterm` root by xtermFrontend whenever the active buffer
+   has scrollback. This keeps the rail visible while idle (xterm otherwise
+   fades it out), and stays hidden when there is nothing to scroll. z-index
+   matches xterm's own `.visible` state so the rail stays above the screen
+   layers. */
+.xterm.tabby-has-scrollback .xterm-scrollable-element > .scrollbar.vertical {
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 11;
 }
 
 .xterm-decoration-overview-ruler {
