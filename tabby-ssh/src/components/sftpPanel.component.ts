@@ -50,11 +50,12 @@ export class SFTPPanelComponent {
             this.closed.emit()
             return
         }
-        try {
-            await this.navigate(this.path)
-        } catch (error) {
-            console.warn('Could not navigate to', this.path, ':', error)
-            this.notifications.error(error.message)
+        // `navigate()` reports failures itself and returns rather than throwing,
+        // so there is nothing to catch here. A stale starting path (a deleted
+        // shell CWD, a path from a previous session) must not leave the panel
+        // empty: fall back to the root once.
+        await this.navigate(this.path)
+        if (this.fileList === null && this.path !== '/') {
             await this.navigate('/')
         }
     }
@@ -86,7 +87,7 @@ export class SFTPPanelComponent {
             this.fileList = await this.sftp.readdir(this.path)
         } catch (error) {
             this.notifications.error(error.message)
-            if (previousPath && fallbackOnError) {
+            if (previousPath && previousPath !== this.path && fallbackOnError) {
                 this.navigate(previousPath, false)
             }
             return

@@ -216,10 +216,31 @@ export class SSHShellSession extends BaseSession {
     }
 
     supportsWorkingDirectory (): boolean {
-        return !!(this.reportedCWD ?? this.titleCWD)
+        // Same source of truth as getWorkingDirectory(): reporting a path is
+        // only useful if that path can actually be handed to the remote. A
+        // `~` or a local Windows path is reported but unusable, so answering
+        // `true` here made callers promise a path they then could not get.
+        return this.getUsableCWD() !== null
     }
 
     async getWorkingDirectory (): Promise<string|null> {
-        return this.reportedCWD ?? this.titleCWD ?? null
+        return this.getUsableCWD()
+    }
+
+    /**
+     * The reported directory, if it can be used outside the shell.
+     *
+     * Paths here are handed to the remote SFTP server verbatim. `~` is a
+     * shell shorthand the protocol never expands, and OSC 1337 can inject the
+     * *local* Windows home into an SSH session; both would make the built-in
+     * SFTP panel open on a path that cannot exist (NoSuchFile). Returning null
+     * keeps the caller's previous/default path instead.
+     */
+    private getUsableCWD (): string|null {
+        const cwd = this.reportedCWD ?? this.titleCWD ?? null
+        if (!cwd || cwd.startsWith('~') || /^[A-Za-z]:[\\/]/.test(cwd)) {
+            return null
+        }
+        return cwd
     }
 }
