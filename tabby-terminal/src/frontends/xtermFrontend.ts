@@ -1,5 +1,5 @@
 import deepEqual from 'deep-equal'
-import { BehaviorSubject, filter, firstValueFrom, fromEvent, takeUntil } from 'rxjs'
+import { filter, fromEvent, takeUntil } from 'rxjs'
 import { Injector } from '@angular/core'
 import { ConfigService, getCSSFontFamily, getWindows10Build, HostAppService, HotkeysService, Platform, PlatformService, TerminalColorScheme, ThemesService } from 'tabby-core'
 import { Frontend, SearchOptions, SearchState, TerminalModeSnapshot } from './frontend'
@@ -15,93 +15,13 @@ import { CanvasAddon } from '@xterm/addon-canvas'
 import { BaseTerminalProfile } from '../api/interfaces'
 import { getXtermBackgroundColor } from '../helpers'
 import { generatePalette } from '../generatePalette'
+import { buildXtermTheme } from './xtermTheme'
+import { FlowControl } from './flowControl'
 import './xterm.css'
-
-const COLOR_NAMES = [
-    'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white',
-    'brightBlack', 'brightRed', 'brightGreen', 'brightYellow', 'brightBlue', 'brightMagenta', 'brightCyan', 'brightWhite',
-]
-
-/**
- * Parse a #rgb / #rrggbb / #rrggbbaa color string into r,g,b(,a) components.
- * Returns null if the string cannot be parsed.
- */
-function parseColor (color: string): { r: number, g: number, b: number, a: number } | null {
-    const m = /^#([0-9a-f]{3,8})$/i.exec(color)
-    if (!m) {
-        return null
-    }
-    let hex = m[1]
-    if (hex.length === 3) {
-        hex = hex.split('').map(c => c + c).join('')
-    }
-    if (hex.length === 4) {
-        hex = hex.split('').map(c => c + c).join('')
-    }
-    const r = parseInt(hex.slice(0, 2), 16)
-    const g = parseInt(hex.slice(2, 4), 16)
-    const b = parseInt(hex.slice(4, 6), 16)
-    const a = hex.length === 8 ? parseInt(hex.slice(6, 8), 16) / 255 : 1
-    return { r, g, b, a }
-}
-
-/**
- * Blend a semi-transparent foreground color over an opaque background and
- * return the resulting opaque color as #rrggbb. If the foreground has no
- * alpha channel or is already opaque it is returned unchanged.
- */
-function blendOverBackground (foreground: string, background: string): string {
-    const fg = parseColor(foreground)
-    const bg = parseColor(background)
-    if (!fg || !bg || fg.a >= 1) {
-        return foreground
-    }
-    const a = fg.a
-    const r = Math.round(fg.r * a + bg.r * (1 - a))
-    const g = Math.round(fg.g * a + bg.g * (1 - a))
-    const b = Math.round(fg.b * a + bg.b * (1 - a))
-    return `#${[r, g, b].map(v => v.toString(16).padStart(2, '0')).join('')}`
-}
 
 // How many times to recreate the WebGL renderer after a lost GPU context
 // before giving up and letting xterm fall back to its DOM renderer.
 const MAX_WEBGL_RECOVERY_ATTEMPTS = 3
-
-class FlowControl {
-    private blocked = false
-    private blocked$ = new BehaviorSubject<boolean>(false)
-    private pendingCallbacks = 0
-    private lowWatermark = 5
-    private highWatermark = 10
-    private bytesWritten = 0
-    private bytesThreshold = 1024 * 128
-
-    constructor (private xterm: Terminal) { }
-
-    async write (data: string) {
-        if (this.blocked) {
-            await firstValueFrom(this.blocked$.pipe(filter(x => !x)))
-        }
-        this.bytesWritten += data.length
-        if (this.bytesWritten > this.bytesThreshold) {
-            this.pendingCallbacks++
-            this.bytesWritten = 0
-            if (!this.blocked && this.pendingCallbacks > this.highWatermark) {
-                this.blocked = true
-                this.blocked$.next(true)
-            }
-            this.xterm.write(data, () => {
-                this.pendingCallbacks--
-                if (this.blocked && this.pendingCallbacks < this.lowWatermark) {
-                    this.blocked = false
-                    this.blocked$.next(false)
-                }
-            })
-        } else {
-            this.xterm.write(data)
-        }
-    }
-}
 
 /** @hidden */
 export class XTermFrontend extends Frontend {
@@ -875,41 +795,15 @@ export class XTermFrontend extends Frontend {
         scheme = scheme ?? appColorScheme
 
         const background = getXtermBackgroundColor(this.configService, this.themes, scheme)
-        // Pre-blend the selection background with the terminal background so
-        // the canvas renderer (which uses the transparent variant directly)
-        // and the WebGL renderer (which uses the opaque, pre-blended variant)
-        // produce the same selection color.
-        // xterm's ThemeService forces *opaque* selection backgrounds to 30%
-        // opacity (see @xterm/xterm ThemeService.ts, issue #2737). That only
-        // affects the canvas renderer, leaving WebGL with the fully opaque
-        // color. Append alpha=254 so xterm treats the color as non-opaque and
-        // leaves it untouched; 254/255 is visually indistinguishable from
-        // fully opaque.
-        const blendedSelection = scheme.selection ? blendOverBackground(scheme.selection, background) : undefined
-        const selectionBackground = blendedSelection ? `${blendedSelection}FE` : undefined
+        const theme = buildXtermTheme({ scheme, background })
 
-        const theme: ITheme = {
-            foreground: scheme.foreground,
-            selectionBackground,
-            selectionForeground: scheme.selectionForeground,
-            background,
-            cursor: scheme.cursor,
-            cursorAccent: scheme.cursorAccent,
-            // xterm 6 draws a 1px bright border on the overview ruler's right
-            // edge; make it transparent so the terminal edge stays clean.
-            overviewRulerBorder: '#00000000',
-        }
-
-        for (let i = 0; i < COLOR_NAMES.length; i++) {
-            theme[COLOR_NAMES[i]] = scheme.colors[i]
-        }
-
-        if (this.configService.store.terminal.paletteGenerate) {
+        const terminalConfig = this.configService.store.terminal
+        if (terminalConfig.paletteGenerate) {
             theme.extendedAnsi = generatePalette(
                 scheme.colors,
                 scheme.background,
                 scheme.foreground,
-                this.configService.store.terminal.paletteHarmonious,
+                terminalConfig.paletteHarmonious,
             )
         }
 
