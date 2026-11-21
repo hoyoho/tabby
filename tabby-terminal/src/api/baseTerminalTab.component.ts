@@ -1,5 +1,4 @@
 import { Observable, Subject, first, auditTime, debounce, interval } from 'rxjs'
-import { Spinner } from 'cli-spinner'
 import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, HostListener, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
 import { AppService, ConfigService, SessionTab, WorkspaceComponent, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
@@ -11,6 +10,8 @@ import { XTermFrontend, XTermWebGLFrontend } from '../frontends/xtermFrontend'
 import { shouldUseWebGL } from '../frontends/webglSupport'
 import { ResizeEvent, BaseTerminalProfile } from './interfaces'
 import { TerminalDecorator } from './decorator'
+import { TerminalSpinner } from './terminalSpinner'
+import { normalizePastedText, trimPastedText } from './paste'
 import { SearchPanelComponent } from '../components/searchPanel.component'
 import { getTerminalBackgroundColor } from '../helpers'
 
@@ -197,23 +198,11 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
     private bellPlayer: HTMLAudioElement
     private termContainerSubscriptions = new SubscriptionContainer()
     private sessionHandlers = new SubscriptionContainer()
-    private spinner = new Spinner({
-        stream: {
-            write: x => {
-                try {
-                    if (!this.frontend) {
-                        return
-                    }
-                    this.writeRaw(x)
-                } catch {
-                    this.spinner.stop()
-                }
-            },
-        },
+    private spinner = new TerminalSpinner({
+        canWrite: () => !!this.frontend,
+        write: x => this.writeRaw(x),
+        runOutsideAngular: work => this.zone.runOutsideAngular(work),
     })
-
-    private spinnerActive = false
-    private spinnerPaused = false
 
     private frontendWriteLock = Promise.resolve()
 
@@ -682,21 +671,11 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
     }
 
     async paste (): Promise<void> {
-        let data = this.platform.readClipboard()
-        if (this.hostApp.platform === Platform.Windows) {
-            data = data.replaceAll('\r\n', '\r')
-        } else {
-            data = data.replaceAll('\n', '\r')
-        }
-
-        if (this.config.store.terminal.replaceNewlinesWithSpacesOnPaste) {
-            data = data.replace(/[\r\n]+/g, ' ')
-        }
-
-        if (this.config.store.terminal.trimWhitespaceOnPaste && data.indexOf('\n') === data.length - 1) {
-            // Ends with a newline and has no other line breaks
-            data = data.substring(0, data.length - 1)
-        }
+        let data = normalizePastedText(this.platform.readClipboard(), {
+            windows: this.hostApp.platform === Platform.Windows,
+            replaceNewlinesWithSpaces: this.config.store.terminal.replaceNewlinesWithSpacesOnPaste,
+            trimWhitespaceOnPaste: this.config.store.terminal.trimWhitespaceOnPaste,
+        })
 
         if (!this.alternateScreenActive) {
             if ((data.includes('\r') || data.includes('\n')) && this.config.store.terminal.warnOnMultilinePaste) {
@@ -719,10 +698,7 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                 }
             } else {
                 if (this.config.store.terminal.trimWhitespaceOnPaste) {
-                    data = data.trimEnd()
-                    if (!data.includes('\r')) {
-                        data = data.trimStart()
-                    }
+                    data = trimPastedText(data)
                 }
             }
         }
@@ -1027,42 +1003,15 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
     }
 
     protected startSpinner (text?: string): void {
-        if (this.spinnerActive || this.spinnerPaused) {
-            return
-        }
-        if (text) {
-            this.spinner.text = text
-        }
-        this.spinner.setSpinnerString(6)
-        this.spinnerActive = true
-        this.zone.runOutsideAngular(() => {
-            this.spinner.start()
-        })
+        this.spinner.start(text)
     }
 
     protected stopSpinner (): void {
-        if (!this.spinnerActive) {
-            return
-        }
-        this.spinner.stop(true)
-        this.spinnerActive = false
+        this.spinner.stop()
     }
 
     protected async withSpinnerPaused (work: () => any): Promise<void> {
-        this.spinnerPaused = true
-        if (this.spinnerActive) {
-            this.spinner.stop(true)
-        }
-        try {
-            await work()
-        } finally {
-            this.spinnerPaused = false
-            if (this.spinnerActive) {
-                this.zone.runOutsideAngular(() => {
-                    this.spinner.start()
-                })
-            }
-        }
+        return this.spinner.withPaused(work)
     }
 
     /**
