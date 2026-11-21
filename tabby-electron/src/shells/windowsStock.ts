@@ -1,6 +1,4 @@
 import * as path from 'path'
-import * as fs from 'fs/promises'
-import * as which from 'which'
 import { Injectable } from '@angular/core'
 import { HostAppService, Platform, ConfigService } from 'tabby-core'
 import { ElectronService } from '../services/electron.service'
@@ -75,26 +73,17 @@ export class WindowsStockShellsProvider extends WindowsBaseShellProvider {
     }
 
     private async getPowerShellPath () {
-        // Check well-known paths first to avoid slow PATH scanning via `which`
-        for (const psPath of [
+        // Check well-known paths first to avoid slow PATH scanning via `which`.
+        // findExecutable also handles Store/MSIX App Execution Aliases, whose
+        // fs.stat can fail even though the alias is runnable.
+        const powershellPath = await this.findExecutable([
             `${process.env.USERPROFILE}\\AppData\\Local\\Microsoft\\WindowsApps\\pwsh.exe`,
             `${process.env.ProgramFiles}\\PowerShell\\7\\pwsh.exe`,
             `${process.env['ProgramFiles(x86)']}\\PowerShell\\7\\pwsh.exe`,
             `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`,
             `${process.env.SystemRoot}\\System32\\powershell.exe`,
-        ]) {
-            try {
-                await fs.stat(psPath)
-                return psPath
-            } catch { }
-        }
-        // Fall back to PATH search only if not found in standard locations
-        for (const name of ['pwsh.exe', 'powershell.exe']) {
-            const found = await which(name, { nothrow: true })
-            if (found) {
-                return found
-            }
-        }
-        return 'powershell.exe'
+        ], 'powershell.exe')
+        // Keep the historical fallback: a stock shell entry must always exist.
+        return powershellPath ?? 'powershell.exe'
     }
 }

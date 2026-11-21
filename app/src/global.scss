@@ -12,6 +12,18 @@ body {
     -webkit-app-region: no-drag;
 }
 
+// A dialog covers the whole window, tab bar included, so the window couldn't be moved while one was open: keep a
+// strip the height of the tab bar draggable. The dialog box itself is below it and stays no-drag.
+.modal::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: calc(38px * var(--spaciness, 1));
+    -webkit-app-region: drag;
+}
+
 // While a workspace tab is being dragged (system DnD active), the title-bar
 // app-region:drag areas (the blank .btn-space beside the tabs, macOS .inset)
 // would swallow dragover/drop — Chromium treats them as non-document chrome
