@@ -4,6 +4,8 @@ import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 
 export const WIN_BUILD_CONPTY_SUPPORTED = 17692
 export const WIN_BUILD_CONPTY_STABLE = 18309
+export const WIN_BUILD_BUNDLED_CONPTY_SUPPORTED = 19041
+export const WIN_BUILD_CONPTY_REFLOW_SUPPORTED = 21376
 /**
  * Build that introduced acrylic (`ACCENT_ENABLE_ACRYLICBLURBEHIND`) and
  * deprecated the legacy blurbehind effect. Kept in sync with glasstron's own

@@ -1,5 +1,5 @@
 import { Component, HostBinding, Injectable, inject } from '@angular/core'
-import { WIN_BUILD_CONPTY_SUPPORTED, WIN_BUILD_CONPTY_STABLE, isWindowsBuild, ConfigService, HostAppService, Platform } from 'tabby-core'
+import { WIN_BUILD_CONPTY_SUPPORTED, WIN_BUILD_BUNDLED_CONPTY_SUPPORTED, isWindowsBuild, ConfigService, HostAppService, Platform } from 'tabby-core'
 import { SettingsTabProvider } from 'tabby-settings'
 
 /** @hidden */
@@ -8,7 +8,7 @@ import { SettingsTabProvider } from 'tabby-settings'
 })
 export class ShellSettingsTabComponent {
     isConPTYAvailable: boolean
-    isConPTYStable: boolean
+    isBundledConPTYAvailable: boolean
 
     @HostBinding('class.content-box') true
 
@@ -16,7 +16,7 @@ export class ShellSettingsTabComponent {
         public config: ConfigService,
     ) {
         this.isConPTYAvailable = isWindowsBuild(WIN_BUILD_CONPTY_SUPPORTED)
-        this.isConPTYStable = isWindowsBuild(WIN_BUILD_CONPTY_STABLE)
+        this.isBundledConPTYAvailable = isWindowsBuild(WIN_BUILD_BUNDLED_CONPTY_SUPPORTED)
     }
 }
 
