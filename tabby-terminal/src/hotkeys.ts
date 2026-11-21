@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HotkeyDescription, HotkeyProvider, TranslateService } from 'tabby-core'
+import { HotkeyDescription, HotkeyProvider, HostAppService, Platform, TranslateService } from 'tabby-core'
 
 /** @hidden */
 @Injectable()
@@ -151,10 +151,16 @@ export class TerminalHotkeyProvider extends HotkeyProvider {
         },
     ]
 
-    constructor (private translate: TranslateService) { super() }
+    constructor (
+        private translate: TranslateService,
+        private hostApp: HostAppService,
+    ) { super() }
 
     async provide (): Promise<HotkeyDescription[]> {
-        return this.hotkeys
+        // The Option key only exists on macOS, and xterm's `macOptionIsMeta`
+        // setting is ignored everywhere else, so the toggle would be a no-op
+        // entry in the Windows/Linux settings UI.
+        return this.hotkeys.filter(x => x.id !== 'switch-meta-option' || this.hostApp.platform === Platform.macOS)
     }
 }
 
