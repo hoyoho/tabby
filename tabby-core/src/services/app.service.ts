@@ -508,9 +508,7 @@ export class AppService {
         const selectedTab = this._mruTabs[this.mruTraversalIndex]
         this.mruTraversing = false
         this.mruTraversalIndex = 0
-        if (selectedTab) {
-            this._mruTabs = [selectedTab, ...this._mruTabs.filter(t => t !== selectedTab)]
-        }
+        this._mruTabs = [selectedTab, ...this._mruTabs.filter(t => t !== selectedTab)]
     }
 
     moveSelectedTabLeft (): void {

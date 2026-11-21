@@ -72,7 +72,8 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
             return
         }
         try {
-            this.hasSavedPassword = (await this.passwordStorage.loadPassword(this.profile)) != null
+            const savedPassword = await this.passwordStorage.loadPassword(this.profile)
+            this.hasSavedPassword = savedPassword != null
         } catch (e) {
             console.error('Could not check for saved password', e)
             this.hasSavedPassword = false
@@ -144,8 +145,8 @@ export class SSHProfileSettingsComponent implements ProfileSettingsComponent<SSH
     save () {
         for (const k of Object.values(SSHAlgorithmType)) {
             this.profile.options.algorithms[k] = Object.entries(this.algorithms[k])
-                .filter(([_, v]) => !!v)
-                .map(([key, _]) => key)
+                .filter(([, v]) => !!v)
+                .map(([key]) => key)
             if(k !== SSHAlgorithmType.COMPRESSION) { this.profile.options.algorithms[k].sort() }
         }
 
