@@ -16,6 +16,8 @@ import { ActionRegistry } from '../services/action.service'
 import { SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, SplitSpannerInfo, SplitTabPaneHeaderData, findPaneForTab, findParentContainer, collectPanes, sideDirectionOf, addPaneInto, cleanNode, PanePlacement, layoutTree } from './workspace.layout'
 export { SplitOrientation, SplitDirection, SplitContainer, Pane, TabView, SPLITTER_BAND, minSizeOf, SplitSpannerInfo, SplitTabPaneHeaderData } from './workspace.layout'
 import { PaneDragController, PaneDragHost, DragHintState, NativeDragPayload, TABBY_DRAG_MIME, PaneHit, dragLeftDocument } from './workspace.dragDrop'
+import { paneHitAt, headerHitAt, HeaderHit } from './workspace.hitTest'
+import { applyPaneTabMarquee, paneTabLabelOf, paneTabTitleOverflow, refreshPaneTabOverflowStates } from './workspace.paneTabs'
 import { PaneNavigation, PaneNavigationHost } from './workspace.navigation'
 import { HostAppService } from '../api/hostApp'
 import { HostWindowService } from '../api/hostWindow'
@@ -570,16 +572,7 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     private refreshPaneTabOverflowStates (): void {
         const host = this.hostElement()
         if (!host) { return }
-        const tabs = Array.from(host.querySelectorAll('.pane-tab')) as HTMLElement[]
-        for (const tab of tabs) {
-            const label = this.paneTabLabelOf(tab)
-            if (!label) { continue }
-            const overflow = this.paneTabTitleOverflow(tab, label)
-            tab.classList.toggle('overflowing', overflow > 0)
-            if (tab.classList.contains('marquee')) {
-                this.applyPaneTabMarquee(tab, overflow)
-            }
-        }
+        refreshPaneTabOverflowStates(host)
     }
 
     /** @hidden Debounced overflow refresh (rAF-throttled). */
@@ -1099,64 +1092,15 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
      */
     onPaneTabMouseEnter (event: MouseEvent): void {
         const tab = event.currentTarget as HTMLElement
-        const label = this.paneTabLabelOf(tab)
+        const label = paneTabLabelOf(tab)
         if (!label) { return }
-        this.applyPaneTabMarquee(tab, this.paneTabTitleOverflow(tab, label))
+        applyPaneTabMarquee(tab, paneTabTitleOverflow(tab, label))
     }
 
     /** @hidden Stop the marquee when the pointer leaves the tab. */
     onPaneTabMouseLeave (event: MouseEvent): void {
         const tab = event.currentTarget as HTMLElement
         tab.classList.remove('marquee')
-    }
-
-    /**
-     * @hidden Start, re-aim or stop a pane-tab marquee for a measured overflow.
-     * The measurement is passed in instead of being re-taken so the scroll always
-     * covers exactly what the `overflowing` class reports as hidden.
-     */
-    private applyPaneTabMarquee (tab: HTMLElement, overflow: number): void {
-        if (overflow <= 0) {
-            tab.classList.remove('marquee')
-            return
-        }
-        // The keyframes own the motion; this only feeds them the distance and a
-        // pace proportional to it, clamped so short overflows don't fly past and
-        // long ones don't crawl.
-        const duration = Math.min(Math.max(overflow * 0.025, 1.5), 6)
-        tab.style.setProperty('--marquee-distance', `-${overflow}px`)
-        tab.style.setProperty('--marquee-duration', `${duration}s`)
-        tab.classList.add('marquee')
-    }
-
-    /**
-     * @hidden How many pixels of a pane-tab's title the chip hides, 0 when it
-     * fits — measured independently of what the chip is currently showing.
-     *
-     * The label's `scrollWidth` is the title's natural width in either layout
-     * (clipped to the chip when idle, max-content while marqueeing), and the
-     * window it is given comes from the chip's own box minus whatever its other
-     * children (the admin badge) take. Reading `label.clientWidth` instead would
-     * report no overflow for a chip whose marquee is already running — which is
-     * exactly the case a title change during a hover arrives in.
-     */
-    private paneTabTitleOverflow (tab: HTMLElement, label: HTMLElement): number {
-        // Computed lengths are strings, and `auto` (a valid margin) has no numeric
-        // value: NaN here would poison the custom property feeding the keyframes.
-        const px = (value: string): number => parseFloat(value) || 0
-        const chipStyle = getComputedStyle(tab)
-        let available = tab.clientWidth - px(chipStyle.paddingLeft) - px(chipStyle.paddingRight)
-        for (const child of Array.from(tab.children)) {
-            if (child === label) { continue }
-            const childStyle = getComputedStyle(child)
-            available -= child.getBoundingClientRect().width + px(childStyle.marginLeft) + px(childStyle.marginRight)
-        }
-        return Math.max(label.scrollWidth - available, 0)
-    }
-
-    /** @hidden The title element of a pane-tab chip. */
-    private paneTabLabelOf (tab: HTMLElement): HTMLElement|null {
-        return tab.querySelector(':scope > .pane-tab-label')
     }
 
     /** Freshly duplicated sessions, animated while present in this set. */
@@ -1227,97 +1171,37 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         this.paneDrag.resolveOwnDrop(event)
     }
 
-    /** @hidden PaneDragHost — GoldenLayout-demo hit test over the pane CELL
-     * boxes. Cells come from the layout pass (`_paneCells`), never from
-     * getBoundingClientRect of the mid-transition terminal DOM, so a drop can
-     * only ever resolve to the pane whose highlight is showing. The pane's
-     * header chip strip is handled by [[headerHit]] (reorder / merge), so this
-     * body hit-test skips it. The merge zone ('all') is the UPPER BAND of the
-     * pane BODY — the hint rect is the body box (header never tinted). Below
-     * the merge band: left/right 25% columns → 'l'/'r'; upper/lower remainder
-     * → 't'/'b'. */
+    /** @hidden PaneDragHost — hit test over the pane CELL boxes; see [[paneHitAt]]. */
     paneHit (x: number, y: number): PaneHit|null {
         const host = this.hostElement()
         const cells = this._paneCells
         if (!host || !cells.length) {
             return null
         }
-        const origin = host.getBoundingClientRect()
-        const headerH = this.paneHeaderHeight
-        for (const cell of cells) {
-            const left = origin.left + cell.x
-            const top = origin.top + cell.y
-            if (x < left || x > left + cell.w || y < top || y > top + cell.h) {
-                continue
-            }
-            const bodyY = top + headerH
-            const bodyH = Math.max(cell.h - headerH, 1)
-            if (y < bodyY) {
-                // The pane header chip strip: handled separately by headerHit
-                // (reorder within the same pane / merge into a different pane),
-                // so the body hit-test deliberately ignores it here.
-                continue
-            }
-            const rect = { left, top: bodyY, width: cell.w, height: bodyH }
-            if (y < bodyY + Math.min(headerH, bodyH)) {
-                return { pane: cell.pane, side: 'all', rect }                       // upper body band — merge (full-area highlight)
-            }
-            if (x >= left && x <= left + cell.w * 0.25) { return { pane: cell.pane, side: 'l', rect } }
-            if (x >= left + cell.w * 0.75 && x <= left + cell.w) { return { pane: cell.pane, side: 'r', rect } }
-            if (y <= bodyY + bodyH * 0.5) { return { pane: cell.pane, side: 't', rect } }
-            return { pane: cell.pane, side: 'b', rect }
-        }
-        // The gutter bands BETWEEN panes (the splitter seams, including where
-        // they meet a header) belong to no cell: deliberately NOT a drop target.
-        // Highlighting whichever pane happens to be nearest here (or letting the
-        // OS report no-drop while a pane is highlighted) reads as a lie, so the
-        // seams are left genuinely dead — no highlight, no accept.
-        return null
+        return paneHitAt({
+            x,
+            y,
+            origin: host.getBoundingClientRect(),
+            cells,
+            headerHeight: this.paneHeaderHeight,
+        })
     }
 
-    /** @hidden PaneDragHost — hit-test the pane HEADER (tab) strips.
-     *  Returns the pane whose header contains the point, the target insertion
-     *  index (derived from the live `.pane-tab` DOM positions), the client x
-     *  of the insertion boundary, and the header's client rect. Null when the
-     *  point is not over any header strip. */
-    headerHit (x: number, y: number): { pane: Pane, targetIndex: number, lineX: number, headerRect: { left: number, top: number, width: number, height: number }, bodyRect: { left: number, top: number, width: number, height: number } }|null {
+    /** @hidden PaneDragHost — hit-test the pane HEADER strips; see [[headerHitAt]]. */
+    headerHit (x: number, y: number): HeaderHit|null {
         const host = this.hostElement()
         const cells = this._paneCells
         if (!host || !cells.length) {
             return null
         }
-        const origin = host.getBoundingClientRect()
-        const headerH = this.paneHeaderHeight
-        const headers = host.querySelectorAll('.pane-header')
-        for (let i = 0; i < cells.length; i++) {
-            const cell = cells[i]
-            const left = origin.left + cell.x
-            const top = origin.top + cell.y
-            if (x < left || x > left + cell.w || y < top || y > top + headerH) {
-                continue
-            }
-            // Found the pane whose header strip contains the point. Resolve the
-            // insertion index from the live tab DOM positions in that header.
-            const headerEl = headers[i] as HTMLElement | undefined
-            const headerRect = { left, top, width: cell.w, height: headerH }
-            const bodyY = top + headerH
-            const bodyH = Math.max(cell.h - headerH, 1)
-            const bodyRect = { left, top: bodyY, width: cell.w, height: bodyH }
-            const tabEls = headerEl?.querySelectorAll('.pane-tab') ?? []
-            let targetIndex = cell.pane.tabs.length
-            let lineX = left + cell.w
-            for (let j = 0; j < tabEls.length; j++) {
-                const r = (tabEls[j] as HTMLElement).getBoundingClientRect()
-                if (x < r.left + r.width / 2) {
-                    targetIndex = j
-                    lineX = r.left
-                    break
-                }
-                lineX = r.right
-            }
-            return { pane: cell.pane, targetIndex, lineX, headerRect, bodyRect }
-        }
-        return null
+        return headerHitAt({
+            x,
+            y,
+            origin: host.getBoundingClientRect(),
+            cells,
+            headerHeight: this.paneHeaderHeight,
+            host,
+        })
     }
 
     /** @hidden PaneDragHost — begin a live-reorder session by snapshotting the
