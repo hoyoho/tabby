@@ -11,8 +11,6 @@ export interface DataQueueOptions {
     maxChunk?: number
     /** Maximum unacked bytes before the producer is paused. */
     maxInFlight?: number
-    /** Transforms a raw chunk before it is handed to the renderer. */
-    transform?: (data: Buffer) => Buffer
     pause?: () => void
     resume?: () => void
 }
@@ -86,9 +84,8 @@ export class DataQueue {
             toSend = toSend.slice(0, this.maxChunk)
         }
 
-        const payload = this.options.transform ? this.options.transform(toSend) : toSend
         this.inFlight += toSend.length
-        this.onData(payload)
+        this.onData(toSend)
 
         // Always let the next tick observe the window, so a producer with
         // pause/resume hooks (node-pty) is paused once it is exceeded.
