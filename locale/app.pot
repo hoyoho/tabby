@@ -229,6 +229,10 @@ msgstr ""
 msgid "Cannot handle scripts of this type"
 msgstr ""
 
+#: tabby-terminal/src/features/zmodem.ts:500
+msgid "Cannot send files while a full-screen program is running"
+msgstr ""
+
 msgid "Case sensitivity"
 msgstr ""
 

@@ -1,13 +1,16 @@
 import colors from 'ansi-colors'
 import * as ZModem from 'zmodem.js'
+import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import { Observable, filter, first } from 'rxjs'
 import { EnvironmentInjector, inject, Injectable } from '@angular/core'
 import { TerminalDecorator } from '../api/decorator'
 import { BaseTerminalTabComponent } from '../api/baseTerminalTab.component'
 import { SessionMiddleware } from '../api/middleware'
-import { LogService, Logger, PlatformService, FileUpload, TranslateService } from 'tabby-core'
+import { DirectoryUpload, FileUpload, LogService, Logger, NotificationsService, PlatformService, TranslateService } from 'tabby-core'
 
 const SPACER = '            '
+/** How long to wait for the remote `rz` to emit its ZMODEM header. */
+const UPLOAD_START_TIMEOUT = 10_000
 
 class ZModemMiddleware extends SessionMiddleware {
     private sentry: ZModem.Sentry
@@ -23,6 +26,15 @@ class ZModemMiddleware extends SessionMiddleware {
     // overwritten by showMessage()'s leading "\r".
     private trailingBuffer: Buffer[] | null = null
 
+    /**
+     * Files a local drag-and-drop asked to upload. Set before `rz` is typed
+     * into the shell, consumed by the next ZMODEM detection. This is what
+     * lets the drop bypass the usual "Accept a ZMODEM session?" prompt and the
+     * native file picker.
+     */
+    private pendingUpload: FileUpload[] | null = null
+    private pendingUploadTimer: ReturnType<typeof setTimeout> | null = null
+
     private flushTrailingBuffer () {
         const buffered = this.trailingBuffer
         this.trailingBuffer = null
@@ -32,6 +44,73 @@ class ZModemMiddleware extends SessionMiddleware {
         for (const chunk of buffered) {
             this.outputToTerminal.next(chunk)
         }
+    }
+
+    /**
+     * Starts an upload the user requested by dropping files onto the terminal.
+     *
+     * Types `rz` into the shell and holds the files until the remote receiver
+     * announces itself. The terminal-side caller already rejects full-screen
+     * programs, where `rz` would be delivered to the foreground app instead of
+     * a shell.
+     */
+    queueUpload (uploads: FileUpload[]): void {
+        if (!uploads.length) {
+            return
+        }
+        if (this.pendingUpload ?? this.activeSession ?? this.isActive) {
+            this.showMessage(colors.bgRed.black(' ZMODEM ') + ' Another transfer is already in progress')
+            for (const upload of uploads) {
+                upload.cancel()
+            }
+            return
+        }
+
+        this.pendingUpload = uploads
+        this.pendingUploadTimer = setTimeout(
+            () => this.cancelPendingUpload('rz did not start. Is lrzsz installed on the remote host?'),
+            UPLOAD_START_TIMEOUT,
+        )
+
+        this.showMessage(colors.bgBlue.black(' ZMODEM ') + ` Sending ${uploads.length} file(s) with rz`)
+        // Kill a half-typed command first. Both readline and the canonical TTY
+        // driver treat ^U as kill-line, so dropping onto a shell cannot turn
+        // "cd /tmp" into "cd /tmprz". `-y` makes an existing remote file get
+        // overwritten instead of skipped, which is what a drop implies.
+        this.outputToSession.next(Buffer.from('\x15rz -y\r'))
+    }
+
+    /** Consumes the drop request that a detection just answered. */
+    private takePendingUpload (): FileUpload[] | null {
+        if (this.pendingUploadTimer) {
+            clearTimeout(this.pendingUploadTimer)
+            this.pendingUploadTimer = null
+        }
+        const uploads = this.pendingUpload
+        this.pendingUpload = null
+        return uploads
+    }
+
+    private cancelPendingUpload (message: string): void {
+        if (this.pendingUploadTimer) {
+            clearTimeout(this.pendingUploadTimer)
+            this.pendingUploadTimer = null
+        }
+        const uploads = this.pendingUpload
+        this.pendingUpload = null
+        this.showMessage(colors.bgRed.black(' ZMODEM ') + ' ' + message)
+        for (const upload of uploads ?? []) {
+            upload.cancel()
+        }
+    }
+
+    close (): void {
+        if (this.pendingUploadTimer) {
+            clearTimeout(this.pendingUploadTimer)
+            this.pendingUploadTimer = null
+        }
+        this.pendingUpload = null
+        super.close()
     }
 
     private log = inject(LogService)
@@ -63,7 +142,12 @@ class ZModemMiddleware extends SessionMiddleware {
             },
             sender: data => this.outputToSession.next(Buffer.from(data)),
             on_detect: async detection => {
-                if ((await this.platform.showMessageBox({
+                // A local drag-and-drop initiated this transfer: the user
+                // already asked for it, so skip both the security prompt and
+                // the native file picker.
+                const uploads = this.takePendingUpload()
+
+                if (!uploads && (await this.platform.showMessageBox({
                     type: 'warning',
                     message: this.translate.instant('Accept a ZMODEM session?'),
                     detail: this.translate.instant('If you have not requested it, it could be a sign of malicious activity.'),
@@ -88,12 +172,16 @@ class ZModemMiddleware extends SessionMiddleware {
 
                 try {
                     this.isActive = true
-                    await this.process(detection)
+                    await this.process(detection, uploads ?? undefined)
                 } finally {
                     this.isActive = false
                 }
             },
             on_retract: () => {
+                // The remote never completed a handshake the drop asked for.
+                for (const upload of this.takePendingUpload() ?? []) {
+                    upload.cancel()
+                }
                 this.showMessage('transfer cancelled')
                 this.activeSession = null
                 this.isActive = false
@@ -128,7 +216,7 @@ class ZModemMiddleware extends SessionMiddleware {
         }
     }
 
-    private async process (detection): Promise<void> {
+    private async process (detection, uploads?: FileUpload[]): Promise<void> {
         this.showMessage(colors.bgBlue.black(' ZMODEM ') + ' Session started')
         this.showMessage('------------------------')
 
@@ -138,7 +226,9 @@ class ZModemMiddleware extends SessionMiddleware {
 
         try {
             if (zsession.type === 'send') {
-                const transfers = await this.platform.startUpload({ multiple: true })
+                // Dragged files win over the native picker; both paths end up
+                // in the same sender loop below.
+                const transfers = uploads ?? await this.platform.startUpload({ multiple: true })
                 let filesRemaining = transfers.length
                 let sizeRemaining = transfers.reduce((a, b) => a + b.getSize(), 0)
                 for (const transfer of transfers) {
@@ -324,10 +414,36 @@ class ZModemMiddleware extends SessionMiddleware {
     }
 }
 
+/**
+ * Flattens a drag-and-drop tree into the flat file list a ZMODEM sender can
+ * offer. Directories keep no structure: rz writes every file into the remote
+ * working directory.
+ */
+function collectFileUploads (root: DirectoryUpload): FileUpload[] {
+    const files: FileUpload[] = []
+    const walk = (entry: FileUpload|DirectoryUpload) => {
+        if (entry instanceof DirectoryUpload) {
+            for (const child of entry.getChildrens()) {
+                walk(child)
+            }
+        } else {
+            files.push(entry)
+        }
+    }
+    for (const child of root.getChildrens()) {
+        walk(child)
+    }
+    return files
+}
+
 /** @hidden */
 @Injectable()
 export class ZModemDecorator extends TerminalDecorator {
     #injector = inject(EnvironmentInjector)
+    private platform = inject(PlatformService)
+    private notifications = inject(NotificationsService)
+    private translate = inject(TranslateService)
+    private middlewares = new Map<BaseTerminalTabComponent<any>, ZModemMiddleware>()
 
     attach (terminal: BaseTerminalTabComponent<any>): void {
         setTimeout(() => {
@@ -335,13 +451,74 @@ export class ZModemDecorator extends TerminalDecorator {
             this.subscribeUntilDetached(terminal, terminal.sessionChanged$.subscribe(() => {
                 this.attachToSession(terminal)
             }))
+
+            const frontend = terminal.frontend
+            if (frontend) {
+                this.subscribeUntilDetached(terminal, frontend.dragOver$.subscribe(event => this.onDragOver(event)))
+                this.subscribeUntilDetached(terminal, frontend.drop$.subscribe(event => {
+                    void this.onDrop(terminal, event)
+                }))
+            }
         })
+    }
+
+    detach (terminal: BaseTerminalTabComponent<any>): void {
+        this.middlewares.delete(terminal)
+        super.detach(terminal)
     }
 
     private attachToSession (terminal: BaseTerminalTabComponent<any>) {
         if (!terminal.session) {
             return
         }
-        terminal.session.middleware.unshift(this.#injector.runInContext(() => new ZModemMiddleware()))
+        const middleware = this.#injector.runInContext(() => new ZModemMiddleware())
+        this.middlewares.set(terminal, middleware)
+        terminal.session.middleware.unshift(middleware)
+    }
+
+    private onDragOver (event: DragEvent): void {
+        const dataTransfer = event.dataTransfer
+        // Internal tab/workspace drags carry their own MIME type, not 'Files'.
+        if (!dataTransfer?.types.includes('Files')) {
+            return
+        }
+        event.preventDefault()
+        dataTransfer.dropEffect = 'copy'
+    }
+
+    private async onDrop (terminal: BaseTerminalTabComponent<any>, event: DragEvent): Promise<void> {
+        const dataTransfer = event.dataTransfer
+        if (!dataTransfer?.files.length) {
+            return
+        }
+
+        // Plain drops keep pasting the quoted path (PathDropDecorator in
+        // tabby-electron). Ctrl+drop is the opt-in ZMODEM upload gesture, so
+        // the two decorators never act on the same drop.
+        if (!event.ctrlKey) {
+            return
+        }
+
+        event.preventDefault()
+        event.stopPropagation()
+
+        if (!terminal.session?.open) {
+            return
+        }
+        // Reachable only for Ctrl+drop: a plain drop returned above and is
+        // pasted as a path by PathDropDecorator, even in a full-screen program.
+        if (terminal.alternateScreenActive) {
+            this.notifications.error(this.translate.instant(_('Cannot send files while a full-screen program is running')))
+            return
+        }
+
+        // Called synchronously before the first await: DataTransfer contents are
+        // only valid for the duration of the drop event.
+        const tree = await this.platform.startUploadFromDragEvent(event, true)
+        const uploads = collectFileUploads(tree)
+        if (!uploads.length) {
+            return
+        }
+        this.middlewares.get(terminal)?.queueUpload(uploads)
     }
 }

@@ -206,6 +206,10 @@ msgid "Cannot handle scripts of this type"
 msgstr "无法处理此类脚本"
 
 
+msgid "Cannot send files while a full-screen program is running"
+msgstr "全屏程序运行时无法发送文件"
+
+
 msgid "Change the master passphrase"
 msgstr "更改主密码"
 

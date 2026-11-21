@@ -12,6 +12,11 @@ export class PathDropDecorator extends TerminalDecorator {
                 event.preventDefault()
             }))
             this.subscribeUntilDetached(terminal, terminal.frontend?.drop$.subscribe((event: DragEvent) => {
+                // Ctrl+drop is reserved for the ZMODEM upload gesture
+                // (tabby-terminal/features/zmodem.ts); plain drops paste paths.
+                if (event.ctrlKey) {
+                    return
+                }
                 for (const file of event.dataTransfer!.files as unknown as Iterable<File>) {
                     this.injectPath(terminal, webUtils.getPathForFile(file))
                 }

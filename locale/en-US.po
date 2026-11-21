@@ -204,6 +204,10 @@ msgid "Cannot handle scripts of this type"
 msgstr ""
 
 
+msgid "Cannot send files while a full-screen program is running"
+msgstr ""
+
+
 msgid "Change the master passphrase"
 msgstr ""
 
