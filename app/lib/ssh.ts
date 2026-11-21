@@ -177,7 +177,13 @@ class SSHConnection {
     private destroying = false
     /** Set when the user dismissed an auth prompt — the connect failure is a cancellation, not a rejection. */
     private userCancelledAuthentication = false
-    /** Set when the server itself rejected the stored credential via direct password auth — only then may it be discarded. */
+    /**
+     * Set when the server rejected the stored credential via direct password
+     * auth. The credential is deliberately kept: a rejection (lockout, IP
+     * restriction, changed password) says nothing about whether the user still
+     * wants it stored. It is only used to avoid prefilling a known-bad secret
+     * into the retry prompt.
+     */
     private storedPasswordRejected = false
 
     constructor (
@@ -406,13 +412,11 @@ class SSHConnection {
             try {
                 this.client.disconnect()
             } catch { /* ignore */ }
-            // Discard the stored credential only when the server itself
-            // rejected it via direct password auth. A failed keyboard-
-            // interactive exchange (e.g. wrong OTP) says nothing about the
-            // password, and a user cancellation even less so.
-            if (this.storedPasswordRejected) {
-                await this.request('delete-password', { username: this.authUsername })
-            }
+            // Saved credentials are never discarded on failure: the server may
+            // reject a valid password (lockout, IP restriction, PAM policy),
+            // and the user's stored secret is theirs to keep. A new password is
+            // written only when the user asks to remember it and it actually
+            // authenticates.
             throw new Error(this.userCancelledAuthentication ? 'Authentication cancelled' : 'Authentication rejected')
         }
 
@@ -660,8 +664,9 @@ class SSHConnection {
                 if (result instanceof russh.AuthenticatedSSHClient) {
                     return result
                 }
-                // Direct password auth with the stored credential — a failure
-                // here is the server definitively rejecting it.
+                // Direct password auth with the stored credential. Remember the
+                // rejection so the retry prompt does not prefill a password the
+                // server just refused, but keep the stored secret itself.
                 this.storedPasswordRejected = true
                 updateAuthPlan(result)
             }
@@ -672,7 +677,12 @@ class SSHConnection {
                     // plain-password fallback afterwards.
                     continue
                 }
-                const prefilledPassword = await this.request('load-password', { username: this.authUsername })
+                // Never prefill a password the server just rejected: pressing
+                // Enter would only burn another auth attempt. The stored
+                // secret itself is kept.
+                const prefilledPassword = this.storedPasswordRejected
+                    ? null
+                    : await this.request('load-password', { username: this.authUsername })
                 const promptResult = await this.request('prompt', {
                     msgid: 'Password for {user}@{host}',
                     params: {
@@ -688,11 +698,15 @@ class SSHConnection {
                     value: this.options.auth === 'keyboardInteractive' ? null : prefilledPassword,
                 } as PromptPayload)
                 if (promptResult) {
-                    if (promptResult.remember) {
-                        this.savedPassword = promptResult.value
-                    }
                     const result = await client.authenticateWithPassword(this.authUsername, promptResult.value)
                     if (result instanceof russh.AuthenticatedSSHClient) {
+                        // Persist only a password that actually worked. Setting
+                        // this before the attempt would store a rejected one if
+                        // a later method (e.g. chained keyboard-interactive)
+                        // ends up authenticating the connection.
+                        if (promptResult.remember) {
+                            this.savedPassword = promptResult.value
+                        }
                         return result
                     }
                     updateAuthPlan(result)
