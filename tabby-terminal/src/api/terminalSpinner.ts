@@ -36,10 +36,6 @@ export class TerminalSpinner {
         })
     }
 
-    get isActive (): boolean {
-        return this.active
-    }
-
     start (text?: string): void {
         if (this.active || this.paused) {
             return
