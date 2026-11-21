@@ -1551,6 +1551,10 @@ msgstr ""
 msgid "Next workspace"
 msgstr ""
 
+#: tabby-core/src/hotkeys.ts:51
+msgid "Next workspace (MRU order)"
+msgstr ""
+
 #: tabby-core/src/utils.ts:59
 msgid "No color"
 msgstr ""
@@ -1833,6 +1837,10 @@ msgstr ""
 msgid "Previous workspace"
 msgstr ""
 
+#: tabby-core/src/hotkeys.ts:55
+msgid "Previous workspace (MRU order)"
+msgstr ""
+
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:108
 msgid "Private keys"
 msgstr ""
@@ -1972,6 +1980,10 @@ msgstr ""
 
 #: locale/tmp-html/tabby-core/src/components/unlockVaultModal.component.html:6
 msgid "Remember for {time}"
+msgstr ""
+
+#: tabby-core/src/components/unlockVaultModal.component.pug:8
+msgid "Remember for {time} while Tabby is open"
 msgstr ""
 
 #: locale/tmp-html/tabby-ssh/src/components/sshPortForwardingConfig.component.html:41
@@ -2604,6 +2616,10 @@ msgstr ""
 msgid "Toggle terminal window"
 msgstr ""
 
+#: tabby-terminal/src/hotkeys.ts:114
+msgid "Toggle the Option key between Meta and normal (macOS)"
+msgstr ""
+
 #: locale/tmp-html/tabby-core/src/components/welcomeTab.component.html:33
 msgid "Toggles the Tabby window visibility"
 msgstr ""
@@ -2671,6 +2687,10 @@ msgstr ""
 msgid "Use ConPTY"
 msgstr ""
 
+#: tabby-local/src/components/shellSettingsTab.component.pug:5
+msgid "Use bundled ConPTY"
+msgstr ""
+
 #: locale/tmp-html/tabby-terminal/src/components/terminalConfigTab.component.html:39
 msgid "Use {altKeyName} as the Meta key"
 msgstr ""
@@ -2683,6 +2703,10 @@ msgstr ""
 #: locale/tmp-html/tabby-settings/src/components/settingsTab.component.html:84
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:70
 msgid "Username"
+msgstr ""
+
+#: tabby-local/src/components/shellSettingsTab.component.pug:6
+msgid "Uses the newer ConPTY from Windows Terminal"
 msgstr ""
 
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:25
@@ -2817,6 +2841,10 @@ msgstr ""
 
 #: locale/tmp-html/tabby-local/src/components/shellSettingsTab.component.html:10
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
+msgstr ""
+
+#: tabby-local/src/components/shellSettingsTab.component.pug:14
+msgid "Windows 10 2004 (build 19041) or above is required for the bundled ConPTY"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/profilesSettingsTab.component.html:102

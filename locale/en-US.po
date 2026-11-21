@@ -2656,3 +2656,69 @@ msgstr "Disable background blur while dragging"
 
 msgid "Prevents flicker while moving or resizing the window"
 msgstr "Prevents flicker while moving or resizing the window"
+
+msgid "Remember for {time} while Tabby is open"
+msgstr ""
+
+msgid "Next workspace (MRU order)"
+msgstr ""
+
+msgid "Previous workspace (MRU order)"
+msgstr ""
+
+msgid "Use bundled ConPTY"
+msgstr ""
+
+msgid "Uses the newer ConPTY from Windows Terminal"
+msgstr ""
+
+msgid "Windows 10 2004 (build 19041) or above is required for the bundled ConPTY"
+msgstr ""
+
+msgid "Session isolation"
+msgstr ""
+
+msgid "Shared mode saves memory; per-session mode is more stable."
+msgstr ""
+
+msgid "Add local plugin"
+msgstr ""
+
+msgid "Select plugin folder"
+msgstr ""
+
+msgid "Window style"
+msgstr ""
+
+msgid "CSS"
+msgstr ""
+
+msgid "Global styles contributed by plugins (read-only)"
+msgstr ""
+
+msgid "Show CSS variables reference"
+msgstr ""
+
+msgid "The current runtime values of the Tabby CSS variables, that can be reused in the Custom CSS field"
+msgstr ""
+
+msgid "Variable"
+msgstr ""
+
+msgid "Current value"
+msgstr ""
+
+msgid "Defined by"
+msgstr ""
+
+msgid "Sessions"
+msgstr ""
+
+msgid "The target of the link {name} does not exist"
+msgstr ""
+
+msgid "Cursor"
+msgstr ""
+
+msgid "Toggle the Option key between Meta and normal (macOS)"
+msgstr ""
