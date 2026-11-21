@@ -68,7 +68,7 @@ class ZModemMiddleware extends SessionMiddleware {
 
         this.pendingUpload = uploads
         this.pendingUploadTimer = setTimeout(
-            () => this.cancelPendingUpload('rz did not start. Is lrzsz installed on the remote host?'),
+            () => this.cancelPendingUpload(),
             UPLOAD_START_TIMEOUT,
         )
 
@@ -91,14 +91,18 @@ class ZModemMiddleware extends SessionMiddleware {
         return uploads
     }
 
-    private cancelPendingUpload (message: string): void {
+    private cancelPendingUpload (): void {
         if (this.pendingUploadTimer) {
             clearTimeout(this.pendingUploadTimer)
             this.pendingUploadTimer = null
         }
         const uploads = this.pendingUpload
         this.pendingUpload = null
-        this.showMessage(colors.bgRed.black(' ZMODEM ') + ' ' + message)
+        // The remote shell already reports its own `rz: command not found`, so
+        // keep this out of the terminal and surface it as a toast instead. By
+        // the time it fires the user may be running something else.
+        this.logger.warn('rz did not start before the upload timeout; is lrzsz installed on the remote host?')
+        this.notifications.error(this.translate.instant(_('ZMODEM upload did not start. Is lrzsz installed on the remote host?')))
         for (const upload of uploads ?? []) {
             upload.cancel()
         }
@@ -116,6 +120,7 @@ class ZModemMiddleware extends SessionMiddleware {
     private log = inject(LogService)
     private translate = inject(TranslateService)
     private platform = inject(PlatformService)
+    private notifications = inject(NotificationsService)
 
     constructor () {
         super()

@@ -2913,6 +2913,10 @@ msgid ""
 "could have just been changed."
 msgstr ""
 
+#: tabby-terminal/src/features/zmodem.ts:105
+msgid "ZMODEM upload did not start. Is lrzsz installed on the remote host?"
+msgstr ""
+
 #: tabby-terminal/src/hotkeys.ts:54
 msgid "Zoom in"
 msgstr ""

@@ -2487,6 +2487,10 @@ msgid "You could be under a man-in-the-middle attack right now, or the host key 
 msgstr ""
 
 
+msgid "ZMODEM upload did not start. Is lrzsz installed on the remote host?"
+msgstr ""
+
+
 msgid "Zoom in"
 msgstr ""
 

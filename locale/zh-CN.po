@@ -2547,6 +2547,10 @@ msgid "You could be under a man-in-the-middle attack right now, or the host key 
 msgstr "你可能正在遭受中间人攻击，或者该主机的密钥刚刚发生了变化。"
 
 
+msgid "ZMODEM upload did not start. Is lrzsz installed on the remote host?"
+msgstr "ZMODEM 上传未启动，请确认远程主机已安装 lrzsz。"
+
+
 msgid "Zoom in"
 msgstr "放大"
 
