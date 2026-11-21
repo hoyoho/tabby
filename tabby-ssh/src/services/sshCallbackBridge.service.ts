@@ -83,9 +83,6 @@ export class SSHCallbackBridgeService {
                 case 'save-password':
                     await this.getPasswordStorage().savePassword(this.getSession(connId).profile, args[0].password, args[0].username)
                     break
-                case 'delete-password':
-                    await this.getPasswordStorage().deletePassword(this.getSession(connId).profile, args[0].username)
-                    break
                 case 'load-key-passphrase':
                     result = await this.getPasswordStorage().loadPrivateKeyPassword(args[0].keyHash)
                     break
