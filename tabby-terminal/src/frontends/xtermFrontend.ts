@@ -105,7 +105,6 @@ class FlowControl {
 
 /** @hidden */
 export class XTermFrontend extends Frontend {
-    enableResizing = true
     xterm: Terminal
     protected xtermCore: any
     protected enableWebGL = false

@@ -32,11 +32,56 @@ export interface SerialPortInfo {
     description?: string
 }
 
+/**
+ * Paces terminal input at the port's line rate. The previous implementation
+ * emitted one Buffer per byte with no delay, which multiplied Subject/IPC
+ * traffic without slowing anything down.
+ */
 class SlowFeedMiddleware extends SessionMiddleware {
+    private queue = Buffer.alloc(0)
+    private timer: ReturnType<typeof setTimeout>|null = null
+    private closed = false
+
+    constructor (private bytesPerSecond: number) {
+        super()
+    }
+
     feedFromTerminal (data: Buffer): void {
-        for (const byte of data) {
-            this.outputToSession.next(Buffer.from([byte]))
+        if (this.closed) {
+            return
         }
+        this.queue = Buffer.concat([this.queue, data])
+        this.pump()
+    }
+
+    close (): void {
+        this.closed = true
+        if (this.timer) {
+            clearTimeout(this.timer)
+            this.timer = null
+        }
+        this.queue = Buffer.alloc(0)
+        super.close()
+    }
+
+    private pump (): void {
+        if (this.timer !== null || this.closed || !this.queue.length) {
+            return
+        }
+        // Timers are clamped to ~4ms; batch the bytes that would have gone out
+        // in that window so low baud rates stay accurate.
+        const delay = Math.max(4, Math.ceil(1000 / this.bytesPerSecond))
+        const chunkSize = Math.max(1, Math.floor(this.bytesPerSecond * delay / 1000))
+        this.timer = setTimeout(() => {
+            this.timer = null
+            if (this.closed || !this.queue.length) {
+                return
+            }
+            const chunk = this.queue.slice(0, chunkSize)
+            this.queue = this.queue.slice(chunkSize)
+            this.outputToSession.next(chunk)
+            this.pump()
+        }, delay)
     }
 }
 
@@ -98,7 +143,9 @@ export class SerialSession extends BaseSession {
         this.middleware.push(this.streamProcessor)
 
         if (this.profile.options.slowSend) {
-            this.middleware.unshift(new SlowFeedMiddleware())
+            // One character is ~10 bits on the wire (start + 8 data + stop).
+            const bytesPerSecond = (this.profile.options.baudrate ?? 9600) / 10
+            this.middleware.unshift(new SlowFeedMiddleware(bytesPerSecond))
         }
 
         this.middleware.push(new UTF8SplitterMiddleware())

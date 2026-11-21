@@ -130,8 +130,8 @@ app.on('ready', async () => {
         app.dock.setMenu(Menu.buildFromTemplate([
             {
                 label: 'New window',
-                click () {
-                    this.app.newWindow()
+                click: () => {
+                    void application.newWindow()
                 },
             },
         ]))

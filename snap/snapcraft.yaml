@@ -20,6 +20,6 @@ parts:
     override-build: |
       yarn
       yarn run build
-      ./scripts/build-linux.js
+      ./scripts/build-linux.mjs
       mkdir -p $SNAPCRAFT_PART_INSTALL/opt/tabby || true
       cp -ar dist/linux-unpacked/* $SNAPCRAFT_PART_INSTALL/opt/tabby/

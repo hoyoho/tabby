@@ -1,4 +1,4 @@
-import { Observable, Subject, Subscription, takeWhile } from 'rxjs'
+import { AsyncSubject, Observable, Subject, Subscription, takeWhile } from 'rxjs'
 import { Component, Injectable, HostBinding, ViewChild, ViewChildren, ViewContainerRef, EmbeddedViewRef, AfterViewInit, OnDestroy, Injector, NgZone, ElementRef, QueryList, ChangeDetectorRef } from '@angular/core'
 import { BaseTabComponent, BaseTabProcess, GetRecoveryTokenOptions } from './baseTab.component'
 import { TopLevelTab } from '../api/topLevelTab'
@@ -286,7 +286,8 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     private tabAdded = new Subject<BaseTabComponent>()
     private tabRemoved = new Subject<BaseTabComponent>()
     private focusChanged = new Subject<BaseTabComponent>()
-    private initialized = new Subject<void>()
+    private initialized = new AsyncSubject<void>()
+    private isDestroyed = false
 
     get tabAdded$ (): Observable<BaseTabComponent> { return this.tabAdded }
 
@@ -608,6 +609,12 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
 
     /** @hidden */
     ngOnDestroy (): void {
+        this.isDestroyed = true
+        // Release callers waiting for the first view pass: the workspace is gone
+        // and they must not attach anything to a destroyed container.
+        if (!this.initialized.isStopped) {
+            this.initialized.complete()
+        }
         // An in-flight drag installs document listeners — drop them before
         // teardown so the gesture can't keep a live reference to us.
         if (this.dragOverListener) {
@@ -1194,11 +1201,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
     }
 
     /** @hidden PaneDragHost */
-    getNativeDragState (dragId: string): any {
-        return this.hostApp.nativeDragState(dragId)
-    }
-
-    /** @hidden PaneDragHost */
     endNativeDrag (dragId: string): void {
         this.hostApp.nativeDragEnd(dragId)
     }
@@ -1211,11 +1213,6 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         }
         const r = host.getBoundingClientRect()
         return { left: r.left, top: r.top, width: r.width, height: r.height }
-    }
-
-    /** @hidden PaneDragHost */
-    acceptNativeDrag (dragId: string): void {
-        this.hostApp.nativeDragAccepted(dragId)
     }
 
     /** @hidden Whether this workspace's pane-drag controller owns the drag
@@ -1486,6 +1483,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (!this.viewContainer) {
             await this.initialized$.toPromise()
+            if (this.isDestroyed) {
+                return false
+            }
         }
 
         // Same placement routing as the in-window gesture: header / body centre
@@ -1625,6 +1625,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             addPaneInto(this.root, pane, relative, side)
             this.recoveryStateChangedHint.next()
             await this.initialized$.toPromise()
+            if (this.isDestroyed) {
+                return
+            }
             await this.attachPaneTabs(pane)
             this.root.normalize()
             return
@@ -1718,6 +1721,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             const newSession = newTab as SessionTab
             if (tab instanceof SessionTab) { tab.setBroadcastFocus(false) }
             tab.removeFromContainer()
+            // The old session leaves this workspace: drop its detached view
+            // reference or it stays retained until the whole workspace dies.
+            this.viewRefs.delete(tab as SessionTab)
             this.adoptTab(newSession)
             pane.tabs[position] = newSession
             if (pane.activeTab === tab) { pane.activeTab = newSession }
@@ -1989,6 +1995,9 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             // initialised; a session may be created before that (e.g. right when
             // a brand-new workspace is opened from the profile list).
             await this.initialized$.toPromise()
+            if (this.isDestroyed) {
+                return
+            }
         }
         if (this.viewRefs.has(tab)) {
             // already attached; do not double-insert the same host view
@@ -2033,7 +2042,10 @@ export class WorkspaceComponent extends TopLevelTab implements AfterViewInit, On
             this.observeUntilChildDetached(tab, tab.recoveryStateChangedHint$),
             () => this.recoveryStateChangedHint.next(),
         )
-        tab.destroyed$.subscribe(() => this.removeTab(tab))
+        this.subscribeUntilDestroyed(
+            this.observeUntilChildDetached(tab, tab.destroyed$),
+            () => this.removeTab(tab),
+        )
     }
 
     private observeUntilChildDetached<T> (tab: SessionTab, event: Observable<T>): Observable<T> {

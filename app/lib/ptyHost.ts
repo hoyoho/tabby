@@ -1,6 +1,6 @@
 import * as nodePTY from 'node-pty'
 import { Subject, debounceTime } from 'rxjs'
-import { UTF8Splitter } from './utfSplitter'
+import { UTF8Splitter } from '../../tabby-core/src/utfSplitter'
 import { PTYHostCommand, PTYHostEvent } from './ptyProtocol'
 
 /**

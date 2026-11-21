@@ -42,13 +42,11 @@ export interface TerminalModeSnapshot {
  * Extend to add support for a different VT frontend implementation
  */
 export abstract class Frontend {
-    enableResizing = true
     protected ready = new AsyncSubject<void>()
     protected title = new ReplaySubject<string>(1)
     protected alternateScreenActive = new BehaviorSubject<boolean>(false)
     protected mouseEvent = new Subject<MouseEvent>()
     protected bell = new Subject<void>()
-    protected contentUpdated = new Subject<void>()
     protected input = new Subject<Buffer>()
     protected resize = new ReplaySubject<ResizeEvent>(1)
     protected dragOver = new Subject<DragEvent>()
@@ -60,7 +58,6 @@ export abstract class Frontend {
     get alternateScreenActive$ (): Observable<boolean> { return this.alternateScreenActive }
     get mouseEvent$ (): Observable<MouseEvent> { return this.mouseEvent }
     get bell$ (): Observable<void> { return this.bell }
-    get contentUpdated$ (): Observable<void> { return this.contentUpdated }
     get input$ (): Observable<Buffer> { return this.input }
     get resize$ (): Observable<ResizeEvent> { return this.resize }
     get dragOver$ (): Observable<DragEvent> { return this.dragOver }
@@ -77,7 +74,6 @@ export abstract class Frontend {
             this.alternateScreenActive,
             this.mouseEvent,
             this.bell,
-            this.contentUpdated,
             this.input,
             this.resize,
             this.dragOver,

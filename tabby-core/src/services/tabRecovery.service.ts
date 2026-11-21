@@ -24,11 +24,21 @@ export class TabRecoveryService {
         if (!this.enabled || !recoverWorkspaces) {
             return
         }
-        window.localStorage.tabsRecovery = JSON.stringify(
-            (await Promise.all(
-                tabs.map(async tab => this.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })),
-            )).filter(token => !!token),
-        )
+        const tokens = await Promise.all(tabs.map(async tab => {
+            try {
+                return await this.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })
+            } catch (error) {
+                this.logger.warn('Could not serialize tab for recovery:', tab, error)
+                return null
+            }
+        }))
+        try {
+            window.localStorage.tabsRecovery = JSON.stringify(tokens.filter(token => !!token))
+        } catch (error) {
+            // Quota exceeded or storage disabled: recovery is best-effort and
+            // must never take down the app.
+            this.logger.warn('Could not persist tab recovery state:', error)
+        }
     }
 
     async getFullRecoveryToken (tab: BaseTabComponent, options?: GetRecoveryTokenOptions): Promise<RecoveryToken|null> {
@@ -71,16 +81,26 @@ export class TabRecoveryService {
     }
 
     async recoverTabs (): Promise<NewTabParameters<BaseTabComponent>[]> {
-        if (window.localStorage.tabsRecovery) {
-            const tabs: NewTabParameters<BaseTabComponent>[] = []
-            for (const token of JSON.parse(window.localStorage.tabsRecovery)) {
-                const tab = await this.recoverTab(token)
-                if (tab) {
-                    tabs.push(tab)
-                }
-            }
-            return tabs
+        if (!window.localStorage.tabsRecovery) {
+            return []
         }
-        return []
+        let tokens: RecoveryToken[] = []
+        try {
+            tokens = JSON.parse(window.localStorage.tabsRecovery)
+            if (!Array.isArray(tokens)) {
+                throw new Error('recovery state is not an array')
+            }
+        } catch (error) {
+            this.logger.warn('Ignoring corrupt tab recovery state:', error)
+            return []
+        }
+        const tabs: NewTabParameters<BaseTabComponent>[] = []
+        for (const token of tokens) {
+            const tab = await this.recoverTab(token)
+            if (tab) {
+                tabs.push(tab)
+            }
+        }
+        return tabs
     }
 }

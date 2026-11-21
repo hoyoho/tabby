@@ -111,18 +111,19 @@ export class ProfilesService {
     * arg: clone (default: false) -> return deepclone Array
     */
     async getProfiles (options?: { includeBuiltin?: boolean, clone?: boolean }): Promise<PartialProfile<Profile>[]> {
-        let list = this.config.store.profiles ?? []
+        // Never sort the store's own array in place: callers use includeBuiltin:false
+        // on every search keystroke, and the resulting order would be persisted.
+        const list = this.config.store.profiles?.slice() ?? []
         if (options?.includeBuiltin ?? true) {
             const lists = await Promise.all(this.config.enabledServices(this.profileProviders).map(x => x.getBuiltinProfiles()))
-            list = [
-                ...this.config.store.profiles ?? [],
-                ...lists.reduce((a, b) => a.concat(b), []),
-            ]
+            list.push(...lists.reduce((a, b) => a.concat(b), []))
         }
 
         const sortKey = p => `${this.resolveProfileGroupName(p.group ?? '')} / ${p.name}`
-        list.sort((a, b) => sortKey(a).localeCompare(sortKey(b)))
-        list.sort((a, b) => (a.isBuiltin ? 1 : 0) - (b.isBuiltin ? 1 : 0))
+        list.sort((a, b) =>
+            (a.isBuiltin ? 1 : 0) - (b.isBuiltin ? 1 : 0) ||
+            sortKey(a).localeCompare(sortKey(b)),
+        )
         return options?.clone ? deepClone(list) : list
     }
 
@@ -188,11 +189,6 @@ export class ProfilesService {
         }
         walk(roots, '', new Set())
         return result
-    }
-
-    /** Builds a "Parent / Child" path for a group based on its id. */
-    getGroupDisplayPath (groupId: string, flattened: (PartialProfileGroup<ProfileGroup> & { displayName: string })[]): string | undefined {
-        return flattened.find(x => x.id === groupId)?.displayName
     }
 
     /**

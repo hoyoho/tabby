@@ -414,8 +414,18 @@ export class ProfileTreeComponent extends BaseComponent {
     }
 
     allowDrop (event: DragEvent): void {
+        // Only accept our own in-tree drags. Without this an OS file drop (or
+        // a drop after a cancelled gesture) could apply a stale profile/group.
+        if (!this.draggedProfile && !this.draggedGroup || !event.dataTransfer?.types.includes('text/plain')) {
+            return
+        }
         event.preventDefault()
         event.stopPropagation()
+    }
+
+    onDragEnd (): void {
+        this.draggedProfile = null
+        this.draggedGroup = null
     }
 
     onGroupDragStart (group: PartialProfileGroup<ProfileGroup>, event: DragEvent): void {

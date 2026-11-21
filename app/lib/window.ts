@@ -1,6 +1,6 @@
 import * as glasstron from 'glasstron'
 import { Subject, Observable, debounceTime } from 'rxjs'
-import { BrowserWindow, app, ipcMain, Rectangle, Menu, screen, BrowserWindowConstructorOptions, TouchBar, nativeImage, WebContents, nativeTheme } from 'electron'
+import { BrowserWindow, app, ipcMain, IpcMainEvent, Rectangle, Menu, screen, BrowserWindowConstructorOptions, TouchBar, nativeImage, WebContents, nativeTheme } from 'electron'
 import ElectronConfig = require('electron-config')
 import { enable as enableRemote } from '@electron/remote/main'
 import * as os from 'os'
@@ -67,6 +67,13 @@ export class Window {
     private lastVibrancy: VibrancyStyle = 'off'
     private disableVibrancyWhileDragging = false
     private touchBarControl: any
+    /**
+     * ipcMain listeners registered on behalf of this window. They must be
+     * removed when the window closes: the handlers check `this.window`, but the
+     * closure itself would otherwise retain the destroyed Window (and its
+     * config store / webContents) for the lifetime of the main process.
+     */
+    private ipcListeners: { event: string, listener: (event: IpcMainEvent, ...args: any[]) => void }[] = []
 
     /**
      * Current dock side of this window. Session-scoped: it is only ever
@@ -204,17 +211,17 @@ export class Window {
         this.setupWindowManagement()
 
         this.ready = new Promise(resolve => {
-            const listener = event => {
+            const listener = (event: IpcMainEvent) => {
                 // The window can be closed mid-bootstrap (tear-off merged
                 // away): `this.window` is already nulled by the closed handler
-                // while the queued app:ready still arrives — guard it, the
+                // while the queued app:ready still arrives 鈥?guard it, the
                 // unhandled throw would take the whole main process down.
                 if (this.window && event.sender === this.window.webContents) {
-                    ipcMain.removeListener('app:ready', listener as any)
+                    this.unlisten('app:ready', listener)
                     resolve()
                 }
             }
-            ipcMain.on('app:ready', listener)
+            this.listen('app:ready', listener)
         })
     }
 
@@ -430,7 +437,13 @@ export class Window {
         })
 
         const moveSubscription = new Observable<void>(observer => {
-            this.window.on('move', () => observer.next())
+            const window = this.window
+            if (!window) {
+                return undefined
+            }
+            const handler = () => observer.next()
+            window.on('move', handler)
+            return () => window.removeListener('move', handler)
         }).pipe(debounceTime(250)).subscribe(() => {
             this.send('host:window-moved')
         })
@@ -457,7 +470,7 @@ export class Window {
                 // If the renderer never confirms the close (e.g. it crashed
                 // while tearing down a WSL/ConPTY session), don't leave a half
                 // dead window holding the single-instance lock. Force the close
-                // so window-all-closed → app.quit() actually runs.
+                // so window-all-closed 鈫?app.quit() actually runs.
                 if (this.forceCloseTimer) {
                     clearTimeout(this.forceCloseTimer)
                 }
@@ -660,7 +673,7 @@ export class Window {
     }
 
     on (event: string, listener: (...args: any[]) => void): void {
-        ipcMain.on(event, (e, ...args) => {
+        this.listen(event, (e, ...args) => {
             if (!this.window || e.sender !== this.window.webContents) {
                 return
             }
@@ -668,7 +681,21 @@ export class Window {
         })
     }
 
+    private listen (event: string, listener: (event: IpcMainEvent, ...args: any[]) => void): void {
+        ipcMain.on(event, listener)
+        this.ipcListeners.push({ event, listener })
+    }
+
+    private unlisten (event: string, listener: (event: IpcMainEvent, ...args: any[]) => void): void {
+        ipcMain.removeListener(event, listener)
+        this.ipcListeners = this.ipcListeners.filter(x => x.listener !== listener)
+    }
+
     private destroy () {
+        for (const { event, listener } of this.ipcListeners) {
+            ipcMain.removeListener(event, listener)
+        }
+        this.ipcListeners = []
         this.window = null
         this.closed.next()
         this.visible.complete()

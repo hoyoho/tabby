@@ -4,7 +4,6 @@ import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 
 export const WIN_BUILD_CONPTY_SUPPORTED = 17692
 export const WIN_BUILD_CONPTY_STABLE = 18309
-export const WIN_BUILD_WSL_EXE_DISTRO_FLAG = 17763
 /**
  * Build that introduced acrylic (`ACCENT_ENABLE_ACRYLICBLURBEHIND`) and
  * deprecated the legacy blurbehind effect. Kept in sync with glasstron's own
@@ -61,23 +60,6 @@ export function wrapPromise <T> (zone: NgZone, promise: Promise<T>): Promise<T> 
             zone.run(() => reject(error))
         })
     })
-}
-
-export class ResettableTimeout {
-    private id: any = null
-
-    constructor (private fn: () => void, private timeout: number) {}
-
-    set (timeout?: number): void {
-        this.clear()
-        this.id = setTimeout(this.fn, timeout ?? this.timeout)
-    }
-
-    clear (): void {
-        if (this.id) {
-            clearTimeout(this.id)
-        }
-    }
 }
 
 export const TAB_COLORS = [

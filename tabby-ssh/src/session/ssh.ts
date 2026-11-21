@@ -216,16 +216,18 @@ export class SSHSession {
     }
 
     /** Internal: notifies the proxy when its main-process SFTP context dies. */
-    subscribeSFTPClosed (sftpId: string, cb: () => void): void {
+    subscribeSFTPClosed (sftpId: string, cb: () => void): () => void {
         if (!this.connId) {
-            return
+            return () => undefined
         }
+        const channel = `ssh:${this.connId}:sftp-closed`
         const listener = (_e: IpcRendererEvent, closedId: string) => {
             if (closedId === sftpId) {
                 cb()
             }
         }
-        ipcRenderer.on(`ssh:${this.connId}:sftp-closed`, listener)
+        ipcRenderer.on(channel, listener)
+        return () => ipcRenderer.off(channel, listener)
     }
 
     async addPortForward (fw: ForwardedPort): Promise<void> {

@@ -91,6 +91,7 @@ export class TelnetSession extends BaseSession {
     private socket: TelnetSocketProxy|null = null
     private streamProcessor: TerminalStreamProcessor
     private telnetProtocol = false
+    private telnetRemainder = Buffer.alloc(0)
     private lastWidth = 0
     private lastHeight = 0
     private requestedOptions = new Set<number>()
@@ -194,16 +195,47 @@ export class TelnetSession extends BaseSession {
     }
 
     processTelnetProtocol (data: Buffer): Buffer {
+        if (this.telnetRemainder.length) {
+            data = Buffer.concat([this.telnetRemainder, data])
+            this.telnetRemainder = Buffer.alloc(0)
+        }
         while (data.length) {
             if (data[0] === TelnetCommands.IAC) {
+                if (data.length < 2) {
+                    // TCP split the IAC from its command byte.
+                    this.telnetRemainder = data
+                    return Buffer.alloc(0)
+                }
                 const command = data[1]
                 const commandName = TelnetCommands[command]
-                const option = data[2]
-                const optionName = TelnetOptions[option]
-
                 if (command === TelnetCommands.IAC) {
                     data = data.slice(1)
                     break
+                }
+                if (data.length < 3) {
+                    // Split between the command and its option byte.
+                    this.telnetRemainder = data
+                    return Buffer.alloc(0)
+                }
+                const option = data[2]
+                const optionName = TelnetOptions[option]
+
+                if (command === TelnetCommands.SUBOPTION) {
+                    const endIndex = data.indexOf(Buffer.from([TelnetCommands.IAC, TelnetCommands.SUBOPTION_END]), 3)
+                    if (endIndex < 0) {
+                        // Wait for the rest of the suboption instead of slicing
+                        // it mid-frame (the previous code used indexOf(IAC) and
+                        // could cut at -1).
+                        this.telnetRemainder = data
+                        return Buffer.alloc(0)
+                    }
+                    const optionValue = data.slice(3, endIndex)
+                    this.logger.debug('<', commandName || command, optionName || option, optionValue)
+                    if (option === TelnetOptions.TERMINAL_TYPE && optionValue[0] === TelnetCommands.SUBOPTION_SEND) {
+                        this.emitTelnetSuboption(option, Buffer.from([0, ...Buffer.from('XTERM-256COLOR')]))
+                    }
+                    data = data.slice(endIndex + 2)
+                    continue
                 }
 
                 data = data.slice(3)
@@ -269,17 +301,6 @@ export class TelnetSession extends BaseSession {
                         this.emitTelnet(TelnetCommands.DONT, option)
                     }
                 }
-                if (command === TelnetCommands.SUBOPTION) {
-                    const endIndex = data.indexOf(TelnetCommands.IAC)
-                    const optionValue = data.slice(0, endIndex)
-                    this.logger.debug('<', commandName || command, optionName || option, optionValue)
-
-                    if (option === TelnetOptions.TERMINAL_TYPE && optionValue[0] === TelnetCommands.SUBOPTION_SEND) {
-                        this.emitTelnetSuboption(option, Buffer.from([0, ...Buffer.from('XTERM-256COLOR')]))
-                    }
-
-                    data = data.slice(endIndex + 2)
-                }
             } else {
                 return data
             }
@@ -325,6 +346,7 @@ export class TelnetSession extends BaseSession {
             return
         }
         this.destroying = true
+        this.telnetRemainder = Buffer.alloc(0)
         if (this.keepPTYAlive) {
             // Detach without killing the live main-process connection so the
             // target window of a cross-window drag can re-attach it by id.

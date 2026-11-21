@@ -78,8 +78,7 @@ export class TabHeaderComponent extends BaseComponent {
     private dragTargetIndex = -1
     private dragAxis: 'x'|'y' = 'x'
 
-    onTabDragStart (tab: BaseTabComponent) {
-        this.app.emitTabDragStarted(tab)
+    onTabDragStart (_tab: BaseTabComponent) {
         if (this.isWorkspaceTab) {
             return
         }
@@ -255,7 +254,6 @@ export class TabHeaderComponent extends BaseComponent {
         // established.
         const sourceHeader = event.currentTarget as HTMLElement
         window.setTimeout(() => sourceHeader.classList.add('ws-dragging'), 0)
-        this.app.emitTabDragStarted(tab)
         this.app.beginWorkspaceNativeDrag(tab, dragId)
     }
 
@@ -270,7 +268,6 @@ export class TabHeaderComponent extends BaseComponent {
         if (event.dataTransfer?.dropEffect !== 'move') {
             (event.currentTarget as HTMLElement).classList.remove('ws-dragging')
         }
-        this.app.emitTabDragEnded()
         this.app.endWorkspaceNativeDrag(this.tab, event.dataTransfer?.dropEffect)
     }
 
@@ -293,7 +290,6 @@ export class TabHeaderComponent extends BaseComponent {
                     h.remove()
                 }
             })
-            this.app.emitTabDragEnded()
             this.app.emitTabsChanged()
         })
     }

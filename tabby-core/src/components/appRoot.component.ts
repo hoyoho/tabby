@@ -176,7 +176,6 @@ export class AppRootComponent {
         this.app.tabOpened$.subscribe(tab => {
             this.unsortedTabs.push(tab)
             this.noTabs = false
-            this.app.emitTabDragEnded()
             this.scheduleTabsOverflowUpdate()
             // A newly opened tab is appended (or inserted) and selected; if the
             // strip overflows it may land off-screen, so scroll it into view.
@@ -191,7 +190,6 @@ export class AppRootComponent {
             }
             this.unsortedTabs = this.unsortedTabs.filter(x => x !== tab)
             this.noTabs = app.tabs.length === 0
-            this.app.emitTabDragEnded()
             this.scheduleTabsOverflowUpdate()
         })
 

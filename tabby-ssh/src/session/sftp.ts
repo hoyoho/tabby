@@ -8,9 +8,7 @@ import { SSHSession } from './ssh'
 // process, the renderer only needs the numeric values.
 export const OPEN_READ = 1
 export const OPEN_WRITE = 2
-export const OPEN_APPEND = 4
 export const OPEN_CREATE = 8
-export const OPEN_TRUNCATE = 16
 
 export interface SFTPFile {
     name: string
@@ -60,6 +58,7 @@ export class SFTPSession {
     private closed = new Subject<void>()
     private connId: string|null
     private sftpId: string|null = null
+    private unsubscribeClosed: (() => void)|null = null
 
     constructor (private ssh: SSHSession) {
         this.connId = ssh.getID()
@@ -68,11 +67,32 @@ export class SFTPSession {
     /** Must be awaited once before any operation; returns this for chaining. */
     async init (): Promise<this> {
         this.sftpId = await this.ssh.createSFTPId()
-        this.ssh.subscribeSFTPClosed(this.sftpId, () => {
-            this.closed.next()
-            this.closed.complete()
+        this.unsubscribeClosed = this.ssh.subscribeSFTPClosed(this.sftpId, () => {
+            this.finishClosed()
         })
         return this
+    }
+
+    /** Releases this renderer's SFTP context; the SSH connection stays alive. */
+    async close (): Promise<void> {
+        if (!this.connId || !this.sftpId) {
+            return
+        }
+        const connId = this.connId
+        const sftpId = this.sftpId
+        this.finishClosed()
+        await ipcRenderer.invoke('ssh:sftp-close', connId, sftpId).catch(() => undefined)
+    }
+
+    private finishClosed (): void {
+        this.unsubscribeClosed?.()
+        this.unsubscribeClosed = null
+        this.sftpId = null
+        this.connId = null
+        if (!this.closed.isStopped) {
+            this.closed.next()
+            this.closed.complete()
+        }
     }
 
     static async create (ssh: SSHSession): Promise<SFTPSession> {

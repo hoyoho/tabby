@@ -113,8 +113,8 @@ export interface PaneDragHost {
 
     /**
      * Register a native drag id (+ serialized screen state) with the main
-     * process (source side). The state is fetched by the target by id on drop —
-     * see [[getNativeDragState]]. Once the session's full recovery token is
+     * process (source side). The target fetches the state by id on drop via
+     * `HostAppService.nativeDragState()`. Once the session's full recovery token is
      * serialized ([[serializeSessionForDrag]]), [[updateNativeDragState]]
      * replaces it so the target can recover through the session's own tab type.
      */
@@ -128,13 +128,6 @@ export interface PaneDragHost {
     updateNativeDragState: (dragId: string, state: any) => void
     /** Release the registration (source side; no committed cross-window drop). */
     endNativeDrag: (dragId: string) => void
-    /**
-     * Receiving side: fetch the source's serialized screen state registered
-     * under a drag id, or null if the source already released the drag.
-     */
-    getNativeDragState: (dragId: string) => any
-    /** The receiving window restored the dragged session — notify the source. */
-    acceptNativeDrag: (dragId: string) => void
     /**
      * Subscribe to cross-window commit notifications, keyed by drag id.
      * Returns the subscription (call cleanup on cancel).
@@ -604,7 +597,7 @@ export class PaneDragController {
         // DataTransfer payload — custom blobs crossing the compositor between
         // windows are size-limited and intermittently dropped, killing the
         // drop. It is registered with the main process instead; the drop
-        // target fetches it by drag id ([[PaneDragHost.getNativeDragState]]).
+        // target fetches it by drag id via `HostAppService.nativeDragState()`.
         const payload: NativeDragPayload = {
             dragId,
             profile,

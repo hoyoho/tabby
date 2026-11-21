@@ -8,6 +8,7 @@ import { SSHAlgorithmType, supportedAlgorithms } from './sshAlgorithms'
 import * as russh from 'russh'
 import socksv5 from '@luminati-io/socksv5'
 import * as shellQuote from 'shell-quote'
+import { resolveX11DisplaySpec } from '../../tabby-core/src/x11'
 
 /**
  * How long a connection with zero attached renderers survives. Covers the
@@ -285,34 +286,6 @@ class ForwardedPort implements ForwardedPortConfig {
     }
 }
 
-/** X11 display spec resolution, ported from tabby-ssh/src/session/x11.ts. */
-function resolveX11DisplaySpec (spec?: string|null): net.SocketConnectOpts {
-    // eslint-disable-next-line prefer-const, @typescript-eslint/no-unused-vars
-    let [_, xHost, xDisplay] = /^(.+):(\d+)(?:.(\d+))$/.exec(spec ?? process.env.DISPLAY ?? 'localhost:0') ?? [undefined, undefined, undefined]
-    if (process.platform === 'win32') {
-        xHost ??= 'localhost'
-    } else {
-        xHost ??= 'unix'
-    }
-
-    if (spec?.startsWith('/')) {
-        xHost = spec
-    }
-
-    const display = parseInt(xDisplay ?? '0')
-    const port = display < 100 ? display + 6000 : display
-
-    if (xHost === 'unix') {
-        xHost = `/tmp/.X11-unix/X${display}`
-    }
-
-    if (xHost.startsWith('/')) {
-        return { path: xHost }
-    } else {
-        return { host: xHost, port }
-    }
-}
-
 /**
  * Main-process host for one live SSH connection. Everything the old
  * renderer-side SSHSession did with russh happens here now; all renderer
@@ -377,7 +350,28 @@ class SSHConnection {
             return
         }
         const wc = webContents.getAllWebContents().find(w => w.id === this.owner && !w.isDestroyed())
-        wc?.send('ssh:cb', this.id, cbId, pending.method, ...pending.args)
+        if (!wc) {
+            // The owner disappeared between the ownership handoff and delivery:
+            // fail the request instead of leaving the caller waiting forever.
+            this.pendingCallbacks.delete(cbId)
+            pending.reject(new Error('SSH owner window is gone'))
+            return
+        }
+        wc.send('ssh:cb', this.id, cbId, pending.method, ...pending.args)
+    }
+
+    /**
+     * Move UI callbacks to a new owner (or fail them when no window is left).
+     * Called on attach/detach/window close so a modal prompt can never hang on
+     * a renderer that no longer exists.
+     */
+    handoffOwner (owner: number|null): void {
+        this.owner = owner
+        if (owner == null) {
+            this.rejectPendingCallbacks('SSH owner window closed')
+        } else {
+            this.resendPendingCallbacks()
+        }
     }
 
     handleCallbackResponse (cbId: string, payload: { ok: boolean, result?: any, error?: string }): void {
@@ -1087,17 +1081,18 @@ class SSHConnection {
 
             const channel = await this.client.activateChannel(event.channel)
 
+            const target = resolveX11DisplaySpec(displaySpec)
             const socket = new net.Socket()
             try {
                 await new Promise<void>((resolve, reject) => {
                     socket.on('connect', () => resolve())
                     socket.on('error', e => reject(e))
-                    socket.connect(resolveX11DisplaySpec(displaySpec))
+                    socket.connect(target)
                 })
                 this.setupSocketChannelEvents(channel, socket)
             } catch (e) {
                 this.emitServiceMessage(`${MSG_X} Could not connect to the X server: ${e}`)
-                this.emitServiceMessage(`    Trying display ${JSON.stringify(resolveX11DisplaySpec(displaySpec))} (DISPLAY: ${displaySpec})`)
+                this.emitServiceMessage(`    Trying display ${JSON.stringify(target)} (DISPLAY: ${displaySpec})`)
                 if (process.platform === 'win32') {
                     this.emitServiceMessage('    To use X forwarding, you need a local X server, e.g. VcXsrv or Xming')
                 }
@@ -1270,6 +1265,19 @@ class SSHConnection {
         const entry: SFTPEntry = { sftp: this.mainSftp, handles: new Map() }
         this.sftps.set(id, entry)
         return id
+    }
+
+    /** Release one renderer's SFTP context without closing the shared channel. */
+    closeSFTP (sftpId: string): void {
+        const entry = this.sftps.get(sftpId)
+        if (!entry) {
+            return
+        }
+        this.sftps.delete(sftpId)
+        for (const handle of entry.handles.values()) {
+            void handle.shutdown().catch(() => undefined)
+        }
+        entry.handles.clear()
     }
 
     private async openMainSftp (client: russh.AuthenticatedSSHClient): Promise<russh.SFTP> {
@@ -1465,7 +1473,6 @@ export class SSHConnectionManager {
                 return
             }
             conn.attachers.add(event.sender.id)
-            conn.owner = event.sender.id
             conn.cancelGrace()
             event.returnValue = {
                 open: conn.open,
@@ -1473,7 +1480,7 @@ export class SSHConnectionManager {
                 usedPrivateKey: conn.activePrivateKey,
                 forwardedPorts: conn.listForwardedPorts(),
             }
-            conn.resendPendingCallbacks()
+            conn.handoffOwner(event.sender.id)
         })
 
         ipcMain.on('ssh:detach', (event, id) => {
@@ -1483,7 +1490,7 @@ export class SSHConnectionManager {
             }
             conn.attachers.delete(event.sender.id)
             if (conn.owner === event.sender.id) {
-                conn.owner = [...conn.attachers].pop() ?? null
+                conn.handoffOwner([...conn.attachers].pop() ?? null)
             }
             conn.armGrace()
         })
@@ -1503,7 +1510,7 @@ export class SSHConnectionManager {
             // cancelled but never re-attached dies on its grace timer instead).
             conn.attachers.delete(event.sender.id)
             if (conn.owner === event.sender.id) {
-                conn.owner = [...conn.attachers].pop() ?? null
+                conn.handoffOwner([...conn.attachers].pop() ?? null)
             }
             if (conn.attachers.size === 0) {
                 conn.destroy()
@@ -1574,6 +1581,10 @@ export class SSHConnectionManager {
             return conn.sftpOp(sftpId, op, args)
         })
 
+        ipcMain.handle('ssh:sftp-close', (_event, connId, sftpId) => {
+            this.connections[connId]?.closeSFTP(sftpId)
+        })
+
         ipcMain.handle('ssh:sftp-handle-read', (_event, connId, sftpId, handleId) => {
             return this.connections[connId]?.sftpHandleRead(sftpId, handleId)
         })
@@ -1609,7 +1620,7 @@ export class SSHConnectionManager {
             }
             if (conn.attachers.delete(webContentsId)) {
                 if (conn.owner === webContentsId) {
-                    conn.owner = [...conn.attachers].pop() ?? null
+                    conn.handoffOwner([...conn.attachers].pop() ?? null)
                 }
                 conn.armGrace()
             }

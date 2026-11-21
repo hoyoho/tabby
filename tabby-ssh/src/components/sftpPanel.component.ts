@@ -1,6 +1,6 @@
 import * as C from 'constants'
 import { posix as path } from 'path'
-import { Component, Input, Output, EventEmitter, Inject, Optional } from '@angular/core'
+import { Component, Input, Output, EventEmitter, Inject, Optional, OnDestroy } from '@angular/core'
 import { FileUpload, DirectoryUpload, DirectoryDownload, MenuItemOptions, NotificationsService, PlatformService, TranslateService } from 'tabby-core'
 import { SFTPSession, SFTPFile } from '../session/sftp'
 import { SSHSession } from '../session/ssh'
@@ -18,7 +18,7 @@ interface PathSegment {
     templateUrl: './sftpPanel.component.pug',
     styleUrls: ['./sftpPanel.component.scss'],
 })
-export class SFTPPanelComponent {
+export class SFTPPanelComponent implements OnDestroy {
     @Input() session: SSHSession
     @Output() closed = new EventEmitter<void>()
     sftp: SFTPSession
@@ -28,6 +28,7 @@ export class SFTPPanelComponent {
     @Output() pathChange = new EventEmitter<string>()
     pathSegments: PathSegment[] = []
     @Input() cwdDetectionAvailable = false
+    private destroyed = false
     editingPath: string|null = null
     showFilter = false
     filterText = ''
@@ -42,12 +43,23 @@ export class SFTPPanelComponent {
         this.contextMenuProviders.sort((a, b) => a.weight - b.weight)
     }
 
+    ngOnDestroy (): void {
+        this.destroyed = true
+        // `sftp` is typed non-null but stays undefined if ngOnInit failed.
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        void this.sftp?.close()
+    }
+
     async ngOnInit (): Promise<void> {
         try {
             this.sftp = await this.session.openSFTP()
         } catch (error) {
             this.notifications.error(error.message)
             this.closed.emit()
+            return
+        }
+        if (this.destroyed) {
+            void this.sftp.close()
             return
         }
         // `navigate()` reports failures itself and returns rather than throwing,

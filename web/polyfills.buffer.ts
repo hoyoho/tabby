@@ -13,7 +13,7 @@ const base64 = require('base64-js')
 function blitBuffer (src, dst, offset, length) {
     let i
     for (i = 0; i < length; ++i) {
-        if (i + offset >= dst.length || i >= src.length) {break}
+        if (i + offset >= dst.length || i >= src.length) { break }
         dst[i + offset] = src[i]
     }
     return i
@@ -43,7 +43,7 @@ function decodeCodePointsArray (codePoints) {
     while (i < len) {
         res += String.fromCharCode.apply(
             String,
-            codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH)
+            codePoints.slice(i, i += MAX_ARGUMENTS_LENGTH),
         )
     }
     return res
@@ -146,11 +146,11 @@ function utf8ToBytes (string, units) {
                 // no lead yet
                 if (codePoint > 0xDBFF) {
                     // unexpected trail
-                    if ((units -= 3) > -1) {bytes.push(0xEF, 0xBF, 0xBD)}
+                    if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
                     continue
                 } else if (i + 1 === length) {
                     // unpaired lead
-                    if ((units -= 3) > -1) {bytes.push(0xEF, 0xBF, 0xBD)}
+                    if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
                     continue
                 }
 
@@ -162,7 +162,7 @@ function utf8ToBytes (string, units) {
 
             // 2 leads in a row
             if (codePoint < 0xDC00) {
-                if ((units -= 3) > -1) {bytes.push(0xEF, 0xBF, 0xBD)}
+                if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
                 leadSurrogate = codePoint
                 continue
             }
@@ -170,35 +170,35 @@ function utf8ToBytes (string, units) {
             codePoint = (leadSurrogate - 0xD800 << 10 | codePoint - 0xDC00) + 0x10000
         } else if (leadSurrogate) {
             // valid bmp char, but last char was a lead
-            if ((units -= 3) > -1) {bytes.push(0xEF, 0xBF, 0xBD)}
+            if ((units -= 3) > -1) { bytes.push(0xEF, 0xBF, 0xBD) }
         }
 
         leadSurrogate = null
 
         // encode utf8
         if (codePoint < 0x80) {
-            if ((units -= 1) < 0) {break}
+            if ((units -= 1) < 0) { break }
             bytes.push(codePoint)
         } else if (codePoint < 0x800) {
-            if ((units -= 2) < 0) {break}
+            if ((units -= 2) < 0) { break }
             bytes.push(
                 codePoint >> 0x6 | 0xC0,
-                codePoint & 0x3F | 0x80
+                codePoint & 0x3F | 0x80,
             )
         } else if (codePoint < 0x10000) {
-            if ((units -= 3) < 0) {break}
+            if ((units -= 3) < 0) { break }
             bytes.push(
                 codePoint >> 0xC | 0xE0,
                 codePoint >> 0x6 & 0x3F | 0x80,
-                codePoint & 0x3F | 0x80
+                codePoint & 0x3F | 0x80,
             )
         } else if (codePoint < 0x110000) {
-            if ((units -= 4) < 0) {break}
+            if ((units -= 4) < 0) { break }
             bytes.push(
                 codePoint >> 0x12 | 0xF0,
                 codePoint >> 0xC & 0x3F | 0x80,
                 codePoint >> 0x6 & 0x3F | 0x80,
-                codePoint & 0x3F | 0x80
+                codePoint & 0x3F | 0x80,
             )
         } else {
             throw new Error('Invalid code point')
@@ -225,8 +225,8 @@ const hexSliceLookupTable = (function () {
 export function hexSlice (start, end) {
     const len = this.length
 
-    if (!start || start < 0) {start = 0}
-    if (!end || end < 0 || end > len) {end = len}
+    if (!start || start < 0) { start = 0 }
+    if (!end || end < 0 || end > len) { end = len }
 
     let out = ''
     for (let i = start; i < end; ++i) {

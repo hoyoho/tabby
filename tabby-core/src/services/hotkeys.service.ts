@@ -5,12 +5,6 @@ import { KeyEventData, getKeyName, Keystroke, KeyName, getKeystrokeName, metaKey
 import { ConfigService } from './config.service'
 import { HostAppService, Platform } from '../api/hostApp'
 
-export interface PartialHotkeyMatch {
-    id: string
-    strokes: string[]
-    matchedLength: number
-}
-
 interface PastKeystroke {
     keystroke: Keystroke
     time: number

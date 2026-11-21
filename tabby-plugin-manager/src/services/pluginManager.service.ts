@@ -1,8 +1,7 @@
 import { compare as semverCompare } from 'semver'
 import { Observable, from, forkJoin, map, of, catchError } from 'rxjs'
 import { Injectable, Inject } from '@angular/core'
-import { Logger, LogService, PlatformService, BOOTSTRAP_DATA, BootstrapData, PluginInfo } from 'tabby-core'
-import { PLUGIN_BLACKLIST } from '../../../app/src/pluginBlacklist'
+import { Logger, LogService, PlatformService, BOOTSTRAP_DATA, BootstrapData, PluginInfo, PLUGIN_BLACKLIST } from 'tabby-core'
 import * as fs from 'fs'
 import * as path from 'path'
 

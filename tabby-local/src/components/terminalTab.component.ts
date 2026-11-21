@@ -1,7 +1,7 @@
-import { Component, Input, Injector, Inject, Optional } from '@angular/core'
+import { Component, Injector, Inject, Optional } from '@angular/core'
 import { BaseTabProcess, WIN_BUILD_CONPTY_SUPPORTED, isWindowsBuild, GetRecoveryTokenOptions, Platform } from 'tabby-core'
 import { BaseTerminalTabComponent } from 'tabby-terminal'
-import { LocalProfile, SessionOptions, UACService } from '../api'
+import { LocalProfile, UACService } from '../api'
 import { Session } from '../session'
 
 /** @hidden */
@@ -12,7 +12,6 @@ import { Session } from '../session'
     animations: BaseTerminalTabComponent.animations,
 })
 export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile> {
-    @Input() sessionOptions: SessionOptions // Deprecated
     session: Session|null = null
 
     // eslint-disable-next-line @typescript-eslint/no-useless-constructor
@@ -24,8 +23,6 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
     }
 
     ngOnInit (): void {
-        this.sessionOptions = this.profile.options
-
         this.logger = this.log.create('terminalTab')
 
         const isConPTY = isWindowsBuild(WIN_BUILD_CONPTY_SUPPORTED) && this.config.store.terminal.useConPTY
@@ -86,16 +83,15 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
                 ? await this.session.getWorkingDirectory()
                 : this.session.getCachedWorkingDirectory()
         }
+        // Round-trip through JSON exactly like ConnectableTerminalTab: the live
+        // profile may be a ConfigProxy, and nested proxies would otherwise leak
+        // their closure-based accessors into the persisted recovery token.
+        const profile = JSON.parse(JSON.stringify(this.profile))
+        profile.options.cwd = cwd ?? profile.options.cwd
+        profile.options.restoreFromPTYID = options?.includeState ? this.session?.getID() ?? undefined : undefined
         return {
             type: 'app:local-tab',
-            profile: {
-                ...this.profile,
-                options: {
-                    ...this.profile.options,
-                    cwd: cwd ?? this.profile.options.cwd,
-                    restoreFromPTYID: options?.includeState && this.session?.getID(),
-                },
-            },
+            profile,
             savedState: options?.includeState && this.frontend?.saveState(),
             // Live-session transfers only (see connectableTerminalTab).
             terminalModes: options?.includeTerminalModes && this.frontend?.getTerminalModeSnapshot(),

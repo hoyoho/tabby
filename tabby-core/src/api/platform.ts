@@ -147,8 +147,6 @@ export interface ProxyTestResult {
 }
 
 export abstract class PlatformService {
-    supportsWindowControls = false
-
     get fileTransferStarted$ (): Observable<FileTransfer> { return this.fileTransferStarted }
     get displayMetricsChanged$ (): Observable<void> { return this.displayMetricsChanged }
     get themeChanged$ (): Observable<PlatformTheme> { return this.themeChanged }
@@ -221,10 +219,6 @@ export abstract class PlatformService {
 
     showItemInFolder (path: string): void {
         throw new Error('Not implemented')
-    }
-
-    async isProcessRunning (name: string): Promise<boolean> {
-        return false
     }
 
     async installPlugin (name: string, version: string): Promise<void> {
@@ -315,9 +309,6 @@ export class HTMLFileUpload extends FileUpload {
         this.increaseProgress(chunk.length)
         return chunk
     }
-
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    bringToFront (): void { }
 
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     close (): void { }

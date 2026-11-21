@@ -19,7 +19,6 @@ export class SSHProfilesService extends QuickConnectProfileProvider<SSHProfile> 
             port: 22,
             user: 'root',
             auth: null,
-            password: null,
             privateKeys: [],
             keepaliveInterval: 5000,
             keepaliveCountMax: 10,

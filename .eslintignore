@@ -1,0 +1,9 @@
+node_modules
+dist
+*/dist
+*/typings
+builtin-plugins
+web/dist
+app/assets/webpack
+docs
+coverage

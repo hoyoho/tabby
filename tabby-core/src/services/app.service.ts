@@ -7,7 +7,6 @@ import { WorkspaceComponent } from '../components/workspace.component'
 import { RenameTabModalComponent } from '../components/renameTabModal.component'
 import { SessionTab } from '../api/session'
 import { TopLevelTab } from '../api/topLevelTab'
-import { SelectorOption } from '../api/selector'
 import { RecoveryToken } from '../api/tabRecovery'
 import { BootstrapData, BOOTSTRAP_DATA } from '../api/mainProcess'
 import { HostWindowService } from '../api/hostWindow'
@@ -16,7 +15,6 @@ import { HostAppService } from '../api/hostApp'
 import { ConfigService } from './config.service'
 import { TabRecoveryService } from './tabRecovery.service'
 import { TabsService, NewTabParameters } from './tabs.service'
-import { SelectorService } from './selector.service'
 import { TABBY_DRAG_MIME, TABBY_WORKSPACE_DRAG_MIME, NativeDragPayload, WorkspaceDragPayload, isWorkspaceDraggedOver, setupWorkspaceDraggedOverTracking, dragLeftDocument } from '../components/workspace.dragDrop'
 
 class CompletionObserver {
@@ -102,7 +100,6 @@ export class AppService {
     private tabOpened = new Subject<BaseTabComponent>()
     private tabRemoved = new Subject<BaseTabComponent>()
     private tabClosed = new Subject<BaseTabComponent>()
-    private tabDragActive = new Subject<BaseTabComponent|null>()
     private ready = new AsyncSubject<void>()
     private recoveryStateChangedHint = new Subject<void>()
 
@@ -113,7 +110,6 @@ export class AppService {
     get tabsChanged$ (): Observable<void> { return this.tabsChanged }
     get tabRemoved$ (): Observable<BaseTabComponent> { return this.tabRemoved }
     get tabClosed$ (): Observable<BaseTabComponent> { return this.tabClosed }
-    get tabDragActive$ (): Observable<BaseTabComponent|null> { return this.tabDragActive }
 
     /** Fires once when the app is ready */
     get ready$ (): Observable<void> { return this.ready }
@@ -125,7 +121,6 @@ export class AppService {
         private hostWindow: HostWindowService,
         private tabRecovery: TabRecoveryService,
         private tabsService: TabsService,
-        private selector: SelectorService,
         private ngbModal: NgbModal,
         @Inject(BOOTSTRAP_DATA) private bootstrapData: BootstrapData,
     ) {
@@ -153,6 +148,8 @@ export class AppService {
                 /** Continue to store the tabs even if the setting is currently off */
                 this.tabRecovery.enabled = true
             }
+        }).catch(error => {
+            console.error('Could not restore tabs:', error)
         })
 
         // A workspace dragged out of another window arrives as a recovery
@@ -395,17 +392,6 @@ export class AppService {
         })
         const active = this._activeTab
         this.hostWindow.setTitle(active ? active.customTitle || active.title : undefined)
-    }
-
-    getParentTab (tab: BaseTabComponent): WorkspaceComponent|null {
-        for (const topLevelTab of this.tabs) {
-            if (topLevelTab instanceof WorkspaceComponent) {
-                if (topLevelTab.getAllTabs().includes(tab as SessionTab)) {
-                    return topLevelTab
-                }
-            }
-        }
-        return null
     }
 
     /** Switches between the current tab and the previously active one */
@@ -1123,16 +1109,6 @@ export class AppService {
         this.hostApp.emitReady()
     }
 
-    /** @hidden */
-    emitTabDragStarted (tab: BaseTabComponent): void {
-        this.tabDragActive.next(tab)
-    }
-
-    /** @hidden */
-    emitTabDragEnded (): void {
-        this.tabDragActive.next(null)
-    }
-
     /**
      * Returns an observable that fires once
      * the tab's internal "process" (see [[BaseTabProcess]]) completes
@@ -1150,11 +1126,6 @@ export class AppService {
 
     stopObservingTabCompletion (tab: BaseTabComponent): void {
         this.completionObservers.delete(tab)
-    }
-
-    // Deprecated
-    showSelector <T> (name: string, options: SelectorOption<T>[]): Promise<T> {
-        return this.selector.show(name, options)
     }
 
     explodeTab (tab: WorkspaceComponent): WorkspaceComponent[] {

@@ -20,6 +20,7 @@
                             [style.paddingLeft.px]='depth * 20',
                             draggable='true',
                             (dragstart)='onProfileDragStart(profile, $event)',
+                            (dragend)='onDragEnd()',
                             (dragover)='allowDrop($event)',
                             (drop)='onProfileDrop($event, group)',
                             (contextmenu)='profileContextMenu(profile, $event)',
@@ -40,6 +41,7 @@
                     a.tree-item(
                         draggable='true',
                         (dragstart)='onGroupDragStart(group, $event)',
+                        (dragend)='onDragEnd()',
                         (click)='toggleGroupCollapse(group)',
                         (dragover)='allowDrop($event)',
                         (drop)='onProfileDrop($event, group)',
@@ -60,6 +62,7 @@
                                 [style.paddingLeft.px]='(depth + 1) * 20',
                                 draggable='true',
                                 (dragstart)='onProfileDragStart(profile, $event)',
+                                (dragend)='onDragEnd()',
                                 (dragover)='allowDrop($event)',
                                 (drop)='onProfileDrop($event, group)',
                                 (contextmenu)='profileContextMenu(profile, $event)',

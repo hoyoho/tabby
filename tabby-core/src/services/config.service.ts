@@ -414,16 +414,13 @@ export class ConfigProxy<T extends AnyRec> {
         }
     }
 
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
-    __getValue (_key: keyof T): any { }
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
-    __setValue (_key: keyof T, _value: any) { }
-    // eslint-disable-next-line @typescript-eslint/no-empty-function
-    __setDefaults (_defaults: T): void { }
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
-    __getDefault (_key: keyof T): any { }
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-empty-function
-    __cleanup () { }
+    // The constructor shadows these with closures over `real`/`defaults`; the
+    // declarations only exist so TypeScript knows the members' shapes.
+    declare __getValue: (key: keyof T) => any
+    declare __setValue: (key: keyof T, value: any) => void
+    declare __setDefaults: (defaults: T) => void
+    declare __getDefault: (key: keyof T) => any
+    declare __cleanup: () => void
 }
 
 @Injectable({ providedIn: 'root' })

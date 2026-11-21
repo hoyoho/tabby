@@ -2,11 +2,6 @@ import { Injectable } from '@angular/core'
 import { App, IpcRenderer, Shell, Dialog, GlobalShortcut, Screen, TouchBar, BrowserWindow, Menu, MenuItem, PowerSaveBlocker, NativeTheme } from 'electron'
 import * as remote from '@electron/remote'
 
-export interface MessageBoxResponse {
-    response: number
-    checkboxChecked?: boolean
-}
-
 @Injectable({ providedIn: 'root' })
 export class ElectronService {
     app: App

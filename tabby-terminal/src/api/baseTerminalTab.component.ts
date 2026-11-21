@@ -424,6 +424,9 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
             this.delayedResizeTimer = setTimeout(() => {
                 this.delayedResizeTimer = null
+                // `size` is declared non-optional but is only populated by the
+                // first resize event; guard for a frontend that never reported.
+                // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 if (!this.isTerminating && this.size) {
                     this.session?.resize(this.size.columns, this.size.rows)
                 }
@@ -878,8 +881,6 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
             }
         }))
 
-        this.termContainerSubscriptions.subscribe(this.focused$, () => this.frontend && (this.frontend.enableResizing = true))
-        this.termContainerSubscriptions.subscribe(this.blurred$, () => this.frontend && (this.frontend.enableResizing = false))
 
         this.termContainerSubscriptions.subscribe(this.frontend.mouseEvent$, event => {
             if (event.type === 'mousedown') {

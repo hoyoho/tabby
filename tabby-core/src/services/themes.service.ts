@@ -2,7 +2,7 @@ import { Inject, Injectable, Optional } from '@angular/core'
 import { Subject, Observable } from 'rxjs'
 import * as Color from 'color'
 import { ConfigService } from '../services/config.service'
-import { TerminalColorScheme, Theme } from '../api/theme'
+import { DefaultColorScheme, TerminalColorScheme, Theme } from '../api/theme'
 import { GlobalStyleProvider } from '../api/globalStyleProvider'
 import { PlatformService, PlatformTheme } from '../api/platform'
 import { NewTheme } from '../theme'
@@ -245,30 +245,11 @@ export class ThemesService {
     /// @hidden
     _getActiveColorScheme (): TerminalColorScheme {
         // Fallback: config may lack a color scheme when the plugin that
-        // provides it (e.g. tabby-terminal) is disabled; core must still boot
+        // provides it (e.g. tabby-terminal) is disabled; core must still boot.
+        // Copy the shared palette so a consumer cannot mutate the exported constant.
         const fallbackScheme: TerminalColorScheme = {
-            name: 'Fallback',
-            foreground: '#cacaca',
-            background: '#171717',
-            cursor: '#bbbbbb',
-            colors: [
-                '#000000',
-                '#ff615a',
-                '#b1e969',
-                '#ebd99c',
-                '#5da9f6',
-                '#e86aff',
-                '#82fff7',
-                '#dedacf',
-                '#313131',
-                '#f58c80',
-                '#ddf88f',
-                '#eee5b2',
-                '#a5c7ff',
-                '#ddaaff',
-                '#b7fff9',
-                '#ffffff',
-            ],
+            ...DefaultColorScheme,
+            colors: [...DefaultColorScheme.colors],
         }
 
         const configStore = this.getConfigStoreOrDefaults()
