@@ -19,14 +19,15 @@ export class TabRecoveryService {
         this.logger = log.create('tabRecovery')
     }
 
-    async saveTabs (tabs: BaseTabComponent[]): Promise<void> {
+    async saveTabs (tabs: BaseTabComponent[], options?: { accurateWorkingDirectory?: boolean }): Promise<void> {
         const recoverWorkspaces = this.config.store.workspace?.recoverTabs
         if (!this.enabled || !recoverWorkspaces) {
             return
         }
+        const accurateWorkingDirectory = options?.accurateWorkingDirectory ?? true
         const tokens = await Promise.all(tabs.map(async tab => {
             try {
-                return await this.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory: true })
+                return await this.getFullRecoveryToken(tab, { includeState: true, accurateWorkingDirectory })
             } catch (error) {
                 this.logger.warn('Could not serialize tab for recovery:', tab, error)
                 return null

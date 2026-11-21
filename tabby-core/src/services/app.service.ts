@@ -101,7 +101,7 @@ export class AppService {
     private tabRemoved = new Subject<BaseTabComponent>()
     private tabClosed = new Subject<BaseTabComponent>()
     private ready = new AsyncSubject<void>()
-    private recoveryStateChangedHint = new Subject<void>()
+    private recoveryStateChangedHint = new Subject<{ accurateWorkingDirectory: boolean }>()
 
     private completionObservers = new Map<BaseTabComponent, CompletionObserver>()
 
@@ -125,15 +125,20 @@ export class AppService {
         @Inject(BOOTSTRAP_DATA) private bootstrapData: BootstrapData,
     ) {
         this.tabsChanged$.subscribe(() => {
-            this.recoveryStateChangedHint.next()
+            this.recoveryStateChangedHint.next({ accurateWorkingDirectory: true })
         })
 
+        // Periodic snapshots keep the scrollback fresh. They use the cached
+        // working directory: the native probe is expensive and the accurate
+        // value is captured on the interactive paths (close/duplicate/drag).
         setInterval(() => {
-            this.recoveryStateChangedHint.next()
+            if (this.tabs.length) {
+                this.recoveryStateChangedHint.next({ accurateWorkingDirectory: false })
+            }
         }, 30000)
 
-        this.recoveryStateChangedHint.pipe(debounceTime(1000)).subscribe(() => {
-            this.tabRecovery.saveTabs(this.tabs)
+        this.recoveryStateChangedHint.pipe(debounceTime(1000)).subscribe(hint => {
+            void this.tabRecovery.saveTabs(this.tabs, { accurateWorkingDirectory: hint.accurateWorkingDirectory })
         })
 
         config.ready$.toPromise().then(async () => {
@@ -260,7 +265,7 @@ export class AppService {
 
         if (this.bootstrapData.isMainWindow) {
             tab.recoveryStateChangedHint$.subscribe(() => {
-                this.recoveryStateChangedHint.next()
+                this.recoveryStateChangedHint.next({ accurateWorkingDirectory: true })
             })
         }
 
