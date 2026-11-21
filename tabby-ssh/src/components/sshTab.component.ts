@@ -136,6 +136,16 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
             this.write(`\r${colors.black.bgWhite(' SSH ')} ${msg}\r\n`)
         })
 
+        this.attachSessionHandler(session.notification$, notification => {
+            if (notification.level === 'error') {
+                this.notifications.error(notification.message, notification.details)
+            } else if (notification.level === 'notice') {
+                this.notifications.notice(notification.message)
+            } else {
+                this.notifications.info(notification.message, notification.details)
+            }
+        })
+
         this.attachSessionHandler(session.willDestroy$, () => {
             this.activeKIPrompt = null
         })

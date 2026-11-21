@@ -97,7 +97,7 @@
     "prod": "cross-env TABBY_DEV=1 electron app",
     "docs": "node scripts/build-docs.mjs",
     "lint": "eslint --ext ts .",
-    "test": "node --experimental-transform-types --test tests/utfSplitter.test.mjs tests/x11.test.mjs tests/dataQueue.test.mjs tests/pluginManifest.test.mjs tests/xtermTheme.test.mjs tests/paste.test.mjs tests/workspaceHitTest.test.mjs",
+    "test": "node --experimental-transform-types --test tests/utfSplitter.test.mjs tests/x11.test.mjs tests/dataQueue.test.mjs tests/pluginManifest.test.mjs tests/xtermTheme.test.mjs tests/paste.test.mjs tests/workspaceHitTest.test.mjs tests/sshAuthSelection.test.mjs",
     "postinstall": "patch-package && node ./scripts/install-deps.mjs && node ./scripts/build-native.mjs",
     "i18n:pull": "crowdin pull --skip-untranslated-strings",
     "i18n:extract": "node scripts/i18n-extract.mjs",

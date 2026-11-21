@@ -12,6 +12,12 @@ export interface Prompt {
     echo?: boolean
 }
 
+export interface SSHNotification {
+    level: 'info'|'notice'|'error'
+    message: string
+    details?: string
+}
+
 /**
  * Renderer-side UI object for one keyboard-interactive round. The auth loop
  * itself runs in the main process; this only collects the user's responses.
@@ -69,6 +75,7 @@ export class SSHSession {
 
     get serviceMessage$ (): Observable<string> { return this.serviceMessage }
     get keyboardInteractivePrompt$ (): Observable<KeyboardInteractivePrompt> { return this.keyboardInteractivePrompt }
+    get notification$ (): Observable<SSHNotification> { return this.notification }
     get willDestroy$ (): Observable<void> { return this.willDestroy }
 
     private translate: TranslateService
@@ -80,6 +87,7 @@ export class SSHSession {
     private destroyHandled = false
     private serviceMessage = new Subject<string>()
     private keyboardInteractivePrompt = new Subject<KeyboardInteractivePrompt>()
+    private notification = new Subject<SSHNotification>()
     private willDestroy = new Subject<void>()
 
     constructor (
@@ -295,6 +303,7 @@ export class SSHSession {
         this.willDestroy.complete()
         this.serviceMessage.complete()
         this.keyboardInteractivePrompt.complete()
+        this.notification.complete()
         this.unwire()
         if (this.connId) {
             this.bridge.unregisterSession(this.connId)
@@ -326,6 +335,7 @@ export class SSHSession {
         this.willDestroy.complete()
         this.serviceMessage.complete()
         this.keyboardInteractivePrompt.complete()
+        this.notification.complete()
         if (this.connId) {
             this.bridge.unregisterSession(this.connId)
         }
@@ -337,6 +347,7 @@ export class SSHSession {
         }
         this.wired = true
         ipcRenderer.on(`ssh:${this.connId}:service-message`, this.serviceListener)
+        ipcRenderer.on(`ssh:${this.connId}:notification`, this.notificationListener)
         ipcRenderer.on(`ssh:${this.connId}:destroyed`, this.destroyedListener)
     }
 
@@ -346,11 +357,15 @@ export class SSHSession {
         }
         this.wired = false
         ipcRenderer.off(`ssh:${this.connId}:service-message`, this.serviceListener)
+        ipcRenderer.off(`ssh:${this.connId}:notification`, this.notificationListener)
         ipcRenderer.off(`ssh:${this.connId}:destroyed`, this.destroyedListener)
     }
 
     private serviceListener = (_e: IpcRendererEvent, msg: string|{ t: string, p?: Record<string, unknown> }) =>
         this.ingestServiceMessage(msg)
+
+    private notificationListener = (_e: IpcRendererEvent, notification: SSHNotification) =>
+        this.notification.next(notification)
 
     private destroyedListener = () => this.onConnectionDestroyed()
 }

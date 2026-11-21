@@ -11,6 +11,7 @@ import { resolveX11DisplaySpec } from '../../tabby-core/src/x11'
 import { DataQueue } from './dataQueue'
 import { SFTPSessionRegistry } from './sshSftp'
 import { ForwardedPort, ForwardedPortHost, type ForwardedPortConfig } from './sshForwarding'
+import { selectNextAuthMethod, updateAuthPlanAfterFailure } from './sshAuthSelection'
 export type { ForwardedPortConfig } from './sshForwarding'
 
 /**
@@ -37,8 +38,6 @@ const MSG_X = ansi([41, 30], ' X ')
 const MSG_WARN = ansi([43, 33], ' ! ')
 const MSG_PROXY_COMMAND = ansi([44, 30], ' Proxy command ')
 const MSG_PROXY = ansi([44, 30], ' Proxy ')
-const MSG_FWD_OK_LOCAL = ansi([42, 30], ' -> ')
-const MSG_FWD_OK_REMOTE = ansi([42, 30], ' <- ')
 const stripAnsi = (s: string): string => s.replace(/\x1b\[[0-9;]*m/g, '')
 
 /**
@@ -196,6 +195,11 @@ class SSHConnection {
 
     private emit (event: string, ...args: any[]): void {
         this.app.broadcast(`ssh:${this.id}:${event}`, ...args)
+    }
+
+    /** One-way user-facing notification; the owning renderer turns it into a toast. */
+    private notify (level: 'info'|'notice'|'error', message: string, details?: string): void {
+        this.emit('notification', { level, message, details })
     }
 
     // ── UI callback bridge ────────────────────────────────────────────────
@@ -390,7 +394,7 @@ class SSHConnection {
 
         if (this.authUsername) {
             const storedPassword = await this.request('load-password', { username: this.authUsername })
-            if (storedPassword) {
+            if (storedPassword != null) {
                 this.populateStoredPassword(allAuthMethods, storedPassword)
             }
         }
@@ -414,12 +418,15 @@ class SSHConnection {
 
         // Auth success
 
-        if (this.savedPassword) {
+        if (this.savedPassword != null) {
             await this.request('save-password', { password: this.savedPassword, username: this.authUsername })
         }
 
         for (const fw of options.forwardedPorts) {
-            await this.addPortForward(new ForwardedPortHost(fw))
+            const forward = new ForwardedPortHost(fw)
+            await this.addPortForward(forward).catch(e => {
+                this.notify('error', `Failed to forward port ${forward}`, String(e))
+            })
         }
 
         this.setupChannelPumps()
@@ -620,9 +627,16 @@ class SSHConnection {
         // password fallback is only for servers that never offered k-i.
         let kiAttempted = false
 
-        function maybeSetRemainingMethods (r: russh.AuthFailure) {
-            if (r.remainingMethods.length) {
-                methodsLeft = r.remainingMethods
+        const updateAuthPlan = (failure: russh.AuthFailure) => {
+            const plan = updateAuthPlanAfterFailure(
+                remainingMethods,
+                failure,
+                sshAuthTypeForMethod,
+                (authType): AuthMethod|null => authType === 'keyboard-interactive' ? { type: 'keyboard-interactive' } : null,
+            )
+            remainingMethods = plan.remainingMethods
+            if (plan.allowedMethods.length) {
+                methodsLeft = plan.allowedMethods
             }
         }
 
@@ -632,8 +646,7 @@ class SSHConnection {
             if (this.userCancelledAuthentication || this.closed) {
                 return null
             }
-            const m = methodsLeft
-            const method = remainingMethods.find(x => m.length === 0 || m.includes(sshAuthTypeForMethod(x)))
+            const method = selectNextAuthMethod(remainingMethods, methodsLeft, sshAuthTypeForMethod)
 
             if (!method) {
                 return null
@@ -650,7 +663,7 @@ class SSHConnection {
                 // Direct password auth with the stored credential — a failure
                 // here is the server definitively rejecting it.
                 this.storedPasswordRejected = true
-                maybeSetRemainingMethods(result)
+                updateAuthPlan(result)
             }
             if (method.type === 'prompt-password') {
                 if (this.options.auth === 'keyboardInteractive' && kiAttempted) {
@@ -682,7 +695,7 @@ class SSHConnection {
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
-                    maybeSetRemainingMethods(result)
+                    updateAuthPlan(result)
                 } else {
                     // The modal was dismissed (ESC / backdrop) — that is a
                     // cancellation, not a server rejection.
@@ -699,7 +712,7 @@ class SSHConnection {
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
-                    maybeSetRemainingMethods(result)
+                    updateAuthPlan(result)
                 } catch (e) {
                     this.emitServiceMessage(`${MSG_WARN} Failed to load private key ${method.name}: ${e}`)
                     continue
@@ -713,7 +726,7 @@ class SSHConnection {
 
                 while (true) {
                     if (state.state === 'failure') {
-                        maybeSetRemainingMethods(state)
+                        updateAuthPlan(state)
                         break
                     }
 
@@ -765,7 +778,7 @@ class SSHConnection {
                     if (result instanceof russh.AuthenticatedSSHClient) {
                         return result
                     }
-                    maybeSetRemainingMethods(result)
+                    updateAuthPlan(result)
                 } catch (e) {
                     const identitySuffix = method.publicKey ? ` with identity ${method.publicKey.fingerprint()}` : ''
                     this.emitServiceMessage(`${MSG_WARN} Failed to authenticate using agent${identitySuffix}: ${e}`)
@@ -849,7 +862,7 @@ class SSHConnection {
                     originatorAddress: sourceAddress ?? '127.0.0.1',
                     originatorPort: sourcePort ?? 0,
                 }).catch(err => {
-                    this.emitServiceMessage(`${MSG_X} Remote has rejected the forwarded connection to ${targetAddress}:${targetPort} via ${fw}: ${err}`)
+                    console.warn(`[ssh] Remote has rejected the forwarded connection to ${targetAddress}:${targetPort} via ${fw}: ${err}`)
                     reject()
                     throw err
                 }))
@@ -857,10 +870,9 @@ class SSHConnection {
 
                 this.setupSocketChannelEvents(channel, socket)
             }).then(() => {
-                this.emitServiceMessage(`${MSG_FWD_OK_LOCAL} Forwarded ${fw}`)
                 this.forwardedPorts.push(fw)
             }).catch(e => {
-                this.emitServiceMessage(`${MSG_X} Failed to forward port ${fw}: ${e}`)
+                console.warn(`[ssh] Failed to forward port ${fw}: ${e}`)
                 throw e
             })
         }
@@ -868,10 +880,9 @@ class SSHConnection {
             try {
                 await client.forwardTCPPort(fw.host, fw.port)
             } catch (err) {
-                this.emitServiceMessage(`${MSG_X} Remote rejected port forwarding for ${fw}: ${err}`)
-                return
+                console.warn(`[ssh] Remote rejected port forwarding for ${fw}: ${err}`)
+                throw err
             }
-            this.emitServiceMessage(`${MSG_FWD_OK_REMOTE} Forwarded ${fw}`)
             this.forwardedPorts.push(fw)
         }
     }
@@ -886,10 +897,10 @@ class SSHConnection {
             this.forwardedPorts = this.forwardedPorts.filter(x => x !== fw)
         }
         if (fw.type === 'Remote') {
-            client.stopForwardingTCPPort(fw.host, fw.port)
+            await client.stopForwardingTCPPort(fw.host, fw.port)
             this.forwardedPorts = this.forwardedPorts.filter(x => x !== fw)
         }
-        this.emitServiceMessage(`Stopped forwarding ${fw}`)
+        console.info(`[ssh] Stopped forwarding ${fw}`)
     }
 
     listForwardedPorts (): ForwardedPortConfig[] {
@@ -920,7 +931,7 @@ class SSHConnection {
 
             const forward = this.forwardedPorts.find(x => x.port === event.targetPort && x.host === event.targetAddress)
             if (!forward) {
-                this.emitServiceMessage(`${MSG_X} Rejected incoming forwarded connection for unrecognized port ${event.targetAddress}:${event.targetPort}`)
+                console.warn(`[ssh] Rejected incoming forwarded connection for unrecognized port ${event.targetAddress}:${event.targetPort}`)
                 channel.close()
                 return
             }
@@ -928,7 +939,7 @@ class SSHConnection {
             const socket = new net.Socket()
             socket.connect(forward.targetPort, forward.targetAddress)
             socket.on('error', e => {
-                this.emitServiceMessage(`${MSG_X} Could not forward the remote connection to ${forward.targetAddress}:${forward.targetPort}: ${e}`)
+                console.warn(`[ssh] Could not forward the remote connection to ${forward.targetAddress}:${forward.targetPort}: ${e}`)
                 channel.close()
             })
 
