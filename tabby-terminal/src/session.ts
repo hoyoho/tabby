@@ -26,6 +26,7 @@ export abstract class BaseSession {
     private initialDataBufferLength = 0
     private initialDataBufferTruncated = false
     private initialDataBufferReleased = false
+    private destroyGuard = false
 
     get output$ (): Observable<string> { return this.output }
     get binaryOutput$ (): Observable<Buffer> { return this.binaryOutput }
@@ -100,6 +101,15 @@ export abstract class BaseSession {
     }
 
     async destroy (): Promise<void> {
+        // closed$ subscribers can call destroy() again synchronously - closing a local tab
+        // runs LocalTerminalTabComponent.ngOnDestroy() -> session.destroy(). That inner call
+        // used to complete destroyed$ before this call emitted it, so destroyed$ subscribers
+        // (e.g. the local session's pty.unsubscribeAll()) never ran and every closed session
+        // stayed reachable through its PTY IPC listeners.
+        if (this.destroyGuard) {
+            return
+        }
+        this.destroyGuard = true
         if (this.open) {
             this.logger.info('Destroying')
             this.open = false
@@ -120,6 +130,10 @@ export abstract class BaseSession {
      * the target window re-attaches the session by id.
      */
     protected releaseRendererState (): void {
+        if (this.destroyGuard) {
+            return
+        }
+        this.destroyGuard = true
         this.open = false
         this.middleware.close()
         this.closed.next()
