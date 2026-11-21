@@ -6,10 +6,12 @@ import { ipcMain, webContents } from 'electron'
 import { Application } from './app'
 import { SSHAlgorithmType, supportedAlgorithms } from './sshAlgorithms'
 import * as russh from 'russh'
-import socksv5 from '@luminati-io/socksv5'
 import * as shellQuote from 'shell-quote'
 import { resolveX11DisplaySpec } from '../../tabby-core/src/x11'
 import { DataQueue } from './dataQueue'
+import { SFTPSessionRegistry } from './sshSftp'
+import { ForwardedPort, ForwardedPortHost, type ForwardedPortConfig } from './sshForwarding'
+export type { ForwardedPortConfig } from './sshForwarding'
 
 /**
  * How long a connection with zero attached renderers survives. Covers the
@@ -87,15 +89,6 @@ export interface SSHConnectionOptions {
     httpProxyPort: number | null
 }
 
-export interface ForwardedPortConfig {
-    type: 'Local'|'Remote'|'Dynamic'
-    host: string
-    port: number
-    targetAddress: string
-    targetPort: number
-    description: string
-}
-
 export interface PromptPayload {
     msgid: string
     params?: Record<string, unknown>
@@ -159,74 +152,6 @@ interface ChannelEntry {
     writeQueue: Promise<void>
 }
 
-interface SFTPEntry {
-    sftp: russh.SFTP
-    handles: Map<string, russh.SFTPFile>
-}
-
-/** Local TCP listener for a forwarded port; lives in the main process. */
-class ForwardedPort implements ForwardedPortConfig {
-    type: ForwardedPortConfig['type']
-    host = '127.0.0.1'
-    port: number
-    targetAddress: string
-    targetPort: number
-    description: string
-
-    private listener: net.Server|null = null
-
-    async startLocalListener (callback: (accept: () => net.Socket, reject: () => void, sourceAddress: string|null, sourcePort: number|null, targetAddress: string, targetPort: number) => void): Promise<void> {
-        if (this.type === 'Local') {
-            const listener = this.listener = net.createServer(s => callback(
-                () => s,
-                () => s.destroy(),
-                s.remoteAddress ?? null,
-                s.remotePort ?? null,
-                this.targetAddress,
-                this.targetPort,
-            ))
-            return new Promise((resolve, reject) => {
-                listener.listen(this.port, this.host)
-                listener.on('error', reject)
-                listener.on('listening', resolve)
-            })
-        } else if (this.type === 'Dynamic') {
-            return new Promise((resolve, reject) => {
-                this.listener = socksv5.createServer((info, acceptConnection, rejectConnection) => {
-                    callback(
-                        () => acceptConnection(true),
-                        () => rejectConnection(),
-                        null,
-                        null,
-                        info.dstAddr,
-                        info.dstPort,
-                    )
-                }) as net.Server
-                this.listener.on('error', reject)
-                this.listener.listen(this.port, this.host, resolve)
-                // eslint-disable-next-line dot-notation
-                this.listener['useAuth'](socksv5.auth.None())
-            })
-        } else {
-            throw new Error('Invalid forward type for a local listener')
-        }
-    }
-
-    stopLocalListener (): void {
-        this.listener?.close()
-    }
-
-    toString (): string {
-        if (this.type === 'Local') {
-            return `(local) ${this.host}:${this.port} → (remote) ${this.targetAddress}:${this.targetPort}`
-        } if (this.type === 'Remote') {
-            return `(remote) ${this.host}:${this.port} → (local) ${this.targetAddress}:${this.targetPort}`
-        } else {
-            return `(dynamic) ${this.host}:${this.port}`
-        }
-    }
-}
-
 /**
  * Main-process host for one live SSH connection. Everything the old
  * renderer-side SSHSession did with russh happens here now; all renderer
@@ -245,7 +170,7 @@ class SSHConnection {
     authUsername: string|null = null
 
     private channels = new Map<string, ChannelEntry>()
-    private sftps = new Map<string, SFTPEntry>()
+    private sftp = new SFTPSessionRegistry(id => this.emit('sftp-closed', id))
     private pendingCallbacks = new Map<string, PendingCallback>()
     private forwardedPorts: ForwardedPort[] = []
     private savedPassword?: string
@@ -255,8 +180,6 @@ class SSHConnection {
     private userCancelledAuthentication = false
     /** Set when the server itself rejected the stored credential via direct password auth — only then may it be discarded. */
     private storedPasswordRejected = false
-    private mainSftp: russh.SFTP|null = null
-    private mainSftpOpening: Promise<russh.SFTP>|null = null
 
     constructor (
         private id: string,
@@ -1193,136 +1116,28 @@ class SSHConnection {
         if (!(client instanceof russh.AuthenticatedSSHClient)) {
             throw new Error('Cannot open SFTP session before auth')
         }
-        if (!this.mainSftp) {
-            this.mainSftpOpening ??= this.openMainSftp(client).finally(() => {
-                this.mainSftpOpening = null
-            })
-            await this.mainSftpOpening
-        }
-        if (!this.mainSftp) {
-            throw new Error('SFTP session closed right after opening')
-        }
-        const id = uuidv4().toString()
-        const entry: SFTPEntry = { sftp: this.mainSftp, handles: new Map() }
-        this.sftps.set(id, entry)
-        return id
+        return this.sftp.open(client)
     }
 
     /** Release one renderer's SFTP context without closing the shared channel. */
     closeSFTP (sftpId: string): void {
-        const entry = this.sftps.get(sftpId)
-        if (!entry) {
-            return
-        }
-        this.sftps.delete(sftpId)
-        for (const handle of entry.handles.values()) {
-            void handle.shutdown().catch(() => undefined)
-        }
-        entry.handles.clear()
-    }
-
-    private async openMainSftp (client: russh.AuthenticatedSSHClient): Promise<russh.SFTP> {
-        const channel = await client.openSessionChannel()
-        // NewChannel cannot be closed from JS: if activateSFTP() rejects, the
-        // native layer owns the channel and cleans it up with the connection.
-        const sftp = await client.activateSFTP(channel)
-        this.mainSftp = sftp
-        sftp.closed$.subscribe(() => {
-            if (this.mainSftp === sftp) {
-                this.mainSftp = null
-            }
-            const closedIds = [...this.sftps.keys()]
-            this.sftps.clear()
-            // Clear before emitting so a listener may synchronously reopen.
-            for (const id of closedIds) {
-                this.emit('sftp-closed', id)
-            }
-        })
-        return sftp
-    }
-
-    private getSftp (id: string): russh.SFTP {
-        const entry = this.sftps.get(id)
-        if (!entry) {
-            throw new Error('SFTP session is closed')
-        }
-        return entry.sftp
+        this.sftp.close(sftpId)
     }
 
     async sftpOp (sftpId: string, op: string, args: any[]): Promise<any> {
-        const sftp = this.getSftp(sftpId)
-        switch (op) {
-            case 'readdir': {
-                const [p] = args
-                const entries = await sftp.readDirectory(p)
-                return entries.map(entry => ({
-                    name: entry.name,
-                    isDirectory: entry.metadata.type === russh.SFTPFileType.Directory,
-                    isSymlink: entry.metadata.type === russh.SFTPFileType.Symlink,
-                    mode: entry.metadata.permissions ?? 0,
-                    size: entry.metadata.size,
-                    mtime: entry.metadata.mtime ?? 0,
-                }))
-            }
-            case 'readlink':
-                return sftp.readlink(args[0])
-            case 'stat': {
-                const stats = await sftp.stat(args[0])
-                return {
-                    isDirectory: stats.type === russh.SFTPFileType.Directory,
-                    isSymlink: stats.type === russh.SFTPFileType.Symlink,
-                    mode: stats.permissions ?? 0,
-                    size: stats.size,
-                    mtime: stats.mtime ?? 0,
-                }
-            }
-            case 'open': {
-                const [p, mode] = args
-                const handle = await sftp.open(p, mode)
-                const handleId = uuidv4().toString()
-                this.sftps.get(sftpId)!.handles.set(handleId, handle)
-                return handleId
-            }
-            case 'rmdir':
-                return sftp.removeDirectory(args[0])
-            case 'mkdir':
-                return sftp.createDirectory(args[0])
-            case 'rename':
-                return sftp.rename(args[0], args[1])
-            case 'unlink':
-                return sftp.removeFile(args[0])
-            case 'chmod':
-                return sftp.chmod(args[0], args[1])
-            default:
-                throw new Error(`Unknown SFTP op: ${op}`)
-        }
+        return this.sftp.op(sftpId, op, args)
     }
 
     async sftpHandleRead (sftpId: string, handleId: string): Promise<Buffer> {
-        const handle = this.sftps.get(sftpId)?.handles.get(handleId)
-        if (!handle) {
-            throw new Error('File handle is closed')
-        }
-        return Buffer.from(await handle.read(256 * 1024))
+        return this.sftp.readHandle(sftpId, handleId)
     }
 
     async sftpHandleWrite (sftpId: string, handleId: string, chunk: Uint8Array): Promise<void> {
-        const handle = this.sftps.get(sftpId)?.handles.get(handleId)
-        if (!handle) {
-            throw new Error('File handle is closed')
-        }
-        await handle.writeAll(chunk)
+        return this.sftp.writeHandle(sftpId, handleId, chunk)
     }
 
     async sftpHandleClose (sftpId: string, handleId: string): Promise<void> {
-        const handle = this.sftps.get(sftpId)?.handles.get(handleId)
-        if (!handle) {
-            return
-        }
-        this.sftps.get(sftpId)!.handles.delete(handleId)
-        try {
-            await handle.shutdown()
-        } catch { /* already gone */ }
+        return this.sftp.closeHandle(sftpId, handleId)
     }
 
     // ── teardown ──────────────────────────────────────────────────────────
@@ -1368,9 +1183,7 @@ class SSHConnection {
             } catch { /* already gone */ }
         }
         this.channels.clear()
-        this.sftps.clear()
-        this.mainSftp = null
-        this.mainSftpOpening = null
+        this.sftp.dispose()
         if (this.client) {
             try {
                 this.client.disconnect()
@@ -1572,13 +1385,5 @@ export class SSHConnectionManager {
         for (const conn of Object.values(this.connections)) {
             conn?.destroy()
         }
-    }
-}
-
-/** Adapter so the manager can rebuild a ForwardedPort from an IPC config. */
-class ForwardedPortHost extends ForwardedPort {
-    constructor (config: ForwardedPortConfig) {
-        super()
-        Object.assign(this, config)
     }
 }
