@@ -17,11 +17,34 @@ import { getXtermBackgroundColor } from '../helpers'
 import { generatePalette } from '../generatePalette'
 import { buildXtermTheme } from './xtermTheme'
 import { FlowControl } from './flowControl'
+import { disposeWebglAddon } from './webglAddon'
 import './xterm.css'
 
 // How many times to recreate the WebGL renderer after a lost GPU context
 // before giving up and letting xterm fall back to its DOM renderer.
 const MAX_WEBGL_RECOVERY_ATTEMPTS = 3
+
+// Fcitx5 applies Chinese punctuation during the browser's default text-input
+// processing. If xterm handles these keys on keydown, it calls preventDefault()
+// before Fcitx5 can emit the converted keypress/input event.
+const LINUX_IME_TEXT_KEY_CODES = new Set([
+    'Backquote',
+    'Backslash',
+    'BracketLeft',
+    'BracketRight',
+    'Comma',
+    'Period',
+    'Quote',
+    'Semicolon',
+    'Slash',
+])
+
+function isIMETextKey (event: KeyboardEvent): boolean {
+    if (event.ctrlKey || event.altKey || event.metaKey) {
+        return false
+    }
+    return LINUX_IME_TEXT_KEY_CODES.has(event.code) || event.code === 'Space' && event.shiftKey
+}
 
 /** @hidden */
 export class XTermFrontend extends Frontend {
@@ -207,7 +230,20 @@ export class XTermFrontend extends Frontend {
                 return false
             }
 
-            return keyboardEventHandler('keydown', event)
+            const handled = keyboardEventHandler(event.type, event)
+            if (!handled) {
+                // a hotkey claimed the event and already cancelled it
+                return false
+            }
+
+            if (event.type === 'keydown' && this.hostApp.platform === Platform.Linux && isIMETextKey(event)) {
+                // Returning false keeps xterm from sending/cancelling keydown.
+                // The resulting keypress/input event contains either the IME
+                // commit string or the original character when IME is inactive.
+                return false
+            }
+
+            return handled
         })
 
         this.xtermCore._scrollToBottom = this.xtermCore.scrollToBottom.bind(this.xtermCore)
@@ -585,7 +621,7 @@ export class XTermFrontend extends Frontend {
             this.detach(this.element)
         }
         super.destroy()
-        this.webGLAddon?.dispose()
+        disposeWebglAddon(this.webGLAddon)
         this.canvasAddon?.dispose()
         this.xterm.dispose()
         this.scrollbarElement = undefined
@@ -621,7 +657,22 @@ export class XTermFrontend extends Frontend {
     }
 
     focus (): void {
-        setTimeout(() => this.xterm.focus())
+        setTimeout(() => {
+            // Don't steal focus from modal dialogs (e.g. the SSH password prompt)
+            // or the tab's own overlay inputs - the deferred focus from a window
+            // focus event would otherwise land right after the user clicks into one
+            const active = document.activeElement
+            const tabHost = this.element?.parentElement
+            if (
+                active instanceof HTMLElement
+                && active !== this.xterm.textarea
+                && active.matches('input, textarea, select')
+                && ((tabHost?.contains(active) ?? false) || active.closest('ngb-modal-window') !== null)
+            ) {
+                return
+            }
+            this.xterm.focus()
+        })
     }
 
     /**
@@ -1121,7 +1172,7 @@ export class XTermFrontend extends Frontend {
     }
 
     private onWebGLContextLoss (): void {
-        this.webGLAddon?.dispose()
+        disposeWebglAddon(this.webGLAddon)
         this.webGLAddon = undefined
         this.pendingRendererRecovery = true
         this.recoverRenderer()
