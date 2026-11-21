@@ -18,33 +18,15 @@ if (version.includes('-c')) {
     version = semver.inc(version, 'prepatch').replace('-0', `-nightly.${process.env.REV ?? 0}`)
 }
 
-export const builtinPlugins = [
-    'tabby-core',
-    'tabby-settings',
-    'tabby-terminal',
-    'tabby-web',
-    'tabby-community-color-schemes',
-    'tabby-ssh',
-    'tabby-serial',
-    'tabby-telnet',
-    'tabby-local',
-    'tabby-electron',
-    'tabby-plugin-manager',
-    'tabby-linkifier',
-    'tabby-auto-sudo-password',
-]
+const manifest = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../plugins.json'), 'utf8'))
 
-export const packagesWithDocs = [
-    ['.', 'tabby-core'],
-    ['terminal', 'tabby-terminal'],
-    ['local', 'tabby-local'],
-    ['settings', 'tabby-settings'],
-]
+export const builtinPlugins = manifest.builtin
+
+export const packagesWithDocs = manifest.docs
 
 export const allPackages = [
     ...builtinPlugins,
-    'web',
-    'tabby-web-demo',
+    ...manifest.extraPackages,
 ]
 
 export const bundledModules = [

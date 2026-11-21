@@ -9,6 +9,7 @@ import * as russh from 'russh'
 import socksv5 from '@luminati-io/socksv5'
 import * as shellQuote from 'shell-quote'
 import { resolveX11DisplaySpec } from '../../tabby-core/src/x11'
+import { DataQueue } from './dataQueue'
 
 /**
  * How long a connection with zero attached renderers survives. Covers the
@@ -146,69 +147,9 @@ interface PendingCallback {
     reject: (reason: any) => void
 }
 
-/**
- * Bounds in-flight IPC output per channel. Unlike the PTY queue there is no
- * native pause; we simply stop draining until the renderer acks.
- */
-class ChannelDataQueue {
-    private buffers: Buffer[] = []
-    private delta = 0
-    private maxChunk = 1024 * 100
-    private maxDelta = this.maxChunk * 5
-    private stopped = false
-
-    constructor (private emit: (data: Buffer) => void) { }
-
-    push (data: Uint8Array): void {
-        if (this.stopped) {
-            return
-        }
-        this.buffers.push(Buffer.from(data))
-        this.maybeEmit()
-    }
-
-    ack (length: number): void {
-        if (this.stopped) {
-            return
-        }
-        this.delta -= length
-        this.maybeEmit()
-    }
-
-    stop (): void {
-        this.stopped = true
-        this.buffers = []
-    }
-
-    private maybeEmit (): void {
-        if (this.stopped || !this.buffers.length) {
-            return
-        }
-        if (this.delta > this.maxDelta) {
-            return
-        }
-        const buffersToSend = []
-        let totalLength = 0
-        while (totalLength < this.maxChunk && this.buffers.length) {
-            totalLength += this.buffers[0].length
-            buffersToSend.push(this.buffers.shift()!)
-        }
-        let toSend = Buffer.concat(buffersToSend)
-        if (toSend.length > this.maxChunk) {
-            this.buffers.unshift(toSend.slice(this.maxChunk))
-            toSend = toSend.slice(0, this.maxChunk)
-        }
-        this.delta += toSend.length
-        this.emit(toSend)
-        if (this.buffers.length && this.delta <= this.maxDelta) {
-            setImmediate(() => this.maybeEmit())
-        }
-    }
-}
-
 interface ChannelEntry {
     channel: russh.Channel
-    queue: ChannelDataQueue
+    queue: DataQueue
     /**
      * Serializes native writes: russh's async `channel.write()` does not
      * guarantee FIFO order for concurrent calls, which corrupts large ZMODEM
@@ -1199,7 +1140,7 @@ class SSHConnection {
         const chId = uuidv4().toString()
         const entry: ChannelEntry = {
             channel: ch,
-            queue: new ChannelDataQueue(data => this.emit(`ch:${chId}:data`, data)),
+            queue: new DataQueue(data => this.emit(`ch:${chId}:data`, data)),
             writeQueue: Promise.resolve(),
         }
         this.channels.set(chId, entry)

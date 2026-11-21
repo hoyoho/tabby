@@ -40,20 +40,11 @@ const cachedBuiltinModules = {
     'zone.js': require('zone.js'),
 }
 
+// The web host is a plugin package but is never loaded into the desktop app.
+const manifest = require('../../plugins.json') as { builtin: string[] }
 const builtinModules = [
     ...Object.keys(cachedBuiltinModules),
-    'tabby-core',
-    'tabby-local',
-    'tabby-settings',
-    'tabby-terminal',
-    'tabby-ssh',
-    'tabby-electron',
-    'tabby-serial',
-    'tabby-telnet',
-    'tabby-community-color-schemes',
-    'tabby-plugin-manager',
-    'tabby-linkifier',
-    'tabby-auto-sudo-password',
+    ...manifest.builtin.filter(name => name !== 'tabby-web'),
 ]
 
 const originalRequire = (global as any).require

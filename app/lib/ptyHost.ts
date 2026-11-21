@@ -2,6 +2,7 @@ import * as nodePTY from 'node-pty'
 import { Subject, debounceTime } from 'rxjs'
 import { UTF8Splitter } from '../../tabby-core/src/utfSplitter'
 import { PTYHostCommand, PTYHostEvent } from './ptyProtocol'
+import { DataQueue } from './dataQueue'
 
 /**
  * Runs node-pty inside an Electron `utilityProcess` so a native ConPTY
@@ -17,17 +18,20 @@ function send (message: PTYHostEvent): void {
 }
 
 class PTYDataQueue {
-    private buffers: Buffer[] = []
-    private delta = 0
-    private maxChunk = 1024 * 100
-    private maxDelta = this.maxChunk * 5
-    private flowPaused = false
     private decoder = new UTF8Splitter()
     private output$ = new Subject<Buffer>()
     private sub: import('rxjs').Subscription|null = null
-    private stopped = false
+    private queue: DataQueue
 
     constructor (private pty: nodePTY.IPty, private onData: (data: Buffer) => void) {
+        this.queue = new DataQueue(data => {
+            const validChunk = this.decoder.write(data)
+            this.onData(validChunk)
+            this.output$.next(validChunk)
+        }, {
+            pause: () => this.pty.pause(),
+            resume: () => this.pty.resume(),
+        })
         this.sub = this.output$.pipe(debounceTime(500)).subscribe(() => {
             const remainder = this.decoder.flush()
             if (remainder.length) {
@@ -37,19 +41,11 @@ class PTYDataQueue {
     }
 
     push (data: Buffer) {
-        if (this.stopped) {
-            return
-        }
-        this.buffers.push(data)
-        this.maybeEmit()
+        this.queue.push(data)
     }
 
     ack (length: number) {
-        if (this.stopped) {
-            return
-        }
-        this.delta -= length
-        this.maybeEmit()
+        this.queue.ack(length)
     }
 
     /**
@@ -58,63 +54,9 @@ class PTYDataQueue {
      * late debounce delivery after teardown.
      */
     stop () {
-        this.stopped = true
-        this.buffers = []
+        this.queue.stop()
         this.sub?.unsubscribe()
         this.sub = null
-    }
-
-    private maybeEmit () {
-        if (this.delta <= this.maxDelta && this.flowPaused) {
-            this.resume()
-            return
-        }
-        if (this.buffers.length > 0) {
-            if (this.delta > this.maxDelta && !this.flowPaused) {
-                this.pause()
-                return
-            }
-
-            const buffersToSend = []
-            let totalLength = 0
-            while (totalLength < this.maxChunk && this.buffers.length) {
-                totalLength += this.buffers[0].length
-                buffersToSend.push(this.buffers.shift())
-            }
-
-            if (buffersToSend.length === 0) {
-                return
-            }
-
-            let toSend = Buffer.concat(buffersToSend)
-            if (toSend.length > this.maxChunk) {
-                this.buffers.unshift(toSend.slice(this.maxChunk))
-                toSend = toSend.slice(0, this.maxChunk)
-            }
-            this.emitData(toSend)
-            this.delta += toSend.length
-
-            if (this.buffers.length) {
-                setImmediate(() => this.maybeEmit())
-            }
-        }
-    }
-
-    private emitData (data: Buffer) {
-        const validChunk = this.decoder.write(data)
-        this.onData(validChunk)
-        this.output$.next(validChunk)
-    }
-
-    private pause () {
-        this.pty.pause()
-        this.flowPaused = true
-    }
-
-    private resume () {
-        this.pty.resume()
-        this.flowPaused = false
-        this.maybeEmit()
     }
 }
 

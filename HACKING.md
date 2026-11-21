@@ -53,6 +53,19 @@ node scripts/build-macos.mjs
 
 The artifacts will be produced in the `dist` folder.
 
+## Windows UAC helper
+
+`extras/UAC.exe` is built from `tabby-uac/` and is only needed for the
+"Run as Administrator" local-shell profile. After changing the C++ helper,
+rebuild it on Windows with:
+
+```
+node scripts/build-uac.mjs
+```
+
+The script locates MSBuild (Visual Studio Build Tools with the C++ workload),
+builds the Release x64 configuration and copies the result to `extras/UAC.exe`.
+
 # Project layout
 ```
 tabby
