@@ -1,6 +1,6 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { AfterViewInit, Component, Injector, HostListener, Input, TemplateRef, ViewChild } from '@angular/core'
+import { Component, Injector, HostListener, Input, TemplateRef, ViewChild } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
@@ -22,7 +22,7 @@ import { SSHCallbackBridgeService } from '../services/sshCallbackBridge.service'
     ],
     animations: BaseTerminalTabComponent.animations,
 })
-export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> implements AfterViewInit {
+export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> {
     enableToolbar = true
     sshSession: SSHSession|null = null
     session: SSHShellSession|null = null
@@ -58,12 +58,6 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         })
     }
 
-    ngAfterViewInit (): void {
-        if (this.sftpPanelTemplate && this.terminalOverlayHost) {
-            this.terminalOverlayHost.createEmbeddedView(this.sftpPanelTemplate)
-        }
-    }
-
     ngOnInit (): void {
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, hotkey => {
             if (!this.hasFocus) {
@@ -91,6 +85,13 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         })
 
         super.ngOnInit()
+
+        // Attach the panel before the first change detection. Building this
+        // embedded view in a later lifecycle hook makes Angular compare its
+        // first bindings against "undefined" and throw NG0100 in dev mode.
+        if (this.sftpPanelTemplate && this.terminalOverlayHost) {
+            this.terminalOverlayHost.createEmbeddedView(this.sftpPanelTemplate)
+        }
     }
 
     // eslint-disable-next-line max-statements
