@@ -206,7 +206,14 @@ export class AppSidebarComponent implements OnDestroy {
     @HostListener('document:mouseup')
     stopResize (): boolean {
         const panel = this.resizingPanel
-        if (!this.isResizing || !panel) {
+        if (!this.isResizing) {
+            return true
+        }
+        if (!panel) {
+            // Defensive: the panel can disappear while the sash is held
+            // (plugin disabled, panel switched). Still clear the app-wide
+            // cursor and drag state instead of leaving the resize stuck.
+            this.resetDragState()
             return true
         }
         // Capture the current edge before the committed width changes; the
