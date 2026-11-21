@@ -295,6 +295,25 @@ const CONFIG_MIGRATIONS: AnyConfigMigration[] = [
             delete config.appearance?.opacity
         },
     },
+    {
+        version: 18,
+        run: config => {
+            // The v11-v14 steps only run for configs below their version, so a
+            // config already at the latest version keeps their stale hotkey ids
+            // forever. Sweep them again for those files.
+            for (const old of [
+                'profile', 'profile-selectors', 'group-selectors',
+                'pane-nav-previous', 'pane-nav-next', 'close-pane',
+                'pane-increase-vertical', 'pane-decrease-vertical',
+                'pane-increase-horizontal', 'pane-decrease-horizontal',
+                'rearrange-panes', 'pane-maximize', 'pane-focus-all',
+                'focus-all-tabs', 'settings-tab',
+            ]) {
+                // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+                delete config.hotkeys?.[old]
+            }
+        },
+    },
 ]
 
 const LATEST_VERSION = CONFIG_MIGRATIONS.length
