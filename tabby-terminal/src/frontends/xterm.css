@@ -5,11 +5,15 @@
     src: url(../fonts/SourceCodePro.ttf) format("truetype");
 }
 
-/* xterm 6 no longer scrolls this element, but its base CSS sets
-   `overflow-y: scroll`, which would force a hidden native scrollbar behind
-   the terminal (visible with transparent backgrounds). Keep it on `auto`. */
+/* xterm 6 no longer scrolls or paints this element: the internal
+   ScrollableElement owns both. Its base CSS still sets an opaque black
+   background, though, and the empty container is painted underneath the
+   transparent renderer - covering the acrylic/vibrancy surface and any
+   background plugin with a solid terminal-sized black rectangle.
+   This is the same rule upstream added with the xterm 6 upgrade. */
 .xterm .xterm-viewport {
     overflow-y: auto;
+    background: none !important;
 }
 
 /* Legacy native viewport scrollbar styling, kept as a no-op for older xterm
