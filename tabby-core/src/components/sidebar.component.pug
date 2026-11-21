@@ -29,4 +29,17 @@ ng-container(*ngIf='baseVisible')
                 ng-container(*ngIf='panel.id === activePanel?.id')
                     ng-container(*ngComponentOutlet='panel.getComponentType()')
 
-    .sash((mousedown)='startResize($event)', [style.transform]='sashTransform')
+    .sash(
+        (mousedown)='startResize($event)',
+        [style.transform]='sashTransform',
+        [class.hidden]='committing'
+    )
+    //- Fixed clone shown while the host width animates to the committed value.
+    //- The real sash stays in flow (hidden) so the content width does not jump
+    //- by its 4px when it would otherwise leave the flex row.
+    .sash.commit(
+        *ngIf='committing',
+        [style.left.px]='commitX',
+        [style.top.px]='commitTop',
+        [style.height.px]='commitHeight'
+    )

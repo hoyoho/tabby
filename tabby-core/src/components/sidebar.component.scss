@@ -1,18 +1,17 @@
-// Shared by the host width and the sash transform so the two animations
-// cancel out on release.
-$resize-transition-duration: 0.12s;
+// Release animation for the host width, matching the pane splitter's 125ms.
+// The real sash stays in flow (hidden) and a fixed clone holds its release
+// position while the width animates underneath.
+$resize-transition-duration: 125ms;
 
 :host {
     display: flex;
     flex: none;
     min-width: 0;
     min-height: 0;
+    transition: width $resize-transition-duration ease;
 
-    &:not(.resizing) {
-        // On release the committed width animates to its new value while the
-        // sash transform animates back to zero over the same duration, so the
-        // two cancel out and the sash stays under the cursor.
-        transition: width $resize-transition-duration ease;
+    &.resizing {
+        transition: none;
     }
 }
 
@@ -86,14 +85,32 @@ $resize-transition-duration: 0.12s;
     cursor: ew-resize;
     background: transparent;
     -webkit-app-region: no-drag;
-    transition: transform $resize-transition-duration ease;
+    // The sash never animates itself: it follows the pointer during the drag
+    // and a fixed clone takes over for the width animation on release.
 
-    // While dragging, follow the pointer without animation and sit above the
-    // pane header (the sash may travel outside the sidebar during the drag).
+    // While dragging, follow the pointer and sit above the pane header (the
+    // sash may travel outside the sidebar during the drag).
     :host(.resizing) & {
         z-index: 50;
-        transition: none;
         will-change: transform;
+    }
+
+    // Hidden while the fixed clone represents the released position.
+    &.hidden {
+        visibility: hidden;
+    }
+
+    // Release clone: pinned at the final edge while the host width glides
+    // there. Inline left/top/height carry the geometry.
+    &.commit {
+        position: fixed;
+        z-index: 50;
+        transform: none;
+        pointer-events: none;
+    }
+
+    &.commit::before {
+        background-color: var(--theme-primary);
     }
 
     // The visible hover/drag highlight fills the sash

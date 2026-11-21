@@ -1,8 +1,11 @@
-import { Component, Input, HostBinding, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core'
+import { Component, ElementRef, Input, HostBinding, HostListener, ChangeDetectorRef, OnDestroy } from '@angular/core'
 import { TranslateService } from '@ngx-translate/core'
 import { ConfigService } from '../services/config.service'
 import { SidebarService } from '../services/sidebar.service'
 import { SidebarContribution } from '../api/sidebarContribution'
+
+/** Must match $resize-transition-duration in sidebar.component.scss. */
+const RESIZE_ANIMATION_MS = 125
 
 /** Metadata for one entry of the built-in platform's panel switcher. */
 export interface SidebarPanelRef {
@@ -54,6 +57,14 @@ export class AppSidebarComponent implements OnDestroy {
     /** Body cursor to restore when the drag ends or the component is destroyed. */
     private previousBodyCursor = ''
 
+    /** Set while the released width animates to its committed value. */
+    committing = false
+    /** Screen position of the fixed clone shown during that animation. */
+    commitX: number|null = null
+    commitTop = 0
+    commitHeight = 0
+    private commitTimer: ReturnType<typeof setTimeout>|null = null
+
     /** Per-panel width cache, hydrated from localStorage on first use. */
     private widthCache = new Map<string, number>()
 
@@ -64,6 +75,7 @@ export class AppSidebarComponent implements OnDestroy {
         public sidebar: SidebarService,
         private translate: TranslateService,
         private cdr: ChangeDetectorRef,
+        private element: ElementRef<HTMLElement>,
     ) { }
 
     get owner (): SidebarContribution|null {
@@ -164,6 +176,7 @@ export class AppSidebarComponent implements OnDestroy {
         if (!this.activePanel) {
             return
         }
+        this.cancelCommitAnimation()
         if (!this.isResizing) {
             this.previousBodyCursor = document.body.style.cursor
         }
@@ -193,27 +206,61 @@ export class AppSidebarComponent implements OnDestroy {
     @HostListener('document:mouseup')
     stopResize (): boolean {
         const panel = this.resizingPanel
-        const width = this.startWidth + this.dragOffset
-        this.resetDragState()
-        if (!panel) {
+        if (!this.isResizing || !panel) {
             return true
         }
+        // Capture the current edge before the committed width changes; the
+        // fixed bar clone is placed at the final edge and the host width
+        // animates there underneath it.
+        const rect = this.element.nativeElement.getBoundingClientRect()
+        const startWidth = this.startWidth
+        const width = this.startWidth + this.dragOffset
+        this.resetDragState()
 
+        let finalWidth = panel.minWidth
+        let collapsed = false
         if (panel.id === PROFILES_PANEL_ID && width < this.panelCollapseThreshold) {
             // Released near the left edge: close the built-in profile panel
             // entirely, it can be re-enabled from the settings or the hotkey.
             // Keep a usable width so re-opening does not bring back a 0px panel.
-            this.widthCache.set(panel.id, panel.minWidth)
-            window.localStorage[`sidebarWidth:${panel.id}`] = panel.minWidth
+            finalWidth = panel.minWidth
+            this.widthCache.set(panel.id, finalWidth)
+            window.localStorage[`sidebarWidth:${panel.id}`] = finalWidth
             this.config.store.showProfileTree = false
             this.config.save()
+            collapsed = true
         } else {
-            const clamped = Math.min(this.maxWidthOf(panel), Math.max(panel.minWidth, width))
-            this.widthCache.set(panel.id, clamped)
-            window.localStorage[`sidebarWidth:${panel.id}`] = clamped
+            finalWidth = Math.min(this.maxWidthOf(panel), Math.max(panel.minWidth, width))
+            this.widthCache.set(panel.id, finalWidth)
+            window.localStorage[`sidebarWidth:${panel.id}`] = finalWidth
         }
         this.cdr.markForCheck()
+        if (!collapsed) {
+            this.startCommitAnimation(rect, rect.right + (finalWidth - startWidth))
+        }
         return true
+    }
+
+    private startCommitAnimation (rect: DOMRect, edge: number): void {
+        this.cancelCommitAnimation()
+        this.committing = true
+        // The sash is the last 4px of the host, so its left edge is the final
+        // edge minus its width.
+        this.commitX = edge - 4
+        this.commitTop = rect.top
+        this.commitHeight = rect.height
+        this.commitTimer = setTimeout(() => {
+            this.commitTimer = null
+            this.committing = false
+        }, RESIZE_ANIMATION_MS)
+    }
+
+    private cancelCommitAnimation (): void {
+        if (this.commitTimer) {
+            clearTimeout(this.commitTimer)
+            this.commitTimer = null
+        }
+        this.committing = false
     }
 
     /**
@@ -235,6 +282,7 @@ export class AppSidebarComponent implements OnDestroy {
         if (this.isResizing) {
             this.resetDragState()
         }
+        this.cancelCommitAnimation()
     }
 
     /** Clears drag state and restores the body cursor without committing width. */
