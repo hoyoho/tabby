@@ -4,4 +4,7 @@ sftp-panel {
     width: 100%;
     bottom: 0;
     z-index: 5;
+    // The base terminal's overlay slot is pointer-transparent so the terminal
+    // stays clickable when no panel is mounted; the panel opts back in.
+    pointer-events: auto;
 }

@@ -1,13 +1,14 @@
-sftp-panel.bg-dark(
-    @panelSlide,
-    [@.disabled]='!config.store.accessibility.animations',
-    [(path)]='sftpPath',
-    *ngIf='sftpPanelVisible && sshSession',
-    (click)='$event.stopPropagation()',
-    [session]='sshSession!',
-    [cwdDetectionAvailable]='session?.supportsWorkingDirectory() ?? false',
-    (closed)='sftpPanelVisible = false'
-)
+ng-template(#sftpPanelTemplate)
+    sftp-panel.bg-dark(
+        @panelSlide,
+        [@.disabled]='!config.store.accessibility.animations',
+        [(path)]='sftpPath',
+        *ngIf='sftpPanelVisible && sshSession',
+        (click)='$event.stopPropagation()',
+        [session]='sshSession!',
+        [cwdDetectionAvailable]='session?.supportsWorkingDirectory() ?? false',
+        (closed)='sftpPanelVisible = false'
+    )
 
 keyboard-interactive-auth-panel.bg-dark(
     *ngIf='activeKIPrompt',

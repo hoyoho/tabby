@@ -5,18 +5,37 @@
     // overflow: hidden;
     position: relative;
 
-    &> .content {
-        flex: auto;
+    // The SFTP/auth overlays live inside this container, not next to the
+    // toolbar: absolute positioning then stops at the terminal area, so a
+    // panel can never cover the toolbar no matter how tall it is.
+    &> .terminal-area {
         position: relative;
-        display: block;
-        overflow: hidden;
-        margin: calc(max(0px, 30px * var(--spaciness) - 15px));
-        transition: opacity ease-out 0.25s;
-        opacity: 0;
+        flex: auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
 
-        div[style]:last-child {
-            background: black !important;
-            color: white !important;
+        &> .content {
+            flex: auto;
+            position: relative;
+            display: block;
+            overflow: hidden;
+            margin: calc(max(0px, 30px * var(--spaciness) - 15px));
+            transition: opacity ease-out 0.25s;
+            opacity: 0;
+
+            div[style]:last-child {
+                background: black !important;
+                color: white !important;
+            }
+        }
+
+        // Pointer-transparent so the terminal stays clickable when no overlay
+        // is mounted; overlay components opt back in with pointer-events: auto.
+        &> .terminal-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
         }
     }
 }

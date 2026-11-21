@@ -1,6 +1,6 @@
 import { marker as _ } from '@biesbjerg/ngx-translate-extract-marker'
 import colors from 'ansi-colors'
-import { Component, Injector, HostListener, Input } from '@angular/core'
+import { AfterViewInit, Component, Injector, HostListener, Input, TemplateRef, ViewChild } from '@angular/core'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap'
 import { ProfilesService, GetRecoveryTokenOptions, RecoveryToken } from 'tabby-core'
 import { BaseTerminalTabComponent, ConnectableTerminalTabComponent } from 'tabby-terminal'
@@ -22,7 +22,7 @@ import { SSHCallbackBridgeService } from '../services/sshCallbackBridge.service'
     ],
     animations: BaseTerminalTabComponent.animations,
 })
-export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> {
+export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile> implements AfterViewInit {
     enableToolbar = true
     sshSession: SSHSession|null = null
     session: SSHShellSession|null = null
@@ -37,6 +37,13 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
     @Input() restoreConnectionId?: string|null
     @Input() restoreChannelId?: string|null
 
+    /**
+     * Rendered lazily into the base terminal's overlay slot: the slot is
+     * inside `.terminal-area`, so the panel's absolute positioning can never
+     * reach the toolbar below it.
+     */
+    @ViewChild('sftpPanelTemplate', { 'static': true }) sftpPanelTemplate?: TemplateRef<any>
+
     constructor (
         injector: Injector,
         public ssh: SSHService,
@@ -49,6 +56,12 @@ export class SSHTabComponent extends ConnectableTerminalTabComponent<SSHProfile>
         this.sessionChanged$.subscribe(() => {
             this.activeKIPrompt = null
         })
+    }
+
+    ngAfterViewInit (): void {
+        if (this.sftpPanelTemplate && this.terminalOverlayHost) {
+            this.terminalOverlayHost.createEmbeddedView(this.sftpPanelTemplate)
+        }
     }
 
     ngOnInit (): void {

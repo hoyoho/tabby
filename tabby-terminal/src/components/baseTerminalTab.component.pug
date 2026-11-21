@@ -1,4 +1,7 @@
-.content(#content, [style.opacity]='frontendIsReady ? 1 : 0')
+.terminal-area
+    .content(#content, [style.opacity]='frontendIsReady ? 1 : 0')
+    .terminal-overlay
+        ng-template(#terminalOverlayHost)
 terminal-toolbar(
     [tab]='this',
     [class.loading]='!frontendIsReady',

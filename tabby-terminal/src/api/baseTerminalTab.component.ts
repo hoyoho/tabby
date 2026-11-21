@@ -1,5 +1,5 @@
 import { Observable, Subject, first, auditTime, debounce, interval } from 'rxjs'
-import { NgZone, OnInit, OnDestroy, Injector, ViewChild, HostBinding, HostListener, Input, ElementRef, InjectFlags, Component } from '@angular/core'
+import { NgZone, OnInit, OnDestroy, Injector, ViewChild, ViewContainerRef, HostBinding, HostListener, Input, ElementRef, InjectFlags, Component } from '@angular/core'
 import { trigger, transition, style, animate, AnimationTriggerMetadata } from '@angular/animations'
 import { AppService, ConfigService, SessionTab, WorkspaceComponent, HostAppService, HotkeysService, NotificationsService, Platform, LogService, Logger, SubscriptionContainer, MenuItemOptions, PlatformService, HostWindowService, TranslateService, ThemesService, FullyDefined, ActionRegistry, ActionSurface, actionsToMenuItems } from 'tabby-core'
 
@@ -79,6 +79,13 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
 
     /** @hidden */
     @ViewChild('content') content
+
+    /**
+     * Overlay slot inside the terminal area (above `.content`, below the
+     * toolbar). Derived tabs can mount panels here and their absolute
+     * positioning will naturally stop above `terminal-toolbar`.
+     */
+    @ViewChild('terminalOverlayHost', { read: ViewContainerRef, 'static': true }) terminalOverlayHost?: ViewContainerRef
 
     /** @hidden */
     @HostBinding('style.background-color') backgroundColor: string|null = null
