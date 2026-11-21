@@ -59,7 +59,7 @@ class ZModemMiddleware extends SessionMiddleware {
             return
         }
         if (this.pendingUpload ?? this.activeSession ?? this.isActive) {
-            this.showMessage(colors.bgRed.black(' ZMODEM ') + ' Another transfer is already in progress')
+            this.notifications.notice(this.translate.instant(_('A ZMODEM upload is already in progress')))
             for (const upload of uploads) {
                 upload.cancel()
             }
@@ -92,6 +92,9 @@ class ZModemMiddleware extends SessionMiddleware {
     }
 
     private cancelPendingUpload (): void {
+        if (!this.pendingUpload) {
+            return
+        }
         if (this.pendingUploadTimer) {
             clearTimeout(this.pendingUploadTimer)
             this.pendingUploadTimer = null
@@ -103,7 +106,7 @@ class ZModemMiddleware extends SessionMiddleware {
         // the time it fires the user may be running something else.
         this.logger.warn('rz did not start before the upload timeout; is lrzsz installed on the remote host?')
         this.notifications.error(this.translate.instant(_('ZMODEM upload did not start. Is lrzsz installed on the remote host?')))
-        for (const upload of uploads ?? []) {
+        for (const upload of uploads) {
             upload.cancel()
         }
     }
@@ -112,6 +115,9 @@ class ZModemMiddleware extends SessionMiddleware {
         if (this.pendingUploadTimer) {
             clearTimeout(this.pendingUploadTimer)
             this.pendingUploadTimer = null
+        }
+        for (const upload of this.pendingUpload ?? []) {
+            upload.cancel()
         }
         this.pendingUpload = null
         super.close()
@@ -245,6 +251,12 @@ class ZModemMiddleware extends SessionMiddleware {
 
                 this.showMessage(colors.bgBlue.black(' ZMODEM ') + ' Complete')
             } else {
+                // A drop asked for an upload, but the remote started a receive
+                // session instead. Its files cannot ride on this transfer, so
+                // release their streams rather than leaving them pending.
+                for (const upload of uploads ?? []) {
+                    upload.cancel()
+                }
                 const pendingReceives: Promise<void>[] = []
                 zsession.on('offer', xfer => {
                     pendingReceives.push(this.receiveFile(xfer, zsession))
@@ -452,18 +464,21 @@ export class ZModemDecorator extends TerminalDecorator {
 
     attach (terminal: BaseTerminalTabComponent<any>): void {
         setTimeout(() => {
+            // The tab may have been destroyed between attach() and this timer;
+            // adding subscriptions then would leave them registered forever.
+            const frontend = terminal.frontend
+            if (!frontend) {
+                return
+            }
             this.attachToSession(terminal)
             this.subscribeUntilDetached(terminal, terminal.sessionChanged$.subscribe(() => {
                 this.attachToSession(terminal)
             }))
 
-            const frontend = terminal.frontend
-            if (frontend) {
-                this.subscribeUntilDetached(terminal, frontend.dragOver$.subscribe(event => this.onDragOver(event)))
-                this.subscribeUntilDetached(terminal, frontend.drop$.subscribe(event => {
-                    void this.onDrop(terminal, event)
-                }))
-            }
+            this.subscribeUntilDetached(terminal, frontend.dragOver$.subscribe(event => this.onDragOver(event)))
+            this.subscribeUntilDetached(terminal, frontend.drop$.subscribe(event => {
+                void this.onDrop(terminal, event)
+            }))
         })
     }
 

@@ -6,6 +6,10 @@ msgid ""
 "A second font family used to display characters missing in the main font"
 msgstr ""
 
+#: tabby-terminal/src/features/zmodem.ts:62
+msgid "A ZMODEM upload is already in progress"
+msgstr ""
+
 msgid "ANSI color {idx}"
 msgstr ""
 
@@ -13,11 +17,11 @@ msgstr ""
 msgid "Abort all"
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:71
+#: tabby-terminal/src/features/zmodem.ts:166
 msgid "Accept"
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:68
+#: tabby-terminal/src/features/zmodem.ts:163
 msgid "Accept a ZMODEM session?"
 msgstr ""
 
@@ -229,7 +233,7 @@ msgstr ""
 msgid "Cannot handle scripts of this type"
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:500
+#: tabby-terminal/src/features/zmodem.ts:530
 msgid "Cannot send files while a full-screen program is running"
 msgstr ""
 
@@ -1183,7 +1187,7 @@ msgstr ""
 msgid "Icon"
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:69
+#: tabby-terminal/src/features/zmodem.ts:164
 msgid "If you have not requested it, it could be a sign of malicious activity."
 msgstr ""
 
@@ -1964,7 +1968,7 @@ msgstr ""
 msgid "Regular expression"
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:72
+#: tabby-terminal/src/features/zmodem.ts:167
 msgid "Reject"
 msgstr ""
 
@@ -2913,7 +2917,7 @@ msgid ""
 "could have just been changed."
 msgstr ""
 
-#: tabby-terminal/src/features/zmodem.ts:105
+#: tabby-terminal/src/features/zmodem.ts:108
 msgid "ZMODEM upload did not start. Is lrzsz installed on the remote host?"
 msgstr ""
 

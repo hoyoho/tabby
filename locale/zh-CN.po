@@ -24,6 +24,10 @@ msgid "A second font family used to display characters missing in the main font"
 msgstr "首选字体缺失时使用备选字体显示字符"
 
 
+msgid "A ZMODEM upload is already in progress"
+msgstr "已有 ZMODEM 上传正在进行"
+
+
 msgid "Abort all"
 msgstr "中止全部"
 

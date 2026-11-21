@@ -24,6 +24,10 @@ msgid "A second font family used to display characters missing in the main font"
 msgstr ""
 
 
+msgid "A ZMODEM upload is already in progress"
+msgstr ""
+
+
 msgid "Abort all"
 msgstr ""
 
