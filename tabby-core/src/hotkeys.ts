@@ -47,6 +47,14 @@ export class AppHotkeyProvider extends HotkeyProvider {
             name: this.translate.instant('Previous workspace'),
         },
         {
+            id: 'next-mru-tab',
+            name: this.translate.instant('Next workspace (MRU order)'),
+        },
+        {
+            id: 'previous-mru-tab',
+            name: this.translate.instant('Previous workspace (MRU order)'),
+        },
+        {
             id: 'move-tab-left',
             name: this.translate.instant('Move workspace to the left'),
         },

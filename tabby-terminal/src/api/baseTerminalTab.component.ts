@@ -289,6 +289,17 @@ export class BaseTerminalTabComponent<P extends BaseTerminalProfile> extends Ses
                 case 'select-all':
                     this.frontend?.selectAll()
                     break
+                case 'switch-meta-option': {
+                    const altIsMeta = !this.config.store.terminal.altIsMeta
+                    this.config.store.terminal.altIsMeta = altIsMeta
+                    this.config.save()
+                    // no config.changed$ listener here - re-apply to this tab now, others on focus
+                    this.configure()
+                    this.notifications.notice(this.translate.instant(
+                        altIsMeta ? 'Option key now sends Meta' : 'Option key now sends its normal character',
+                    ))
+                    break
+                }
                 case 'clear':
                     {
                         const tabProfile = this.profile

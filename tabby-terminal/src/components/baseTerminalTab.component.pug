@@ -4,7 +4,8 @@ terminal-toolbar(
     [class.loading]='!frontendIsReady',
 )
 search-panel(
-    *ngIf='showSearchPanel && hasFocus && frontend',
+    *ngIf='showSearchPanel && frontend',
+    [class.d-none]='!hasFocus',
     @toolbarSlide,
     [@.disabled]='!config.store.accessibility.animations',
     [frontend]='frontend',
