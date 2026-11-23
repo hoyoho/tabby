@@ -2304,6 +2304,11 @@ msgstr "Upload mappe"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Brug {altKeyName} som Meta tasten"
 
+msgid "Use bundled ConPTY"
+msgstr "Brug den medfølgende ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Bruger den ConPTY, der følger med Tabby (fra Windows Terminal), i stedet for den, der er indbygget i Windows"
 
 msgid "Use ConPTY"
 msgstr "Brug ConPTY"

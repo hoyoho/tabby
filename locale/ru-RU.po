@@ -2304,6 +2304,11 @@ msgstr "Загрузить папку"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Использовать {altKeyName} в качестве клавиши Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Использовать поставляемый ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Использует ConPTY, поставляемый с Tabby (из Windows Terminal), вместо встроенного в Windows"
 
 msgid "Use ConPTY"
 msgstr "Использовать ConPTY"

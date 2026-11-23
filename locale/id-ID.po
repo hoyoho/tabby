@@ -2304,6 +2304,11 @@ msgstr "Unggah folder"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Gunakan {altKeyName} sebagai tombol Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Gunakan ConPTY bawaan"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Menggunakan ConPTY yang disertakan dengan Tabby (dari Windows Terminal) alih-alih yang bawaan Windows"
 
 msgid "Use ConPTY"
 msgstr "Gunakan ConPTY"

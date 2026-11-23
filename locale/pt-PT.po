@@ -2304,6 +2304,11 @@ msgstr "Fazer upload de pasta"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Use {altKeyName} como chave Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Utilizar o ConPTY incluído"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Utiliza o ConPTY incluído com o Tabby (do Windows Terminal) em vez do integrado no Windows"
 
 msgid "Use ConPTY"
 msgstr "Usar ConPTY"

@@ -2304,6 +2304,11 @@ msgstr "Enviar pasta"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Use {altKeyName} como Meta key"
 
+msgid "Use bundled ConPTY"
+msgstr "Usar o ConPTY incluído"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Usa o ConPTY incluído com o Tabby (do Windows Terminal) em vez do integrado ao Windows"
 
 msgid "Use ConPTY"
 msgstr "Usar ConPTY"

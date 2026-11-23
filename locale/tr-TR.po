@@ -2305,6 +2305,11 @@ msgstr "Klasörü yükle"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Meta anahtarı olarak {altKeyName} kullanın"
 
+msgid "Use bundled ConPTY"
+msgstr "Paketle gelen ConPTY'yi kullan"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Windows'a gömülü olan yerine Tabby ile birlikte gelen ConPTY'yi (Windows Terminal'den) kullanır"
 
 msgid "Use ConPTY"
 msgstr "ConPTY kullan"

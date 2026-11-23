@@ -2304,6 +2304,11 @@ msgstr "Nahrát složku"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Použít {altKeyName} jako Meta klíč"
 
+msgid "Use bundled ConPTY"
+msgstr "Použít ConPTY přibalený k aplikaci"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Používá ConPTY přibalený k aplikaci Tabby (z Windows Terminal) místo ConPTY zabudovaného ve Windows"
 
 msgid "Use ConPTY"
 msgstr "Použít ConPTY"

@@ -2304,6 +2304,11 @@ msgstr "Ordner hochladen"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "{altKeyName} als Meta-Taste verwenden"
 
+msgid "Use bundled ConPTY"
+msgstr "Mitgeliefertes ConPTY verwenden"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Verwendet das mit Tabby gelieferte ConPTY (aus Windows Terminal) statt des in Windows integrierten"
 
 msgid "Use ConPTY"
 msgstr "ConPTY verwenden"

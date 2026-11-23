@@ -2681,10 +2681,7 @@ msgstr ""
 msgid "Use bundled ConPTY"
 msgstr ""
 
-msgid "Uses the newer ConPTY from Windows Terminal"
-msgstr ""
-
-msgid "Windows 10 2004 (build 19041) or above is required for the bundled ConPTY"
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
 msgstr ""
 
 msgid "Session isolation"

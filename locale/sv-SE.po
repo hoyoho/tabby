@@ -2304,6 +2304,11 @@ msgstr "Ladda upp mapp"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Använd {altKeyName} som Meta-nyckel"
 
+msgid "Use bundled ConPTY"
+msgstr "Använd medföljande ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Använder ConPTY som medföljer Tabby (från Windows Terminal) i stället för den inbyggda i Windows"
 
 msgid "Use ConPTY"
 msgstr "Använd ConPTY"

@@ -2306,6 +2306,11 @@ msgstr "Carica cartella"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Come chiave meta usa {altKeyName} "
 
+msgid "Use bundled ConPTY"
+msgstr "Usa il ConPTY incluso"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Usa il ConPTY incluso con Tabby (da Windows Terminal) invece di quello integrato in Windows"
 
 msgid "Use ConPTY"
 msgstr "Usa ConPTY"

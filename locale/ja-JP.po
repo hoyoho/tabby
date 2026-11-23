@@ -2304,6 +2304,11 @@ msgstr "フォルダーをアップロード"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "メタキーとして {altKeyName} を使用する"
 
+msgid "Use bundled ConPTY"
+msgstr "同梱の ConPTY を使用する"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Windows に内蔵されているものではなく、Tabby に同梱された ConPTY（Windows Terminal 由来）を使用します"
 
 msgid "Use ConPTY"
 msgstr "ConPTYを使用する"

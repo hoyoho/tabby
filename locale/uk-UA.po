@@ -2304,6 +2304,11 @@ msgstr "Передати теку"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Використовувати {altKeyName} як клавішу Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Використовувати ConPTY з комплекту"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Використовує ConPTY, що постачається з Tabby (з Windows Terminal), замість вбудованого в Windows"
 
 msgid "Use ConPTY"
 msgstr "Використовувати ConPTY"

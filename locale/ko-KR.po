@@ -2304,6 +2304,11 @@ msgstr "폴더 업로드"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "{altKeyName} 을 메타 키로 사용"
 
+msgid "Use bundled ConPTY"
+msgstr "내장 ConPTY 사용"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Windows에 내장된 ConPTY 대신 Tabby에 포함된 ConPTY(Windows Terminal 제공)를 사용합니다"
 
 msgid "Use ConPTY"
 msgstr "ConPTY 사용"

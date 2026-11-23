@@ -2304,6 +2304,11 @@ msgstr "Prześlij folder"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Użyj {altKeyName} jako klawisza Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Używaj dołączonego ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Używa ConPTY dołączonego do Tabby (z Windows Terminal) zamiast wbudowanego w Windows"
 
 msgid "Use ConPTY"
 msgstr "Użyj ConPTY"

@@ -2304,6 +2304,11 @@ msgstr "Prenesi mapu"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Koristi {altKeyName} kao meta-tipku"
 
+msgid "Use bundled ConPTY"
+msgstr "Koristi priloženi ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Koristi ConPTY priložen uz Tabby (iz Windows Terminala) umjesto onog ugrađenog u Windows"
 
 msgid "Use ConPTY"
 msgstr "Koristi ConPTY"

@@ -2304,6 +2304,11 @@ msgstr "Téléverser un dossier"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Utiliser {altKeyName} comme clé Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Utiliser le ConPTY fourni"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Utilise le ConPTY fourni avec Tabby (provenant de Windows Terminal) au lieu de celui intégré à Windows"
 
 msgid "Use ConPTY"
 msgstr "Utiliser ConPTY"

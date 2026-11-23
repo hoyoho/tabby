@@ -2304,6 +2304,11 @@ msgstr "Subir carpeta"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Usar {altKeyName} como la tecla Meta"
 
+msgid "Use bundled ConPTY"
+msgstr "Usar el ConPTY incluido"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Usa el ConPTY incluido con Tabby (de Windows Terminal) en lugar del integrado en Windows"
 
 msgid "Use ConPTY"
 msgstr "Usar ConPTY"

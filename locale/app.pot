@@ -2714,7 +2714,7 @@ msgid "Username"
 msgstr ""
 
 #: tabby-local/src/components/shellSettingsTab.component.pug:6
-msgid "Uses the newer ConPTY from Windows Terminal"
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
 msgstr ""
 
 #: locale/tmp-html/tabby-ssh/src/components/sshProfileSettings.component.html:25
@@ -2849,10 +2849,6 @@ msgstr ""
 
 #: locale/tmp-html/tabby-local/src/components/shellSettingsTab.component.html:10
 msgid "Windows 10 build 18309 or above is recommended for ConPTY"
-msgstr ""
-
-#: tabby-local/src/components/shellSettingsTab.component.pug:14
-msgid "Windows 10 2004 (build 19041) or above is required for the bundled ConPTY"
 msgstr ""
 
 #: locale/tmp-html/tabby-settings/src/components/profilesSettingsTab.component.html:102

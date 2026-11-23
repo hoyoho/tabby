@@ -2308,6 +2308,11 @@ msgstr "上傳資料夾"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "使用{altKeyName}為Meta鍵"
 
+msgid "Use bundled ConPTY"
+msgstr "使用內建 ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "使用 Tabby 內建的 ConPTY（來自 Windows Terminal），而非 Windows 內建的 ConPTY"
 
 msgid "Use ConPTY"
 msgstr "使用 ConPTY"

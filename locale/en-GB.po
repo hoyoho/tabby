@@ -2304,6 +2304,11 @@ msgstr ""
 msgid "Use {altKeyName} as the Meta key"
 msgstr ""
 
+msgid "Use bundled ConPTY"
+msgstr "Use bundled ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
 
 msgid "Use ConPTY"
 msgstr ""

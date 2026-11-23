@@ -2304,6 +2304,11 @@ msgstr "Laai vouer op"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Gebruik {altKeyName} as die Meta-sleutel"
 
+msgid "Use bundled ConPTY"
+msgstr "Gebruik ingebedde ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Gebruik die ConPTY wat by Tabby ingesluit is (van Windows Terminal) in plaas van dié wat in Windows ingebou is"
 
 msgid "Use ConPTY"
 msgstr "Gebruik ConPTY"

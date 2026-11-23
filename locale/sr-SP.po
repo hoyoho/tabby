@@ -2304,6 +2304,11 @@ msgstr "Otpremi fasciklu"
 msgid "Use {altKeyName} as the Meta key"
 msgstr "Користи {altKeyName} као Мета кључ"
 
+msgid "Use bundled ConPTY"
+msgstr "Користи испоручени ConPTY"
+
+msgid "Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows"
+msgstr "Користи ConPTY који се испоручује уз Tabby (из Windows Terminal-а) уместо оног уграђеног у Windows"
 
 msgid "Use ConPTY"
 msgstr "Користи ConPTY"
