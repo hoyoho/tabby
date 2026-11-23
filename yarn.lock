@@ -5665,14 +5665,14 @@ string_decoder@~1.1.1:
   dependencies:
     safe-buffer "~5.1.0"
 
-strip-ansi@6.0.0, strip-ansi@^6.0.1:
+strip-ansi@6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.0.tgz#0b1571dd7669ccd4f3e06e14ef1eed26225ae532"
   integrity sha512-AuvKTrTfQNYNIctbR1K/YGTR1756GycPsg7b9bdV9Duqur4gv6aKqHXah67Z8ImS7WEz5QVcOtlfW2rZEugt6w==
   dependencies:
     ansi-regex "^5.0.0"
 
-strip-ansi@^6.0.0:
+strip-ansi@^6.0.0, strip-ansi@^6.0.1:
   version "6.0.1"
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-6.0.1.tgz#9e26c63d30f53443e9489495b2105d37b67a85d9"
   integrity sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==
@@ -6088,9 +6088,9 @@ util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
 
 utils-decorators@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/utils-decorators/-/utils-decorators-2.0.6.tgz#9ba53a7fa86a0853c506b0f352d717d3847b2032"
-  integrity sha512-GIjMKdVdkUK61di5kfX71S2kUI0MXQbRa3FFv7woBPGeExpYd/dx+/x5rM/3ucVUd4+NqO8WwjRymQn7mnoAnw==
+  version "2.10.0"
+  resolved "https://registry.yarnpkg.com/utils-decorators/-/utils-decorators-2.10.0.tgz#cec7cba973eec0439066d7661807e49253619a60"
+  integrity sha512-viSYs2KjFPzN81gJ3jagThaKC6Ac+rKaMjU/rvnvH/Ew6pXd/meMOG3ZlI205xFB7Dxthn6hj8MyXPyMv8nu0Q==
   dependencies:
     tinyqueue "^2.0.3"
 
