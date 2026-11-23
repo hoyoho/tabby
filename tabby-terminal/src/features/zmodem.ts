@@ -6,11 +6,38 @@ import { EnvironmentInjector, inject, Injectable } from '@angular/core'
 import { TerminalDecorator } from '../api/decorator'
 import { BaseTerminalTabComponent } from '../api/baseTerminalTab.component'
 import { SessionMiddleware } from '../api/middleware'
+import { BaseSession } from '../session'
 import { DirectoryUpload, FileUpload, LogService, Logger, NotificationsService, PlatformService, TranslateService } from 'tabby-core'
 
 const SPACER = '            '
 /** How long to wait for the remote `rz` to emit its ZMODEM header. */
 const UPLOAD_START_TIMEOUT = 10_000
+/**
+ * Bytes the sender may queue before waiting for the transport to accept them.
+ * Small enough that SFTP requests on the same SSH connection never wait long,
+ * large enough to keep a high-latency link busy.
+ */
+const UPLOAD_WINDOW = 256 * 1024
+/**
+ * How long an upload may sit without the transport accepting data, or without
+ * the peer answering a protocol handshake. ZMODEM's sender is a firehose with
+ * no per-packet acknowledgements, so silence is the only signal that a
+ * transfer has died.
+ */
+const TRANSFER_STALL_TIMEOUT = 30_000
+
+function withTimeout<T> (promise: Promise<T>, ms: number, message: string): Promise<T> {
+    let timer: ReturnType<typeof setTimeout> | undefined = undefined
+    const timeout = new Promise<never>((_resolve, reject) => {
+        timer = setTimeout(() => reject(new Error(message)), ms)
+    })
+    // When the timeout wins the original may still reject later; that rejection
+    // is meaningless by then but must not surface as unhandled.
+    promise.catch(() => undefined)
+    return Promise.race([promise, timeout]).finally(() => {
+        clearTimeout(timer)
+    })
+}
 
 class ZModemMiddleware extends SessionMiddleware {
     private sentry: ZModem.Sentry
@@ -128,7 +155,7 @@ class ZModemMiddleware extends SessionMiddleware {
     private platform = inject(PlatformService)
     private notifications = inject(NotificationsService)
 
-    constructor () {
+    constructor (private session: BaseSession) {
         super()
         this.cancelEvent = this.outputToSession$.pipe(filter(x => x.length === 1 && x[0] === 3))
 
@@ -242,14 +269,29 @@ class ZModemMiddleware extends SessionMiddleware {
                 const transfers = uploads ?? await this.platform.startUpload({ multiple: true })
                 let filesRemaining = transfers.length
                 let sizeRemaining = transfers.reduce((a, b) => a + b.getSize(), 0)
-                for (const transfer of transfers) {
-                    await this.sendFile(zsession, transfer, filesRemaining, sizeRemaining)
+                let completed = true
+                for (let i = 0; i < transfers.length; i++) {
+                    const transfer = transfers[i]
+                    completed = await this.sendFile(zsession, transfer, filesRemaining, sizeRemaining)
                     filesRemaining--
                     sizeRemaining -= transfer.getSize()
+                    if (!completed) {
+                        // The user cancelled: release the files that were
+                        // queued behind the one being sent.
+                        for (const remaining of transfers.slice(i + 1)) {
+                            remaining.cancel()
+                        }
+                        break
+                    }
                 }
-                await zsession.close()
-
-                this.showMessage(colors.bgBlue.black(' ZMODEM ') + ' Complete')
+                if (completed) {
+                    await withTimeout(
+                        zsession.close(),
+                        TRANSFER_STALL_TIMEOUT,
+                        'the remote did not confirm the end of the session',
+                    )
+                    this.showMessage(colors.bgBlue.black(' ZMODEM ') + ' Complete')
+                }
             } else {
                 // A drop asked for an upload, but the remote started a receive
                 // session instead. Its files cannot ride on this transfer, so
@@ -370,7 +412,11 @@ class ZModemMiddleware extends SessionMiddleware {
         cancelSubscription.unsubscribe()
     }
 
-    private async sendFile (zsession, transfer: FileUpload, filesRemaining, sizeRemaining) {
+    /**
+     * Sends one file. Returns false when the user cancelled, in which case the
+     * session has already been aborted and must not be closed as if complete.
+     */
+    private async sendFile (zsession, transfer: FileUpload, filesRemaining, sizeRemaining): Promise<boolean> {
         const offer = {
             name: transfer.getName(),
             size: transfer.getSize(),
@@ -382,45 +428,86 @@ class ZModemMiddleware extends SessionMiddleware {
         this.showMessage(colors.bgYellow.black(' Offered ') + ' ' + offer.name, true)
 
         const xfer = await zsession.send_offer(offer)
-        if (xfer) {
-            let canceled = false
-            const cancelSubscription = this.cancelEvent.subscribe(() => {
-                canceled = true
-            })
+        if (!xfer) {
+            transfer.cancel()
+            this.showMessage(colors.bgRed.black(' Rejected ') + ' ' + offer.name)
+            this.logger.warn('rejected by the other side')
+            return true
+        }
 
-            while (true) {
+        let canceled = false
+        const cancelSubscription = this.cancelEvent.subscribe(() => {
+            canceled = true
+            // ^C is also on its way to the remote, but the local firehose would
+            // keep queueing file bytes until rz reacts. Abort locally so the
+            // sender stops and the connection is released immediately.
+            try {
+                zsession.abort()
+            } catch { }
+        })
+
+        try {
+            let unflushed = 0
+            while (!canceled) {
                 const chunk = await transfer.read()
                 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
                 if (canceled || !chunk.length) {
                     break
                 }
 
-                await xfer.send(chunk)
+                // ZMODEM's send() is synchronous and the receiver never
+                // acknowledges file data (CANOVIO), so pacing has to come from
+                // the transport. Waiting once per window keeps the SSH
+                // connection's write queue short, which is what lets the SFTP
+                // channel sharing that connection stay responsive.
+                xfer.send(chunk)
+                unflushed += chunk.length
+                if (unflushed >= UPLOAD_WINDOW) {
+                    await this.waitForUploadProgress()
+                    unflushed = 0
+                }
+
                 this.showMessage(colors.bgYellow.black(' ' + Math.round(100 * transfer.getCompletedBytes() / offer.size).toString().padStart(3, ' ') + '% ') + offer.name, true)
             }
 
             // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (canceled) {
                 transfer.cancel()
-            } else {
-                transfer.close()
-            }
-
-            await xfer.end()
-
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            if (canceled) {
                 this.showMessage(colors.bgRed.black(' Canceled ') + ' ' + offer.name)
-            } else {
-                this.showMessage(colors.bgGreen.black(' Sent ') + ' ' + offer.name)
+                return false
             }
 
+            transfer.close()
+
+            // end() writes the last subpacket and ZEOF synchronously, then
+            // resolves once the receiver answers; a receiver that stops reading
+            // leaves it pending forever, which is the only failure signal
+            // ZMODEM offers.
+            await withTimeout(
+                xfer.end(),
+                TRANSFER_STALL_TIMEOUT,
+                'rz stopped acknowledging the end of the file',
+            )
+
+            this.showMessage(colors.bgGreen.black(' Sent ') + ' ' + offer.name)
+            return true
+        } finally {
             cancelSubscription.unsubscribe()
-        } else {
-            transfer.cancel()
-            this.showMessage(colors.bgRed.black(' Rejected ') + ' ' + offer.name)
-            this.logger.warn('rejected by the other side')
         }
+    }
+
+    /**
+     * Waits for the transport to accept everything written so far, and bounds
+     * how long that may take. A receiver that stops reading (or a wedged
+     * connection) leaves the channel silent, which is the only failure signal
+     * ZMODEM offers.
+     */
+    private async waitForUploadProgress (): Promise<void> {
+        await withTimeout(
+            this.session.drainOutput(),
+            TRANSFER_STALL_TIMEOUT,
+            'the connection stopped accepting data',
+        )
     }
 
     private showMessage (msg: string, overwrite = false) {
@@ -488,12 +575,13 @@ export class ZModemDecorator extends TerminalDecorator {
     }
 
     private attachToSession (terminal: BaseTerminalTabComponent<any>) {
-        if (!terminal.session) {
+        const session = terminal.session
+        if (!session) {
             return
         }
-        const middleware = this.#injector.runInContext(() => new ZModemMiddleware())
+        const middleware = this.#injector.runInContext(() => new ZModemMiddleware(session))
         this.middlewares.set(terminal, middleware)
-        terminal.session.middleware.unshift(middleware)
+        session.middleware.unshift(middleware)
     }
 
     private onDragOver (event: DragEvent): void {
