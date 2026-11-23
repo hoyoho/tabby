@@ -6,7 +6,7 @@
         .description(translate) Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows
 
     toggle(
-        [(ngModel)]='config.store.terminal.useConPTY',
+        [(ngModel)]='config.store.terminal.useBundledConPTY',
         (ngModelChange)='config.save()'
     )
 

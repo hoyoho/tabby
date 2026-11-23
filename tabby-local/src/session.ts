@@ -163,7 +163,7 @@ export class Session extends BaseSession {
                 // through to fullscreen TUIs) or the one built into Windows.
                 // node-pty has no other Windows backend, so this only selects the
                 // DLL — never the backend itself.
-                useConptyDll: this.config.store.terminal.useConPTY && isWindowsBuild(WIN_BUILD_BUNDLED_CONPTY_SUPPORTED),
+                useConptyDll: this.config.store.terminal.useBundledConPTY && isWindowsBuild(WIN_BUILD_BUNDLED_CONPTY_SUPPORTED),
             }
 
             pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], ptyOptions)

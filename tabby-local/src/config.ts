@@ -4,7 +4,9 @@ import { ConfigProvider, Platform } from 'tabby-core'
 export class TerminalConfigProvider extends ConfigProvider {
     defaults = {
         terminal: {
-            useConPTY: true,
+            // Windows only: run the ConPTY bundled with Tabby (from Windows
+            // Terminal) instead of the one built into Windows.
+            useBundledConPTY: true,
             /**
              * Local PTY host process model:
              * - 'shared'      one helper process for all local sessions (lowest memory)
