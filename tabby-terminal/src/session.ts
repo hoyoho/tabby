@@ -68,6 +68,19 @@ export abstract class BaseSession {
         this.middleware.feedFromTerminal(data)
     }
 
+    /**
+     * Resolves once the transport accepted everything written so far.
+     *
+     * Middlewares that produce data faster than the transport drains it (ZMODEM
+     * uploads) await this between chunks. Without it the whole payload is queued
+     * at once: an SSH connection carries both the shell and the SFTP channel, so
+     * that backlog starves every other operation on it. Sessions whose write
+     * path already hands data off synchronously resolve immediately.
+     */
+    drainOutput (): Promise<void> {
+        return Promise.resolve()
+    }
+
     protected emitOutput (data: Buffer): void {
         this.middleware.feedFromSession(data)
     }

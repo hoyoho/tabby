@@ -7,6 +7,11 @@ import { BaseSession, UTF8SplitterMiddleware, InputProcessor } from 'tabby-termi
 import { SSHSession } from './ssh'
 import { SSHProfile } from '../api'
 
+interface DrainWaiter {
+    resolve: () => void
+    reject: (error: Error) => void
+}
+
 /**
  * Renderer-side stand-in for one shell channel of a main-process SSH
  * connection. Data flows over `ssh:<connId>:ch:<chId>:*` events with the
@@ -18,6 +23,11 @@ export class SSHShellChannelProxy {
     readonly closed$ = new Subject<void>()
 
     private wired = false
+    /** Set once the channel can no longer take writes. */
+    private unwired = false
+    private nextDrainToken = 1
+    /** Pending `drainOutput()` requests, keyed by their token. */
+    private drainWaiters = new Map<number, DrainWaiter>()
 
     constructor (
         private connId: string,
@@ -32,6 +42,7 @@ export class SSHShellChannelProxy {
         ipcRenderer.on(`ssh:${this.connId}:ch:${this.id}:data`, this.dataListener)
         ipcRenderer.on(`ssh:${this.connId}:ch:${this.id}:eof`, this.eofListener)
         ipcRenderer.on(`ssh:${this.connId}:ch:${this.id}:closed`, this.closedListener)
+        ipcRenderer.on(`ssh:${this.connId}:ch:${this.id}:drained`, this.drainedListener)
     }
 
     unwire (): void {
@@ -39,16 +50,35 @@ export class SSHShellChannelProxy {
             return
         }
         this.wired = false
+        this.unwired = true
         ipcRenderer.off(`ssh:${this.connId}:ch:${this.id}:data`, this.dataListener)
         ipcRenderer.off(`ssh:${this.connId}:ch:${this.id}:eof`, this.eofListener)
         ipcRenderer.off(`ssh:${this.connId}:ch:${this.id}:closed`, this.closedListener)
+        ipcRenderer.off(`ssh:${this.connId}:ch:${this.id}:drained`, this.drainedListener)
         this.data$.complete()
         this.eof$.complete()
         this.closed$.complete()
+        this.failDrainWaiters()
     }
 
     write (data: Buffer): void {
         ipcRenderer.send('ssh:ch-write', this.connId, this.id, data)
+    }
+
+    /**
+     * Resolves once the main process has handed every write issued before the
+     * call to the SSH channel. The request rides the same ordered IPC stream as
+     * the writes, so it cannot overtake them.
+     */
+    drainOutput (): Promise<void> {
+        if (this.unwired) {
+            return Promise.reject(new Error('Channel closed'))
+        }
+        const token = this.nextDrainToken++
+        return new Promise((resolve, reject) => {
+            this.drainWaiters.set(token, { resolve, reject })
+            ipcRenderer.send('ssh:ch-drain', this.connId, this.id, token)
+        })
     }
 
     resizePTY (dimensions: { columns: number, rows: number }): void {
@@ -61,7 +91,28 @@ export class SSHShellChannelProxy {
 
     private dataListener = (_e: IpcRendererEvent, data: Buffer) => this.data$.next(Buffer.from(data))
     private eofListener = () => this.eof$.next()
-    private closedListener = () => this.closed$.next()
+    private closedListener = () => {
+        this.unwired = true
+        this.failDrainWaiters()
+        this.closed$.next()
+    }
+
+    private drainedListener = (_e: IpcRendererEvent, token: number) => {
+        const waiter = this.drainWaiters.get(token)
+        if (!waiter) {
+            return
+        }
+        this.drainWaiters.delete(token)
+        waiter.resolve()
+    }
+
+    private failDrainWaiters (): void {
+        const waiters = [...this.drainWaiters.values()]
+        this.drainWaiters.clear()
+        for (const waiter of waiters) {
+            waiter.reject(new Error('Channel closed'))
+        }
+    }
 }
 
 export class SSHShellSession extends BaseSession {
@@ -176,6 +227,10 @@ export class SSHShellSession extends BaseSession {
 
     write (data: Buffer): void {
         this.shell?.write(data)
+    }
+
+    override drainOutput (): Promise<void> {
+        return this.shell?.drainOutput() ?? Promise.resolve()
     }
 
     kill (_signal?: string): void {

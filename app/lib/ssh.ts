@@ -1120,6 +1120,21 @@ class SSHConnection {
         })
     }
 
+    /**
+     * Calls `done` once every byte written to the channel so far has been
+     * handed to the transport. Bulk producers (ZMODEM uploads) use it to pace
+     * themselves: the connection is shared with SFTP, so an unbounded write
+     * backlog starves every other operation on it.
+     */
+    drainChannel (chId: string, done: () => void): void {
+        const entry = this.channels.get(chId)
+        if (!entry) {
+            done()
+            return
+        }
+        entry.writeQueue.then(done)
+    }
+
     resizeChannel (chId: string, columns: number, rows: number): void {
         const entry = this.channels.get(chId)
         if (!entry) {
@@ -1300,6 +1315,23 @@ export class SSHConnectionManager {
 
         ipcMain.on('ssh:ch-write', (_event, connId, chId, data) => {
             this.connections[connId]?.writeChannel(chId, data)
+        })
+
+        // Sent on the same ordered IPC stream as the writes above, so the main
+        // process cannot observe it before them. The reply is addressed to the
+        // requesting window only.
+        ipcMain.on('ssh:ch-drain', (event, connId, chId, token) => {
+            const reply = (): void => {
+                if (!event.sender.isDestroyed()) {
+                    event.sender.send(`ssh:${connId}:ch:${chId}:drained`, token)
+                }
+            }
+            const connection = this.connections[connId]
+            if (connection) {
+                connection.drainChannel(chId, reply)
+            } else {
+                reply()
+            }
         })
 
         ipcMain.on('ssh:ch-resize', (_event, connId, chId, columns, rows) => {
