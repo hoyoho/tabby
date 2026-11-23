@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 import { rebuild } from '@electron/rebuild'
-import { execFileSync } from 'child_process'
 import * as path from 'path'
 import * as vars from './vars.mjs'
+import { stageBundledConpty } from './stage-conpty.mjs'
 
 import * as url from 'url'
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
@@ -41,12 +41,6 @@ for (let [lc, dir] of lifecycles) {
 
 await Promise.all(builds)
 
-if (process.platform === 'win32') {
-    // node-gyp's clean step just wiped node-pty's bundled conpty.dll + OpenConsole.exe out of
-    // build/Release; node-pty's own postinstall puts them back for the arch we're targeting
-    execFileSync(process.execPath, ['scripts/post-install.js'], {
-        cwd: path.resolve(__dirname, '../app/node_modules/node-pty'),
-        env: { ...process.env, npm_config_arch: process.env.ARCH },
-        stdio: 'inherit',
-    })
-}
+// node-gyp's clean step wiped node-pty's bundled conpty.dll + OpenConsole.exe out
+// of build/Release, so put them back for the arch being built.
+stageBundledConpty()

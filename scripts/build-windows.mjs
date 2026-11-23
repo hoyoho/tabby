@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import { build as builder } from 'electron-builder'
 import * as vars from './vars.mjs'
+import { stageBundledConpty } from './stage-conpty.mjs'
 import { execSync } from 'child_process'
 import { existsSync, writeFileSync } from 'fs'
 import path from 'node:path'
@@ -26,6 +27,11 @@ if (!existsSync(vcRedistPath)) {
     writeFileSync(vcRedistPath, body)
     console.log('Saved:', vcRedistPath, '(', body.length, 'bytes )')
 }
+
+// Packaging must own the ConPTY payload: build/Release is wiped by any native
+// rebuild, and electron-builder only unpacks what is on disk here. Staging it
+// now makes the installer independent of whether build-native ran last.
+stageBundledConpty()
 
 builder({
     dir: true,
