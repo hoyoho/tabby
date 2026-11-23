@@ -1,17 +1,14 @@
 
 
-.form-line(*ngIf='isConPTYAvailable')
+.form-line(*ngIf='isBundledConPTYAvailable')
     .header
         .title(translate) Use bundled ConPTY
-        .description(translate) Uses the newer ConPTY from Windows Terminal
+        .description(translate) Uses the ConPTY bundled with Tabby (from Windows Terminal) instead of the one built into Windows
 
     toggle(
         [(ngModel)]='config.store.terminal.useConPTY',
         (ngModelChange)='config.save()'
     )
-
-.alert.alert-info.d-flex.align-items-center(*ngIf='config.store.terminal.useConPTY && isConPTYAvailable && !isBundledConPTYAvailable')
-    .me-auto(translate) Windows 10 2004 (build 19041) or above is required for the bundled ConPTY
 
 .form-line.content-box
     .header

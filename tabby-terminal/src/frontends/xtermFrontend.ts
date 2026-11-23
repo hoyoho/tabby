@@ -124,7 +124,10 @@ export class XTermFrontend extends Frontend {
             },
             reflowCursorLine: true,
             windowsPty: process.platform === 'win32' ? {
-                backend: this.configService.store.terminal.useConPTY ? 'conpty' : 'winpty',
+                // node-pty has no winpty backend: Windows sessions are always
+                // ConPTY, and `useConPTY` only selects between the bundled DLL and
+                // the system one — a distinction xterm does not model.
+                backend: 'conpty',
                 buildNumber: this.configService.store.terminal.useConPTY && isWindowsBuild(WIN_BUILD_BUNDLED_CONPTY_SUPPORTED)
                     ? WIN_BUILD_CONPTY_REFLOW_SUPPORTED
                     : getWindows10Build(),

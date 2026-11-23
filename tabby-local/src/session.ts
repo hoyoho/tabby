@@ -158,21 +158,15 @@ export class Session extends BaseSession {
                 encoding: null,
                 cwd,
                 env: env,
-                // node-pty's bundled ConPTY passes VT mouse tracking through to fullscreen TUIs,
-                // which the one built into Windows swallows. It needs Windows 10 2004+.
+                // The setting picks which ConPTY implementation to run: node-pty's
+                // bundled DLL (Windows Terminal's, which passes VT mouse tracking
+                // through to fullscreen TUIs) or the one built into Windows.
+                // node-pty has no other Windows backend, so this only selects the
+                // DLL — never the backend itself.
                 useConptyDll: this.config.store.terminal.useConPTY && isWindowsBuild(WIN_BUILD_BUNDLED_CONPTY_SUPPORTED),
             }
 
-            try {
-                pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], ptyOptions)
-            } catch (error) {
-                if (!ptyOptions.useConptyDll) {
-                    throw error
-                }
-                // A missing or blocked conpty.dll must not cost the user their terminal
-                this.logger.warn('Bundled ConPTY failed, retrying with the built-in one:', error)
-                pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], { ...ptyOptions, useConptyDll: false })
-            }
+            pty = await this.ptyInterface.spawn(options.command, [...wslCdArgs, ...options.args], ptyOptions)
 
             this.guessedCWD = cwd ?? null
         }

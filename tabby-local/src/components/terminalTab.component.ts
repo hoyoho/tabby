@@ -25,7 +25,10 @@ export class TerminalTabComponent extends BaseTerminalTabComponent<LocalProfile>
     ngOnInit (): void {
         this.logger = this.log.create('terminalTab')
 
-        const isConPTY = isWindowsBuild(WIN_BUILD_CONPTY_SUPPORTED) && this.config.store.terminal.useConPTY
+        // node-pty only has a ConPTY backend on Windows, so Home/End use the
+        // ConPTY escapes there regardless of which ConPTY implementation the
+        // `useConPTY` setting selects (bundled DLL vs the system one).
+        const isConPTY = isWindowsBuild(WIN_BUILD_CONPTY_SUPPORTED)
 
         this.subscribeUntilDestroyed(this.hotkeys.hotkey$, hotkey => {
             if (!this.hasFocus) {
