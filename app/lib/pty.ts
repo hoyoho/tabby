@@ -269,6 +269,9 @@ export class PTYManager {
                 conn?.setPID(message.pid)
                 break
             case 'error':
+                // The host owns the real spawn, so this is the only place the
+                // reason (e.g. a missing conpty.dll) can be surfaced at all.
+                console.error(`[pty] Failed to spawn ${message.id}: ${message.message}`)
                 conn?.onHostGone()
                 break
             case 'event':
