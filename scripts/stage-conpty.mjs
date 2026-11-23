@@ -1,13 +1,17 @@
 #!/usr/bin/env node
 /**
- * Stage node-pty's bundled ConPTY binaries where its native module loads them from.
+ * Stage node-pty's bundled ConPTY binaries next to the module that will load them.
  *
  * `conpty.node` resolves `conpty.dll` at `conpty/conpty.dll` relative to its own
- * directory, i.e. `build/Release/conpty/`. That directory is a build artifact:
- * node-gyp wipes `build/Release` on every rebuild and does not put the DLLs back.
- * Staging them from node-pty's own `third_party` copy therefore belongs to both
- * the native build (dev runs load from the same path) and packaging itself —
- * electron-builder unpacks exactly `build/Release/conpty/*` into the app.
+ * directory, so the DLLs must sit beside whichever module the loader picks. There
+ * are two possible layouts:
+ *
+ * - rebuilt (build-native / @electron/rebuild): `build/Release/conpty.node`, whose
+ *   `build/Release/conpty/` directory node-gyp wipes on every rebuild — that is
+ *   what this function restores.
+ * - prebuilt (no native rebuild): `prebuilds/<platform>-<arch>/conpty.node`, which
+ *   ships its own `conpty/` pair inside the node-pty package. Nothing to stage;
+ *   packaging keeps that pair (see electron-builder.yml) so the pair stays complete.
  */
 import * as fs from 'fs'
 import * as path from 'path'
@@ -22,6 +26,12 @@ const ARCH_DIRS = {
 
 export function stageBundledConpty () {
     if (process.platform !== 'win32') {
+        return
+    }
+    if (!fs.existsSync(path.join(NODE_PTY_DIR, 'build/Release/conpty.node'))) {
+        // No rebuilt module: the loader uses the self-contained prebuilt pair,
+        // and creating build/Release/conpty here would only ship a stray DLL.
+        console.info('Bundled ConPTY: node-pty was not rebuilt, using its prebuilt pair')
         return
     }
     const arch = process.env.ARCH ?? process.arch

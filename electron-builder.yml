@@ -35,7 +35,6 @@ files:
 - '!**/{npm-debug.log,yarn.lock,.yarn-integrity,.yarn-metadata.json}'
 - '!**/deps/cpu_features/build'
 - '!**/node_modules/node-pty/third_party'
-- '!**/node_modules/node-pty/prebuilds/*/conpty'
 extraResources:
 - builtin-plugins
 - extras
@@ -45,6 +44,7 @@ asarUnpack:
 - node_modules/**/*.node
 - node_modules/node-pty/lib
 - node_modules/node-pty/build/Release/conpty/*
+- node_modules/node-pty/prebuilds/*/conpty/*
 win:
   icon: "./build/windows/icon.ico"
   artifactName: tabby-${version}-portable-${env.ARCH}.${ext}
